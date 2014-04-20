@@ -1,0 +1,24 @@
+\begin{thebibliography}{1}
+\providecommand{\biburl}[1]{\url{#1}}
+\providecommand{\urlprefix}{Dostupn{\' e} z: }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\providecommand{\eprint}[2][]{\biburl{#2}}
+
+\bibitem{anderson}
+Anderson, C.: The Long Tail. [online], říjen 2004.
+\urlprefix\biburl{http://archive.wired.com/wired/archive/12.10/tail.html}
+
+\bibitem{digitaluniverse}
+John~Gantz, D.~R.: Extracting Value from Chaos. [online], červen 2011.
+\urlprefix\biburl{http://www.emc.com/collateral/analyst-reports/idc-extracting-value-from-chaos-ar.pdf}
+
+\bibitem{wiki:longtail}
+Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;
+  stav z 19. dubna 2014].
+\urlprefix\biburl{http://en.wikipedia.org/w/index.php?title=Long_tail&oldid=603431399}
+
+\end{thebibliography}

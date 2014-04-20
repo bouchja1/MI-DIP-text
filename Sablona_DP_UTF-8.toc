@@ -1,0 +1,50 @@
+\select@language {czech}
+\select@language {czech}
+\contentsline {subsection}{Odkaz na tuto pr{\' a}ci}{viii}{section*.1}
+\contentsline {chapter}{{\' U}vod}{1}{chapter*.5}
+\contentsline {section}{Z\IeC {\'a}kladn\IeC {\'\i } pojmy}{1}{section*.6}
+\contentsline {subsection}{Lidstvo a informace}{1}{section*.7}
+\contentsline {subsection}{Informace a The Long Tail Theory}{2}{section*.8}
+\contentsline {subsection}{Doporu\IeC {\v c}ovac\IeC {\'\i } syst\IeC {\'e}my}{3}{section*.9}
+\contentsline {subsubsection}{Pou\IeC {\v z}it\IeC {\'\i }}{3}{section*.10}
+\contentsline {subsubsection}{Typy}{3}{section*.11}
+\contentsline {section}{Motivace}{4}{section*.12}
+\contentsline {section}{Projekt}{4}{section*.13}
+\contentsline {section}{Struktura pr\IeC {\'a}ce}{4}{section*.14}
+\contentsline {chapter}{\chapternumberline {1}Aktu\IeC {\'a}ln\IeC {\'\i } stav}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}Existuj\IeC {\'\i }c\IeC {\'\i } \IeC {\v r}e\IeC {\v s}en\IeC {\'\i }}{5}{section.1.1}
+\contentsline {section}{\numberline {1.2}Sada algoritm\IeC {\r u}}{5}{section.1.2}
+\contentsline {chapter}{\chapternumberline {2}Anal\IeC {\'y}za}{7}{chapter.2}
+\contentsline {subsection}{\numberline {2.0.1}Real time}{7}{subsection.2.0.1}
+\contentsline {chapter}{\chapternumberline {3}Adaptibiln\IeC {\'\i } syst\IeC {\'e}m}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Strojov\IeC {\'e} u\IeC {\v c}en\IeC {\'\i }}{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Online u\IeC {\v c}en\IeC {\'\i }}{10}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}Multi-armed Bandit algoritmus}{10}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Princip algoritmu}{10}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Exploration vs. Exploitation}{11}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}Bayesian Bandits}{11}{section.3.3}
+\contentsline {subsubsection}{\numberline {3.3.0.1}D\IeC {\r u}raz na zp\IeC {\v e}tnou vazbu}{13}{subsubsection.3.3.0.1}
+\contentsline {subsubsection}{\numberline {3.3.0.2}Jednoduch\IeC {\'y} pr\IeC {\r u}zkum}{13}{subsubsection.3.3.0.2}
+\contentsline {chapter}{\chapternumberline {4}Principy a technologie}{15}{chapter.4}
+\contentsline {section}{\numberline {4.1}Vyhodnocovac\IeC {\'\i } technologie}{15}{section.4.1}
+\contentsline {section}{\numberline {4.2}Server}{15}{section.4.2}
+\contentsline {section}{\numberline {4.3}Api}{15}{section.4.3}
+\contentsline {section}{\numberline {4.4}Jak to ud\IeC {\v e}lat, aby to b\IeC {\v e}\IeC {\v z}elo rychle?}{15}{section.4.4}
+\contentsline {section}{\numberline {4.5}Principy a technologie technologi\IeC {\'\i }}{15}{section.4.5}
+\contentsline {section}{\numberline {4.6}Architektura \IeC {\v r}e\IeC {\v s}en\IeC {\'\i }}{16}{section.4.6}
+\contentsline {section}{\numberline {4.7}N\IeC {\'a}vrh komunikace}{16}{section.4.7}
+\contentsline {section}{\numberline {4.8}Parametrizace}{16}{section.4.8}
+\contentsline {chapter}{\chapternumberline {5}N\IeC {\'a}vrh a implementace}{17}{chapter.5}
+\contentsline {section}{\numberline {5.1}Aplikace}{17}{section.5.1}
+\contentsline {section}{\numberline {5.2}Form\IeC {\'a}t zas\IeC {\'\i }lan\IeC {\'y}ch zpr\IeC {\'a}v}{17}{section.5.2}
+\contentsline {section}{\numberline {5.3}Komunika\IeC {\v c}n\IeC {\'\i } protokol}{17}{section.5.3}
+\contentsline {section}{\numberline {5.4}Nasazen\IeC {\'\i }}{17}{section.5.4}
+\contentsline {chapter}{\chapternumberline {6}Experimenty a vyhodnocen\IeC {\'\i }}{19}{chapter.6}
+\contentsline {section}{\numberline {6.1}Testov\IeC {\'a}n\IeC {\'\i } r\IeC {\r u}zn\IeC {\'y}ch zp\IeC {\r u}sob\IeC {\r u} chov\IeC {\'a}n\IeC {\'\i }}{19}{section.6.1}
+\contentsline {section}{\numberline {6.2}Experimenty}{19}{section.6.2}
+\contentsline {section}{\numberline {6.3}Zhodnocen\IeC {\'\i } aplikace}{19}{section.6.3}
+\contentsline {section}{\numberline {6.4}Budouc\IeC {\'\i } pr\IeC {\'a}ce}{19}{section.6.4}
+\contentsline {chapter}{Z{\' a}v{\v e}r}{21}{chapter*.15}
+\contentsline {chapter}{Literatura}{23}{section*.17}
+\contentsline {appendix}{\chapternumberline {A}Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{25}{appendix.A}
+\contentsline {appendix}{\chapternumberline {B}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{27}{appendix.B}
