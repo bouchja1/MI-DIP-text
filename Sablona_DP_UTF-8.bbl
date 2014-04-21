@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \providecommand{\biburl}[1]{\url{#1}}
 \providecommand{\urlprefix}{Dostupn{\' e} z: }
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -8,13 +8,58 @@
 \providecommand{\selectlanguage}[1]{\relax}
 \providecommand{\eprint}[2][]{\biburl{#2}}
 
+\bibitem{bellkor}
+BellKor, AT\&T Labs, Inc. – Research. [online], stav ze dne 21.4.2012.
+\urlprefix\biburl{http://www2.research.att.com/~volinsky/netflix/}
+
+\bibitem{zitecnn}
+CNN Acquires Zite. [online], stav ze dne 21.4.2012.
+\urlprefix\biburl{http://cnnpressroom.blogs.cnn.com/2011/08/30/cnnzite/}
+
+\bibitem{amazonrec}
+How does the Amazon Recommendation feature work? [online], stav ze dne
+  21.4.2012.
+\urlprefix\biburl{http://stackoverflow.com/questions/2323768/how-does-the-amazon-recommendation-feature-work}
+
+\bibitem{netflixrec}
+Netflix Contest: 1 Million Dollars for Better Recommendations. [online], stav
+  ze dne 21.4.2012.
+\urlprefix\biburl{http://www.uie.com/brainsparks/2006/10/02/netflix-contest-1-million-dollars-for-better-recommendations/}
+
+\bibitem{netflix2007}
+Netflix offers streaming movies to subscribers. [online], stav ze dne
+  21.4.2012.
+\urlprefix\biburl{http://arstechnica.com/uncategorized/2007/01/8627/}
+
+\bibitem{proklik}
+Proklik. [online], stav ze dne 21.4.2012.
+\urlprefix\biburl{http://www.adaptic.cz/znalosti/slovnicek/proklik/}
+
+\bibitem{affinity}
+What Is Affinity Analysis? [online], stav ze dne 21.4.2012.
+\urlprefix\biburl{http://www.wisegeek.com/what-is-affinity-analysis.htm}
+
+\bibitem{ziteflip}
+Zite is Flipping out. [online], stav ze dne 21.4.2012.
+\urlprefix\biburl{http://blog.zite.com/2014/03/05/zite-is-flipping-out/}
+
 \bibitem{anderson}
 Anderson, C.: The Long Tail. [online], říjen 2004.
 \urlprefix\biburl{http://archive.wired.com/wired/archive/12.10/tail.html}
 
+\bibitem{jacobi2006personalized}
+Jacobi, J.; Benson, E.; Linden, G.: Personalized recommendations of items
+  represented within a database. Z\'a\v r\'\i{}~26 2006, uS Patent 7,113,917.
+\urlprefix\biburl{http://www.google.com/patents/US7113917}
+
 \bibitem{digitaluniverse}
 John~Gantz, D.~R.: Extracting Value from Chaos. [online], červen 2011.
 \urlprefix\biburl{http://www.emc.com/collateral/analyst-reports/idc-extracting-value-from-chaos-ar.pdf}
+
+\bibitem{linden2001collaborative}
+Linden, G.; Jacobi, J.; Benson, E.: Collaborative recommendations using
+  item-to-item similarity mappings. \v Cervenec~24 2001, uS Patent 6,266,649.
+\urlprefix\biburl{https://www.google.com/patents/US6266649}
 
 \bibitem{wiki:longtail}
 Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;

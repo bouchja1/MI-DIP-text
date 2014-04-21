@@ -46,3 +46,95 @@
    url = {http://www.emc.com/collateral/analyst-reports/idc-extracting-value-from-chaos-ar.pdf},
    howpublished = "[online]"
  }
+
+ @misc{wiki:longtail,
+   author = "Wikipedia",
+   title = "Long tail --- Wikipedia{,} The Free Encyclopedia",
+   year = "2014",
+   url = {http://en.wikipedia.org/w/index.php?title=Long_tail&oldid=603431399},
+   note = "[Online; stav z 19. dubna 2014]"
+ }
+
+@MISC{affinity,
+title="What Is Affinity Analysis?",
+note="stav ze dne 21.4.2012",
+url="http://www.wisegeek.com/what-is-affinity-analysis.htm",
+howpublished = "[online]"
+}
+
+@MISC{amazonrec,
+title="How does the Amazon Recommendation feature work?",
+note="stav ze dne 21.4.2012",
+url="http://stackoverflow.com/questions/2323768/how-does-the-amazon-recommendation-feature-work",
+howpublished = "[online]"
+}
+
+@MISC{proklik,
+title="Proklik",
+note="stav ze dne 21.4.2012",
+url="http://www.adaptic.cz/znalosti/slovnicek/proklik/",
+howpublished = "[online]"
+}
+
+@misc{jacobi2006personalized,
+  title={Personalized recommendations of items represented within a database},
+  author={Jacobi, J.A. and Benson, E.A. and Linden, G.D.},
+  url={http://www.google.com/patents/US7113917},
+  year={2006},
+  month=sep # "~26",
+  publisher={Google Patents},
+  note={US Patent 7,113,917}
+}
+
+@misc{linden2001collaborative,
+  title={Collaborative recommendations using item-to-item similarity mappings},
+  author={Linden, G.D. and Jacobi, J.A. and Benson, E.A.},
+  url={https://www.google.com/patents/US6266649},
+  year={2001},
+  month=jul # "~24",
+  publisher={Google Patents},
+  note={US Patent 6,266,649}
+}
+
+@MISC{netflix2007,
+title="Netflix offers streaming movies to subscribers",
+note="stav ze dne 21.4.2012",
+url="http://arstechnica.com/uncategorized/2007/01/8627/",
+howpublished = "[online]"
+}
+
+@MISC{bellkor,
+title="BellKor, AT\&T Labs, Inc. – Research",
+note="stav ze dne 21.4.2012",
+url="http://www2.research.att.com/~volinsky/netflix/",
+howpublished = "[online]"
+}
+
+@MISC{netflixrec,
+title="Netflix Contest: 1 Million Dollars for Better Recommendations",
+note="stav ze dne 21.4.2012",
+url="http://www.uie.com/brainsparks/2006/10/02/netflix-contest-1-million-dollars-for-better-recommendations/",
+howpublished = "[online]"
+}
+
+@MISC{zitecnn,
+title="CNN Acquires Zite",
+note="stav ze dne 21.4.2012",
+url="http://cnnpressroom.blogs.cnn.com/2011/08/30/cnnzite/",
+howpublished = "[online]"
+}
+
+@MISC{ziteflip,
+title="Zite is Flipping out",
+note="stav ze dne 21.4.2012",
+url="http://blog.zite.com/2014/03/05/zite-is-flipping-out/",
+howpublished = "[online]"
+}
+
+@MISC{mendeleymahout,
+title="Mendeley Suggest: Engineering a Personalized Article Recommender System",
+note="stav ze dne 21.4.2012",
+url="http://www.slideshare.net/KrisJack/mendeley-suggest-engineering-a-personalised-article-recommender-system",
+howpublished = "[online]"
+}
+

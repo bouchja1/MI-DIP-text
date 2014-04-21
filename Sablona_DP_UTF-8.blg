@@ -4,44 +4,53 @@ The top-level auxiliary file: Sablona_DP_UTF-8.aux
 The style file: csn690.bst
 Database file #1: mybibliographyfile.bib
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-You've used 3 entries,
+Warning--to sort, need author or key in affinity
+Warning--to sort, need author or key in proklik
+Warning--to sort, need author or key in amazonrec
+Warning--to sort, need author or key in netflix2007
+Warning--to sort, need author or key in netflixrec
+Warning--to sort, need author or key in bellkor
+Warning--to sort, need author or key in ziteflip
+Warning--to sort, need author or key in zitecnn
+You've used 13 entries,
             3151 wiz_defined-function locations,
-            670 strings with 5883 characters,
-and the built_in function-call counts, 907 in all, are:
-= -- 59
-> -- 21
+            710 strings with 7174 characters,
+and the built_in function-call counts, 3729 in all, are:
+= -- 265
+> -- 71
 < -- 0
-+ -- 10
-- -- 6
-* -- 41
-:= -- 117
-add.period$ -- 6
-call.type$ -- 3
-change.case$ -- 10
++ -- 40
+- -- 18
+* -- 175
+:= -- 359
+add.period$ -- 26
+call.type$ -- 13
+change.case$ -- 46
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 85
-empty$ -- 99
-format.name$ -- 6
-if$ -- 189
+cite$ -- 21
+duplicate$ -- 371
+empty$ -- 425
+format.name$ -- 20
+if$ -- 831
 int.to.chr$ -- 0
-int.to.str$ -- 3
-missing$ -- 19
-newline$ -- 22
-num.names$ -- 6
-pop$ -- 49
+int.to.str$ -- 13
+missing$ -- 85
+newline$ -- 62
+num.names$ -- 10
+pop$ -- 263
 preamble$ -- 1
-purify$ -- 9
+purify$ -- 35
 quote$ -- 0
-skip$ -- 27
+skip$ -- 130
 stack$ -- 0
-substring$ -- 18
-swap$ -- 40
+substring$ -- 88
+swap$ -- 158
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 12
-warning$ -- 0
-while$ -- 6
-width$ -- 4
-write$ -- 36
+type$ -- 52
+warning$ -- 8
+while$ -- 10
+width$ -- 15
+write$ -- 118
+(There were 8 warnings)
