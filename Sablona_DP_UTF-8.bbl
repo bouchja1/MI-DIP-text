@@ -21,6 +21,11 @@ How does the Amazon Recommendation feature work? [online], stav ze dne
   21.4.2012.
 \urlprefix\biburl{http://stackoverflow.com/questions/2323768/how-does-the-amazon-recommendation-feature-work}
 
+\bibitem{mendeleylastfm}
+Mendeley: Recommendation Systems for Academic Literature. [online], stav ze dne
+  21.4.2012.
+\urlprefix\biburl{http://www.slideshare.net/KrisJack/mendeley-recommendation-systems-for-academic-literature}
+
 \bibitem{netflixrec}
 Netflix Contest: 1 Million Dollars for Better Recommendations. [online], stav
   ze dne 21.4.2012.
@@ -47,6 +52,10 @@ Zite is Flipping out. [online], stav ze dne 21.4.2012.
 Anderson, C.: The Long Tail. [online], říjen 2004.
 \urlprefix\biburl{http://archive.wired.com/wired/archive/12.10/tail.html}
 
+\bibitem{arlow}
+Arlow~J., N.~I.: \emph{UML2 a unifikovaný proces vývoje aplikací}. Computer
+  Press, a.s., 2008.
+
 \bibitem{jacobi2006personalized}
 Jacobi, J.; Benson, E.; Linden, G.: Personalized recommendations of items
   represented within a database. Z\'a\v r\'\i{}~26 2006, uS Patent 7,113,917.
@@ -60,6 +69,11 @@ John~Gantz, D.~R.: Extracting Value from Chaos. [online], červen 2011.
 Linden, G.; Jacobi, J.; Benson, E.: Collaborative recommendations using
   item-to-item similarity mappings. \v Cervenec~24 2001, uS Patent 6,266,649.
 \urlprefix\biburl{https://www.google.com/patents/US6266649}
+
+\bibitem{googlenews}
+Liu, J.; Pedersen, E.; Dolan, P.: Personalized News Recommendation Based on
+  Click Behavior. In \emph{2010 International Conference on Intelligent User
+  Interfaces}, 2010.
 
 \bibitem{wiki:longtail}
 Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;

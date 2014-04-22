@@ -21,6 +21,13 @@
 	edition = "3"
 }
 
+@BOOK{arlow,
+	title = "UML2 a unifikovaný proces vývoje aplikací",
+	author = "Arlow J., Neustadt I.",
+	publisher = "Computer Press, a.s.",
+	year = "2008"
+}
+
 @MANUAL{iso690,
 	organization = "\'U\v rad pro technickou normalizaci, metrologii a st\'atn\'\i{} zku\v sebnictv\'\i{}",
 	title = "\v CSN ISO 690 Informace a dokumentace -- Pravidla pro bibliografick\'e odkazy a citace informa\v cn\'\i{}ch zdroj{\r u}",
@@ -138,3 +145,16 @@ url="http://www.slideshare.net/KrisJack/mendeley-suggest-engineering-a-personali
 howpublished = "[online]"
 }
 
+@MISC{mendeleylastfm,
+title="Mendeley: Recommendation Systems for Academic Literature",
+note="stav ze dne 21.4.2012",
+url="http://www.slideshare.net/KrisJack/mendeley-recommendation-systems-for-academic-literature",
+howpublished = "[online]"
+}
+
+@inproceedings{googlenews,
+title = {Personalized News Recommendation Based on Click Behavior},
+author  = {Jiahui Liu and Elin Pedersen and Peter Dolan},
+year  = 2010,
+booktitle = {2010 International Conference on Intelligent User Interfaces}
+}

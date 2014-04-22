@@ -54,60 +54,103 @@
 	\begin{quote}
 		``We are leaving the age of information and entering the age of recommendation''.
 	\end{quote}
-	Hned na úvod práce jsem si dovolil vypůjčit citát z článku \emph{The Long Tail}~\cite{anderson} (česky Dlouhý chvost) bývalého šéfredaktora časopisu Wired Chrise Andersona, který je též autorem stejnojmenné teorie. Ta je založena na tom, že díky internetu lze nabízet širokou škálu produktů, které by dříve mohly jen sotva slavit prodejní úspěchy, neboť poptávka po nich je příliš malá. 
+	Hned na úvod práce jsem si dovolil použít citát z článku \emph{The Long Tail}~\cite{anderson} (česky Dlouhý chvost) bývalého šéfredaktora časopisu Wired Chrise Andersona, který je též autorem stejnojmenné teorie. Ta je založena na tom, že díky internetu lze nabízet širokou škálu produktů, které by dříve mohly jen sotva slavit prodejní úspěchy, neboť poptávka po nich je příliš malá. 
 	
-	Co je míněno tvrzením \uv{které by dříve mohly jen sotva slavit prodejní úspěchy} je vysvětleno v následující podsekci~\nameref{sub:lidinf}, po kterémžto vysvětlení bude vše zasazeno do kontextu zmíněné teorie (podsekce ~\nameref{sub:ltl}) a její souvislosti s potřebou doporučování informací, jež je popsána v podsekci~\nameref{sub:recsys}.
+	Co je míněno tvrzením \uv{které by dříve mohly jen sotva slavit prodejní úspěchy}?
 	
-	\subsection{Lidstvo a informace}	
+	Myšlenky se lze dopátrat v následující sekci~\nameref{sub:lidinf}, po kterémžto vysvětlení bude vše zasazeno do kontextu zmíněné teorie (podsekce ~\nameref{sub:ltl}) a její souvislosti s potřebou doporučování informací, jež je popsána v sekci~\nameref{sub:recsys}.
+	
+	Sekce~\nameref{sec:motivation} popisuje vizi systému schopného přizpůsobit se podmínkám a predikovat doporučení na základě předchozích a aktuálních zkušeností.
+	
+	Popisu nároků na podobný systém, jenž jsem prostřednictvím této práce navrhl a následně implementoval, je věnována sekce~\nameref{sec:objectives}. V sekci jsou též stanoveny cíle, kterých by měl nabývat implementovaný produkt. 
+	
+	Struktuře práce vzhledem k vytyčeným cílům se věnuje příslušná sekce~\nameref{sec:structure}.
+	
+\section{Lidstvo a informace}	
 	\label{sub:lidinf}
-	Význam informací a dat je pro lidstvo odjakživa nezpochybnitelný. Již před nástupem digitálního věku byl jejich objem velký, takže ke spoustě informací, na základě kterých by si byl jednotlivec utvořil vlastní názor, nebylo snadné se dostat. Lidé se často spoléhali na obecnou oblíbenost daného produktu (ať už se jednalo o zboží, článek, hudebního interpreta a jiné), která byla ale spíše než cokoliv jiného určena aktuálním společenským trendem nebo informace čerpali ze zkušeností svých několika známých na základě jejich doporučení.
+	Význam informací a dat je pro lidstvo odjakživa nezpochybnitelný. Již před nástupem digitálního věku byl jejich objem značný, takže ke spoustě informací, na základě kterých by si byl jednotlivec utvořil vlastní názor, nebylo snadné se dostat.
 	
-	S masovým rozvojem internetu pak začalo množství dostupných informací růst obřím tempem (organizace IDC došla v článku \emph{Extracting Value from Chaos}~\cite{digitaluniverse} k závěru, že objem světových dat se každé dva roky zdvojnásobuje). Nové informace jsou produkovány takřka každou sekundu a na jejich setřídění máme mnohem méně času než dříve. Není již v lidských silách udržet si o všem přehled. Takovým vývojem se přirozeně změnil pohled na data. Cílem není shromáždit co největší objem, neboť při tomto pokusu bychom se zanedlouho dostali do stavu informačního zahlcení. Ceněnou schopností je naopak vytěžit maximální množství užitečných informací a ty využít pro získání nových vědomostí a alespoň přibližně správnou odpověď na potřeby konkrétního jedince.
+	Lidé se často spoléhali na obecnou oblíbenost daného produktu (ať už se jednalo o zboží, článek, hudebního interpreta a jiné), která byla ale spíše než čímkoliv jiným určována aktuálním společenským trendem nebo informace prostě a jednoduše čerpali ze zkušeností svých několika známých na základě jejich doporučení.
+
+\subsection{Nástup internetu}		
+	S masovým rozvojem internetu začalo množství dostupných informací růst obřím tempem (organizace IDC došla v článku \emph{Extracting Value from Chaos}~\cite{digitaluniverse} k závěru, že objem světových dat se každé dva roky zdvojnásobuje). Nové informace jsou produkovány takřka každou sekundu a na jejich setřídění máme mnohem méně času než dříve. Není již v lidských silách udržet si o všem přehled.
 	
-	\subsection{Informace a The Long Tail Theory}	
+	Takovým vývojem se přirozeně změnil pohled na data. Cílem není shromáždit co největší objem, neboť při tomto pokusu bychom se zanedlouho dostali do stavu informačního zahlcení. Ceněnou schopností je nyní vytěžit maximální množství užitečných informací a ty využít pro získání nových vědomostí a alespoň přibližně správnou odpověď na otázku potřeb konkrétního jedince.
+	
+\subsection{Informace a The Long Tail Theory}	
 	\label{sub:ltl}
-	Vrátím se nyní ještě jednou k teorii Dlouhého chvostu. Pro účely této práce ji nemá význam vysvětlovat dopodrobna, ale je vhodné zmínit alespoň hlavní myšlenku, která vychází z úvah výše. Nejdůležitějším poznatkem je to, že – z pohledu obchodního – s nárůstem informací dochází k fenoménu snižování prodejů dřívějších hitů (tedy těch několika málo produktů, které se na daném trhu dostanou k masovému publiku, a které určuje především trend) ve prospěch prvků nacházejících se v takzvaném dlouhém chvostu. Uživatel se tak může dostat k informacím, ke kterým by se obyčejným hledáním přes jeden z vyhledávačů třeba nikdy nedostal (pokud by tedy opravdu přesně nevěděl, co hledá). Bližší představu si lze utvořit při pohledu na obrázek~\ref{fig:longtail}. Na vodorovné ose leží jednotlivé produkty, svislá osa pak znázorňuje objem prodeje (či popularitu). Žlutá část pod grafem vpravo reprezentuje dlouhý chvost (zhruba 80 procent produktů, po kterých je na trhu poptávka v malých objemech). Zelená část nalevo pak znázorňuje těch několik dominujících produktů (označuje se též jako \emph{hlava}). Tento fenomén si lze dost dobře ilustrovat na příkladu hudebního průmyslu, kde díky obrovským databázím interpretů nedochází k selekci a prodeji jen těch potenciálně nejúspěšnějších, ale uživatelům se dostává mnohem větší výběr.
+	Vrátím se nyní ještě jednou k teorii Dlouhého chvostu. Pro účely této práce ji nemá význam vysvětlovat dopodrobna, ale je vhodné zmínit alespoň hlavní myšlenku, která vychází z úvah výše.
+	
+	Nejdůležitějším poznatkem je to, že – z pohledu obchodního – s nárůstem informací dochází k fenoménu snižování prodejů dřívějších hitů (tedy těch několika málo produktů, které se na daném trhu dostanou k masovému publiku, a které určuje především trend) ve prospěch prvků nacházejících se v takzvaném dlouhém chvostu. Uživatel se tak může dostat k informacím, ke kterým by se obyčejným hledáním přes jeden z vyhledávačů třeba nikdy nedostal (pokud by tedy opravdu přesně nevěděl, co hledá).
+	
+	Bližší představu si lze utvořit při pohledu na obrázek~\ref{fig:longtail}. Na vodorovné ose leží jednotlivé produkty, svislá osa pak znázorňuje objem prodeje (stejně tak se může jednat o popularitu). Žlutá část pod grafem vpravo reprezentuje dlouhý chvost (zhruba 80 procent produktů, po kterých je na trhu poptávka v malých objemech). Zelená část nalevo pak znázorňuje těch několik dominujících produktů (označuje se též jako \emph{hlava}). Tento fenomén lze dobře ilustrovat na příkladu hudebního průmyslu, kde díky obrovským databázím interpretů~\footnote{Jmenujme pár nejznámějších: last.fm, Spotify, Grooveshark, Google Music} již nedochází k selekci a prodeji či poslechu jen těch potenciálně nejúspěšnějších, ale uživatelům se dostává mnohem většího výběru a je jen na nich, kterého si zvolí.
 	
 \begin{figure}\centering
 	\includegraphics[width=0.8\textwidth]{obr/longtail.png}
  	\caption[Příklad rozdělení zobrazující popularitu hodnocení]{Příklad rozdělení zobrazující popularitu hodnocení. Zdroj: \url{http://en.wikipedia.org/} \cite{wiki:longtail}}\label{fig:longtail}
 \end{figure}	
 
-	Všechny výše zmíněné faktory zapříčinily rozvoj přístupu zvaného \emph{informační filtrování}. Odtud už je jen krok k doporučování na míru, které se v posledních několika letech rozmohlo zaváděním tzv. \emph{doporučovacích systémů}.
+	Všechny výše zmíněné faktory přirozeně zapříčinily rozvoj přístupu zvaného \emph{informační filtrování}, tedy jakési selekce a redukce informací dle volených parametrů. Odtud už byl jen krok k doporučování na míru, které se v posledních několika letech rozmohlo zaváděním tzv. \emph{doporučovacích systémů}.
 
-	\subsection{Doporučovací systémy}
-	\label{sub:recsys}
- Doporučovací systémy pracují s předem známými daty a mohou uživateli pomoci v tom smyslu, že z obrovské množiny informací různými způsoby vyfiltrují relevantní podmnožinu. Například sledováním a vyhodnocováním historie používání služby uživatelem (doposud nakoupené produkty, seznam všech jím ohodnocených článků či žebříček preferovaných hudebních interpretů) nebo porovnáváním kontextu uživatele s ostatními lidmi využívajících tu samou službu. Oběma způsoby je možné objevit pro uživatele zajímavé a jeho vkusu vyhovující položky.
- Další informace o doporučovacích systémech a aktuální stav na poli doporučovacích systémů včetně technologického pozadí dokumentuje následující kapitola~\ref{chap:current}.
+\section{Doporučovací systémy}
+\label{sub:recsys}
+ Doporučovací systémy jsou systémy, které mohou být uživateli nápomocné v tom smyslu, že z obrovské množiny informací různými způsoby vyfiltrují relevantní podmnožinu. Například prostým pozorováním toho, jak uživatelé službu využívají (v minulosti zakoupené produkty, seznam všech jimi ohodnocených článků či žebříček preferovaných hudebních interpretů), nebo porovnáváním kontextu uživatele s ostatními lidmi využívajících tu samou službu, lze objevovat pro uživatele nové a jejich vkusu vyhovující položky.
+ 
+\subsubsection{Typy systémů}
 
-	\section{Motivace} 	
-		
-	Představme si nyní jakéhosi rádce, který dokáže v každém okamžiku rozhodnout, co je za daných okolností nejvhodnější. Rádce v klidu vyčkává, ale v okamžiku, kdy je tázán uživatelem na to, jakou metodou si má nechat doporučit obsah, aby z toho měl maximální užitek, je schopen ihned a bez dlouhého rozmýšlení odpovědět. Rádce dokáže i pružně reagovat na situaci, kdy náhle dojde ke změně preferencí či vyvstanou jiné nečekané události, které mají za následek doporučování nevhodného obsahu.
-	
-	\section{Projekt}
-	Cílem práce tedy je navrhnout adaptibilní systém, který bude automaticky vhodně volit a kombinovat algoritmy. Bude využívat zpětnou vazbu ohledně kvality doporučení, která principem odměny za dobré doporučení nebo trestu za špatné ovlivní preference při kombinování. Zároveň bude zodpovědná za podporu velkého množství dotazujících se uživatelů.	
-	
-	Tato diplomová práce dokumentuje návrh a vývoj takového systému a s ním spolupracujících komponent.	
-	
-	TODO Napsat že neméně důležitou součástí praáce bylo nastudování dostupných algoritmů a tak... prostě nějaká ta rešerše.
-	
-	TODO Napsat že důležité bylo to všechno otestovat na reálném příkladu
-	
-	Toto je seznam modulů, které byly pro potřeby práce vyvinuty:
-
-\begin{itemize}
-  \item \textbf{Adaptibilní systém pro doporučování obsahu.} The first item
-  \item \textbf{Sada základních algoritmů určených k doporučování.} The second item
-  \item \textbf{Rozhraní pro algoritmy a systému pro kombinování.} The third etc \ldots
-\end{itemize}	
-
-	\section{Struktura práce}
-	Tato práce je strukturována do X různých kapitol a popisuje celý vývojový cyklus systému. Kapitoly jsou řazeny v tom samém pořadí, v jakém probíhaly vývojové fáze.	
+Tyto systémy lze dle způsobu práce rozdělit do dvou skupin. 
 
 \begin{description}
-  \item[Kapitola] \nameref{chap:tests} The first item
-  \item[Kapitola] \ref{chap:tests} The second item
-  \item[Kapitola] The third etc \ldots
+	\item[Kolaborativní filtrování.] První skupinou jsou systémy fungující na principu tzv. kolaborativního filtrování. Tento princip má ještě dvě odnože zahrnující doporučování založené na podobnosti uživatelů (user-based) a doporučení založené na podobnosti položek (item-based). Doporučení z této skupiny nejvíce využívají stránky zabývající se prodejem různých produktů a také stránky nabízející novinové články.
+	\item[Doporučení založené na obsahu.] Druhou skupinou jsou pak doporučení založená na obsahu. Pro tato doporučení se nejčastěji využívá textové podobnosti. Výhodou je rychlé absorbování nových položek do systému a imunita vůči tzv. \emph{cold start problému}~\footnote{TODO}. Již na malé množině dat lze dostávat poměrně uspokojivá doporučení.
+\end{description}
+ 
+ Další informace o doporučovacích systémech a aktuální stav na poli doporučovacích systémů včetně technologického pozadí dokumentuje následující kapitola~\ref{chap:current}. Technické detaily jsou v menší míře k nalezení v sekci~\ref{sec:alg} kapitoly~\ref{chap:impl}.
+
+\section{Motivace} 	
+\label{sec:motivation}
+		
+	Představme si nyní jakéhosi rádce, který dokáže v každém okamžiku rozhodnout, co je za daných okolností nejvhodnější s tím, že to, o čem rádce rozhoduje, je volba algoritmu, kterým by si měl uživatel v danou chvíli nechat doporučit obsah. Pokud by uživatel dbal těchto rad, s největší pravděpodobností by obdržel vhodné doporučení a svou spokojenost by vyjádřil nějakou zpětnou vazbou (tím, že by klikl na doporučené položky nebo by jiným způsobem vyjádřil svůj zájem).
+	
+	Dokud rádce explicitně nekomunikuje s uživatelem, neprovádí žádné operace a pouze vyčkává na okamžik, kdy bude vyzván k nějaké akci. V okamžiku, kdy je vyzván k tomu, aby uživateli doporučil obsah, je schopen ihned a bez dlouhé analýzy uskutečnit rozhodnutí.
+	
+	Dokáže též pružně reagovat na situaci, kdy dojde k náhlé změně preferencí nebo vyvstanou jiné nečekané události, které by měli za následek dlouhodobější doporučování nevhodného obsahu.
+	
+\section{Cíle práce}
+\label{sec:objectives}
+	Cílem práce je tedy vyvinout rádce popsaného výše, a to ve formě aplikačního software. 
+
+	Nejdůležitějším cílem této práce je tedy návrh a implementace takového adaptibilního systému, jenž by automaticky a vhodně volil a kombinoval metody pro doporučování obsahu. Metodami zde myslí doporučovací algoritmy. Jejich identifikace a výběr vhodné sady je též jednou ze součástí diplomové práce.
+	
+	Systém bude využívat zpětnou vazbu ohledně kvality doporučení, která principem odměny za dobré doporučení nebo trestu za špatné ovlivní preference při kombinování. Zároveň bude zodpovědný za podporu většího množství uživatelů zasílajících žádosti na systém.
+	
+	Nezbytnou součástí diplomové práce je též nastudování základních pojmů a pravidel strojového učení a teorie pravděpodobnosti. Zejména kvůli částem zabývajících se zpětnou vazbou a predikcí vhodného algoritmu. 
+	
+	Vzhledem k fragmentované povaze projektu bude nutné navrhnout obecné rozhraní jak pro doporučovací algoritmy, tak pro adaptibilní systém zahrnující zpětnou vazbu.
+	
+	K nastudování jsou nutné i technologie pro zpracování většího množství dat a pro rychlou odezvu (ta je potřebná již ze samotné podstaty problému).
+	
+	Funkčnost navrženého systému by měla být ověřena implementací prototypu a spuštěním na modelové úloze, jež bude simulovat doporučování obsahu pro skupinu více uživatelů.
+	
+	Tato diplomová práce dokumentuje návrh a vývoj takového systému a s ním spolupracujících komponent. Následuje seznam modulů, které byly pro potřeby práce vyvinuty:
+
+\begin{itemize}
+  \item \textbf{adaptibilní systém pro doporučování obsahu}
+  \item \textbf{sada základních algoritmů určených k doporučování}
+  \item \textbf{rozhraní pro algoritmy a systém pro kombinování}
+  \item \textbf{generátor článků, na kterých bylo prováděno základní měření}
+\end{itemize}	
+
+\section{Struktura práce}
+\label{sec:structure}
+	Tato práce je strukturována do 5 různých kapitol a popisuje celý vývojový cyklus systému. Kapitoly jsou řazeny v tom samém pořadí, v jakém probíhaly fáze vývoje.	
+
+\begin{description}
+  \item[Kapitola] \nameref{chap:current} popisuje historické pozadí i aktuální trendy používané současnými doporučovacími systémy. Z této rešerše se snaží vyvodit některé závěry, které by mohly být užitečné pro účely některé z dalších kapitol.
+  \item[Kapitola] \nameref{chap:analysis} shromažďuje veškeré požadavky kladené na systém, zabývá se návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto dvou částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. 
+  \item[Kapitola] \nameref{chap:adapt} detailně dokumentuje algoritmické a matematické přístupy použité při návrhu adaptibilního systému. 
+  \item[Kapitola] \nameref{chap:impl} popisuje vývoj aplikace na základě analýzy a návrhu z předchozích kapitol. 
+  \item[Kapitola] \nameref{chap:tests} pak shrnuje poznatky nabyté z experimentů se systémem a hodnotí vyvinutou aplikaci. 
 \end{description}
 	
 \end{introduction}
@@ -115,16 +158,26 @@
 \chapter{Aktuální stav na poli doporučování}	
 \label{chap:current}
 
-Kamkoliv v dnešní době na internetu zavítáme, máme velkou šanci, že na některý z doporučovacích systémů narazíme. Mohou mít různá jména, ať už \emph{uživateli A se líbí věc B}, dále například \emph{lidé, které byste mohli znát} nebo třeba \emph{uživatelé kupující produkt X kupují též produkt Y}, ale všechny mají stejný význam – zaujmout či upozornit na něco nebo někoho konkrétního. Spousta elektronických obchodů, renomovaných aukčních domů, ale též serverů se zábavou na nich doslova staví svá podnikání, neboť správně navržený a fungující doporučovací systém může firmě přinést výrazné zvýšení zisku. 
-Sami jejich zákazníci navíc o doporučování stojí. Jsou vděční za navigaci a existuje vysoká pravděpodobnost, že v závislosti na ní budou přizpůsobovat i své chování. Uživatelská trpělivost ale není neomezená – pokud dostávají špatná doporučení, nenásledují je a ve výsledku odmítají celý systém.
+Kamkoliv v dnešní době na internetu zavítáme, máme velkou šanci, že na některý z doporučovacích systémů narazíme. Mohou mít různá jména:
+
+\begin{itemize}
+	\item lidé, které byste mohli znát
+	\item uživatelé kupující produkt X kupují též produkt Y
+\end{itemize}
+
+Všechny mají ale stejný význam – zaujmout či upozornit na něco nebo někoho konkrétního. Spousta elektronických obchodů, renomovaných aukčních domů, ale též serverů se zábavou na nich doslova staví svá podnikání, neboť správně navržený a fungující doporučovací systém může firmě přinést výrazné zvýšení zisku. 
+
+Sami jejich zákazníci o doporučování stojí. Usnadňují jim navigaci po stránce a existuje vysoká pravděpodobnost, že v závislosti na ní budou přizpůsobovat i své chování. Uživatelská trpělivost ale není neomezená – pokud dostávají špatná doporučení, nenásledují je a ve výsledku odmítají celý systém.
 
 \section{Příklady systémů}
-
-Na internetu je k nalezení samozřejmě několik desítek, ba možná i stovek, běžících systému, záměrně jsem se proto snažil vybral jen zlomek z nich pokrývající ale většinu doporučovaného obsahu (zboží, zábava, text). Níže uvádím jako příklady několik úspěšně nasazených systémů do reálného provozu. 
+\label{sec:examples}
+Na internetu je k nalezení samozřejmě několik desítek – možná stovek – běžících systému, záměrně jsem se proto snažil vybral jen zlomek, který ale pokrývá většinu doporučovaného obsahu (zboží, zábava, text). Níže tedy uvádím jako příklady několik do reálného provozu úspěšně nasazených systémů. 
 
 \subsection{Amazon.com}
 
-Amazon.com, Inc. je jedním z nejstarších a největších internetových prodejců. Společnost začínala svůj provoz jako online knihkupectví, ale postupem let zařadila do své prodejní nabídky též hudební a filmové nosiče, software, elektroniku, nábytek a spoustu dalšího zboží. Novinkou posledních let je vlastní spotřební elektronika v podobě čtečky elektronických knih a tabletů Kindle či poskytování služeb z oblasti cloud computingu.
+\textbf{Amazon.com, Inc.}~\footnote{\url{http://www.amazon.com}} je jedním z nejstarších a největších internetových prodejců. Společnost začínala svůj provoz jako online knihkupectví, ale postupem let zařadila do své prodejní nabídky též hudební a filmové nosiče, software, elektroniku, nábytek a spoustu dalšího zboží.
+
+Novinkou posledních let je vlastní spotřební elektronika v podobě čtečky elektronických knih a tabletů Kindle či poskytování služeb z oblasti cloud computingu.
 
 Firmu lze řadit mezi průkopníky doporučování na internetu. Jako jeden z prvních internetových prodejců totiž začala svým zákazníkům doporučovat výrobky na základě nákupů jiných uživatelů.
 
@@ -143,11 +196,13 @@ Výše jsou popsány pouze základní principy. Doporučovací systém společno
 
 \subsection{Netflix}
 
-Netflix, Inc. je společnost, která začínala nabízet své služby jako internetová videopůjčovna. Během posledních pár let (strategicky významný byl rok 2007, kdy byla nabídka rozšířena o filmy streamované prostřednictvím internetu~\cite{netflix2007}) se rozrostla v obrovskou mediální společnost nabízející obsah v podobě filmů a seriálů pro většinu v dnešní době používaných platforem jako PC, Mac, PlayStation3, Wii, Xbox a také mobilní telefony a tablety. 
+\textbf{Netflix, Inc.}~\footnote{\url{https://www.netflix.com}} je společnost, která začínala nabízet své služby jako internetová videopůjčovna. Během posledních pár let (strategicky významný byl rok 2007, kdy byla nabídka rozšířena o filmy streamované prostřednictvím internetu~\cite{netflix2007}) se rozrostla v obrovskou mediální společnost nabízející obsah v podobě filmů a seriálů pro většinu v dnešní době používaných platforem jako PC, Mac, PlayStation3, Wii, Xbox a také mobilní telefony a tablety. 
 
 Vzhledem k tomu, že firma staví své podnikání na tom, že přicházející uživatelé platí za konzumaci zábavy (dle~\cite{netflixrec} pochází 2/3 zapůjčených filmů z předchozího doporučení), je v jejím vlastním zájmu, aby těmto uživatelům sledujícím filmy a seriály nabízela automaticky další obsahově či žánrově podobné, zkrátka takové, jenž budou co možná nejvíce lahodit jejich vkusu. Úspěšné podnikání společnosti je tak přímo závislé na tom, jak kvalitním doporučovacím systém společnost disponuje. 
 
-Za tímto účelem byl pro doporučování filmů vyvinut vlastní systém s názvem \emph{Cinematch}. Potřeba neustálého zlepšování a zpřesňování doporučení vyústila v to, že společnost začátkem října 2006 vypsala soutěž známou jako \emph{Netflix Prize}. Jednalo se o pokus ještě více pokročit na poli doporučování filmů a pro tým, který by dokázal zlepšit dosavadní výsledky systému Cinematch alespoň o 10 procent, byla vypsána odměna ve výši 1 000 000 dolarů.
+\subsubsection{Netflix Prize}
+
+Za účelem zkvalitňování doporučování filmů byl vyvinut vlastní systém s názvem \emph{Cinematch}. Potřeba neustálého zlepšování a zpřesňování doporučení vyústila ale v to, že společnost začátkem října 2006 vypsala soutěž známou jako \emph{Netflix Prize}. Jednalo se o pokus ještě více pokročit na poli doporučování filmů a pro tým, který by dokázal zlepšit dosavadní výsledky systému Cinematch alespoň o 10 procent, byla vypsána odměna ve výši 1 000 000 dolarů.
 
 K tomuto účelu společnost uvolnila testovací data obsahující ID uživatele, ID filmu, hodnocení na intervalu <1,5> a datum uskutečnění hodnocení. Testovací data obsahovala 100 480 507 hodnocení pro 17 770 filmů od 480 189 uživatelů. Uvolněna byla ještě další testovací data obsahující stejné informace, jen byla vynechána uživatelská hodnocení. Cílem úkolu pak bylo předpovědět tato chybějící hodnocení opět na intervalu <1,5>.
 
@@ -155,9 +210,9 @@ Cena byla udělena až v roce 2009 (do té doby docházelo k průběžnému zlep
 
 Výsledný algoritmus je navíc směsicí zhruba stovky menších algoritmů, takže by se dalo s trochou nadsázky prohlásit, že jednou z hlavních taktik je použít tolik doporučovacích algoritmů, kolik je jen možné. 
 
-\subsection{Zite \& Flipboard}
+\subsection{Zite}
 
-Zite.com~\footnote{\url{http://zite.com}} je moderní aplikace pro chytré mobilní telefony a tablety.
+\textbf{Zite.com}~\footnote{\url{http://zite.com}} je moderní aplikace pro chytré mobilní telefony a tablety.
 
 Mike Klass, CTO společnosti v jednom z článků~\cite{ziteflip} prozradil, že vizí bylo vyvinout sofistikovaný, na technikách strojového učení postavený systém, jehož účelem nebude pouhé filtrování příchozích novinek vedoucí k úspoře času uživatele. Cílem tohoto systému bylo přizpůsobit se svému uživateli studiem vzorců chování (pozoruje zájmy a návyky při čtení článků) natolik, aby mu dokázal doporučit přesně to, co v danou chvíli hledá, ale kvůli různým okolnostem (například obsah produkovaný neznámým bloggerem) by na to nikdy neměl šanci narazit.
 
@@ -165,13 +220,14 @@ Zite nasazené v systému uživatele je tedy stejně tak unikátní jako jeho u�
 
 Tak jako Netflix a Amazon doporučují filmy a produkty, které by na základě podobnosti mohli uživatele zajímat, stejně tak i Zite provádí na pozadí porovnání mezi čtenáři – jak v rámci aplikace, tak obecně na webu.
 
+\subsubsection{Zite \& CNN \& Flipboard}
 V srpnu 2011 o technologii vyjádřila zájem společnost CNN~\cite{zitecnn} a Zite přešlo pod ni. Poslední novinky ze začátku března 2014 ale naznačují~\cite{ziteflip}, že Zite opouští CNN a rozhodlo se spojit síly s aplikací Flipboard~\footnote{https://flipboard.com} vývojářské společnosti Flipboard, Inc., jejíž funkcionalitou je agregování obsahu ze sociálních sítí a jiných stránek a následné nabízení ke čtení v magazínovém formátu umožňujícím jednoduchým způsobem listovat napříč vzájemně souvisejícími tématy.
 
 Společným cílem je vystavět nejlepší systém pro personalizované čtení novinek. 
 
 \subsection{Mendeley}	
 
-Mendeley je systém určený k doporučování vědeckých článků využívající jako svou výpočetní vrstvu technologii Apache Mahout~\footnote{https://mahout.apache.org}. Cílem systému je spojovat dohromady výzkumníky a jejich data. Svým uživatelům tak pomáhá v organizaci výzkumu, umožňuje jim nalézt potenciální spolupráci s dalšími uživateli aplikace a napomáhá též k objevům nových podnětů pro vlastní práci. Uživateli této aplikace jsou přední světové university jako University of Cambridge, Stanford University, MIT či University of Michigan. Data pro aplikaci pocházejí z vlastních importů svými uživateli i z externích importů skrze různé katalogy prací. 
+\textbf{Mendeley}~\footnote{\url{http://www.mendeley.com}} je systém určený k doporučování vědeckých článků využívající jako svou výpočetní vrstvu technologii Apache Mahout~\footnote{https://mahout.apache.org}. Cílem systému je spojovat dohromady výzkumníky a jejich data. Svým uživatelům tak pomáhá v organizaci výzkumu, umožňuje jim nalézt potenciální spolupráci s dalšími uživateli aplikace a napomáhá též k objevům nových podnětů pro vlastní práci. Uživateli této aplikace jsou přední světové university jako University of Cambridge, Stanford University, MIT či University of Michigan. Data pro aplikaci pocházejí z vlastních importů svými uživateli i z externích importů skrze různé katalogy prací. 
 
 Projekt samotný se v jedné ze svých prezentací~\cite{mendeleylastfm} přirovnává k největší hudební databázi na internetu – last.fm~\footnote{http://www.last.fm}. Ta funguje na tom principu, že potenciální uživatel si nainstaluje na svůj počítač desktopovou aplikaci, následně s instalovanou aplikací začne poslouchat hudbu a tím je zahájeno automatické odesílání informace o skladbě (interpret, žánr apod.) na server last.fm. Podle těchto odeslaných dat jsou uživateli v budoucnu doporučovány další skladby. 
 
@@ -193,80 +249,153 @@ Uživatelé mohou svůj zájem či nezájem o každou z doporučených položek 
 
 \subsection{Google News}	
 
+Vlastní platformu pro doporučování obsahu má jako součást svého vývoje též společnost \textbf{Google, Inc.}~\footnote{\url{http://www.google.com/about/company}}. Její výzkumníci se ve své práci~\cite{googlenews} zabývali vývojem prediktivního systému pro personalizované doporučování zpráv na webu Google News~\footnote{\url{http://news.google.com}}. Přihlášeným uživatelům, kteří mají v prohlížeči explicitně povolen záznam historie, jsou generována doporučení založená na zájmu těchto uživatelů vycházejících z profilů sestavených pozorováním chování na stránce.  
+
+K porozumění, jak se mění zájem uživatelů o zprávy v čase, napomohla výzkumníkům analýza logů (záznamy chování anonymních uživatelů na stránce). Na základě této analýzy byl vyvinut Bayesovský framework pro předvídání zájmu uživatelů o novinky.
+
+Kombinací mechanismu pro filtrování informací, který vzešel z předpovězených uživatelských profilů a již existujícího mechanismu využívajícího principů kolaborativního filtrování vznikl systém pro generování personalizovaných zpráv. Tato kombinace byla nasazena do živého provozu a následné experimenty prokázaly, že kombinováním metod došlo ke zlepšení kvality doporučování, což vedlo k častějším návratům na stránky.
 
 \subsection{Výzkum}
 
-Také výzkum v oblasti doporučovacích systémů, zdá se, nezahálí. Zde je výčet několika akcí, jejichž náplní či součástí je problematika doporučování a doporučovacích systémů.
+Také současný výzkum v oblasti doporučovacích systémů, zdá se, nezahálí. Zde je výčet několika akcí, jejichž náplní či součástí je problematika doporučování a doporučovacích systémů.
 
 \begin{itemize}
-  \item \textbf{ACM RecSys conference.}~\footnote{\url{http://recsys.acm.org}} Tato konference je předním mezinárodním fórem pro prezentaci nových výsledků výzkumu, systémů a postupů na poli doporučovacích systémů. RecSys sdružuje hlavní mezinárodní výzkumné skupiny a též mnoho předních světových společností na trhu e-commerce. Nabízí také doprovodný program v podobě zvaných přednášek, konzultace týkající se této problematiky a sympózium studentů doktorských programů. 
+  \item \textbf{ACM RecSys conference.}~\footnote{\url{http://recsys.acm.org}} Tato konference je předním mezinárodním fórem pro prezentaci nových výsledků výzkumu a postupů na poli doporučovacích systémů. RecSys sdružuje hlavní mezinárodní výzkumné skupiny a též mnoho předních světových společností na trhu e-commerce. Nabízí také doprovodný program v podobě zvaných přednášek, konzultace týkající se problematiky RecSys a sympózium studentů doktorských programů. 
+  
+  Zajímavé prezentace jsou volně dostupné na internetu, dá se tedy načerpat spousta inspirace do vlastního výzkumu. Mně osobně velmi zaujala prezentace~\footnote{\url{http://www.slideshare.net/d0nut/open-recommendation-platform}} z posledního ročníku konference (Hong Kong, 2013), se kterou vystoupil jeden z klíčových řečníků Torben Brodt. V prezentaci popisuje tzv. \emph{Open Recommendation Platform}, která je založena na výběru vždy toho nejlepšího algoritmu pro doporučení v závislosti na daném kontextu. 
+  
   \item \textbf{ICWSM: Weblog and Social Media.}~\footnote{\url{http://www.icwsm.org/2014}} The International AAAI Conference on Weblogs and Social Media je mezinárodní konference, na které se střetávají výzkumní pracovníci z oblasti počítačových a společenských věd. Konference je pořádaná za účelem sdílení znalostí, diskutování o nápadech a výměny informací. Probíranými body jsou psychologické a sociální teorie, výpočetní algoritmy pro analýzu sociálních médií a jedním z mnoha témat jsou též doporučovací systémy.
   \item \textbf{ICML: Machine  Learning.}~\footnote{http://icml.cc/2014} The International Conference on Machine Learning je konference s bohatou historií. Její první ročník proběhl již v roce 1980 v Pittsburghu. Jedná se o přední mezinárodní konferenci zabývající se strojovým učením. 
 \end{itemize}
 
 O tématu se též píše spousta článků a každým rokem vzniká několik disertačních prací. Dle dostupných informací z ACM RecSys Wiki~\footnote{\url{http://www.recsyswiki.com/wiki/List_of_recommender_system_dissertations}} jich jen za poslední 4 roky bylo přes 50. 
 
-\section{Technologické pozadí}
-Napsat, že používají ty a ty algoritmy, takže na jejich základě jsem se rozhodl vybrat ty a ty a implementoval je. Jejich popis a vysvětlení do hloubky viz nějaký ref.
+\section{Shrnutí poznatků}
 
-TODO
-	\subsubsection{Typy}
-Doporučovací systémy lze dle způsobu práce rozdělit do dvou skupin. 
-	behavioral (založeny na interakci uživatelů se články) - most popular, collabo. filter., item to item a content (založeny na článcích) - content similarity, latest item
-	zmínit nejznámější doporučovací algoritmy, collaborative filtering, most popular, text similarity atd.
-	ze treba pro potreby doporucovani novinek je lepsi kolaborativni filtrovani a ze pro doporucovani obsahu je lepsi text similarity
+Z výše uvedených příkladů~\ref{sec:examples} lze vypozorovat určité společné vlastnosti a zformulovat několik závěrů:
 
-content based - TF\_IDF, BM25, bayesovské kalsifikátory... rychle avsorbovani novych polozek, prekonani cold start problemu, lze uz z malo prikladu stavet dobre doporuceni
+\begin{itemize}
+	\item o uživateli je vedena spousta záznamů, například historie jeho chování na stránkách
+	\item velký důraz je kladen na zpětnou vazbu (vyjádření zájmu uživatele o obsah stránky)
+	\item stále se využívá osvědčených přístupů kolaborativního filtrování a filtrování na základě obsahu
+	\item síla není v použití jednoho konkrétního algoritmu, ale v kombinaci více metod a přístupů dohromady
+	\item většina výpočtů běží na pozadí v tom samém čase, co uživatel tráví prohlížením stránek, a je schopna se přizpůsobit okolnostem
+	\item problematika má silnou závislost na strojovém učení a teorii pravděpodobnosti
+\end{itemize}
 
-collfiltr- zadna potreba rozumet item charekteristikam
-
-\section{Adaptibilní systémy}
-
-Jak vidno, podobných řešení je celá řada. Mou největší inspirací a výzvou, ke které bych se rád přiblížil, je open recommendation platform společnosti plista.
+Existujících řešení je tedy celá řada. Každé z těchto řešení je ale využíváno ke svému vlastnímu účelu a není vzájemně přenositelné. Navíc se zdá, že době, kdy obchodníkům stačilo na svůj elektronický obchod nasadit jednoduchý algoritmus kolaborativního filtrování, již odzvonilo a budoucnost patří systémům schopným přizpůsobit vývoj doporučování dle nějaké predikce, a to navíc v reálném čase. 
 
 \chapter{Analýza a návrh řešení}
 \label{chap:analysis}
 
-Zatímco v předchozí kapitole jsem se zabýval analýzou existujících řešení a zjišťoval, jaké funkce jsou současnými doporučovacími systémy nabízeny, tato kapitola je celá věnována analýze mnou řešeného systému. Ta v sobě zahrnuje definování cílů a požadavků, které by měl systém plnit. Na základě této analýzy byl poté proveden návrh řešení. 
+Zatímco v předchozí kapitole jsem se zabýval popisem existujících řešení a zkoumal, jaké možnosti nabízejí současné doporučovací systémy, tato kapitola je celá věnovaná analýze požadovaného chování mnou vyvíjeného systému. Prostřednictvím výstupů získaných z této analýzy jsem následně mohl provést návrh řešení.
 
-Jednou z mnoha výzev pro někoho, kdo se snaží vybudovat doporučovací systém, je to, že je velice těžké dopředu říct, zda budou naše předpovědi dost přesné. Alespoň do té doby, dokud je nezačneme dělat a nebudeme pozorovat, jak často naši uživatelé přijímají naše návrhy. Je zde obrovský prostor možností (možných metod), z čeho vybírat. 
-
-\section{Cíle}
-
-Prvním a nejdůležitějším cílem je navrhnout a vyvinout systém, který bude automaticky vhodně volit a kombinovat algoritmy.
-
-Druhým cílem je identifikovat a následně implementovat sadu základních algoritmů určených pro kombinování. Pomocí této sady bude možné 
-
-Třetím cílem je vyvinout buď dashboard nebo nevim...
+Nejprve se budu zabývat požadavky na systém, které vyplynuly z úvodních konzultací s vedoucím práce a vlastním zkoumáním problému. Se znalostí těchto požadavků bude možné provést hrubý návrh architektury systému včetně technického řešení součástí, kterými bude systém disponovat.
 
 \section{Požadavky}
 
-Hlavním požadavkem pro systém je 
+Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požadavky strukturovat do zastřešujících skupin trojího typu (globální požadavky, rozhraní a systém). Nakonec se ale ukázalo, že mezi skupinami \emph{rozhraní} a \emph{systém} existuje velmi tenká hranice (pouze z hlediska požadovaného chování, nikoliv implementačního), proto byly skupiny redukovány na dvě.
 
-\subsection{Nefunkční požadavky}
+\subsection{Globální požadavky na systém}
 
-\subsection{Funkční požadavky}
+\begin{itemize}
+	\item Systém bude mít možnost uložit v pravidelných intervalech svůj aktuální stav pro potřeby obnovení v případě pádu.
+	\item Bude existovat možnost zobrazení dosavadního průběhu doporučování systémem v čase.
+	\item Systém bude veškerou komunikaci vyhodnocovat v reálném čase (live read, live write).
+	\item Systém bude na každou žádost vracet příslušnou odpověď (i chybovou).	
+	\item Systém poklade důraz na zpětnou vazbu, podle které bude přizpůsobovat své chování.
+	\item Zpětná vazba bude realizována na principu odměny za dobré doporučení (přičítání) a trestu za špatné (odečítání).
+	\item Systém se bude automaticky přizpůsobovat vývoji v čase tím, že bude normalizovat své hodnoty (aby nedošlo k přetečení datových typů).
+\end{itemize}
 
-Pro implementaci rozhodovacího mechanismu je potřeba 
+\subsection{Systém \& Rozhraní}
+
+\begin{itemize}
+	\item Systém bude umožňovat vytvářet skrze své rozhraní kolekce s algoritmy určených pro následnou predikci. 
+	\item Uživatel bude mít možnost zaslat systému svou žádost o radu a obdržet informaci o tom, který algoritmus pro doporučení obsahu by měl v danou chvíli zvolit.
+	\item Uživatel bude mít možnost zaslat systému informaci o tom, jaký algoritmus pro doporučení se rozhodne vybrat.
+	\item Uživatel bude mít možnost zažádat o doporučení obsahu pomocí algoritmu, který mu byl navržen systémem.
+	\item Uživatel bude mít možnost zaslat systému zpětnou vazbu pro zvolené doporučení.
+	\item Aplikace bude umožňovat skrze své rozhraní zpracovávat informace o tom, že jeden uživatel dělá něco s jedním dokumentem (zpracování zpětné vazby).
+	\item Aplikace bude umožňovat skrze své rozhraní mazat pro doporučování již neaktuální informace. 
+\end{itemize}
+
+Dle disciplín softwarového inženýrství je výčet uvedený výše nazýván jako \emph{funkční požadavky}.
+
+Lze definovat i tzv. \emph{nefunkční požadavky} specifikující vlastnosti a omezující podmínky kladené na systém:
+
+\begin{itemize}
+	\item Systém bude postaven na platformě Java.
+	\item Rozhraní systému bude navrženo a implementováno v podobě služeb REST (vychází ze zadání)
+	\item Systém bude postaven tak, aby se dal snadno parametrizovat. 
+	\item Systém bude připraven na to, že jej bude využívat více uživatelů současně.
+	\item Systém poběží jako samostatná aplikace. Ostatní s ní budou komunikovat zvenčí.
+	\item Systému bude pro snadné nasazení a otestování vytvořen cookbook nástrojem Chef a bude jej možno nasadit nástrojem Vagrant.
+\end{itemize}
+
+\section{Architektura}
+
+\subsection{Server}
+
+\subsection{Klient}
+
+\subsection{Komunikace}
+
+že to bude komunikovat skrz to rozhraní co je popsaný tam a tam. 
+
+\section{Adaptibilní systém}
+
+Na základě zkoumání existujících implementací v kapitole XY mě nejvíce zaujala ta open recommendatio platorm, ze které jsem se rozhodl vzít si několik principů jako multi armed bandits a tak.
 
 Tato část práce mi přišla natolik významná, že jsem se jí rozhodl věnovat samostatnou kapitolu~\ref{chap:ensemble}. 
 	
-	\subsection{Real time}
-	live read + live write = real time recommendation
-	\url{http://www.slideshare.net/d0nut/realtime-recommender-with-redis-hands-on}	
-	
-	\subsubsection{Důraz na zpětnou vazbu}
-	počet kliků, objednávek, čas na stránce...
-	\subsubsection{Jednoduchý průzkum}
-	mezi price/time my plýtváme na offline evaluaci a price je kvůli špatným doporučováním ztrácena	
-	
 \section{Sada algoritmů}
-Identifikujte sadu základních algoritmů určených pro kombinování. Ty implementujte nebo použijte existující implementace.			
+Identifikujte sadu základních algoritmů určených pro kombinování. Ty implementujte nebo použijte existující implementace.	
+
+\subsection{Algoritmus náhodného výběru}
+
+\subsection{Algoritmus výběru dle nejnovějších položek}
+
+\subsection{Algoritmus výběru nejlépe hodnocených položek}
+
+\subsection{Algoritmus výběru dle podobnosti obsahu}
+
+\subsection{Algoritmus kolaborativního filtrování}
 
 \section{Rozhraní}
-Identifikujte sadu základních algoritmů určených pro kombinování. Ty implementujte nebo použijte existující implementace.		
+
+normálka návrh endpointů a tak
+
+Z prováděné analýzy vyplývají požadavky na rozhraní tak, že jej můžeme rozdělit do tří skupin dle úkolu:
+
+\subsection{Rozhraní pro adaptibilní systém}
+
+\begin{itemize}
+	\item vytvořit kolekci banditů
+	\item 	provést dotaz na kolekci banditů (na nejlepší algoritmus nebo na seřazené pořadí)
+	\item 	zaslat informaci o tom, že bandita byl vybrán pro doporučení
+	\item zaslat systému feedback s tím, jak jsem byl s volbou spokojený		
+\end{itemize}
+
+\subsection{Rozhraní pro sadu základních algoritmů}
+
+\begin{itemize}
+	\item zaslání žádosti o doporučení obsahu konkrétním algoritmem
+\end{itemize}
+
+\subsection{Rozhraní pro úložiště dat}
+
+\begin{itemize}
+\item zaslání informace o tom, že 1 uživatel dělá něco s jedním článkem
+	\item smazání/zneviditelnění článku z výsledků hledání
+\end{itemize}
+
+\section{Formát vyměňovaných zpráv}
+
+Popsat ten JSON a tak
 			
 \chapter{Adaptibilní systém}
+\label{chap:adapt}
 Navrhněte, implementujte a otestujte systém, který bude dynamicky kombinovat algoritmy a optimalizovat celkovou kvalitu algoritmů.
 \label{chap:ensemble}
 
@@ -393,30 +522,37 @@ ZAVEREM
 Algoritmus je velice jednoduchý, proto je také jednoduché jej rozšířit. V mém případě bylo potřeba přidat learning rates - předpokládejme, že to prostředí se prostě může měnit v čase. Technicky by se tedy standardní Bayesian Bandit algoritmus self-updatoval tím, že by se učil tím, že to, co si myslel, že se zdá jako nejlepší, selhává nejčastěji. Také lze docílit toho, aby se algoritmus učil měnícím se prostředím rychleji. Potřebuje pro to jedinou věc - přidat rate napříč updatováním.
 
 Pokud rate menší než 1, algoritmus bude zapomínat předchozí výsledky rychleji a tlak na neznalost bude směrem dolů. naopak rate větší než 1 implikuje to, že náě algoritmus se bude chovat více riskantně a bude vsázet na dřívější výhry častěji a bude tedy více odolný proti změnám měnícího se prostředí.
+
+\section{Nezbytné základy z teorie pravděpodobnosti}
+
+distribuční funkce, rozdělení pravděpodobnosti. kvanitily a tak, spojité náhodné veličiny, hustota, střední hodnota
 		
 \chapter{Realizace}
 \label{chap:impl}
-Realizace toho systému, jak jsem ty části propojil dohromady a tak
+
+Jednou z mnoha výzev pro někoho, kdo se snaží vybudovat doporučovací systém, je to, že je velice těžké dopředu říct, zda budou naše předpovědi dost přesné. Alespoň do té doby, dokud je nezačneme dělat a nebudeme pozorovat, jak často naši uživatelé přijímají naše návrhy. Je zde obrovský prostor možností (možných metod), z čeho vybírat. 
+
+Pro implementaci aplikace byly použity technologie uvedené níže.
 
 \section{Principy a technologie}
 \label{sec:sysanalys}
-Analýza a návrh systému pro kombinování metod pro doporučování obsahu v reálném čase
 
-Sekce se zabývá výběrem vhodných technologií
-REST, APlikační server, NoSQL, ZeroMQ, Hadoop, Apache mahout
+\subsection{Síťová komunikace a fronta zpráv}
+ZeroMQ
 
-\url{http://contest.plista.com/wiki/example}
-	\subsection{Vyhodnocovací technologie}	
-	Výpočty. kvůli kombinování budeme počítat s floaty
-	\subsection{Server}		
-	Je třeba nějaký server, na kterém to bude běžet
-	\subsection{Api}		
-	
-	\subsection{Jak to udělat, aby to běželo rychle?}		
-	musíme zpracovávat data velice rychle
-	rychlý webový server, rychlý síťový protokol, rychlou frontu zpráv, rychlé úložiště
+\subsection{REST}
 
-\section{Návrh architektury}
+\subsection{Aplikační server}
+
+\subsection{Databáze}
+
+\subsection{Vyhledávací platforma}
+
+\subsection{Doporučování}
+mahout
+
+\section{Popis implementace}
+\label{sec:impl}
 
 \section{Server}
 
@@ -425,11 +561,15 @@ volba parametrů, ať už těch, co ovlivňují tresty nebo třeba úložiště 
 
 \section{Klient}
 
+\section{Sada algoritmů}
+\label{sec:alg}
+
 \section{Návrh komunikace}
 router, dealer, worker thready
 
-\subsection{Formát zasílaných zpráv}
 \subsection{Komunikační protokol}
+
+\subsection{Formát zasílaných zpráv}
 
 \chapter{Experimenty a vyhodnocení}
 \label{chap:tests}
@@ -437,6 +577,11 @@ kecy o testování
 \section{Testování různých způsobů chování}
 viz jak jarda vymyslel těch zhruba 5 příkladů, co mohou nastat
 \section{Experimenty}
+
+\url{http://contest.plista.com/wiki/example}
+	\subsection{Vyhodnocovací technologie}	
+	Výpočty. kvůli kombinování budeme počítat s floaty
+	
 
 \section{Zhodnocení aplikace}
 Slovní zhodnocení

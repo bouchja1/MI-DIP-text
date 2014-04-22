@@ -12,45 +12,47 @@ Warning--to sort, need author or key in netflixrec
 Warning--to sort, need author or key in bellkor
 Warning--to sort, need author or key in ziteflip
 Warning--to sort, need author or key in zitecnn
-You've used 13 entries,
+Warning--to sort, need author or key in mendeleylastfm
+Warning--empty pages in googlenews
+You've used 16 entries,
             3151 wiz_defined-function locations,
-            710 strings with 7174 characters,
-and the built_in function-call counts, 3729 in all, are:
-= -- 265
-> -- 71
+            723 strings with 7602 characters,
+and the built_in function-call counts, 4796 in all, are:
+= -- 329
+> -- 100
 < -- 0
-+ -- 40
-- -- 18
-* -- 175
-:= -- 359
-add.period$ -- 26
-call.type$ -- 13
-change.case$ -- 46
++ -- 55
+- -- 26
+* -- 226
+:= -- 471
+add.period$ -- 32
+call.type$ -- 16
+change.case$ -- 59
 chr.to.int$ -- 0
-cite$ -- 21
-duplicate$ -- 371
-empty$ -- 425
-format.name$ -- 20
-if$ -- 831
+cite$ -- 26
+duplicate$ -- 486
+empty$ -- 547
+format.name$ -- 29
+if$ -- 1064
 int.to.chr$ -- 0
-int.to.str$ -- 13
-missing$ -- 85
-newline$ -- 62
-num.names$ -- 10
-pop$ -- 263
+int.to.str$ -- 16
+missing$ -- 114
+newline$ -- 72
+num.names$ -- 14
+pop$ -- 342
 preamble$ -- 1
-purify$ -- 35
+purify$ -- 45
 quote$ -- 0
-skip$ -- 130
+skip$ -- 172
 stack$ -- 0
-substring$ -- 88
-swap$ -- 158
+substring$ -- 105
+swap$ -- 203
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 52
-warning$ -- 8
-while$ -- 10
-width$ -- 15
-write$ -- 118
-(There were 8 warnings)
+type$ -- 62
+warning$ -- 10
+while$ -- 14
+width$ -- 18
+write$ -- 142
+(There were 10 warnings)

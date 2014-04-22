@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.2.20)  21 APR 2014 21:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.2.20)  23 APR 2014 01:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -888,7 +888,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 47.
 
-<cvut-logo-bw.pdf, id=142, 91.34125pt x 69.25874pt>
+<cvut-logo-bw.pdf, id=166, 91.34125pt x 69.25874pt>
 File: cvut-logo-bw.pdf Graphic file (type pdf)
  <use cvut-logo-bw.pdf>
 Package pdftex.def Info: cvut-logo-bw.pdf used on input line 47.
@@ -970,15 +970,25 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+Overfull \hbox (9.13837pt too wide) in paragraph at lines 67--68
+[]\T1/lmr/m/n/10.95 Struktu°e práce vzhle-dem k vy-ty-£e-ným cí-l·m se v¥-nuje 
+p°í-slu²ná sekce []Struk-
+ []
+
 [1
 
 
-] <obr/longtail.png, id=255, 2007.5pt x 1043.9pt>
+]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 86.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 86.
+ <obr/longtail.png, id=287, 2007.5pt x 1043.9pt>
 File: obr/longtail.png Graphic file (type png)
  <use obr/longtail.png>
-Package pdftex.def Info: obr/longtail.png used on input line 72.
+Package pdftex.def Info: obr/longtail.png used on input line 89.
 (pdftex.def)             Requested size: 295.20113pt x 153.50401pt.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 73.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 90.
 
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -987,101 +997,117 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 Class memoir Warning: The material used in the headers is too large
 (14.1595pt) for the given head height (13.6pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 82.
+(in both cases you will find help in the memoir manual). on input line 95.
 
 
 Overfull \vbox (0.5595pt too high) has occurred while \output is active []
 
 
-[2 <./obr/longtail.png>] [3]
-Overfull \vbox (0.5595pt too high) has occurred while \output is active []
-
-
-[4]
+[2]
 
 Package hyperref Warning: Composite letter `\textasciicaron+c'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 115.
+(hyperref)                removing `\textasciicaron' on input line 95.
+
+[3 <./obr/longtail.png>]
+Overfull \vbox (0.5595pt too high) has occurred while \output is active []
+
+
+[4] [5] [6
+
+]
+
+Package hyperref Warning: Composite letter `\textasciicaron+c'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textasciicaron' on input line 158.
 
 
 Package hyperref Warning: Composite letter `\textasciicaron+r'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 121.
+(hyperref)                removing `\textasciicaron' on input line 172.
 
 
 Package hyperref Warning: Composite letter `\textring+u'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textring' on input line 121.
-
-[5
-
-]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 134.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 134.
- [6] [7]
-
-LaTeX Warning: Citation `mendeleylastfm' on page 8 undefined on input line 176.
+(hyperref)                removing `\textring' on input line 172.
 
 
-[8]
-Overfull \hbox (8.05396pt too wide) in paragraph at lines 184--185
+Underfull \vbox (badness 1127) has occurred while \output is active []
+
+ [7]
+[8] [9] [10]
+Overfull \hbox (8.05396pt too wide) in paragraph at lines 240--241
 []\T1/lmr/m/n/10.95 Pouºívá se k na-le-zení sou-vi-se-jí-cího vý-zkumu,
  []
 
-[9] [10]
-
-Package hyperref Warning: Composite letter `\textasciicaron+r'
-(hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 227.
-
-
-Overfull \hbox (9.9911pt too wide) in paragraph at lines 255--257
-\T1/lmr/m/n/10.95 live read + live write = real time re-com-men-dation []$\T1/l
-mtt/m/n/10.95 http : / / www\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 slideshare\
-OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 net /
- []
-
-[11
-
-]
+[11] [12]
 
 Package hyperref Warning: Composite letter `\textring+u'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textring' on input line 263.
+(hyperref)                removing `\textring' on input line 273.
 
-[12]
+[13] [14
+
+]
+
+Package hyperref Warning: Composite letter `\textasciicaron+r'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textasciicaron' on input line 288.
+
+[15]
+Overfull \hbox (1.56567pt too wide) in paragraph at lines 319--320
+\T1/lmr/m/n/10.95 tom, ºe je-den uºi-va-tel d¥lá n¥co s jed-ním do-ku-men-tem (
+zpra-co-vání zp¥tné
+ []
+
+[16]
+
+Package hyperref Warning: Composite letter `\textring+u'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textring' on input line 350.
+
+[17]
+
+Package hyperref Warning: Composite letter `\textasciicaron+e'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textasciicaron' on input line 389.
+
+
+Package hyperref Warning: Composite letter `\textasciicaron+n'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textasciicaron' on input line 389.
+
+[18]
 
 Package hyperref Warning: Composite letter `\textasciicaron+c'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 273.
+(hyperref)                removing `\textasciicaron' on input line 398.
 
 
-Overfull \hbox (38.12608pt too wide) in paragraph at lines 284--287
+Overfull \hbox (38.12608pt too wide) in paragraph at lines 409--412
 \T1/lmtt/m/n/10.95 support\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 google\OML/lm
 m/m/it/10.95 :\T1/lmtt/m/n/10.95 com / analytics / answer / 2844870?hl = cs&ref
 []topic = 2844866$[] 
  []
 
-[13
+[19
 
 ]
-Overfull \hbox (7.18942pt too wide) in paragraph at lines 299--309
+Overfull \hbox (7.18942pt too wide) in paragraph at lines 424--434
 [][]$\T1/lmtt/m/n/10.95 http : / / cs\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 wi
 kipedia\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 org / wiki / Strojov % C3 % A9[]
 u % C4 % 8Den % C3 % AD$[] []$http :
  []
 
 
-Overfull \hbox (18.93309pt too wide) in paragraph at lines 299--309
+Overfull \hbox (18.93309pt too wide) in paragraph at lines 424--434
 \T1/lmtt/m/n/10.95 / / cs\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 wikipedia\OML/
 lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 org / wiki / Zp % C4 % 9Btnovazebn % C3 % AD
 []u % C4 % 8Den % C3 % AD$[] []$http :
  []
 
 
-Overfull \hbox (19.2677pt too wide) in paragraph at lines 299--309
+Overfull \hbox (19.2677pt too wide) in paragraph at lines 424--434
 \T1/lmtt/m/n/10.95 / / en\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 wikipedia\OML/
 lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 org / wiki / Machine[]learning$[] []$http : 
 / / cs\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 wikipedia\OML/lmm/m/it/10.95 :\T1
@@ -1089,7 +1115,7 @@ lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 org / wiki / Machine[]learning$[] []$http :
  []
 
 
-Overfull \hbox (289.12357pt too wide) in paragraph at lines 299--309
+Overfull \hbox (289.12357pt too wide) in paragraph at lines 424--434
 \T1/lmtt/m/n/10.95 U % C4 % 8Den % C3 % AD[]s[]u % C4 % 8Ditelem$[] []$http : /
  / en\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 wikipedia\OML/lmm/m/it/10.95 :\T1/
 lmtt/m/n/10.95 org / wiki / List[]of[]machine[]learning[]algorithms#Supervised[
@@ -1097,7 +1123,7 @@ lmtt/m/n/10.95 org / wiki / List[]of[]machine[]learning[]algorithms#Supervised[
  []
 
 
-Overfull \hbox (76.75504pt too wide) in paragraph at lines 299--309
+Overfull \hbox (76.75504pt too wide) in paragraph at lines 424--434
 []$\T1/lmtt/m/n/10.95 http : / / en\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 wiki
 pedia\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 org / wiki / Reinforcement[]learni
 ng$[] []$http : / / tdunning\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 blogspot\OM
@@ -1105,7 +1131,7 @@ L/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 cz /
  []
 
 
-Overfull \hbox (52.71843pt too wide) in paragraph at lines 299--309
+Overfull \hbox (52.71843pt too wide) in paragraph at lines 424--434
 \T1/lmtt/m/n/10.95 2012 / 10 / references -[] for -[] on -[] line -[] algorithm
 s\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 html$[] []$http : / / tdunning\OML/lmm
 /m/it/10.95 :\T1/lmtt/m/n/10.95 blogspot\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95
@@ -1113,106 +1139,131 @@ s\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 html$[] []$http : / / tdunning\OML/lmm
  []
 
 
-Overfull \hbox (2.07855pt too wide) in paragraph at lines 299--309
+Overfull \hbox (2.07855pt too wide) in paragraph at lines 424--434
 \T1/lmtt/m/n/10.95 search?q = bandit$[] []$http : / / camdp\OML/lmm/m/it/10.95 
 :\T1/lmtt/m/n/10.95 com / blogs / multi -[] armed -[] bandits$[] []$http : / /
  []
 
-[14] [15]
+[20] [21]
 
-LaTeX Warning: Reference `' on page 16 undefined on input line 352.
+LaTeX Warning: Reference `' on page 22 undefined on input line 477.
 
 
-Overfull \hbox (19.6728pt too wide) in paragraph at lines 376--381
+Overfull \hbox (19.6728pt too wide) in paragraph at lines 501--506
 \T1/lmtt/m/n/10.95 a3m33ui / prednasky / files / ui -[] 2010 -[] p11 -[] reinfo
 rcement[]learning\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 pdf$[]\T1/lmr/m/n/10.9
 5 ). Tedy
  []
 
-[16] [17] [18
-
-]
-Underfull \vbox (badness 3460) has occurred while \output is active []
-
- [19]
-[20]
-
-Package hyperref Warning: Composite letter `\textring+u'
-(hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textring' on input line 437.
-
-
-Package hyperref Warning: Composite letter `\textring+u'
-(hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textring' on input line 437.
-
-
-Package hyperref Warning: Composite letter `\textring+u'
-(hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textring' on input line 437.
-
-[21
-
-] [22
-
-]
+[22]
 
 Package hyperref Warning: Composite letter `\textasciicaron+e'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 446.
-
-(./Sablona_DP_UTF-8.bbl [23] [24
-
-]
-bibitemlist
-
-Underfull \hbox (badness 10000) in paragraph at lines 25--28
-\T1/lmtt/m/n/10.95 2006 / 10 / 02 / netflix -[] contest -[] 1 -[] million -[] d
-ollars -[] for -[] better -[]
- []
+(hyperref)                removing `\textasciicaron' on input line 522.
 
 
-Underfull \hbox (badness 3514) in paragraph at lines 30--33
-[]\T1/lmr/m/n/10.95 Netflix of-fers stre-a-ming mo-vies to sub-scri-bers. [on-l
-ine], stav ze
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [23]
+[24]
+
+Package hyperref Warning: Composite letter `\textring+u'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textring' on input line 560.
+
+[25
+
+] [26]
+
+Package hyperref Warning: Composite letter `\textring+u'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textring' on input line 573.
 
 
-Underfull \hbox (badness 5119) in paragraph at lines 35--37
-[]\T1/lmr/m/n/10.95 Proklik. [on-line], stav ze dne 21.4.2012. Do-stupné z: []$
-\T1/lmtt/m/n/10.95 http : / /
- []
+Package hyperref Warning: Composite letter `\textring+u'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textring' on input line 573.
 
-[25]) [26] [27
+
+Package hyperref Warning: Composite letter `\textring+u'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textring' on input line 573.
+
+[27
 
 ] [28
 
 ]
 
+Package hyperref Warning: Composite letter `\textasciicaron+e'
+(hyperref)                not defined in PD1 encoding,
+(hyperref)                removing `\textasciicaron' on input line 587.
+
+(./Sablona_DP_UTF-8.bbl [29] [30
+
+]
+bibitemlist
+
+Underfull \hbox (badness 2818) in paragraph at lines 25--28
+\T1/lmr/m/n/10.95 stav ze dne 21.4.2012. Do-stupné z: []$\T1/lmtt/m/n/10.95 htt
+p : / / www\OML/lmm/m/it/10.95 :\T1/lmtt/m/n/10.95 slideshare\OML/lmm/m/it/10.9
+5 :\T1/lmtt/m/n/10.95 net /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--28
+\T1/lmtt/m/n/10.95 KrisJack / mendeley -[] recommendation -[] systems -[] for -
+[] academic -[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 30--33
+\T1/lmtt/m/n/10.95 2006 / 10 / 02 / netflix -[] contest -[] 1 -[] million -[] d
+ollars -[] for -[] better -[]
+ []
+
+
+Underfull \hbox (badness 3514) in paragraph at lines 35--38
+[]\T1/lmr/m/n/10.95 Netflix of-fers stre-a-ming mo-vies to sub-scri-bers. [on-l
+ine], stav ze
+ []
+
+
+Underfull \hbox (badness 5119) in paragraph at lines 40--42
+[]\T1/lmr/m/n/10.95 Proklik. [on-line], stav ze dne 21.4.2012. Do-stupné z: []$
+\T1/lmtt/m/n/10.95 http : / /
+ []
+
+[31]) [32] [33
+
+] [34
+
+]
+
 Package hyperref Warning: Composite letter `\textasciicaron+r'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 569.
+(hyperref)                removing `\textasciicaron' on input line 710.
 
 
 Class memoir Warning: The material used in the headers is too large
 (14.1595pt) for the given head height (13.6pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 586.
+(in both cases you will find help in the memoir manual). on input line 727.
 
-[29]
+[35]
 \tf@toc=\write5
 \openout5 = `Sablona_DP_UTF-8.toc'.
 
 \tf@lof=\write6
 \openout6 = `Sablona_DP_UTF-8.lof'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 586.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 586.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 727.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 727.
  (./Sablona_DP_UTF-8.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 586.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 586.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 727.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 727.
 Package rerunfilecheck Info: File `Sablona_DP_UTF-8.out' has not changed.
-(rerunfilecheck)             Checksum: 5ACA18D7F3AD37A6EAF1059BA89684DB;2005.
+(rerunfilecheck)             Checksum: ACA64B3A1BD12BD936D33497DF61C65E;2458.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -1220,16 +1271,16 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 586.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 727.
  ) 
 Here is how much of TeX's memory you used:
- 10269 strings out of 493380
- 144392 string characters out of 6141487
- 293611 words of memory out of 5000000
- 13452 multiletter control sequences out of 15000+600000
+ 10317 strings out of 493380
+ 144975 string characters out of 6141487
+ 293171 words of memory out of 5000000
+ 13468 multiletter control sequences out of 15000+600000
  82276 words of font info for 54 fonts, out of 8000000 for 9000
  912 hyphenation exceptions out of 8191
- 38i,13n,32p,1524b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,13n,32p,1100b,505s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/en
 c/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/s
 hare/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/publi
@@ -1243,10 +1294,10 @@ share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/publ
 ic/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/sha
 re/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/
 lm/lmtt9.pfb>
-Output written on Sablona_DP_UTF-8.pdf (43 pages, 454970 bytes).
+Output written on Sablona_DP_UTF-8.pdf (49 pages, 472674 bytes).
 PDF statistics:
- 603 PDF objects out of 1000 (max. 8388607)
- 531 compressed objects within 6 object streams
- 131 named destinations out of 1000 (max. 500000)
- 267 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 713 PDF objects out of 1000 (max. 8388607)
+ 634 compressed objects within 7 object streams
+ 163 named destinations out of 1000 (max. 500000)
+ 315 words of extra memory for PDF output out of 10000 (max. 10000000)
 
