@@ -21,13 +21,6 @@
 	edition = "3"
 }
 
-@BOOK{arlow,
-	title = "UML2 a unifikovaný proces vývoje aplikací",
-	author = "Arlow J., Neustadt I.",
-	publisher = "Computer Press, a.s.",
-	year = "2008"
-}
-
 @MANUAL{iso690,
 	organization = "\'U\v rad pro technickou normalizaci, metrologii a st\'atn\'\i{} zku\v sebnictv\'\i{}",
 	title = "\v CSN ISO 690 Informace a dokumentace -- Pravidla pro bibliografick\'e odkazy a citace informa\v cn\'\i{}ch zdroj{\r u}",

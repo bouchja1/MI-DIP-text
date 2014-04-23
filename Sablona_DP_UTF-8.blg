@@ -16,43 +16,43 @@ Warning--to sort, need author or key in mendeleylastfm
 Warning--empty pages in googlenews
 You've used 16 entries,
             3151 wiz_defined-function locations,
-            723 strings with 7602 characters,
-and the built_in function-call counts, 4796 in all, are:
-= -- 329
+            724 strings with 7660 characters,
+and the built_in function-call counts, 4755 in all, are:
+= -- 333
 > -- 100
 < -- 0
 + -- 55
 - -- 26
-* -- 226
-:= -- 471
+* -- 225
+:= -- 468
 add.period$ -- 32
 call.type$ -- 16
-change.case$ -- 59
+change.case$ -- 60
 chr.to.int$ -- 0
 cite$ -- 26
-duplicate$ -- 486
-empty$ -- 547
+duplicate$ -- 476
+empty$ -- 536
 format.name$ -- 29
-if$ -- 1064
+if$ -- 1054
 int.to.chr$ -- 0
 int.to.str$ -- 16
-missing$ -- 114
-newline$ -- 72
+missing$ -- 110
+newline$ -- 73
 num.names$ -- 14
-pop$ -- 342
+pop$ -- 336
 preamble$ -- 1
 purify$ -- 45
 quote$ -- 0
-skip$ -- 172
+skip$ -- 168
 stack$ -- 0
-substring$ -- 105
-swap$ -- 203
+substring$ -- 107
+swap$ -- 200
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 62
+type$ -- 64
 warning$ -- 10
 while$ -- 14
 width$ -- 18
-write$ -- 142
+write$ -- 143
 (There were 10 warnings)

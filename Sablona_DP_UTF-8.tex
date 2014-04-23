@@ -288,13 +288,15 @@ Existujících řešení je tedy celá řada. Každé z těchto řešení je ale
 \chapter{Analýza a návrh řešení}
 \label{chap:analysis}
 
-Zatímco v předchozí kapitole jsem se zabýval popisem existujících řešení a zkoumal, jaké možnosti nabízejí současné doporučovací systémy, tato kapitola je celá věnovaná analýze požadovaného chování mnou vyvíjeného systému. Prostřednictvím výstupů získaných z této analýzy jsem následně mohl provést návrh řešení.
+Zatímco v předchozí kapitole jsem se zabýval popisem existujících řešení a zkoumal, jaké možnosti nabízejí současné doporučovací systémy, tato kapitola je celá věnována analýze požadovaného chování mnou vyvíjeného systému.
 
 Nejprve se budu zabývat požadavky na systém, které vyplynuly z úvodních konzultací s vedoucím práce a vlastním zkoumáním problému. Se znalostí těchto požadavků bude možné provést hrubý návrh architektury systému včetně technického řešení součástí, kterými bude systém disponovat.
 
+Prostřednictvím výstupů získaných v této kapitole budu schopen provést implementaci systému.
+
 \section{Požadavky}
 
-Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požadavky strukturovat do zastřešujících skupin trojího typu (globální požadavky, rozhraní a systém). Nakonec se ale ukázalo, že mezi skupinami \emph{rozhraní} a \emph{systém} existuje velmi tenká hranice (pouze z hlediska požadovaného chování, nikoliv implementačního), proto byly skupiny redukovány na dvě.
+Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požadavky strukturovat do zastřešujících skupin trojího typu (globální požadavky, rozhraní a systém). Nakonec se ale ukázalo, že mezi skupinami \emph{rozhraní} a \emph{systém} existuje velmi tenká hranice (z hlediska požadovaného chování, nikoliv implementačního), proto byly skupiny redukovány na dvě.
 
 \subsection{Globální požadavky na systém}
 
@@ -333,7 +335,33 @@ Lze definovat i tzv. \emph{nefunkční požadavky} specifikující vlastnosti a 
 	\item Systému bude pro snadné nasazení a otestování vytvořen cookbook nástrojem Chef a bude jej možno nasadit nástrojem Vagrant.
 \end{itemize}
 
-\section{Architektura}
+\section{Adaptibilní systém}
+
+Pro implementaci systému splňujícího požadavky vzešlé z analýzy výše je třeba důkladně zvážit, jaké všechny komponenty bude obsahovat a případně jaké algoritmické postupy bude nutné použít. Na základě zkoumání existujících implementací v kapitole~\ref{chap:current} mě velmi zaujal projekt \emph{Open recommendation Platorm} (zkr. ORP) společnosti plista~\footnote{\url{https://www.plista.com}} prezentovaný na posledním ročníku konference ACM RecSys 2013 v Hong Kongu. 
+
+Motivací ORP bylo získat lepší výsledky kombinací více doporučovacích metod společně se zapojením kontextu uživatele, neboli informacemi čerpanými převážně z HTTP hlaviček. Těmi informacemi mohou být:
+
+\begin{itemize}
+	\item IP adresa, která může prozradit geologickou lokaci uživatele
+	\item denní doba, kdy je ke stránce přistupováno
+	\item user agent informující o zařízení, ze kterého bylo k obsahu přistoupeno (mobilní telefon, PC)
+	\item referer pro zjištění způsobu přístupu (přístup z vyhledávání nebo přímý přístup) 
+\end{itemize}
+
+Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}. Na něm je systém zachycen jako \emph{Ensemble}, který je dle uživatelských preferencí schopen vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, který použije pro publikování obsahu. Konzumenti doporučeného obsahu (\emph{Visitors}) pak zasílají systému zpětnou vazbu, kterou systém použije k přepočítání preferencí, čímž ovlivní výběr budoucího algoritmu.
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/plistaEnsemble.png}
+ 	\caption[Abstraktní pohled na systém společnosti plista]{Abstraktní pohled na systém společnosti plista. Zdroj: \cite{slideshare:plista}}\label{fig:plista}
+\end{figure}	
+
+V prezentaci bylo zmíněno několik dobře míněných rad ohledně toho, co by měl systém podobného typu umět. Zmíněna je potřeba rychlého webového serveru, na kterém bude aplikace běžet, dále nutnost rychlého síťového protokolu a rychlé fronty zpráv. Padla zde též nutnost rychlého úložiště dat. K dosažení funkcionality pro výběr nejlepšího algoritmu za daných podmínek společnost používá tzv. \emph{multi-armed bayesian bandit}, což byla i jedna z doporučovaných strategií, které mi na úvodní schůzce doporučil vedoucí práce.
+
+Se spoustou rad jsem se ztotožnil a vyhodnotil, že s jejich pomocí bych mohl být schopen uspokojit velkou část požadavků na systém stanovených výše.
+
+Strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významná, že jsem jí věnoval samostatnou kapitolu~\ref{chap:ensemble}.
+
+\section{Architektura systému}
 
 \subsection{Server}
 
@@ -342,12 +370,6 @@ Lze definovat i tzv. \emph{nefunkční požadavky} specifikující vlastnosti a 
 \subsection{Komunikace}
 
 že to bude komunikovat skrz to rozhraní co je popsaný tam a tam. 
-
-\section{Adaptibilní systém}
-
-Na základě zkoumání existujících implementací v kapitole XY mě nejvíce zaujala ta open recommendatio platorm, ze které jsem se rozhodl vzít si několik principů jako multi armed bandits a tak.
-
-Tato část práce mi přišla natolik významná, že jsem se jí rozhodl věnovat samostatnou kapitolu~\ref{chap:ensemble}. 
 	
 \section{Sada algoritmů}
 Identifikujte sadu základních algoritmů určených pro kombinování. Ty implementujte nebo použijte existující implementace.	
