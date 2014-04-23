@@ -308,7 +308,7 @@ Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požada
 	\item Systém bude klást důraz na zpětnou vazbu, podle které bude přizpůsobovat své chování.
 	\item Systém bude zpětnou vazbu přijímat na principu odměny za dobré doporučení (přičítání v poměru) a trestu za špatné (odečítání v poměru).
 	\item Systém bude schopen automaticky se přizpůsobovat vývoji v čase normalizováním ukládaných hodnoty (z důvodu ochrany proti přetečení datových typů).
-	\item Bude existovat možnost zobrazit dosavadního průběh doporučování systémem v čase.	
+	\item Bude existovat možnost zobrazit dosavadní průběh doporučování systémem v čase.	
 \end{itemize}
 
 \subsection{Systém \& Rozhraní}
@@ -366,29 +366,73 @@ Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci 
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_env.pdf}
- 	\caption[Abstraktní návrh architektury a komponent adaptibilního systému]{Abstraktní návrh architektury a komponent adaptibilního systému}\label{fig:longtail}
+ 	\caption[Abstraktní návrh architektury a komponent adaptibilního systému]{Abstraktní návrh architektury a komponent adaptibilního systému, ve kterém je též vidět základní interakce uživatele se systémem.}\label{fig:recommeng}
 \end{figure}	
 
 \subsection{Server}
 
+\subsubsection{Recommeng Application}
+
+Stěžejní serverovou komponentou je bez větších pochyb doporučovací platforma. Tu jsem pracovně nazval jako \textbf{Recommeng} (zkratka pro recommendation engine), abych o ní již nadále nemusel mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
+
+Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové platformy. Mou snahou bylo zachytit přítomnost jednotlivých komponent systému a formu jejich vzájemné komunikace.
+
+Na serverové straně se tedy nacházejí dvě hlavní komponenty:
+
+\begin{itemize}
+	\item \textbf{Recommeng Application.} Zamýšlená aplikace 
+	\item \textbf{Aplikace běžící v prostředí aplikačního serveru.} 	
+\end{itemize}
+
 \subsection{Klient}
+
+Klientská strana není v tomto případě nikterak složitá a potenciální uživatel aplikace má v zásadě dvě možnosti. jak s platformou komunikovat:
+
+\begin{itemize}
+	\item jen a pouze prostřednictvím REST API
+	\item kombinací metod, jež nabízí REST API, společně s přímou komunikací se systémem prostřednictvím fronty zpráv
+\end{itemize}
+
+Mělo by být jasné, že bez komunikace s REST API je nemožné se některých systémových funkcionalit dovolat. Do této kategorie spadá například přidávání informací o článcích do datového úložiště (to v mém případě zajišťuje fulltextový index Solr) nebo zasílání žádosti o doporučení obsahu některým z podporovaných algoritmů. 
+
+Naopak přímé spojení s platformou bez nutnosti zapojení prostředníka v podobě REST API by měly umožňovat všechny metody komponenty Ensemble, jmenovitě tedy podpora pro vytvoření kolekce se seznamem algoritmů, dále zaslání žádosti o radu pro výběr algoritmu a též metody informující systém o vyrovnání se s vzniklou situací (informace o zvolení konkrétního algoritmu a zaslání zpětné vazby). 
+
+V diagramu~\ref{fig:recommeng} jsem se snažil zachytit představu různých způsobů komunikace klienta se systémem. Pro lepší názornost jsou jednotlivé žádosti odlišeny barevnými variantami.
+
+\subsubsection{Červená varianta}
+
+Aneb klient přidávající nový vztah mezi dokumentem a uživatelem do úložiště.
+
+\subsubsection{Žlutá varianta}
+
+Aneb klient poptávající doporučení obsahu konkrétním algoritmem.
+
+Toto doporučení klient poptává na základě rady, kterou mu udělil systém. 
+
+\subsubsection{Fialová varianta}
+
+Aneb klient zasílající platformě zpětnou vazbu ohledně doporučení, které dostal
+
+\subsubsection{Modrá varianta}
+
+Aneb klient, který odmítl komunikaci přes REST API, tím pádem zasílající svou žádost prostřednictvím socketu
 
 \subsection{Komunikace}
 
 že to bude komunikovat skrz to rozhraní co je popsaný tam a tam. 
 
+\subsubsection{Formát vyměňovaných zpráv}
+
 \section{Rozhraní}
 
-normálka návrh endpointů a tak
-
-Z prováděné analýzy vyplývají požadavky na rozhraní tak, že jej můžeme rozdělit do tří skupin dle úkolu:
-
-\subsection{Rozhraní pro adaptibilní systém}
+Z prováděné analýzy vyplynuly požadavky na rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. K dispozici je připraven diagram~\ref{fig:rest}, který by měl celou věc pomoct osvětlit. 
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_rest.pdf}
- 	\caption[Ukázka REST endpointů navrhovaného adaptibilního systému]{Ukázka REST endpointů navrhovaného adaptibilního systému}\label{fig:longtail}
+ 	\caption[Ukázka REST endpointů navrhovaného adaptibilního systému]{Ukázka REST endpointů navrhovaného adaptibilního systému}\label{fig:rest}
 \end{figure}	
+
+\subsection{Rozhraní pro Recommeng}
 
 \begin{itemize}
 	\item vytvořit kolekci banditů
@@ -409,23 +453,34 @@ Z prováděné analýzy vyplývají požadavky na rozhraní tak, že jej můžem
 \item zaslání informace o tom, že 1 uživatel dělá něco s jedním článkem
 	\item smazání/zneviditelnění článku z výsledků hledání
 \end{itemize}
-
-\section{Formát vyměňovaných zpráv}
-
-Popsat ten JSON a tak
 			
 \section{Sada algoritmů}
-Identifikujte sadu základních algoritmů určených pro kombinování. Ty implementujte nebo použijte existující implementace.	
+
+Cílem systému je, aby byl schopen rozhodovat se na základě informací udržujících jako svůj vnitřní stav. Výsledkem takového rozhodnutí je identifikátor doporučovacího algoritmu. 
+
+Doporučovací algoritmy pracují s informacemi o uživateli, položce a hodnocení. Ukládány jsou ale i další informace jako datum zveřejnění položky, její popis (u novinového článku například text zprávy) a tak podobně. Se všemi těmito informacemi mohou doporučovací algoritmy pracovat. 
+
+Identifikace sady základních algoritmů určených pro kombinování byl též jeden z požadavků na systém plynoucích přímo ze zadání. 
 
 \subsection{Algoritmus náhodného výběru}
 
+Jak je patrné již z názvu, algoritmus předpovídá hodnocení zcela náhodně. Jeho hlavním a v podstatě jediným úkolem je být zde pro srovnání s ostatními algoritmy. 
+
 \subsection{Algoritmus výběru dle nejnovějších položek}
+
+Doporučování dle nejnovějších položek je dalším z algoritmů s naivním přístupem k problému. Položky budou v tomto případě doporučovány sestupně dle zveřejněného data.
 
 \subsection{Algoritmus výběru nejlépe hodnocených položek}
 
+viz imdb nebo lamer
+
 \subsection{Algoritmus výběru dle podobnosti obsahu}
 
+More like this
+
 \subsection{Algoritmus kolaborativního filtrování}
+
+spousta druhů
 
 \chapter{Adaptibilní systém}
 \label{chap:adapt}
