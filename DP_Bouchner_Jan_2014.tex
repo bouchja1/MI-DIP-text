@@ -301,67 +301,73 @@ Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požada
 \subsection{Globální požadavky na systém}
 
 \begin{itemize}
-	\item Systém bude mít možnost uložit v pravidelných intervalech svůj aktuální stav pro potřeby obnovení v případě pádu.
-	\item Bude existovat možnost zobrazení dosavadního průběhu doporučování systémem v čase.
-	\item Systém bude veškerou komunikaci vyhodnocovat v reálném čase (live read, live write).
-	\item Systém bude na každou žádost vracet příslušnou odpověď (i chybovou).	
-	\item Systém poklade důraz na zpětnou vazbu, podle které bude přizpůsobovat své chování.
-	\item Zpětná vazba bude realizována na principu odměny za dobré doporučení (přičítání) a trestu za špatné (odečítání).
-	\item Systém se bude automaticky přizpůsobovat vývoji v čase tím, že bude normalizovat své hodnoty (aby nedošlo k přetečení datových typů).
+	\item Systém bude v pravidelných intervalech ukládat do databáze svůj aktuální stav.
+	\item Systém bude schopen v případě pádu aplikace a po jejím opětovném spuštění načíst naposledy uložený stav.
+	\item Systém bude veškeré své operace týkající se doporučování provádět a vyhodnocovat v reálném čase (live read \& live write).
+	\item Systém bude na každou klientskou žádost vracet příslušnou odpověď (i chybovou) – neexistuje nic jako odpověď \emph{null}.	
+	\item Systém bude klást důraz na zpětnou vazbu, podle které bude přizpůsobovat své chování.
+	\item Systém bude zpětnou vazbu přijímat na principu odměny za dobré doporučení (přičítání v poměru) a trestu za špatné (odečítání v poměru).
+	\item Systém bude schopen automaticky se přizpůsobovat vývoji v čase normalizováním ukládaných hodnoty (z důvodu ochrany proti přetečení datových typů).
+	\item Bude existovat možnost zobrazit dosavadního průběh doporučování systémem v čase.	
 \end{itemize}
 
 \subsection{Systém \& Rozhraní}
 
 \begin{itemize}
-	\item Systém bude umožňovat vytvářet skrze své rozhraní kolekce s algoritmy určených pro následnou predikci. 
-	\item Uživatel bude mít možnost zaslat systému svou žádost o radu a obdržet informaci o tom, který algoritmus pro doporučení obsahu by měl v danou chvíli zvolit.
-	\item Uživatel bude mít možnost zaslat systému informaci o tom, jaký algoritmus pro doporučení se rozhodne vybrat.
-	\item Uživatel bude mít možnost zažádat o doporučení obsahu pomocí algoritmu, který mu byl navržen systémem.
-	\item Uživatel bude mít možnost zaslat systému zpětnou vazbu pro zvolené doporučení.
-	\item Aplikace bude umožňovat skrze své rozhraní zpracovávat informace o tom, že jeden uživatel dělá něco s jedním dokumentem (zpracování zpětné vazby).
-	\item Aplikace bude umožňovat skrze své rozhraní mazat pro doporučování již neaktuální informace. 
+	\item Uživatel bude mít možnost vytvářet skrze systémové rozhraní kolekce se seznamem algoritmů určených pro následnou predikci.
+	\item Uživatel bude mít možnost zaslat systému žádost o radu a obdržet informaci o tom, který algoritmus pro doporučení obsahu by měl v danou chvíli zvolit.
+	\item Uživatel bude mít možnost zaslat systému informaci o tom, jaký algoritmus pro doporučení se rozhodl si zvolit.
+	\item Uživatel bude mít možnost zažádat si o doporučení obsahu prostřednictvím algoritmu, jenž mu byl navržen systémem.
+	\item Uživatel bude mít možnost zaslat systému informaci o zpětné vazbě pro daný algoritmus, který si zvolil.
+	\item Aplikace bude umožňovat prostřednictvím svého rozhraní zpracování informace, že jeden uživatel dělá něco s jedním dokumentem (reakce na zpětnou vazbu).
+	\item Aplikace bude umožňovat prostřednictvím svého rozhraní mazání či zneviditelnění pro doporučování již neaktuálních informací.
 \end{itemize}
 
-Dle disciplín softwarového inženýrství je výčet uvedený výše nazýván jako \emph{funkční požadavky}.
+Dle disciplín softwarového inženýrství je výčet uvedený výše označován jako \textbf{funkční požadavky}.
 
-Lze definovat i tzv. \emph{nefunkční požadavky} specifikující vlastnosti a omezující podmínky kladené na systém:
+Lze definovat i tzv. \textbf{nefunkční požadavky} specifikující vlastnosti a omezující podmínky kladené na systém:
 
 \begin{itemize}
 	\item Systém bude postaven na platformě Java.
-	\item Rozhraní systému bude navrženo a implementováno v podobě služeb REST (vychází ze zadání)
+	\item Rozhraní systému pro komunikaci s klientem bude navrženo a implementováno v podobě služeb REST (vychází ze zadání)
 	\item Systém bude postaven tak, aby se dal snadno parametrizovat. 
-	\item Systém bude připraven na to, že jej bude využívat více uživatelů současně.
-	\item Systém poběží jako samostatná aplikace. Ostatní s ní budou komunikovat zvenčí.
-	\item Systému bude pro snadné nasazení a otestování vytvořen cookbook nástrojem Chef a bude jej možno nasadit nástrojem Vagrant.
+	\item Systém bude připraven na situaci, že jej bude využívat více uživatelů současně.
+	\item Systém poběží jako samostatná aplikace na serveru naslouchající na volném TCP portu. Veškerá komunikace s ní bude probíhat formou zasílaných zpráv.
+	\item Pro snadné nasazení a otestování systému na libovolné pracovní stanici bude nutné vytvořit Chef cookbook a bude jej možno zavést nástrojem Vagrant.
 \end{itemize}
 
 \section{Adaptibilní systém}
 
-Pro implementaci systému splňujícího požadavky vzešlé z analýzy výše je třeba důkladně zvážit, jaké všechny komponenty bude obsahovat a případně jaké algoritmické postupy bude nutné použít. Na základě zkoumání existujících implementací v kapitole~\ref{chap:current} mě velmi zaujal projekt \emph{Open recommendation Platorm} (zkr. ORP) společnosti plista~\footnote{\url{https://www.plista.com}} prezentovaný na posledním ročníku konference ACM RecSys 2013 v Hong Kongu. 
+Pro implementaci systému splňujícího požadavky vzešlé z analýzy výše je třeba důkladně zvážit, jaké všechny komponenty bude tento systém obsahovat a případně jaké algoritmické postupy bude vhodné využít. Na základě zkoumání existujících implementací v kapitole~\ref{chap:current} mě zaujal projekt \emph{Open recommendation Platorm} (zkr. ORP) společnosti plista~\footnote{\url{https://www.plista.com}} prezentovaný na posledním ročníku konference ACM RecSys 2013 v Hong Kongu. 
 
-Motivací ORP bylo získat lepší výsledky kombinací více doporučovacích metod společně se zapojením kontextu uživatele, neboli informacemi čerpanými převážně z HTTP hlaviček. Těmi informacemi mohou být:
+Motivací ORP bylo dosáhnout lepších výsledků kombinací více metod doporučování obsahu společně se zapojením kontextu uživatele (informacemi čerpanými převážně z HTTP hlaviček). Takovými informacemi mohou být:
 
 \begin{itemize}
 	\item IP adresa, která může prozradit geologickou lokaci uživatele
-	\item denní doba, kdy je ke stránce přistupováno
+	\item denní doba, kdy uživatel přistupuje ke stránce
 	\item user agent informující o zařízení, ze kterého bylo k obsahu přistoupeno (mobilní telefon, PC)
 	\item referer pro zjištění způsobu přístupu (přístup z vyhledávání nebo přímý přístup) 
 \end{itemize}
 
-Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}. Na něm je systém zachycen jako \emph{Ensemble}, který je dle uživatelských preferencí schopen vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, který použije pro publikování obsahu. Konzumenti doporučeného obsahu (\emph{Visitors}) pak zasílají systému zpětnou vazbu, kterou systém použije k přepočítání preferencí, čímž ovlivní výběr budoucího algoritmu.
+Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}, na kterém je systém zachycen jako \emph{Ensemble}. Ensemble je schopen dle uživatelských preferencí vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, jenž použije pro publikování obsahu. Konzumenti doporučeného obsahu (\emph{Visitors}) zasílají poté systému zpětnou vazbu, díky které dojde k rekalkulaci preferencí, což ovlivní výběr budoucího algoritmu.
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/plistaEnsemble.png}
  	\caption[Abstraktní pohled na systém společnosti plista]{Abstraktní pohled na systém společnosti plista. Zdroj: \cite{slideshare:plista}}\label{fig:plista}
 \end{figure}	
 
-V prezentaci bylo zmíněno několik dobře míněných rad ohledně toho, co by měl systém podobného typu umět. Zmíněna je potřeba rychlého webového serveru, na kterém bude aplikace běžet, dále nutnost rychlého síťového protokolu a rychlé fronty zpráv. Padla zde též nutnost rychlého úložiště dat. K dosažení funkcionality pro výběr nejlepšího algoritmu za daných podmínek společnost používá tzv. \emph{multi-armed bayesian bandit}, což byla i jedna z doporučovaných strategií, které mi na úvodní schůzce doporučil vedoucí práce.
+V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechno by měl systém podobného typu umět. Zmíněna je potřeba rychlého webového serveru, na kterém bude aplikace běžet, dále nutnost rychlého síťového protokolu a rychlé fronty zpráv. Padla zde též nutnost rychlého úložiště dat. K dosažení funkcionality pro výběr nejlepšího algoritmu za daných podmínek společnost používá tzv. \emph{multi-armed bayesian bandit}, což byla i jedna ze strategií, které mi na úvodní schůzce doporučil vedoucí této práce.
 
-Se spoustou rad jsem se ztotožnil a vyhodnotil, že s jejich pomocí bych mohl být schopen uspokojit velkou část požadavků na systém stanovených výše.
+Se spoustou rad z této prezentace jsem se ztotožnil a vyhodnotil, že s jejich pomocí by mohla být uspokojena velká část požadavků na systém stanovených výše.
 
-Strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významná, že jsem jí věnoval samostatnou kapitolu~\ref{chap:ensemble}.
+Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významná, že jsem se jí rozhodl věnovat samostatnou kapitolu~\ref{chap:ensemble}.
 
 \section{Architektura systému}
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_env.pdf}
+ 	\caption[Abstraktní návrh architektury a komponent adaptibilního systému]{Abstraktní návrh architektury a komponent adaptibilního systému}\label{fig:longtail}
+\end{figure}	
 
 \subsection{Server}
 
@@ -370,19 +376,6 @@ Strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významn�
 \subsection{Komunikace}
 
 že to bude komunikovat skrz to rozhraní co je popsaný tam a tam. 
-	
-\section{Sada algoritmů}
-Identifikujte sadu základních algoritmů určených pro kombinování. Ty implementujte nebo použijte existující implementace.	
-
-\subsection{Algoritmus náhodného výběru}
-
-\subsection{Algoritmus výběru dle nejnovějších položek}
-
-\subsection{Algoritmus výběru nejlépe hodnocených položek}
-
-\subsection{Algoritmus výběru dle podobnosti obsahu}
-
-\subsection{Algoritmus kolaborativního filtrování}
 
 \section{Rozhraní}
 
@@ -391,6 +384,11 @@ normálka návrh endpointů a tak
 Z prováděné analýzy vyplývají požadavky na rozhraní tak, že jej můžeme rozdělit do tří skupin dle úkolu:
 
 \subsection{Rozhraní pro adaptibilní systém}
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_rest.pdf}
+ 	\caption[Ukázka REST endpointů navrhovaného adaptibilního systému]{Ukázka REST endpointů navrhovaného adaptibilního systému}\label{fig:longtail}
+\end{figure}	
 
 \begin{itemize}
 	\item vytvořit kolekci banditů
@@ -416,6 +414,19 @@ Z prováděné analýzy vyplývají požadavky na rozhraní tak, že jej můžem
 
 Popsat ten JSON a tak
 			
+\section{Sada algoritmů}
+Identifikujte sadu základních algoritmů určených pro kombinování. Ty implementujte nebo použijte existující implementace.	
+
+\subsection{Algoritmus náhodného výběru}
+
+\subsection{Algoritmus výběru dle nejnovějších položek}
+
+\subsection{Algoritmus výběru nejlépe hodnocených položek}
+
+\subsection{Algoritmus výběru dle podobnosti obsahu}
+
+\subsection{Algoritmus kolaborativního filtrování}
+
 \chapter{Adaptibilní systém}
 \label{chap:adapt}
 Navrhněte, implementujte a otestujte systém, který bude dynamicky kombinovat algoritmy a optimalizovat celkovou kvalitu algoritmů.
