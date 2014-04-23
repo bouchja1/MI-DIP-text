@@ -360,7 +360,7 @@ V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechn
 
 Se spoustou rad z této prezentace jsem se ztotožnil a vyhodnotil, že s jejich pomocí by mohla být uspokojena velká část požadavků na systém stanovených výše.
 
-Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významná, že jsem se jí rozhodl věnovat samostatnou kapitolu~\ref{chap:ensemble}.
+Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významná, že jsem se jí rozhodl věnovat samostatnou kapitolu~\ref{chap:adapt}.
 
 \section{Architektura systému}
 
@@ -371,18 +371,19 @@ Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci 
 
 \subsection{Server}
 
-\subsubsection{Recommeng Application}
-
 Stěžejní serverovou komponentou je bez větších pochyb doporučovací platforma. Tu jsem pracovně nazval jako \textbf{Recommeng} (zkratka pro recommendation engine), abych o ní již nadále nemusel mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
 
 Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové platformy. Mou snahou bylo zachytit přítomnost jednotlivých komponent systému a formu jejich vzájemné komunikace.
 
-Na serverové straně se tedy nacházejí dvě hlavní komponenty:
+Na serverové straně se tedy nacházejí:
 
-\begin{itemize}
-	\item \textbf{Recommeng Application.} Zamýšlená aplikace 
-	\item \textbf{Aplikace běžící v prostředí aplikačního serveru.} 	
-\end{itemize}
+\subsubsection{Cassandra}
+
+\subsubsection{Solr}
+
+\subsubsection{REST API}
+
+to v sobě má ty algoritmy a tak
 
 \subsection{Klient}
 
@@ -419,11 +420,21 @@ Aneb klient, který odmítl komunikaci přes REST API, tím pádem zasílající
 
 \subsection{Komunikace}
 
-že to bude komunikovat skrz to rozhraní co je popsaný tam a tam. 
+Dvě možnosti komunikace.
 
-\subsubsection{Formát vyměňovaných zpráv}
+Buď standardní volání HTTP metod.
+
+Nebo vzdálené volání metod doporučovacího systému. K tomu bude asi nejlepší pokusit se napodobit HTTP protokol. 
+
+Mám rád sémantiku metoda, cesta a tělo, tak bych ji rád zachoval. Dle funkčních požadavků to také odpovídá, že jako vždycky odpovíme. 
+
+Bude to  fungovat tak, že zašlu JSON mapu obsahující klíče metoda, cesta a tělo. A systém by nám měl vhodným způsovem odpovědět včetně napodobení status  kodu a tak. 
+
+To je vlastně ten formát vyměňovaných zpráv
 
 \section{Rozhraní}
+
+TODO rest endponty
 
 Z prováděné analýzy vyplynuly požadavky na rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. K dispozici je připraven diagram~\ref{fig:rest}, který by měl celou věc pomoct osvětlit. 
 
@@ -484,8 +495,6 @@ spousta druhů
 
 \chapter{Adaptibilní systém}
 \label{chap:adapt}
-Navrhněte, implementujte a otestujte systém, který bude dynamicky kombinovat algoritmy a optimalizovat celkovou kvalitu algoritmů.
-\label{chap:ensemble}
 
 \section{Strojové učení}
 
@@ -536,6 +545,10 @@ Z matematického hlediska má online učení propojení na klasické online algo
 
 \section{Multi-armed Bandit algoritmus}
 The Multi-Armed Bandit Problem je jedním z klasických problémů online učení. Tato herní strategie je podobná tradičnímu hernímu automatu, který představuje one-armed strategii, ale mnohoruká varianta má více herních pák~\emph{V každém kole si lze pro hru vybírat mezi N automaty}. 
+
+\subsection{Teoretický základ nutný k pochopení algoritmu}
+
+distribuční funkce a tak podobně
 
 \subsection{Princip algoritmu}
 Strategii si lze představit tak, že stojíme před N výherními automaty (též nazývány jako bandité) a v každém kole máme možnost vybrat si jeden z nich, na kterém budeme hrát. Pravděpodobnosti výher u jednotlivých automatů jsou pro nás neznámé. 
