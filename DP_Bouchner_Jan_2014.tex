@@ -52,7 +52,7 @@
 \begin{introduction}
 	%sem napište úvod Vaší práce
 	\begin{quote}
-		``We are leaving the age of information and entering the age of recommendation''.
+		``We are leaving the age of information and entering the age of recommendation.''
 	\end{quote}
 	Hned na úvod práce jsem si dovolil použít citát z článku \emph{The Long Tail}~\cite{anderson} (česky Dlouhý chvost) bývalého šéfredaktora časopisu Wired Chrise Andersona, který je též autorem stejnojmenné teorie. Ta je založena na tom, že díky internetu lze nabízet širokou škálu produktů, které by dříve mohly jen sotva slavit prodejní úspěchy, neboť poptávka po nich je příliš malá. 
 	
@@ -163,6 +163,7 @@ Kamkoliv v dnešní době na internetu zavítáme, máme velkou šanci, že na n
 \begin{itemize}
 	\item lidé, které byste mohli znát
 	\item uživatelé kupující produkt X kupují též produkt Y
+	\item položky podobné položce XY	
 \end{itemize}
 
 Všechny mají ale stejný význam – zaujmout či upozornit na něco nebo někoho konkrétního. Spousta elektronických obchodů, renomovaných aukčních domů, ale též serverů se zábavou na nich doslova staví svá podnikání, neboť správně navržený a fungující doporučovací systém může firmě přinést výrazné zvýšení zisku. 
@@ -270,9 +271,18 @@ Také současný výzkum v oblasti doporučovacích systémů, zdá se, nezahál
 
 O tématu se též píše spousta článků a každým rokem vzniká několik disertačních prací. Dle dostupných informací z ACM RecSys Wiki~\footnote{\url{http://www.recsyswiki.com/wiki/List_of_recommender_system_dissertations}} jich jen za poslední 4 roky bylo přes 50. 
 
+Také technická knihovna společnosti IBM obsahuje přehledný seznam~\footnote{http://www.ibm.com/developerworks/library/os-recommender2/index.html} několika doporučovacích systémů, z nichž převážná část vznikla jakou součást univerzitního výzkumu.
+
+Z tohoto seznamu se mi jako zajímavý systém jeví \emph{easyrec}~\footnote{\url{http://easyrec.org/recommendation-engine}}. Jedná se o open source webovou aplikaci napsanou v programovacím jazyce Java nabízející personalizovaná doporučení prostřednictvím RESTful webových služeb. Skrz REST API je možné zasílat uživatelské akce jako prohlížení, nákup či hodnocení položky. Tyto uživatelské akce jsou poté ukládány do databáze easyrec, nad kterou je prováděna analýza a z té jsou generována doporučení pro aplikaci uživatele (viz obrázek~\ref{fig:easyrec}).
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/easyrec.png}
+ 	\caption[Abstraktní model open source systému easyrec]{Abstraktní model open source systému easyrec. Zdroj: \cite{easyrec}}\label{fig:easyrec}
+\end{figure}	
+
 \section{Shrnutí poznatků}
 
-Z výše uvedených příkladů~\ref{sec:examples} lze vypozorovat určité společné vlastnosti a zformulovat několik závěrů:
+Z výše uvedených příkladů v sekci~\ref{sec:examples} lze vypozorovat určité společné vlastnosti a zformulovat několik závěrů:
 
 \begin{itemize}
 	\item o uživateli je vedena spousta záznamů, například historie jeho chování na stránkách
@@ -488,9 +498,9 @@ Podobně jako nabízí HTTP, na každou žádost ve tvaru \emph{method, path} a 
 
 \section{Rozhraní}
 
-TODO rest endponty
+Platforma poskytuje API pro interakci s daty formou RESTful (HTTP implementace REST). Každý uživatel tak může interagovat s rozhraním prostřednictvím veřejných REST endpointů.
 
-Z prováděné analýzy vyplynuly požadavky na rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. K dispozici je připraven diagram~\ref{fig:rest}, který by měl celou věc pomoct osvětlit. 
+Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. K dispozici je diagram~\ref{fig:rest}, který by měl celou věc osvětlit. 
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_rest.pdf}
@@ -499,60 +509,100 @@ Z prováděné analýzy vyplynuly požadavky na rozhraní takové, že je lze ro
 
 \subsection{Rozhraní pro Recommeng}
 
-\begin{itemize}
-	\item vytvořit kolekci banditů
-	\item 	provést dotaz na kolekci banditů (na nejlepší algoritmus nebo na seřazené pořadí)
-	\item 	zaslat informaci o tom, že bandita byl vybrán pro doporučení
-	\item zaslat systému feedback s tím, jak jsem byl s volbou spokojený		
-\end{itemize}
+Komunikace s rozhraním by měla umožňovat vytvářet v Recommeng aplikaci kolekce s identifikátory algoritmů, jenž budou zapojeny do predikce. 
+
+K tomu účelu bude sloužit endpoint:
+
+\begin{verbatim}
+	/recommeng/ensemble/collection
+\end{verbatim}
+
+Pokud uživatel zašle metodou POST žádost na tento endpoint (obsahující identifikátor kolekce a seznam algoritmů), v případě neexistence v systému bude kolekce vytvořena a připravena k predikci. 
+
+Dále by měla existovat možnost zaslat na kolekci prosbu o predikci nejlepšího jejího algoritmu pro doporučení.
+
+\begin{verbatim}
+	/recommeng/ensemble/collection/{collection-id}
+\end{verbatim}
+
+Toho dosáhneme žádostí s metodou GET, uvedením identifikátoru kolekce a případným specifikováním požadovaného výstupu (zda chceme vrátit jen nejlepší možnost či všechny možnosti seřazené sestupně od nejlepšího) v parametru dotazu.
+
+Kvůli učení a vývoji znalostí systému je nezbytně nutné mít možnost zaslat informaci o výběru konkrétního algoritmu a též zpětnou vazbu vyjadřující, jak byl žádající uživatel s navrhovanou variantou spokojen.
+
+\begin{verbatim}
+	/recommeng/ensemble/collection/{collection-id}/{algorithm-id}
+\end{verbatim}
+
+Na endpoint výše v takovém případě zašleme metodou PUT upřesňující informaci o operaci, kterou chceme systému sdělit (výběr vs. zpětná vazba).
 
 \subsection{Rozhraní pro sadu základních algoritmů}
 
-\begin{itemize}
-	\item zaslání žádosti o doporučení obsahu konkrétním algoritmem
-\end{itemize}
+Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s metodou GET.
+
+\begin{verbatim}
+	/recommeng/algorithms/{core-id}/{algorithm-id}
+\end{verbatim}
+
+Úkolem je zpracovat žádost uživatele o doporučení algoritmem, jehož identifikátor je uveden v cestě. Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je též nutno uvést). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z té samé skupiny a další.
 
 \subsection{Rozhraní pro úložiště dat}
 
-\begin{itemize}
-\item zaslání informace o tom, že 1 uživatel dělá něco s jedním článkem
-	\item smazání/zneviditelnění článku z výsledků hledání
-\end{itemize}
+Důležité rozhraní umožňující zaznamenat chování uživatele vzhledem ke sledovaným položkám.
+
+\begin{verbatim}
+	/recommeng/cores/{core-id}/document
+\end{verbatim}
+
+Prostřednictvím metody POST budou zasílány veškeré informace o položce (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), která má být uložena do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být cokoliv, například URL adresa).
 			
 \section{Sada algoritmů}
 
-Cílem systému je, aby byl schopen rozhodovat se na základě informací udržujících jako svůj vnitřní stav. Výsledkem takového rozhodnutí je identifikátor doporučovacího algoritmu. 
+Identifikace základní sady algoritmů určených pro kombinování je jeden z požadavků na systém plynoucí přímo ze zadání. 
 
-Doporučovací algoritmy pracují s informacemi o uživateli, položce a hodnocení. Ukládány jsou ale i další informace jako datum zveřejnění položky, její popis (u novinového článku například text zprávy) a tak podobně. Se všemi těmito informacemi mohou doporučovací algoritmy pracovat. 
+Uživatel žádající o radu pro výběr nejlepšího algoritmu obdrží od systému identifikátor reprezentující tento algoritmus. 
 
-Identifikace sady základních algoritmů určených pro kombinování byl též jeden z požadavků na systém plynoucích přímo ze zadání. 
+Algoritmy pro doporučování vyhodnocují především informace o uživateli, položkách a hodnocení. Ukládány jsou ale i další údaje, například datum zveřejnění položky či její popis (u článku se může jednat o text zprávy). Také s těmito informacemi mohou doporučovací algoritmy pracovat. 
 
 \subsection{Algoritmus náhodného výběru}
 
-Jak je patrné již z názvu, algoritmus předpovídá hodnocení zcela náhodně. Jeho hlavním a v podstatě jediným úkolem je být zde pro srovnání s ostatními algoritmy. 
+Jak je patrné již z názvu, tento algoritmus vybírá položky pro doporučení naprosto náhodným způsobem. Jeho hlavním úkolem je být zde pro srovnání s ostatními algoritmy. 
 
 \subsection{Algoritmus výběru dle nejnovějších položek}
 
-Doporučování dle nejnovějších položek je dalším z algoritmů s naivním přístupem k problému. Položky budou v tomto případě doporučovány sestupně dle zveřejněného data.
+Doporučování dle nejnovějších položek je dalším z algoritmů s naivním přístupem k problému. Položky budou v tomto případě doporučovány sestupně dle zveřejněného data. 
 
 \subsection{Algoritmus výběru nejlépe hodnocených položek}
 
-viz imdb nebo lamer
+Jedná se o první algoritmus založený na složitějším výpočtu. Položky vzešlé z doporučení budou dle určitých parametrů nějakým způsobem lepší než ostatní, které se v doporučení neobjevily. Takovým parametrem může být například hodnocení na škále od 1 do 5, počet pozitivních hodnocení, souhrnné číslo udávající počet přečtení článku nebo jiný z mnoha způsobů vyjádření zájmu o položku. 
 
 \subsection{Algoritmus výběru dle podobnosti obsahu}
 
-More like this
+Algoritmus se snaží na základě podobnosti obsahu nalézt pro položku několik jí podobných položek z databáze. Podobnost se určuje porovnáním jednotlivých parametrů, například tagů, nadpisů nebo celého textu článku.
 
 \subsection{Algoritmus kolaborativního filtrování}
 
-spousta druhů
+Algoritmus je založen na modelu dřívějšího chování uživatele v systému. Model je většinou konstruován z chování většího množství uživatelů s podobným vkusem. V podstatě lze říci, že doporučení jsou založena na automatické spolupráci více uživatelů a výběru těch, kteří mají co nejpodobnější preference či chování.
+
+Rozlišují se dva hlavní způsoby filtrování.
+
+\subsubsection{User-based}
+
+``You may like it because your friends liked it.''~\cite{cf}
+
+Aneb filtrování založené na uživatelích. Jedná se o starší variantu kolaborativního filtrování. Podstatou je vzít na základě určité podobnosti skupinu (zdroj~\cite{cf} udává cca 20 až 50) uživatelů s podobných vkusem jako má uživatel, pro něhož je doporučení konstruováno, a poté předpovědět, jak moc zajímavá by pro uživatele byla pro něj neznámá položka, se kterou jsou spojení uživatelé se stejným vkusem.
+
+\subsubsection{Item-based}
+
+``You tend to like that item because you have liked those items.''~\cite{cf}
+
+Aneb filtrování založené na položkách, které použila v roce 2001 jako první společnost Amazon. Myšlenka je taková, že uživatel, který si v minulosti zakoupil nějakou položku, bude v budoucnu při dalším nákupu vyhledávat položku podobnou. Například předpověď toho, co si uživatel zakoupí v budoucnu, lze uskutečnit analýzou uživatelovi historie nákupů~\cite{itemcf}. 
 
 \chapter{Adaptibilní systém}
 \label{chap:adapt}
 
 \section{Strojové učení}
 
-Vzhledem k povaze řešeného problému je nutné zaměřit se na metody tzv. \emph{strojového učení}. 
+Jak vyplynulo z rešerše existujících řešení~\ref{chap:current} a analýzy~\ref{chap:analysis}, vzhledem k povaze řešeného problému je nutné zaměřit se na metody tzv. \emph{strojového učení}. 
 Jedná se o vědeckou disciplínu (jednu z větví oboru umělé inteligence), která se zabývá tím, jak se má počítač přizpůsobit určité situaci, aniž by byl pro danou situaci explicitně naprogramován. Metody strojového učení, které hledají generalizaci libovolných dat nebo slouží pro adaptaci existujícího systému na změny okolí, se používají ve všech oblastech informačních věd od analýzy snímků, analýzy DNA a textu, až po simulace chování člověka. 
 
 Typickým příkladem je vytvořit z dostupných dat model, který dokáže:
@@ -562,34 +612,19 @@ Typickým příkladem je vytvořit z dostupných dat model, který dokáže:
   \item rozpoznat spam od regulérního e-mailu
   \item u pacienta hospitalizovaného s infarktem predikovat riziko dalšího infarktu
   \item napomoci společnostem zabývajících se internetovou reklamou v rozhodování se, kterou reklamní strategii použít k maximalizaci zisků
-  Používá to ale třeba Google analytics! při správě online experimentů
-\url{https://support.google.com/analytics/answer/2844870?hl=cs&ref_topic=2844866}
 \end{itemize}
 
-Algoritmy strojového učení mohou být děleny do taxonomie (nadtříd a podtříd) založené na požadovaném výsledku algoritmu nebo typu vstupu, který je k dispozici během trénování stroje. Algoritmů je celá řada, bude tedy vhodné zmínit zde alespoň ty nejtypičtější. 
+Algoritmy strojového učení dělíme do taxonomie (nadtříd a podtříd) založené na požadovaném výsledku nebo typu vstupu, jenž je k dispozici během trénování stroje. Algoritmů je celá řada, bude tedy vhodné zmínit zde alespoň ty nejtypičtější. 
 
 \begin{description}
-  \item[Supervised learning]~\footnote{učení s učitelem} TODO
-  \item[Unsupervised learning]~\footnote{učení bez učitele} TODO
-  \item[Reinforcement learning]~\footnote{zpětnovazební učení nebo též učení posilováním} TODO
+  \item[Supervised learning]~\footnote{učení s učitelem} je typ učení, které se používá v případě, že máme k našim trénovacím instancím korektní výsledky. Pomocí kombinace trénovacích vstupních instancí a jejich požadovaných výsledků lze systém naučit na situaci, aby dokázal automaticky předpovídat výsledek pro každý další platný vstup.~\cite{aihorizon}
+  \item[Unsupervised learning]~\footnote{učení bez učitele} je již ze samotné podstaty absence informace od učitele obtížným problémem. Učení bez učitele se používá pro analýzu pozorování (nebo dat), když není k dispozici informace od učitele, tj. trénovací multimnožina. Pozorovaná data se mají vysvětlit pomocí matematického modelu.~\cite{hlavac}
+  \item[Reinforcement learning]~\footnote{zpětnovazební učení nebo též učení posilováním} je oblast informatiky tykající se chování agentů~\footnote{TODO}. Jedná se o metodu, při které se agent učí, jakým způsobem má volit akce, aby nalezl optimální strategii pro dané prostředí. Jedná se o učení bez učitele. Agent sice dostává odezvu, ale přímo z prostředí, takže musí experimentovat a zjišťovat, které stavy jsou nějakým způsobem dobré, a kterým stavům je lepší se vyhnout. Průzkum probíhá na principu zpětné vazby v podobě odměny za akce dosahující cíle nebo trestu v opačném případě. Řeší se zde problém explorace vs. exploatace~\ref{sub:explo}. 
 \end{description}
 
-TODO zmínit, že pro naše potřeby je nejvhodnější reinforcement learning.
+Za nejvhodnější algoritmus, který by byl schopen plnit požadavky definované na tuto práci, jsem zvolil algoritmus zpětnovazebního učení.
 
-\url{http://cs.wikipedia.org/wiki/Strojov%C3%A9_u%C4%8Den%C3%AD}
-\url{http://cs.wikipedia.org/wiki/Zp%C4%9Btnovazebn%C3%AD_u%C4%8Den%C3%AD}
-\url{http://en.wikipedia.org/wiki/Machine_learning}
-\url{http://cs.wikipedia.org/wiki/U%C4%8Den%C3%AD_s_u%C4%8Ditelem}
-\url{http://en.wikipedia.org/wiki/List_of_machine_learning_algorithms#Supervised_learning}
-\url{http://en.wikipedia.org/wiki/Reinforcement_learning}
-\url{http://tdunning.blogspot.cz/2012/10/references-for-on-line-algorithms.html}
-\url{http://tdunning.blogspot.cz/search?q=bandit}
-\url{http://camdp.com/blogs/multi-armed-bandits}
-\url{http://www.recsyswiki.com/wiki/Ensemble}
-
-Algoritmus začne ve stavu nevědomí (ignorant state), kdy neví nic o daných okolnostech a začíná nabývat vědomosti tím, že testuje systém. Tím, jak vstřebává data a vyhodnocuje výsledky, učí se, jaké chování je nejlepší.
-
-Z psychologického hlediska se jedná o následující úvahu: Jakým způsobem dokáže trest a odměna ovlivňovat naše budoucí chování? Na základě čeho se (nejen) lidstvo učí novým věcem?
+Algoritmus začne ve stavu nevědomí, kdy neví nic o daných okolnostech a začíná nabývat vědomosti tím, že testuje systém. Tím, jak vstřebává data a vyhodnocuje výsledky, učí se, jaké chování je nejlepší.
 
 \subsection{Online učení}
 
@@ -597,12 +632,21 @@ Navrhovaná strategie je též nazývána jako \emph{online učení}. Nutno zmí
 
 Z matematického hlediska má online učení propojení na klasické online algoritmy, teorii (opakovaných) her a teorii pravděpodobnosti. Díky těmto znalostem tak můžeme navrhovat pravděpodobností dynamické systémy, kterými lze modelovat složitá průmyslová zařízení nebo třeba výherní automat známý jako mnohoruký bandita (Multi-Armed Bandit).
 
+\section{Nezbytné základy z teorie pravděpodobnosti}
+
+Ještě předtím, než se pustím do vysvětlování strategie, která bude použita v implementaci systému, bude třeba zopakovat si některé pojmy a problémy z teorie pravděpodobnosti. 
+
+distribuční funkce, rozdělení pravděpodobnosti. kvanitily a tak, spojité náhodné veličiny, hustota, střední hodnota
+
+
 \section{Multi-armed Bandit algoritmus}
+
+\url{http://tdunning.blogspot.cz/2012/10/references-for-on-line-algorithms.html}
+\url{http://tdunning.blogspot.cz/search?q=bandit}
+\url{http://camdp.com/blogs/multi-armed-bandits}
+\url{http://www.recsyswiki.com/wiki/Ensemble}
+
 The Multi-Armed Bandit Problem je jedním z klasických problémů online učení. Tato herní strategie je podobná tradičnímu hernímu automatu, který představuje one-armed strategii, ale mnohoruká varianta má více herních pák~\emph{V každém kole si lze pro hru vybírat mezi N automaty}. 
-
-\subsection{Teoretický základ nutný k pochopení algoritmu}
-
-distribuční funkce a tak podobně
 
 \subsection{Princip algoritmu}
 Strategii si lze představit tak, že stojíme před N výherními automaty (též nazývány jako bandité) a v každém kole máme možnost vybrat si jeden z nich, na kterém budeme hrát. Pravděpodobnosti výher u jednotlivých automatů jsou pro nás neznámé. 
@@ -623,6 +667,9 @@ NEMOJE
 Nechť u1, …, uK jsou průměrné hodnoty výnosových distribučních funkcí. Hráč aktivně zatáhne za páku každé kolo a sleduje příslušný výnos. jeho úkolem je maximalizovat součet těchto výnosů. Oželení (regret) po T kolech je definováno jako rozdíl mezi součtem výnosů příslušných výnosových funkcí optimální strategie a součtu získaných výnosů (VZOREC VIZ kybernář)
 
 \subsection{Exploration vs. Exploitation}
+\label{sub:explo}
+
+Pokud agent zkouší nové akce, jejichž výsledek nezná, jde o exploraci, pokud provádí akce, o kterých ví, že mu přinášejí užitek, jde o exploataci. Problém je, že optimální strategie nemůže být ani čistě explorační ani čistě exploatační - hledá se vyvážený kompromis. 
 
 \begin{itemize}
   \item \textbf{Explorace} Nacházení nových oblastí hledání - náhodné procházky, nevyužívá předchozích znalostí
@@ -677,10 +724,6 @@ ZAVEREM
 Algoritmus je velice jednoduchý, proto je také jednoduché jej rozšířit. V mém případě bylo potřeba přidat learning rates - předpokládejme, že to prostředí se prostě může měnit v čase. Technicky by se tedy standardní Bayesian Bandit algoritmus self-updatoval tím, že by se učil tím, že to, co si myslel, že se zdá jako nejlepší, selhává nejčastěji. Také lze docílit toho, aby se algoritmus učil měnícím se prostředím rychleji. Potřebuje pro to jedinou věc - přidat rate napříč updatováním.
 
 Pokud rate menší než 1, algoritmus bude zapomínat předchozí výsledky rychleji a tlak na neznalost bude směrem dolů. naopak rate větší než 1 implikuje to, že náě algoritmus se bude chovat více riskantně a bude vsázet na dřívější výhry častěji a bude tedy více odolný proti změnám měnícího se prostředí.
-
-\section{Nezbytné základy z teorie pravděpodobnosti}
-
-distribuční funkce, rozdělení pravděpodobnosti. kvanitily a tak, spojité náhodné veličiny, hustota, střední hodnota
 		
 \chapter{Realizace}
 \label{chap:impl}

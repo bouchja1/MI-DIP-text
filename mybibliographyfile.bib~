@@ -171,8 +171,60 @@ howpublished = "[online]"
   Author = {Vitvar, Tomáš},
   Institution = {Czech Technical University In Prague},
   Howpublished = {University Lecture},
-  Year = {2000},
-  Title = {An Introduction to Crossbow Hunting}
+  note="stav ze dne 24.4.2012",
+  Year = {2014},
+  url="http://humla.vitvar.com/slides/mdw/lecture5-1p.pdf",
+  Title = {Lecture 5: Application Server Services}
 }
 
-http://humla.vitvar.com/slides/mdw/lecture5-1p.pdf
+@misc{hlavac,
+  Author = {Hlaváč, Václav},
+  Institution = {Czech Technical University In Prague},
+  Howpublished = {University Lecture},
+  note="stav ze dne 24.4.2012",
+  Year = {2014},
+  url="http://cmp.felk.cvut.cz/~hlavac/Public/TeachingLectures/UceniBezUcitele.pdf",
+  Title = {Učení bez učitele}
+}
+
+@misc{cf,
+  Author = {Drachsler, Hendrik},
+  Institution = {Open University of the Netherlands},
+  Howpublished = {University Lecture},
+  note="stav ze dne 24.4.2012",
+  Year = {2014},
+  url="http://www.slideshare.net/Drachsler/rec-sys-mupplelecturekmi",
+  Title = {Recommender Systems and Learning Analytics in TEL}
+}
+
+@MISC{easyrec,
+title="easyrec: Recommendation Engine ",
+note="stav ze dne 24.4.2012",
+url="http://easyrec.org/recommendation-engine",
+howpublished = "[online]"
+}
+
+@misc{itemcf,
+author = {Dhoha Almazro and Ghadeer Shahatah and Lamia Albdulkarim and Mona Kherees and Romy Martinez and Lamia Albdulkarim and William Nzoukou},
+title = {A Survey Paper on Recommender Systems},
+note="stav ze dne 24.4.2012",
+url="http://arxiv.org/pdf/1006.5278v4.pdf",
+howpublished = "[online]"
+}
+
+@misc{aihorizon,
+author = {aihorizon: Your Online Artificial Intelligence Resource},
+title = {Machine Learning, Part I: Supervised and Unsupervised Learning},
+note="stav ze dne 24.4.2012",
+url="http://www.aihorizon.com/essays/generalai/supervised_unsupervised_machine_learning.htm",
+howpublished = "[online]"
+}
+
+@misc{aihorizon,
+author = {Barták, Roman},
+  Institution = {Charles University in Prague},
+title = {Umělá inteligence II: Lekce 13},
+note="stav ze dne 24.4.2012",
+url="http://kti.ms.mff.cuni.cz/~bartak/ui2/lectures/lecture13.pdf",
+howpublished = "[online]"
+}

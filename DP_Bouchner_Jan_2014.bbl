@@ -16,6 +16,10 @@ BellKor, AT\&T Labs, Inc. – Research. [online], stav ze dne 21.4.2012.
 CNN Acquires Zite. [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://cnnpressroom.blogs.cnn.com/2011/08/30/cnnzite/}
 
+\bibitem{easyrec}
+easyrec: Recommendation Engine. [online], stav ze dne 24.4.2012.
+\urlprefix\biburl{http://easyrec.org/recommendation-engine}
+
 \bibitem{fulltext}
 Fulltext. [online], stav ze dne 24.4.2012.
 \urlprefix\biburl{http://www.adaptic.cz/znalosti/slovnicek/fulltext/}
@@ -52,6 +56,11 @@ What Is Affinity Analysis? [online], stav ze dne 21.4.2012.
 Zite is Flipping out. [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://blog.zite.com/2014/03/05/zite-is-flipping-out/}
 
+\bibitem{itemcf}
+Almazro, D.; Shahatah, G.; Albdulkarim, L.; aj.: A Survey Paper on Recommender
+  Systems. [online], stav ze dne 24.4.2012.
+\urlprefix\biburl{http://arxiv.org/pdf/1006.5278v4.pdf}
+
 \bibitem{anderson}
 Anderson, C.: The Long Tail. [online], říjen 2004.
 \urlprefix\biburl{http://archive.wired.com/wired/archive/12.10/tail.html}
@@ -59,6 +68,11 @@ Anderson, C.: The Long Tail. [online], říjen 2004.
 \bibitem{slideshare:plista}
 Brodt, T.: Open Recommendation Platform. 2013, [Online; stav z 23. dubna 2014].
 \urlprefix\biburl{http://www.slideshare.net/d0nut/open-recommendation-platform}
+
+\bibitem{cf}
+Drachsler, H.: Recommender Systems and Learning Analytics in TEL. University
+  Lecture, 2014, stav ze dne 24.4.2012.
+\urlprefix\biburl{http://www.slideshare.net/Drachsler/rec-sys-mupplelecturekmi}
 
 \bibitem{jacobi2006personalized}
 Jacobi, J.; Benson, E.; Linden, G.: Personalized recommendations of items
@@ -82,6 +96,7 @@ Liu, J.; Pedersen, E.; Dolan, P.: Personalized News Recommendation Based on
 \bibitem{vitvarMq}
 Vitvar, T.: Lecture 5: Application Server Services. University Lecture, 2014,
   stav ze dne 24.4.2012.
+\urlprefix\biburl{http://humla.vitvar.com/slides/mdw/lecture5-1p.pdf}
 
 \bibitem{wiki:longtail}
 Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;
