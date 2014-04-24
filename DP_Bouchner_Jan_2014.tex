@@ -396,11 +396,11 @@ Kvůli potřebě ukládání průběžného stavu aplikace (časové snímky) a 
 
 \subsubsection{Reccomeng Application}
 
-Komunikace s aplikací bude realizována zapojením systému pro zprávy (Messaging System) s využitím fronty zpráv (Message Queue). Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
+Komunikaci s aplikací bude umožňovat zapojení systému pro zprávy (Messaging System) s využitím fronty zpráv (Message Queue). Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
 
 Producenti zpráv (klienti využívající aplikaci) vytvářejí zprávy, které jsou zasílány do fronty. Zprávy jsou z fronty postupně odebírány konzumenty, kteří mají jejich zpracování na starosti. Výhodou je časová nezávislost mezi producenty zpráv a jejich konzumenty – producent tak může zasílat zprávy i tehdy, když žádný z producentů není k dispozici. Zprávy pak existují ve frontě, dokud se o jejich zpracování konzument nepřihlásí.
 
-Aplikace taktéž komunikuje s databází, ale využívá ji pouze pro ukládání informací o stavu, které je prováděno v pravidelných časových intervalech, respektive pro načítání posledního uloženého stavu při startu aplikace. Důvodem pro vynechání komunikačního mezikroku je požadavek na rychlost systému – veškerá data pro výpočet a predikci budou udržována přímo ve vnitřní paměti (uvnitř JVM). 
+Aplikace taktéž komunikuje s databází, ale využívá ji pouze pro ukládání informací o stavu, které je prováděno v pravidelných časových intervalech, respektive pro načítání posledního uloženého stavu při startu aplikace. Důvodem pro vynechání komunikačního mezikroku s databází je požadavek na rychlost systému – veškerá data pro výpočet a predikci budou udržována přímo ve vnitřní paměti (uvnitř JVM). 
 
 \begin{figure}\centering
 	\includegraphics[width=1.2\textwidth]{obr/vitvar_mq.png}
@@ -409,50 +409,82 @@ Aplikace taktéž komunikuje s databází, ale využívá ji pouze pro ukládán
 
 \subsection{Klient}
 
-Klientská strana není v tomto případě nikterak složitá a potenciální uživatel aplikace má v zásadě dvě možnosti. jak s platformou komunikovat:
+Klientská strana není nikterak složitá. Potenciální uživatel aplikace má v zásadě dvě možnosti, jak s platformou komunikovat:
 
 \begin{itemize}
-	\item jen a pouze prostřednictvím REST API
-	\item kombinací metod, jež nabízí REST API, společně s přímou komunikací se systémem prostřednictvím fronty zpráv
+	\item jen a pouze zasíláním žádostí na REST API
+	\item kombinací zasílání žádostí na REST API společně s přímou komunikací s Recommeng systémem prostřednictvím fronty zpráv
 \end{itemize}
 
-Mělo by být jasné, že bez komunikace s REST API je nemožné se některých systémových funkcionalit dovolat. Do této kategorie spadá například přidávání informací o článcích do datového úložiště (to v mém případě zajišťuje fulltextový index Solr) nebo zasílání žádosti o doporučení obsahu některým z podporovaných algoritmů. 
+Některé ze systémových funkcionalit nelze bez komunikace s REST API využívat. Do této kategorie spadá například přidání nového vztahu k položce ve fulltextovém indexu nebo zaslání žádosti o doporučení obsahu některým z podporovaných algoritmů. 
 
-Naopak přímé spojení s platformou bez nutnosti zapojení prostředníka v podobě REST API by měly umožňovat všechny metody komponenty Ensemble, jmenovitě tedy podpora pro vytvoření kolekce se seznamem algoritmů, dále zaslání žádosti o radu pro výběr algoritmu a též metody informující systém o vyrovnání se s vzniklou situací (informace o zvolení konkrétního algoritmu a zaslání zpětné vazby). 
+Přímé spojení s platformou skrze frontu zpráv bez nutnosti zapojení prostředníka v podobě REST API by ale měly umožňovat všechny možnosti použití Recommeng systému. Jmenovitě vytváření kolekcí se seznamem algoritmů, dále zasílání žádostí o radu pro výběr algoritmu a též metody informující systém o uživatelském chování jako zvolení konkrétního algoritmu nebo zaslání zpětné vazby o doporučení. 
 
-V diagramu~\ref{fig:recommeng} jsem se snažil zachytit představu různých způsobů komunikace klienta se systémem. Pro lepší názornost jsou jednotlivé žádosti odlišeny barevnými variantami.
+V diagramu~\ref{fig:recommeng} jsem se snažil zachytit různé formy komunikace klienta se systémem. Pro lepší názornost jsou jednotlivé žádosti barevně odlišeny. Ty lze považovat za modelové případy užití inspirované systémovými požadavky.
 
 \subsubsection{Červená varianta}
 
-Aneb klient přidávající nový vztah mezi dokumentem a uživatelem do úložiště.
+Aneb klient přidávající nový vztah mezi položkou a jejím uživatelem do úložiště.
+
+\begin{itemize}
+	\item klient zašle žádost na rozhraní
+	\item aplikace (Web Application 1) za rozhraním se spojí s indexem
+	\item v případě zdárného průběhu se přidá do indexu informace o tom, že 1 uživatel dělá něco s 1 dokumentem
+	\item klient obdrží odpověď s výsledkem žádosti
+\end{itemize}
+
+\subsubsection{Fialová varianta}
+\label{subsub:purple}
+
+Aneb klient zasílající platformě zpětnou vazbu ohledně doporučení, které dostal.
+
+Fialová varianta může též představovat situaci, kdy klient žádá systém o radu, kterým algoritmem si má nechat doporučit obsah ve své budoucí žádosti o doporučení (viz žlutá varianta~\ref{subsub:yellow}).
+
+\begin{itemize}
+	\item klient zašle žádost na rozhraní
+	\item aplikace (Web Application 1) za rozhraním se pokusí přistoupit k frontě zpráv
+	\item pokud fronta existuje, žádost je předána do fronty pro zpracování konzumentem (aplikace Recommeng)
+	\item konzument zpracuje žádost a zasílá odpověď, kterou systém zpráv předá zpět do aplikace
+	\item klient obdrží odpověď s výsledkem žádosti
+\end{itemize}
 
 \subsubsection{Žlutá varianta}
+\label{subsub:yellow}
 
 Aneb klient poptávající doporučení obsahu konkrétním algoritmem.
 
-Toto doporučení klient poptává na základě rady, kterou mu udělil systém. 
+Toto doporučení klient poptává na základě odpovědi na žádost, která mu byla udělena systém (viz fialová varianta~\ref{subsub:purple})). 
 
-\subsubsection{Fialová varianta}
-
-Aneb klient zasílající platformě zpětnou vazbu ohledně doporučení, které dostal
+\begin{itemize}
+	\item klient zašle žádost na rozhraní
+	\item aplikace (Web Application 1) za rozhraním zvolí vybraný algoritmus pro doporučení
+	\item algoritmus přistoupí k datům v indexu, nad kterými provede doporučení
+	\item klient obdrží odpověď s výsledkem žádosti
+\end{itemize}
 
 \subsubsection{Modrá varianta}
 
-Aneb klient, který odmítl komunikaci přes REST API, tím pádem zasílající svou žádost prostřednictvím socketu
+Aneb klient, který se rozhodl nevyužít možnosti komunikovat prostřednictvím REST API. Svou žádost zasílá přímo do fronty zpráv.
+
+\begin{itemize}
+	\item klient zašle žádost do fronty
+	\item pokud fronta existuje, žádost je předána do fronty pro zpracování konzumentem (aplikace Recommeng)
+	\item konzument zpracuje žádost a zasílá klientovi odpověď
+\end{itemize}
 
 \subsection{Komunikace}
 
-Dvě možnosti komunikace.
+Výše jsme měli možnost poznat dva způsoby komunikace uživatele s doporučovací platformou. Dalším úkolem je navrhnout formát, jakým si budou vyměňovat producent s konzumentem data prostřednictvím fronty zpráv za účelem vzdáleného volání metod Recommeng systému.
 
-Buď standardní volání HTTP metod.
+Vzhledem k obecné známosti protokolu HTTP jsem se rozhodl napodobit jeho chování a zachovat sémantiku:
 
-Nebo vzdálené volání metod doporučovacího systému. K tomu bude asi nejlepší pokusit se napodobit HTTP protokol. 
+\begin{itemize}
+	\item metoda (method)
+	\item cesta (path)
+	\item tělo zprávy (body)
+\end{itemize}
 
-Mám rád sémantiku metoda, cesta a tělo, tak bych ji rád zachoval. Dle funkčních požadavků to také odpovídá, že jako vždycky odpovíme. 
-
-Bude to  fungovat tak, že zašlu JSON mapu obsahující klíče metoda, cesta a tělo. A systém by nám měl vhodným způsovem odpovědět včetně napodobení status  kodu a tak. 
-
-To je vlastně ten formát vyměňovaných zpráv
+Podobně jako nabízí HTTP, na každou žádost ve tvaru \emph{method, path} a \emph{body} přijde odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status).
 
 \section{Rozhraní}
 
