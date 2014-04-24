@@ -329,7 +329,8 @@ Lze definovat i tzv. \textbf{nefunkční požadavky} specifikující vlastnosti 
 
 \begin{itemize}
 	\item Systém bude postaven na platformě Java.
-	\item Rozhraní systému pro komunikaci s klientem bude navrženo a implementováno v podobě služeb REST (vychází ze zadání)
+	\item Pro uchování informací o uživatelích, položkách a jejich vzájemné interakci bude využita platforma pro vyhledávání v textu Apache Solr.
+	\item Rozhraní systému pro komunikaci s klientem bude navrženo a implementováno v podobě služeb REST (vychází ze zadání).
 	\item Systém bude postaven tak, aby se dal snadno parametrizovat. 
 	\item Systém bude připraven na situaci, že jej bude využívat více uživatelů současně.
 	\item Systém poběží jako samostatná aplikace na serveru naslouchající na volném TCP portu. Veškerá komunikace s ní bude probíhat formou zasílaných zpráv.
@@ -360,7 +361,7 @@ V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechn
 
 Se spoustou rad z této prezentace jsem se ztotožnil a vyhodnotil, že s jejich pomocí by mohla být uspokojena velká část požadavků na systém stanovených výše.
 
-Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významná, že jsem se jí rozhodl věnovat samostatnou kapitolu~\ref{chap:adapt}.
+Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významná, že jsem se rozhodl věnovat jí samostatnou kapitolu~\ref{chap:adapt}.
 
 \section{Architektura systému}
 
@@ -371,19 +372,40 @@ Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci 
 
 \subsection{Server}
 
-Stěžejní serverovou komponentou je bez větších pochyb doporučovací platforma. Tu jsem pracovně nazval jako \textbf{Recommeng} (zkratka pro recommendation engine), abych o ní již nadále nemusel mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
+Stěžejní serverovou komponentou je doporučovací platforma. Tu jsem pracovně nazval jako \textbf{Recommeng} (zkratka pro recommendation engine), abych o ní již nadále nemusel mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
 
-Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové platformy. Mou snahou bylo zachytit přítomnost jednotlivých komponent systému a formu jejich vzájemné komunikace.
+Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové platformy. Mou snahou bylo zachytit přítomnost jednotlivých komponent systému, formu jejich vzájemné komunikace a též základní interakci uživatele se systémem.
 
-Na serverové straně se tedy nacházejí:
+V rámci ucelenosti zde uvádím přehled všech komponent nacházející se na serverové straně.
 
-\subsubsection{Cassandra}
+\subsubsection{Aplikační server}
 
-\subsubsection{Solr}
+Na aplikačním serveru poběží dvě aplikace. 
 
-\subsubsection{REST API}
+\begin{description}
+	\item[Webová aplikace s rozhraním pro snadnou komunikaci s klienty.]
+	(viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 1}) Aplikace bude mít na starosti obsluhu klientských požadavků na systém prováděných prostřednictvím protokolu HTTP. Zároveň bude disponovat sadou algoritmů, které lze použít pro doporučení obsahu. Dále bude aplikace obstarávat komunikační režii s druhou aplikací běžící na aplikačním serveru (\emph{Web Application 2}), kterou je platforma pro vyhledávání v textu – Apache Solr.
 
-to v sobě má ty algoritmy a tak
+	\item[Apache Solr]
+	(viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 2}) Přítomnost této aplikace vychází z nefunkčních požadavků. Apache Solr funguje jako samostatná komponenta umožňující fulltextové vyhledávání~\footnote{\emph{Obecné označení pro vyhledávače fungující na základě porovnávání fráze se všemi ostatními slovy v daném dokumentu. Fulltext je tedy souhrn algoritmů, které dokáží z daného dokumentu vytvořit podrobnou statistiku výskytu jednotlivých pojmů a tu zanést do databáze (říkáme, že dokument naindexují). Při vyhledávání pak algoritmy fulltextu porovnají hledané klíčové slovo s touto databází.}~\cite{fulltext}} nad dokumenty. K indexování a vyhledávání Solr používá knihovnu Apache Lucene (detaily v kapitole~\ref{chap:impl}).
+\end{description}
+
+\subsubsection{Databáze}
+
+Kvůli potřebě ukládání průběžného stavu aplikace (časové snímky) a snadného obnovení v případě přerušení běhu systému je nutné zapojit do návrhu databázi. Database Management System (DBMS) hraje důležitou roli i při škálování aplikací. V minulosti tolik používané standardní relační DBMS mohou způsobovat zpoždění při provádění čtení/zápisu a v některých případech hrát roli úzkého hrdla aplikace (bottleneck). Ohledně tohoto problému by možná stálo za úvahu prozkoumat možnosti použití NoSQL databází, které jsou již ze svého principu navrženy pro spolupráci s aplikacemi se zaměřením na výkon a škálovatelnost.
+
+\subsubsection{Reccomeng Application}
+
+Komunikace s aplikací bude realizována zapojením systému pro zprávy (Messaging System) s využitím fronty zpráv (Message Queue). Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
+
+Producenti zpráv (klienti využívající aplikaci) vytvářejí zprávy, které jsou zasílány do fronty. Zprávy jsou z fronty postupně odebírány konzumenty, kteří mají jejich zpracování na starosti. Výhodou je časová nezávislost mezi producenty zpráv a jejich konzumenty – producent tak může zasílat zprávy i tehdy, když žádný z producentů není k dispozici. Zprávy pak existují ve frontě, dokud se o jejich zpracování konzument nepřihlásí.
+
+Aplikace taktéž komunikuje s databází, ale využívá ji pouze pro ukládání informací o stavu, které je prováděno v pravidelných časových intervalech, respektive pro načítání posledního uloženého stavu při startu aplikace. Důvodem pro vynechání komunikačního mezikroku je požadavek na rychlost systému – veškerá data pro výpočet a predikci budou udržována přímo ve vnitřní paměti (uvnitř JVM). 
+
+\begin{figure}\centering
+	\includegraphics[width=1.2\textwidth]{obr/vitvar_mq.png}
+ 	\caption[Příklad MQ systému s producentem zpráv a konzumenty]{Příklad MQ systému s producentem zpráv a konzumenty. Zdroj: \cite{vitvarMq}}\label{fig:vitvarMq}
+\end{figure}	
 
 \subsection{Klient}
 
@@ -646,6 +668,8 @@ ZeroMQ
 \subsection{Aplikační server}
 
 \subsection{Databáze}
+
+\url{http://is.muni.cz/th/256499/fi_m/thesis_sikora.pdf}
 
 \subsection{Vyhledávací platforma}
 

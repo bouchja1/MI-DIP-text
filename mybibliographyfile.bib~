@@ -55,6 +55,14 @@
    note = "[Online; stav z 19. dubna 2014]"
  }
 
+ @misc{slideshare:plista,
+   author = "Torben Brodt",
+   title = "Open Recommendation Platform",
+   year = "2013",
+   url = {http://www.slideshare.net/d0nut/open-recommendation-platform},
+   note = "[Online; stav z 23. dubna 2014]"
+ }
+
 @MISC{affinity,
 title="What Is Affinity Analysis?",
 note="stav ze dne 21.4.2012",
@@ -151,3 +159,20 @@ author  = {Jiahui Liu and Elin Pedersen and Peter Dolan},
 year  = 2010,
 booktitle = {2010 International Conference on Intelligent User Interfaces}
 }
+
+@MISC{fulltext,
+title="Fulltext",
+note="stav ze dne 24.4.2012",
+url="http://www.adaptic.cz/znalosti/slovnicek/fulltext/",
+howpublished = "[online]"
+}
+
+@misc{vitvarMq,
+  Author = {Vitvar, Tomáš},
+  Institution = {Czech Technical University In Prague},
+  Howpublished = {University Lecture},
+  Year = {2000},
+  Title = {An Introduction to Crossbow Hunting}
+}
+
+http://humla.vitvar.com/slides/mdw/lecture5-1p.pdf

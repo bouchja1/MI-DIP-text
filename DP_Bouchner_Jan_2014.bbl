@@ -16,6 +16,10 @@ BellKor, AT\&T Labs, Inc. – Research. [online], stav ze dne 21.4.2012.
 CNN Acquires Zite. [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://cnnpressroom.blogs.cnn.com/2011/08/30/cnnzite/}
 
+\bibitem{fulltext}
+Fulltext. [online], stav ze dne 24.4.2012.
+\urlprefix\biburl{http://www.adaptic.cz/znalosti/slovnicek/fulltext/}
+
 \bibitem{amazonrec}
 How does the Amazon Recommendation feature work? [online], stav ze dne
   21.4.2012.
@@ -74,6 +78,10 @@ Linden, G.; Jacobi, J.; Benson, E.: Collaborative recommendations using
 Liu, J.; Pedersen, E.; Dolan, P.: Personalized News Recommendation Based on
   Click Behavior. In \emph{2010 International Conference on Intelligent User
   Interfaces}, 2010.
+
+\bibitem{vitvarMq}
+Vitvar, T.: Lecture 5: Application Server Services. University Lecture, 2014,
+  stav ze dne 24.4.2012.
 
 \bibitem{wiki:longtail}
 Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;
