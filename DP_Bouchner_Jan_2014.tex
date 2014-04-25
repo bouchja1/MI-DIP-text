@@ -110,7 +110,7 @@ Tyto systémy lze dle způsobu práce rozdělit do dvou skupin.
 \section{Motivace} 	
 \label{sec:motivation}
 		
-	Představme si nyní jakéhosi rádce, který dokáže v každém okamžiku rozhodnout, co je za daných okolností nejvhodnější s tím, že to, o čem rádce rozhoduje, je volba algoritmu, kterým by si měl uživatel v danou chvíli nechat doporučit obsah. Pokud by uživatel dbal těchto rad, s největší pravděpodobností by obdržel vhodné doporučení a svou spokojenost by vyjádřil nějakou zpětnou vazbou (tím, že by klikl na doporučené položky nebo by jiným způsobem vyjádřil svůj zájem).
+	Představme si nyní jakéhosi rádce, který dokáže v každém okamžiku rozhodnout, co je za daných okolností nejvhodnější s tím, že to, o čem rádce rozhoduje, je volba algoritmu, kterým by si měl uživatel v danou chvíli nechat doporučit obsah. Pokud by uživatel dbal těchto rad, s největší pravděpodobností by obdržel vhodné doporučení a svou spokojenost by vyjádřil například tím, že by klikl myší na doporučené položky nebo by jiným způsobem vyjádřil svůj zájem o doporučený obsah.
 	
 	Dokud rádce explicitně nekomunikuje s uživatelem, neprovádí žádné operace a pouze vyčkává na okamžik, kdy bude vyzván k nějaké akci. V okamžiku, kdy je vyzván k tomu, aby uživateli doporučil obsah, je schopen ihned a bez dlouhé analýzy uskutečnit rozhodnutí.
 	
@@ -600,10 +600,105 @@ Aneb filtrování založené na položkách, které použila v roce 2001 jako pr
 \chapter{Adaptibilní systém}
 \label{chap:adapt}
 
-\section{Strojové učení}
+\section{Minimální teoretický základ}
+
+Ještě předtím, než se pustím do popisu strategie, která bude použita v implementaci systému, bude vhodné zopakovat některé pojmy týkající se strojového učení a teorie pravděpodobnosti. Jedná se o minimální základ potřebný k pochopení postupů popisovaných v této sekci.
+
+\subsection{Strojové učení}
+Strojové učení je vědecká disciplína (jedna z větví oboru umělé inteligence), jež se zabývá tím, jak se má počítač přizpůsobit určité situaci, aniž by byl pro danou situaci explicitně naprogramován. Detailněji v sekci~\ref{sec:machine}.
+
+\subsection{Agent}
+Agent je speciální autonomní program, který jedná samostatně a nezávisle bez vedení uživatele. Jeho úkolem je komunikovat s okolím a interagovat v závislosti na okolních podnětech. Dalšími důležitými vlastnostmi jsou schopnost příhodně reagovat na danou situaci a též proaktivně vykonávat činnost a dosahovat cíle prostřednictvím vlastní iniciativy. Jedná se o definici obecnou, ale pro naše potřeby zcela dostačující. Problematika agentů a agentních systémů je jinak samostatný obor spadající do oblasti umělé inteligence a jeho zkoumání by vydalo na další samostatnou závěrečnou práci. 
+
+\subsection{Zpětná vazba}
+Zpětnou vazbou je označován proces, ve kterém na základě obdržených informací (například při komunikaci s nějakým systémem) a reakcí na ně ovlivňujeme jejich budoucí podobu – část systémového výstupu lze použít jako vstup pro další činnost systému. Rozlišujeme dva typy reakcí, a to kladnou zpětnou vazbu a zápornou zpětnou vazbu. Téma má blízko k psychologickému zkoumání toho, jakým způsobem dokáže ovlivnit zapojení odměny a trestu lidské chování.
+
+\subsection{Teorie pravděpodobnosti}
+
+Nejprve uvedu několik pojmů z teorie pravděpodobnosti, se kterými budu v následujících podsekcích pracovat.
+
+\begin{description}
+	\item[Pravděpodobnostní prostor] prováděného náhodného pokusu je tvořen trojicí $(\Omega,\mathcal{F},P)$, kde:
+	\begin{itemize}
+		\item $\Omega$ je prostor elementárních jevů (např. čísla od jedné do šesti na šestistranné hrací kostce), kde elementárním jevem nazýváme libovolný možný výsledek $\omega \in \Omega$ 
+		\item $\mathcal{F}$ je množina náhodných jevů (potenční množina~\footnote{Potenční množina množiny $X$ je množina obsahující všechny podmnožiny množiny $X$} množiny $\Omega$)
+		\item $P$ je přiřazení pravděpodobnosti jednotlivým jevům z $\Omega$ ($P(\Omega)=1$)
+	\end{itemize}
+\end{description}
+
+\subsubsection{Náhodný jev}
+Náhodný jev $A$ je popisován jako výsledek náhodného pokusu. Příkladem jevu může být například hod mincí a pozorování, zda padla panna nebo orel. V tomto jevovém prostoru jsou zahrnuty celkem dva elementární jevy (hodnota panna a hodnota orel), jenž souvisejí s pokusem (pozorování výskytu elementárních jevů během házení).
+
+\subsubsection{Náhodná veličina}
+Jak vidno, výsledkem náhodného pokusu nemusí být číslo (v příkladu výše jsme měli dvě hodnoty po stranách mince), proto je vhodné těmto výsledkům kvůli matematickému zpracování čísla přiřazovat. Způsob přiřazení čísla výsledku náhodného pokusu se označuje jako \emph{náhodná veličina $X$}. Pro počítání padlých panen při opakovaném házení mincí by mohlo přiřazení vypadat například takto:
+
+\begin{itemize}
+	\item $X(panna) = 1$
+	\item $X(orel) = 0$
+\end{itemize}
+
+Náhodná veličina na pravděpodobnostním prostoru $(\Omega,\mathcal{F},P)$ je tedy funkce $X: \Omega \to R$, která každému $\omega \in \Omega$ přiřadí $X(\omega)$ a pro kterou platí podmínka měřitelnosti:
+
+\begin{center}
+$\{ X \leq x \} = \{ \omega \in \Omega: X(\omega) \leq x \} \in \mathcal{F}, \forall x \in R$
+\end{center}
+
+Dle typu se rozlišují náhodné veličiny diskrétní a spojité. Diskrétní náhodné veličiny mohou nabývat pouze konečného počtu hodnot z $R$ (například ročník studia), zatímco spojité náhodné veličiny nabývají v určitém intervalu libovolné reálné hodnoty (například čas potřebný k dokončení diplomové práce). 
+
+Pravděpodobnostní rozdělení náhodné veličiny určuje její distribuční funkce~\cite{pst1}. 
+
+\subsection{Distribuční funkce}
+Distribuční funkce náhodné veličiny $X$ je funkce $F: R \to \langle0,1\rangle$ definovaná vztahem 
+
+\begin{center}
+$F(x) = P(X \leq x) = P(\{ \omega \in \Omega: X(\omega) \leq x \})$.
+\end{center}
+
+Vyjadřuje tedy pravděpodobnost, že hodnota náhodné veličiny $X$ nabude hodnoty menší nebo rovné zadané hodnotě (libovolnému $x \in R$). Distribuční funkce určuje rozdělení pravděpodobnosti.
+
+\subsection{Kvantilová funkce (inverzní distribuční funkce)}
+
+Computes the quantile function of this distribution
+
+\subsubsection{Rozdělení pravděpodobnosti}
+Někdy se též označuje jako distribuce pravděpodobnosti náhodné veličiny $X$. 
+Rozdělení pravděpodobnosti každému jevu popsanému veličinou $X$ přiřazuje určitou pravděpodobnost. V diskrétním případě přiřazujeme pravděpodobnosti jednotlivým hodnotám (lze si představit jako samostatné body v grafu), ve spojitém případě pak intervalu hodnot náhodné veličiny. 
+
+Rozdělení pravděpodobnosti je celá řada, z diskrétních je známé například binomické ($n$ pokusů s rovnocennou pravděpodobností) či geometrické rozdělení. Ze spojitých například normální rozdělení, exponenciální rozdělení nebo beta rozdělení.
+
+\subsection{Beta rozdělení pravděpodobnosti}
+
+\subsection{Střední hodnota náhodné veličiny}
+
+beta nextMean
+Returns a random number from the distribution.
+   *
+   * @return A new sample from this distribution.
+
+\subsection{Kvantilová funkce (inverzní distribuční funkce)}
+
+Computes the quantile function of this distribution
+
+//sample from the bandits's priors, and select the largest sample (prior?)
+
+\subsection{Multi-armed Bandits}
+Jedná se o jeden z klasických učících problémů zasahující do teorie pravděpodobnosti. Herní strategie je podobná filosofii tradičního výherního automatu (představujícího \emph{one-armed strategii}) s tím rozdílem, že multi-armed varianta má více herních pák, a proto lze v každém kole pro jednu hru volit mezi více automaty. Detailněji v sekci~\ref{sec:multi}.
+
+
+
+you can sample from any of a finite number of distributions and your goal is to maximize the average value of the values that you get.
+ This can be cast into a number of practical settings in which you select which slot machine to put a quarter into, or you select which on-line ad to present to a user or you select which landing page to deliver to a user's browser should see when they visit a particular URL.
+ 
+ Obviously, at least one of the distributions you are picking from has a mean equal to the large mean of any alternative.  Any time you take a sample from a distribution that has a smaller mean, you fall behind the theoretical best, on average, that you could have achieved by picking from (one of) the best distributions.  The degree by which you fall behind is known as the regret that you incur.
+ 
+ The key to the multi-armed bandit problem is that you cannot know which distribution might have the largest mean.  This means that you have to sample all of the distributions in order to estimate their means, but this implies that you have to sample from the lesser distributions in order to determine that their are, in fact, inferior. 
+
+\section{Význam strojového učení v návrhu systému}
+\label{sec:machine}
 
 Jak vyplynulo z rešerše existujících řešení~\ref{chap:current} a analýzy~\ref{chap:analysis}, vzhledem k povaze řešeného problému je nutné zaměřit se na metody tzv. \emph{strojového učení}. 
-Jedná se o vědeckou disciplínu (jednu z větví oboru umělé inteligence), která se zabývá tím, jak se má počítač přizpůsobit určité situaci, aniž by byl pro danou situaci explicitně naprogramován. Metody strojového učení, které hledají generalizaci libovolných dat nebo slouží pro adaptaci existujícího systému na změny okolí, se používají ve všech oblastech informačních věd od analýzy snímků, analýzy DNA a textu, až po simulace chování člověka. 
+
+Metodami strojového učení lze například dosáhnout generalizace vstupních instancí na správné výsledky nebo adaptovat existující systém na změny okolí. Používají se ve všech oblastech informačních věd od analýzy snímků, analýzy DNA a textu, až po simulace chování člověka. 
 
 Typickým příkladem je vytvořit z dostupných dat model, který dokáže:
 
@@ -619,12 +714,14 @@ Algoritmy strojového učení dělíme do taxonomie (nadtříd a podtříd) zalo
 \begin{description}
   \item[Supervised learning]~\footnote{učení s učitelem} je typ učení, které se používá v případě, že máme k našim trénovacím instancím korektní výsledky. Pomocí kombinace trénovacích vstupních instancí a jejich požadovaných výsledků lze systém naučit na situaci, aby dokázal automaticky předpovídat výsledek pro každý další platný vstup.~\cite{aihorizon}
   \item[Unsupervised learning]~\footnote{učení bez učitele} je již ze samotné podstaty absence informace od učitele obtížným problémem. Učení bez učitele se používá pro analýzu pozorování (nebo dat), když není k dispozici informace od učitele, tj. trénovací multimnožina. Pozorovaná data se mají vysvětlit pomocí matematického modelu.~\cite{hlavac}
-  \item[Reinforcement learning]~\footnote{zpětnovazební učení nebo též učení posilováním} je oblast informatiky tykající se chování agentů~\footnote{TODO}. Jedná se o metodu, při které se agent učí, jakým způsobem má volit akce, aby nalezl optimální strategii pro dané prostředí. Jedná se o učení bez učitele. Agent sice dostává odezvu, ale přímo z prostředí, takže musí experimentovat a zjišťovat, které stavy jsou nějakým způsobem dobré, a kterým stavům je lepší se vyhnout. Průzkum probíhá na principu zpětné vazby v podobě odměny za akce dosahující cíle nebo trestu v opačném případě. Řeší se zde problém explorace vs. exploatace~\ref{sub:explo}. 
+  \item[Reinforcement learning]~\footnote{zpětnovazební učení nebo též učení posilováním} je oblast informatiky tykající se chování agentů. Jedná se o metodu, při které se agent učí, jakým způsobem má volit akce, aby nalezl optimální strategii pro dané prostředí. Jedná se o učení bez učitele. Agent sice dostává odezvu, ale přímo z prostředí, takže musí experimentovat a zjišťovat, které stavy jsou nějakým způsobem dobré, a kterým stavům je lepší se vyhnout. Průzkum probíhá na principu zpětné vazby v podobě odměny za akce dosahující cíle nebo trestu v opačném případě. Řeší se zde problém explorace vs. exploatace~\ref{sub:explo}. 
 \end{description}
 
 Za nejvhodnější algoritmus, který by byl schopen plnit požadavky definované na tuto práci, jsem zvolil algoritmus zpětnovazebního učení.
 
-Algoritmus začne ve stavu nevědomí, kdy neví nic o daných okolnostech a začíná nabývat vědomosti tím, že testuje systém. Tím, jak vstřebává data a vyhodnocuje výsledky, učí se, jaké chování je nejlepší.
+Rozlišujeme několik typů zpětnovazebního učení, například tzv. \emph{single-stage} (agent se snaží uplatňovat zpětnou vazbu ihned po každé provedené akci), oproti kterému stojí typ \emph{sekvenční} (agent uplatňuje zpětnou vazbu po obdržení série akcí). Dalšími typy jsou pak například \emph{pasivní} a \emph{aktivní} zpětnovazební učení přizpůsobující svůj vývoj na základě pevně dané strategie, respektive učení se a rozhodování o prováděných akcích za chodu systému~\cite{reinforcement}.
+
+Algoritmus zpětnovazebního učení začíná při svém spuštění ve stavu nevědomí, kdy neví nic o daných okolnostech a začíná nabývat své vědomosti postupným testováním systému. Postupující dobou běhu (a tím, jak vstřebává data a vyhodnocuje výsledky) se učí rozpoznat, jaké chování je nejlepší.
 
 \subsection{Online učení}
 
@@ -632,21 +729,14 @@ Navrhovaná strategie je též nazývána jako \emph{online učení}. Nutno zmí
 
 Z matematického hlediska má online učení propojení na klasické online algoritmy, teorii (opakovaných) her a teorii pravděpodobnosti. Díky těmto znalostem tak můžeme navrhovat pravděpodobností dynamické systémy, kterými lze modelovat složitá průmyslová zařízení nebo třeba výherní automat známý jako mnohoruký bandita (Multi-Armed Bandit).
 
-\section{Nezbytné základy z teorie pravděpodobnosti}
-
-Ještě předtím, než se pustím do vysvětlování strategie, která bude použita v implementaci systému, bude třeba zopakovat si některé pojmy a problémy z teorie pravděpodobnosti. 
-
-distribuční funkce, rozdělení pravděpodobnosti. kvanitily a tak, spojité náhodné veličiny, hustota, střední hodnota
-
-
 \section{Multi-armed Bandit algoritmus}
-
+\label{sec:multi}
 \url{http://tdunning.blogspot.cz/2012/10/references-for-on-line-algorithms.html}
 \url{http://tdunning.blogspot.cz/search?q=bandit}
 \url{http://camdp.com/blogs/multi-armed-bandits}
 \url{http://www.recsyswiki.com/wiki/Ensemble}
 
-The Multi-Armed Bandit Problem je jedním z klasických problémů online učení. Tato herní strategie je podobná tradičnímu hernímu automatu, který představuje one-armed strategii, ale mnohoruká varianta má více herních pák~\emph{V každém kole si lze pro hru vybírat mezi N automaty}. 
+Je to asi nějaký aktivní učení přes distributional estimates
 
 \subsection{Princip algoritmu}
 Strategii si lze představit tak, že stojíme před N výherními automaty (též nazývány jako bandité) a v každém kole máme možnost vybrat si jeden z nich, na kterém budeme hrát. Pravděpodobnosti výher u jednotlivých automatů jsou pro nás neznámé. 
@@ -800,8 +890,25 @@ bude li nějaká
 \chapter{Seznam použitých zkratek}
 % \printglossaries
 \begin{description}
-	\item[GUI] Graphical user interface
-	\item[XML] Extensible markup language
+	\item[IDC] 
+	\item[CTO]
+	\item[MIT]	
+	\item[ACM] Association for Computing Machinery	
+	\item[]	
+	\item[]	
+	\item[]	
+	\item[]	
+	\item[]							
+	\item[]
+	\item[]
+	\item[]
+	\item[]
+	\item[]
+	\item[]
+	\item[]
+	\item[]
+	\item[]
+	\item[]	
 \end{description}
 
 

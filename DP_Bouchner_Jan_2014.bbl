@@ -65,6 +65,11 @@ Almazro, D.; Shahatah, G.; Albdulkarim, L.; aj.: A Survey Paper on Recommender
 Anderson, C.: The Long Tail. [online], říjen 2004.
 \urlprefix\biburl{http://archive.wired.com/wired/archive/12.10/tail.html}
 
+\bibitem{pst1}
+Blažek, R.~B.; Kotecký, R.; Hrabáková, J.; aj.: BI-PST – Pravděpodobnost
+  a statistika, přednáška 3. [online], stav ze dne 24.4.2012.
+\urlprefix\biburl{https://edux.fit.cvut.cz/courses/BI-PST/_media/lectures/3_handout_pst-v2.pdf}
+
 \bibitem{slideshare:plista}
 Brodt, T.: Open Recommendation Platform. 2013, [Online; stav z 23. dubna 2014].
 \urlprefix\biburl{http://www.slideshare.net/d0nut/open-recommendation-platform}
@@ -74,10 +79,20 @@ Drachsler, H.: Recommender Systems and Learning Analytics in TEL. University
   Lecture, 2014, stav ze dne 24.4.2012.
 \urlprefix\biburl{http://www.slideshare.net/Drachsler/rec-sys-mupplelecturekmi}
 
+\bibitem{hlavac}
+Hlaváč, V.: Učení bez učitele. University Lecture, 2014, stav ze dne
+  24.4.2012.
+\urlprefix\biburl{http://cmp.felk.cvut.cz/~hlavac/Public/TeachingLectures/UceniBezUcitele.pdf}
+
 \bibitem{jacobi2006personalized}
 Jacobi, J.; Benson, E.; Linden, G.: Personalized recommendations of items
   represented within a database. Z\'a\v r\'\i{}~26 2006, uS Patent 7,113,917.
 \urlprefix\biburl{http://www.google.com/patents/US7113917}
+
+\bibitem{reinforcement}
+Jakob, M.: Reinforcement Learning. University Lecture, 2010, stav ze dne
+  24.4.2012.
+\urlprefix\biburl{https://cw.felk.cvut.cz/wiki/_media/courses/a3m33ui/prednasky/files/ui-2010-p11-reinforcement_learning.pdf}
 
 \bibitem{digitaluniverse}
 John~Gantz, D.~R.: Extracting Value from Chaos. [online], červen 2011.
@@ -102,5 +117,10 @@ Vitvar, T.: Lecture 5: Application Server Services. University Lecture, 2014,
 Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;
   stav z 19. dubna 2014].
 \urlprefix\biburl{http://en.wikipedia.org/w/index.php?title=Long_tail&oldid=603431399}
+
+\bibitem{aihorizon}
+aihorizon: Your Online Artificial Intelligence~Resource: Machine Learning, Part
+  I: Supervised and Unsupervised Learning. [online], stav ze dne 24.4.2012.
+\urlprefix\biburl{http://www.aihorizon.com/essays/generalai/supervised_unsupervised_machine_learning.htm}
 
 \end{thebibliography}

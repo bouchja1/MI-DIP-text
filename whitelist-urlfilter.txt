@@ -1,0 +1,297 @@
+# LinkedTV configuration file for white-listed urls.
+#
+# RBB White List - http://linkedtv.eu/wiki/index.php/RBB_White_List
+# SV White List - http://linkedtv.eu/wiki/index.php/Sound_and_Vision_White_List
+#
+# If you want to add resource you can do it in this way:
+#
+# Format:
+# Set prefix "R_" for urls which you want to have indexed as "rbb" in the Solr field called "domain_source"
+# or set prefix "S_" for urls which you want to have indexed as "sv" in the Solr field called "domain_source"
+#
+# then add url (without http or www)
+# example: R_rbb-online.de
+
+########################################################## RBB
+
+# RBB
+
+R_rbb-online.de
+
+#Radio
+
+R_antennebrandenburg.de
+R_inforadio.de
+R_radioberlin.de
+R_radioeins.de
+R_kulturradio.de
+R_fritz.de
+R_funkhauseuropa.de
+
+R_albaberlin.de
+R_bbg03.de
+
+# Swr
+
+R_swr.de
+R_swrmediathek.de
+
+# BR
+R_br.de/
+
+# HR
+
+R_hr-online.de
+
+# MDR
+
+R_mdr.de
+
+# NDR
+
+R_ndr.de
+
+# SR
+
+R_sr-online.de/
+
+# DW
+
+R_dw-world.de/
+R_dw.de/
+
+# Deutschland Radio
+
+R_dradio.de/
+
+# Radio Bremen
+
+R_radiobremen.de/
+
+# KI.KA
+
+R_kika.de/
+
+# Arte
+
+R_arte.tv/
+
+# 3sat
+
+R_3sat.de/
+
+# ARD
+
+R_ard.de/
+R_ardmediathek.de/
+
+# Das Erste
+R_daserste.de/
+R_checkeins.de/
+R_tagesschau.de/
+
+# ZDF
+
+R_zdf.de/
+R_heute.de/
+
+# YouTube
+
+R_youtube.com/user/ARD
+R_youtube.com/user/FRITZde
+R_youtube.com/user/tagesschau
+R_youtube.com/user/phoenix
+
+# Facebook
+
+R_facebook.com/fernsehen.rbb
+R_facebook.com/abendschau.rbb
+R_facebook.com/brandenburgaktuell.rbb
+R_facebook.com/zibb.rbb
+R_facebook.com/kontraste.rbb
+R_facebook.com/stilbruch.rbb
+R_facebook.com/rbbpraxis.rbb
+R_facebook.com/kesslersexpedition
+R_facebook.com/Fritz.de
+R_facebook.com/radioeins
+R_facebook.com/inforadio.rbb
+R_facebook.com/radioberlin.rbb
+R_facebook.com/rbbshop.rbb
+
+# IMDB
+
+R_imdb.de/
+
+# Wikipedia
+
+R_de.wikipedia.org/
+
+# Official Websites of regional institutions
+
+R_berlin.de
+R_potsdam.de
+R_brandenburg.de
+
+# (Regional) Sports Associations
+
+R_herthabsc.de/
+R_fc-union-berlin.de
+R_fcenergie.de/
+R_eisbaeren.de/
+R_istaf.de/
+R_olympiastadion-berlin.de/
+R_fuechse-berlin-reinickendorf.de/
+R_bmw-berlin-marathon.com
+R_ffc-turbine.de/
+R_velodrom.de/
+R_berlin-recycling-volleys.de/
+R_dfb.de/
+R_netzhoppers.org/
+R_lausitzring.de/
+R_kcpotsdam.de/
+
+# Regional Events
+
+R_karneval-berlin.de/
+R_baumbluete.de/
+R_berlinale.de/
+R_lange-nacht-der-museen.de/
+R_schloessernacht.eu/
+R_langenachtderwissenschaften.de/
+
+# Institutions in Berlin and Brandenburg
+
+R_gfz-potsdam.de/
+R_europa-uni.de/
+R_uni-potsdam.de
+R_hu-berlin.de
+R_fu-berlin.de/
+R_tu-cottbus.de/
+R_tu-berlin.de/
+R_s-bahn-berlin.de/
+R_bvg.de/
+R_vbbonline.de/
+R_studiobabelsberg.com/
+R_sanssoucis.de/
+R_spsg.de/
+R_unesco.de/
+
+# General Sources
+
+R_bundesregierung.de
+R_bpb.de
+R_bundesrat.de
+
+########################################################## SV
+
+# CONTENT AND METADATA
+
+S_opencultuurdata.nl/
+S_artcyclopedia.com/
+S_the-athenaeum.org/
+S_openimages.eu/
+S_oclc.org/
+S_europeana-triplestore.isti.cnr.it/
+S_europeana.eu/
+
+# VOCABULARIES
+
+S_getty.edu/
+
+# WEBSITES
+
+S_amsterdammuseum.nl/
+S_imdb.com/
+S_hermitage.nl/
+S_youtube.com/user/Museumkaart
+S_youtube.com/user/gettymuseum
+S_youtube.com/user/RMOpuntNL
+S_youtube.com/user/RijksmuseumAmsterdam
+
+#addition 20.6.2013
+
+S_worldcat.org/
+S_afrikamuseum.nl
+S_textielmuseum.nl
+S_louwmanmuseum.nl
+S_aviodrome.nl
+S_bonnefanten.nl
+S_catharijneconvent.nl
+S_coda-apeldoorn.nl
+S_continium.nl
+S_dordrechtsmuseum.nl
+S_drentsmuseum.nl
+S_escherinhetpaleis.nl
+S_franshalsmuseum.nl
+S_friesmuseum.nl
+S_galloromeinsmuseum.be
+S_motimuseum.nl
+S_groningermuseum.nl
+S_hotelspaander.nl
+S_jopiehuismanmuseum.nl
+S_kunsthalkade.nl
+S_kasteelgroeneveld.nl
+S_kasteelheeswijk.nl
+S_museumdefundatie.nl
+S_huisbergh.nl
+S_gemeentemuseumhelmond.nl
+S_royaldelft.com
+S_kmm.nl
+S_oorlogsmuseum.nl
+S_limburgsmuseum.nl
+S_louwmanmuseum.nl
+S_rolduc.com
+S_continium.nl
+S_militaireluchtvaartmuseum.nl
+S_muzee.be
+S_beeldenaanzee.nl
+S_museumbelvedere.nl
+S_boijmans.nl
+S_defensie.nl/
+S_depont.nl
+S_museumdrguislain.be
+S_museumdefundatie.nl
+S_museumhetvalkhof.nl
+S_twentsewelle.nl
+S_museummartena.nl
+S_museumspeelklok.nl
+S_twentsewelle.nl
+S_museumspeelklok.nl
+S_naturalis.nl
+S_nederlandsfotomuseum.nl
+S_paleishetloo.nl
+S_rijksmuseumtwenthe.nl
+S_rmo.nl
+S_hetscheepvaartmuseum.nl
+S_e-nemo.nl
+S_singerlaren.nl
+S_slotzeist.nl
+S_societeitdewitte.nl
+S_spoorwegmuseum.nl
+S_brugge.be/
+S_geschiedeniszeeland.nl/
+S_stedelijkmuseumalkmaar.nl
+S_sm-s.nl
+S_stedelijkmuseumschiedam.nl
+S_stedelijkmuseumzwolle.nl
+S_musea.sint-niklaas.be
+S_wereldmuseum.nl
+S_zeeuwsmuseum.nl
+S_zuiderzeemuseum.nl
+S_avro.nl
+
+R_morgenpost.de/
+R_whitehouse.gov/
+R_whitehousemuseum.org/
+R_tim-raue.com/
+R_krongut-bornstedt.de/
+R_spsg.de/
+R_berliner-mauer-gedenkstaette.de/
+R_stiftung-denkmal.de/
+R_deutschefluthilfe.de/
+
+S_wikidata.org
+
+
+
+
