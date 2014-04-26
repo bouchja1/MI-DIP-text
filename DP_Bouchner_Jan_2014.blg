@@ -18,45 +18,45 @@ Warning--to sort, need author or key in fulltext
 Warning--to sort, need author or key in pst2
 Warning--to sort, need author or key in pst3
 Warning--empty pages in googlenews
-You've used 27 entries,
+You've used 29 entries,
             3151 wiz_defined-function locations,
-            770 strings with 9248 characters,
-and the built_in function-call counts, 8196 in all, are:
-= -- 584
-> -- 195
+            779 strings with 9563 characters,
+and the built_in function-call counts, 8790 in all, are:
+= -- 626
+> -- 209
 < -- 0
-+ -- 105
-- -- 52
-* -- 390
-:= -- 840
-add.period$ -- 54
-call.type$ -- 27
-change.case$ -- 104
++ -- 111
+- -- 56
+* -- 416
+:= -- 912
+add.period$ -- 58
+call.type$ -- 29
+change.case$ -- 112
 chr.to.int$ -- 0
-cite$ -- 41
-duplicate$ -- 805
-empty$ -- 898
-format.name$ -- 57
-if$ -- 1812
+cite$ -- 43
+duplicate$ -- 863
+empty$ -- 962
+format.name$ -- 61
+if$ -- 1940
 int.to.chr$ -- 0
-int.to.str$ -- 27
-missing$ -- 189
-newline$ -- 117
-num.names$ -- 28
-pop$ -- 556
+int.to.str$ -- 29
+missing$ -- 203
+newline$ -- 125
+num.names$ -- 32
+pop$ -- 596
 preamble$ -- 1
-purify$ -- 78
+purify$ -- 84
 quote$ -- 0
-skip$ -- 290
+skip$ -- 306
 stack$ -- 0
-substring$ -- 185
-swap$ -- 340
+substring$ -- 199
+swap$ -- 364
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 108
+type$ -- 116
 warning$ -- 14
-while$ -- 28
-width$ -- 29
-write$ -- 242
+while$ -- 32
+width$ -- 31
+write$ -- 260
 (There were 14 warnings)

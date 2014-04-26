@@ -121,6 +121,11 @@ Vitvar, T.: Lecture 5: Application Server Services. University Lecture, 2014,
   stav ze dne 24.4.2012.
 \urlprefix\biburl{http://humla.vitvar.com/slides/mdw/lecture5-1p.pdf}
 
+\bibitem{pst5}
+Vychodil, V.: Pravděpodobnost a statistika: Normální rozdělení a
+  centrální limitní věta. [online], stav ze dne 26.4.2012.
+\urlprefix\biburl{http://vychodil.inf.upol.cz/kmi/pras/pr09.pdf}
+
 \bibitem{wiki:longtail}
 Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;
   stav z 19. dubna 2014].
@@ -130,5 +135,10 @@ Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;
 aihorizon: Your Online Artificial Intelligence~Resource: Machine Learning, Part
   I: Supervised and Unsupervised Learning. [online], stav ze dne 24.4.2012.
 \urlprefix\biburl{http://www.aihorizon.com/essays/generalai/supervised_unsupervised_machine_learning.htm}
+
+\bibitem{pst4}
+Černý, D.: Bayesovská statistika: klíč k porozumění vesmíru? [online],
+  stav ze dne 26.4.2012.
+\urlprefix\biburl{http://gchd.cz/fygyz/2012_2013/david_cerny-bayesovska_statistika.pdf}
 
 \end{thebibliography}

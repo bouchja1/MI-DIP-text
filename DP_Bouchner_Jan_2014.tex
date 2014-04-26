@@ -669,7 +669,7 @@ Rozdělení pravděpodobnosti je celá řada, z diskrétních je známé napří
 Beta rozdělení (${Beta}(\alpha, \beta)$) je spojité pravděpodobnostní rozdělení definované na intervalu $\langle0,1\rangle$. Rozdělení má dva vstupní parametry $\alpha$ a $\beta$ určující tvar. Rozdělení se používá k modelování chování náhodných veličin, které jsou omezené na konečné intervaly. 
 
 \subsection{Bayesovská statistika}
-Jedná se o moderní větev statistiky pracující s podmíněnou pravděpodobností. Základem bayesovské statistiky je známý Bayesův teorém (často označovaný jako Bayesova věta) vyjadřující pravděpodobnost hypotézy ($H_j$) v závislosti na datech ($D$) a případně modelu ($M$). Lze pomocí ni stanovit pravděpodobnost, aniž bychom měli známá fakta z minulosti (oproti klasickému statistickému přístupu). Oproti klasické statistice taktéž netestujeme hypotézy, ale děláme intervalové odhady. 
+Jedná se o moderní větev statistiky pracující s podmíněnou pravděpodobností. Základem bayesovské statistiky je známý Bayesův teorém (často označovaný jako Bayesova věta) vyjadřující pravděpodobnost hypotézy ($H_j$) v závislosti na datech ($D$) a případně modelu ($M$). Lze pomocí ni stanovit pravděpodobnost, aniž bychom měli známá fakta z minulosti (oproti klasickému statistickému přístupu). Oproti klasické statistice taktéž netestujeme hypotézy, ale provádíme odhady. 
 
 \subsubsection{Apriorní pravděpodobnost}
 Pravděpodobnost $P(H_j | M)$, označována jako \emph{prior}. Značí to, co víme nebo si myslíme předem, ještě před získáním dat (např. výsledky předchozích experimentů)~\cite{pst4}. Lze jí vyjádřit určitou míru nejistoty, například podíl voličů, kteří budou v budoucích volbách hlasovat pro nějakého konkrétního politika. 
@@ -680,18 +680,21 @@ Pravděpodobnost $P(H_j | D, M)$, označována jako \emph{posterior}. Udává v�
 Díky uvedeným pravidlům je možné s každou další objevenou skutečností zpřesňovat pravděpodobnost výchozí hypotézy. 
 
 \subsection{Náhodný výběr}
-Náhodného výběru se využívá k rozpoznání charakteru rozdělení z toho, že opakované pokusy dávají za stejných podmínek různé výsledky odpovídající hodnotám jednotlivých realizací náhodné veličiny. Jedná se o uspořádanou $n$-tici ($X_1$, $X_2$, \ldots, $X_n$) náhodných veličin $X_i$, $1 \leq i \leq n$, které jsou nezávislé a mají stejné rozdělení~\cite{pst3}.
+Náhodného výběru se využívá k rozpoznání charakteru rozdělení z toho, že opakované pokusy dávají za stejných podmínek různé výsledky odpovídající hodnotám jednotlivých realizací náhodné veličiny. Jedná se o uspořádanou $n$-tici ($X_1$, $X_2$, \ldots, $X_n$) náhodných veličin $X_i$, $1 \leq i \leq n$, které jsou nezávislé a mají stejné rozdělení pravděpodobnosti~\cite{pst3}.
+
+Zatímco \textbf{náhodným výběrem} označujeme $n$-prvkovou posloupnost nezávislých náhodných veličin $X_1$, $X_2$, \ldots, $X_n$, pojmem \textbf{výběr} budeme značit $n$-prvkovou posloupnost reálných čísel $x_1$, $X_2$, \ldots, $X_n$~\cite{pst5}. 
+
+\subsection{Statistická inference}
+Při statistickém usuzování uvažujeme pojem \emph{populace}, kdy populací myslíme náhodnou veličinu s jejím rozdělením pravděpodobnosti. Úkolem statistické inference je pak s použitím \textbf{výběru} z populace \emph{odhadnout parametr}, což je číselná hodnota platící pro celou populaci (může jí být například střední hodnota, rozptyl a tak podobně). Odhadem je myšleno právě získání číselné hodnoty nebo intervalu hodnot z výběru. Cílem je, aby měl odhad blízko skutečné hodnotě parametru.
+
+Rozlišujeme dva typy odhadů, a to bodový, kdy odhadem je jedna hodnota, a intervalový, kdy je odhadem interval hodnot~\cite{pst5}. 
 
 \subsection{Multi-armed Bandits}
 Jedná se o jeden z klasických učících problémů zasahující do teorie pravděpodobnosti. Herní strategie je podobná filosofii tradičního výherního automatu (představujícího \emph{one-armed strategii}) s tím rozdílem, že multi-armed varianta má více herních pák, a proto lze v každém kole pro jednu hru volit mezi více automaty. Detailněji v sekci~\ref{sec:multi}.
 
+S pojmy vysvětlenými výše souvisí strategie v tom smyslu, že pokud je použito bayesovské varianty, prováděním výběru z konečného počtu rozdělení lze maximalizovat průměrnou hodnotu z hodnot, které dostáváme. 
 
-you can sample from any of a finite number of distributions and your goal is to maximize the average value of the values that you get.
- This can be cast into a number of practical settings in which you select which slot machine to put a quarter into, or you select which on-line ad to present to a user or you select which landing page to deliver to a user's browser should see when they visit a particular URL.
- 
- Obviously, at least one of the distributions you are picking from has a mean equal to the large mean of any alternative.  Any time you take a sample from a distribution that has a smaller mean, you fall behind the theoretical best, on average, that you could have achieved by picking from (one of) the best distributions.  The degree by which you fall behind is known as the regret that you incur.
- 
- The key to the multi-armed bandit problem is that you cannot know which distribution might have the largest mean.  This means that you have to sample all of the distributions in order to estimate their means, but this implies that you have to sample from the lesser distributions in order to determine that their are, in fact, inferior. 
+Toho lze využít například k cílenému doporučování reklamy nebo výběru personalizované úvodní stránky pro uživatele vstupujícího na naše stránky.
 
 \section{Význam strojového učení v návrhu systému}
 \label{sec:machine}

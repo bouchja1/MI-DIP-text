@@ -242,6 +242,23 @@ url="ftp://math.feld.cvut.cz/pub/prucha/ubmi/predn/u12.pdf",
 howpublished = "[online]"
 }
 
+@misc{pst4,
+author = "David Černý",
+title = {Bayesovská statistika: klíč k porozumění vesmíru?},
+note="stav ze dne 26.4.2012",
+url="http://gchd.cz/fygyz/2012_2013/david_cerny-bayesovska_statistika.pdf",
+howpublished = "[online]"
+}
+
+@misc{mff,
+author = {Vychodil, Vilém},
+  Institution = {Charles University in Prague},
+title = {Pravděpodobnost a statistika: Normální rozdělení a centrální limitní věta},
+note="stav ze dne 26.4.2012",
+url="http://vychodil.inf.upol.cz/kmi/pras/pr09.pdf",
+howpublished = "[online]"
+}
+
 @misc{aihorizon,
 author = {aihorizon: Your Online Artificial Intelligence Resource},
 title = {Machine Learning, Part I: Supervised and Unsupervised Learning},
