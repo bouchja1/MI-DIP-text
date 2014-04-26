@@ -701,7 +701,7 @@ Toho lze využít například k cílenému doporučování reklamy nebo výběru
 
 Jak vyplynulo z rešerše existujících řešení~\ref{chap:current} a analýzy~\ref{chap:analysis}, vzhledem k povaze řešeného problému je nutné zaměřit se na metody tzv. \emph{strojového učení}. 
 
-Metodami strojového učení lze například dosáhnout generalizace vstupních instancí na správné výsledky nebo adaptovat existující systém na změny okolí. Používají se ve všech oblastech informačních věd od analýzy snímků, analýzy DNA a textu, až po simulace chování člověka. 
+Těmito metodami učení lze například dosáhnout generalizace vstupních instancí na správné výsledky nebo adaptovat existující systém na změny okolí. Používají se ve všech oblastech informačních věd od analýzy snímků, analýzy DNA a textu, až po simulace chování člověka. 
 
 Typickým příkladem je vytvořit z dostupných dat model, který dokáže:
 
@@ -727,6 +727,7 @@ Rozlišujeme několik typů zpětnovazebního učení, například tzv. \emph{si
 Algoritmus zpětnovazebního učení začíná při svém spuštění ve stavu nevědomí, kdy neví nic o daných okolnostech a začíná nabývat své vědomosti postupným testováním systému. Postupující dobou běhu (a tím, jak vstřebává data a vyhodnocuje výsledky) se učí rozpoznat, jaké chování je nejlepší.
 
 \subsection{Online učení}
+\label{sub:online}
 
 Navrhovaná strategie je též nazývána jako \emph{online učení}. Nutno zmínit, že slovem online zde není míněno něco ve smyslu internetu, ale ve smyslu neustále se vyvíjející aktualizace dat. Učící algoritmus v každém kole vykoná nějakou akci, přijme zpětnou vazbu a připíše si daný zisk či ztrátu.
 
@@ -734,61 +735,67 @@ Z matematického hlediska má online učení propojení na klasické online algo
 
 \section{Multi-armed Bandits algoritmus}
 \label{sec:multi}
-\url{http://tdunning.blogspot.cz/2012/10/references-for-on-line-algorithms.html}
-\url{http://tdunning.blogspot.cz/search?q=bandit}
-\url{http://camdp.com/blogs/multi-armed-bandits}
-\url{http://www.recsyswiki.com/wiki/Ensemble}
-
-Je to asi nějaký aktivní učení přes distributional estimates
 
 \subsection{Princip algoritmu}
-Strategii si lze představit tak, že stojíme před N výherními automaty (též nazývány jako bandité) a v každém kole máme možnost vybrat si jeden z nich, na kterém budeme hrát. Pravděpodobnosti výher u jednotlivých automatů jsou pro nás neznámé. 
+Základ algoritmu si lze představit tak, že hráč stojí před $N$ výherními automaty (ty jsou podle dle strategie nazývány jako bandité) a v každém kole má možnost vybrat si jeden, na kterém bude hrát.
 
-Formálně lze strategii popsat jako skupinu výnosových (reward) distribučních funkcí B = {R1, …, RK}, kde K je počet banditů. Každý bandita má tedy přiřazenu jednu distribuční funkci, jež vyjadřuje pravděpodobnost úspěchu. 
+Strategii je možné formálně popsat jako skupinu výnosových distribučních funkcí $B = \{ A_1, A_2, \ldots, A_N \}$, kde $N$ je počet banditů (každý z banditů má tedy přiřazenu právě jednu distribuční funkci vyjadřující pravděpodobnost úspěchu). 
 
-Zpočátku nemá hráč žádnou informaci o průběhu hry ani o rozložení pravděpodobnosti úspěchu napříč bandity. Tím, že v každém kole vybíráme vždy jen jednoho banditu, se snažíme navrhnout strategii pro maximalizaci celkové výhry.
+Hráč nemá zpočátku žádnou informaci o průběhu hry ani o rozložení pravděpodobnosti úspěchu mezi bandity a maximalizace výhry může dosáhnout pouze tím, že v každém kole vybírá vždy jednoho z banditů.
 
-Samozřejmě, že kdybychom znali banditu s největší pravděpodobností výhry, potom bychom jej vždy vybírali, čímž bychom maximalizovali výhry. Naším úkolem bude tedy nalézt nejlepšího banditu a to co nejrychleji, jak je to jen možné.
+Kdyby hráč věděl, u kterého z banditů je největší pravděpodobnost výhry, samozřejmě by vždy vybíral právě tohoto. Pravděpodobnosti výher u jednotlivých automatů jsou ale neznámé, úkolem hráče tedy bude nalézt nejlepšího banditu, a to tak nejrychleji, jak jen to je možné.
 
-K návrhu strategie nám pomáhá to, že jednotlivé bandity nejdříve testujeme, abychom získali nutné znalosti. Poté už se lze zaměřovat na páky, které nám poskytují největší zužitkované znalosti. 
+Návrh strategie je o tom, že jednotliví bandité jsou nejdříve testování za účelem získání nutných znalostí o systému. Poté je už možné zaměřit se na páky, které poskytují díky zužitkovaným znalostem největší odměnu. 
 
-Úkol trochu komplikuje stochastická povaha banditů. Suboptimální bandita může vracet spoustu výher, což by nás mohlo přimět uvěřit, že právě tento bandita je velice štědrý. Podobně ale naopak nejlepší bandita může vracet spoustu proher. Měli bychom tedy pořád zkoušet i lůzry, nebo se na ně vykašlat?
+Úkol je komplikován stochastickou povahou banditů. Suboptimální bandita může vracet spoustu výher, což by nás mohlo přimět uvěřit, že právě tento štědrý bandita je pro nás tím nejlepším. Podobně ale naopak nejlepší bandita může zpočátku dávat spoustu proher.
 
-Co je dalším problémem, tak pokud najdeme banditu, který vrací “docela dobré” výsledky, měli bychom toto zachovat a nadále rozvíjet naše “docela dobré” skóre, nebo bychom měli zkoušet i další bandity v naději, že nalezneme ještě lepšího? Tomuto se říká exploration vs. exploitation dilema.
+Na místě jsou dvě otázky:
 
-NEMOJE
-Nechť u1, …, uK jsou průměrné hodnoty výnosových distribučních funkcí. Hráč aktivně zatáhne za páku každé kolo a sleduje příslušný výnos. jeho úkolem je maximalizovat součet těchto výnosů. Oželení (regret) po T kolech je definováno jako rozdíl mezi součtem výnosů příslušných výnosových funkcí optimální strategie a součtu získaných výnosů (VZOREC VIZ kybernář)
+\begin{itemize}
+	\item Měli bychom dávat stále šanci i banditům, u kterých často prohráváme, nebo na ně zapomenout a zkoušet štěstí vedle?
+	\item Pokud nalezneme banditu, který vrací \emph{docela dobré} výsledky, měli bychom u něj již zůstat a nadále rozvíjet své skóre, nebo se vyplatí zkoušet i nadále další bandity v naději, že se povede nalézt ještě lepšího?
+\end{itemize}
+
+Toto dilema je odborně nazýváno jako explorace proti exploataci.
 
 \subsection{Exploration vs. Exploitation}
 \label{sub:explo}
 
-Pokud agent zkouší nové akce, jejichž výsledek nezná, jde o exploraci, pokud provádí akce, o kterých ví, že mu přinášejí užitek, jde o exploataci. Problém je, že optimální strategie nemůže být ani čistě explorační ani čistě exploatační - hledá se vyvážený kompromis. 
+Pokud agent zkouší nové akce, jejichž výsledek nezná, jde o exploraci, pokud provádí akce, o kterých ví, že mu přinášejí užitek, jde o exploataci. 
 
-\begin{itemize}
-  \item \textbf{Explorace} Nacházení nových oblastí hledání - náhodné procházky, nevyužívá předchozích znalostí
-  \item \textbf{Exploatace} Využití stávajících znalostí, uvíznutí v lokálních extrémech, rigidita
-\end{itemize}	
+\begin{description}
+  \item[Explorace] Nacházení nových oblastí hledání, kdy agent nevyužívá předchozích znalostí.
+  \item[Exploatace] Agent využívá stávajících znalostí, hrozí ale uvíznutí v lokálních extrémech.
+\end{description}	
+
+Problém je, že optimální strategie nemůže být ani čistě explorační ani čistě exploatační, čili se hledá vyvážený kompromis. 
 
 \section{Bayesian Bandits}
 
-Ukazuje se ale, že nalézt optimální řešení je neuvěřitelně obtížné. A může trvat léta, než je celkové řešení vyvinuto. Existuje totiž také spousta přibližně optimálních řešení, které jsou docela dobré. 
+Ukazuje se, že nalézt optimální řešení je poměrně obtížné a může trvat i léta, než se k němu systém dopracuje. Existuje ale i spousta \emph{přibližně optimálních} řešení.
 
-Právě to jedno z mnoha takových řešení (které lze velice dobře škálovat) je známo jako Bayesian Bandits a bude se jednat o online algoritmus, o kterém už padla řeč v sekci \ref{} a má přímou souvislost s zpětnovazebním učením (reinforcement learning).
+Jedním z takových řešení jsou Bayesian Bandits, online algoritmus, o kterém již padla řeč v sekci \ref{sub:online}. Algoritmus má přímou souvislost s učením založeným na zpětné vazbě.
 
-NEMOJE PRUBEH ALGORITMU
-Bayesovské řešení začíná stanovením pravděpodobností výhry pro každého banditu z předchozích zkušeností. V našem případě jsou tyto pravděpodbnosti od 0 do 1. 
+Bayesovské řešení začíná stanovením pravděpodobností výhry z předchozích zkušeností pro každého banditu. Hodnoty jsou v rozmezí $\langle0,1\rangle$. Jak bylo již řečeno, každý bandita je reprezentován jednou distribuční funkcí.
 
-Bandité jsou uspořádaná $n-tice$ ($X_1$, $X_2$, \ldots, $X_n$) náhodných veličin $X_i$, $1 \leq i \leq n$, které jsou nezávislé a mají stejné rozdělení.
+V každém kole, kterých je v případě mého návrhu nekonečně (standardní použití Multi-armed Bandits pracuje s konečným počtem stavů) probíhá následující proces:
 
-V každém kole:
-Vzorkování náhodné veličiny Xb 
-Výběr bandity s největším vzorkem (např. vyber banditu B = argmax Xb)
-Pozorujme výsledek vybrání bandity B a updatujme priors (takový ty prostě věci z dřívějšího vyhodnocování - pokusy a výhry)
-Návrat na 1)
+\begin{description}
+	\item pro každého z banditů proveď výběr náhodné veličiny $X_b$ z apriorní pravděpodobnosti (počty pokusů, výher, \ldots) bandity $b$
+	\item ze získaných dat vyber banditu s největší hodnotou, tedy $B = argmax X_b$	
+	\item pozoruj výsledek dosažený vybraným banditou $B$ a proveď mu aktualizaci apriorní pravděpodobnosti	
+	\item vrať se k prvnímu kroku
+\end{description}
 
-A to je vše. Z výpočetního hlediska algoritmus zahrnuje vzorkování z N distribucí. Počáteční priors jsou Beta(alfa = 1, beta = 1) (uniformní rozdělení) a pozorovaná náhodná veličina X (výhra či prohra, zakódována jako 1, respektive 0) je Binomialní, proto posterior (po provedení pokusu) je Beta(alfa = 1 + X, beta = 1 + 1 - X)
+Počáteční apriorní pravděpodobností je u každého bandity rozdělení ${Beta}(\alpha = 1, \beta = 1)$ (uniformní rozdělení).
 
-Takže pokud bychom měli odpovědět na otázku z dřívějška (zda vybírat i ty lůzry), tak tento algoritmus navrhuje to, abychom nevyřazovali lůzry, ale měli bychom je vybírat s klesajícím tempem, jakmile nashromáždíme dost jistoty, že existují lepší bandité. Vyplývá to z podstaty, že vždy existuje nenulová šance, že lůzr dosáhne statusu B, ale pravděpodobnost této události se snižuje s tím, jak hrajeme více kol. 
+Pozorovaná náhodná veličina $X$ (výhra či prohra, tedy 1 nebo 0) je binomická. Aposteriorní pravděpodobnost se po provedení pokusu přizpůsobuje novému rozdělení
+
+\begin{center}
+${Beta}(\alpha = 1 + X, \beta = 1 + 1 - X)$.
+\end{center}
+
+Pokud tedy chceme odpovědět na dřívější otázku, zda bychom měli dávat stále šanci i banditům, u kterých často prohráváme, nebo na ně zapomenout a zkoušet štěstí vedle, tento algoritmus navrhuje, abychom prohrávající bandity přímo nevyřazovali, ale vybírali stále méně častěji, jakmile získáme dostatek jistoty, že existují i lepší bandité. Opravdu tedy existuje nenulová šance, že prohrávající dosáhne statusu $B$, ale pravděpodobnost této šance se snižuje s rostoucím počtem odehraných kol. 
 
 TODO možná nějaký obrázky (grafy) jak se to pulls vyvíjí (všechno je v článku na campdb)
 
@@ -797,14 +804,6 @@ Všimněme si, že se zase až tolik nestaráme o nějaké závěry nad skrytým
 To je třeba vidět v tom grafu níže, že distribuce červeného bandity je velice široká (což představuje neznalost o tom, jaká by skrytá pravděpodobnost vůbec mohla být), ale jsme si docela dobře jistí, že není nejlepší, algoritmus se tedy rozhodne tohoto banditu ignorovat.
 
 ZPETNA VAZBA
-Multi-armed bandit je příklad Single-stage typu Reinforcement learningu (viz \url{https://cw.felk.cvut.cz/wiki/_media/courses/a3m33ui/prednasky/files/ui-2010-p11-reinforcement_learning.pdf}). Tedy snažíme se po jedné akci ihned uplatňovat feedback. Každá akce v multi-armed je nazývána jako jedna hra. Po každé hře at obdržíme (stochastický) reward t:
-E[rt|at] = Q*(at) a z dlouhodobého hlediska je právě cílem maximalizovat reward.
-“To solve the multi-armed bandit problem, one must explore a variety of
-actions and exploit the best of them”
-
-Q*(a) je “action-value odhad - v čitateli součet rewardu z jednotlivých výběrů / počet výběrů
-
-Pak je ještě “greedy akce” ve hře t - at* = argmax Qt(a) 
 
 Zajímavé poznámky
 V případě jakéhokoliv úspěchu doporučení by se měla navýšit někde hodnota pravděpodobnosti, se kterou bude algoritmus znovu vybrán. V případě neúspěchu pak by se tato pravděpodobnost měla exponenciálně snížit. V další iteraci už se bude systém rozhodovat s touto pravděpodobnsotí mezí objevováním a zužitkováním. V případě zužitkování se vybírá z algoritmů, co již předtím něco vynesly. To je ta strategie learnable - u banditů to funguje tak, že poměr mezi objevováním a zužitkováním se mění v čase a ne v závislosti na předchozích výsledcích. Algoritmy jsou rozděleni ve svých dimenzích a každé té dimenzi je přiřazena určitá pravděpodbnost definující míru úspěšnosti nalezení toho, že tenhle algoritmus je fakt nejlepší. V případě, že uživatelé zužitkovávají tyto znalosti, tak si poté vybírají algoritmus, který má maximální pravděpodobnost z dané množiny. 
@@ -896,21 +895,20 @@ bude li nějaká
 	\item[CTO]
 	\item[MIT]	
 	\item[ACM] Association for Computing Machinery	
-	\item[]	
-	\item[]	
-	\item[]	
-	\item[]	
-	\item[]							
-	\item[]
-	\item[]
-	\item[]
-	\item[]
-	\item[]
-	\item[]
-	\item[]
-	\item[]
-	\item[]
-	\item[]	
+	\item[ICWSM]	
+	\item[ICML]	
+	\item[IBM]	
+	\item[REST]	
+	\item[API]							
+	\item[TCP]
+	\item[DBMS]
+	\item[NoSQL]
+	\item[MQ]
+	\item[JVM]
+	\item[JSON]
+	\item[URL]
+	\item[ORP]
+	\item[HTTP]
 \end{description}
 
 
