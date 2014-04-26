@@ -602,7 +602,7 @@ Aneb filtrování založené na položkách, které použila v roce 2001 jako pr
 
 \section{Minimální teoretický základ}
 
-Ještě předtím, než se pustím do popisu strategie, která bude použita v implementaci systému, bude vhodné zopakovat některé pojmy týkající se strojového učení a teorie pravděpodobnosti. Jedná se o minimální základ potřebný k pochopení postupů popisovaných v této sekci.
+Ještě předtím, než se pustím do popisu strategie, která bude použita v implementaci systému, zopakuji zde některé pojmy týkající se strojového učení, teorie pravděpodobnosti a statistiky. Jedná se o minimální základ potřebný k pochopení postupů popisovaných dále v této sekci. 
 
 \subsection{Strojové učení}
 Strojové učení je vědecká disciplína (jedna z větví oboru umělé inteligence), jež se zabývá tím, jak se má počítač přizpůsobit určité situaci, aniž by byl pro danou situaci explicitně naprogramován. Detailněji v sekci~\ref{sec:machine}.
@@ -613,7 +613,7 @@ Agent je speciální autonomní program, který jedná samostatně a nezávisle 
 \subsection{Zpětná vazba}
 Zpětnou vazbou je označován proces, ve kterém na základě obdržených informací (například při komunikaci s nějakým systémem) a reakcí na ně ovlivňujeme jejich budoucí podobu – část systémového výstupu lze použít jako vstup pro další činnost systému. Rozlišujeme dva typy reakcí, a to kladnou zpětnou vazbu a zápornou zpětnou vazbu. Téma má blízko k psychologickému zkoumání toho, jakým způsobem dokáže ovlivnit zapojení odměny a trestu lidské chování.
 
-\subsection{Teorie pravděpodobnosti}
+\subsection{Základy teorie pravděpodobnosti}
 
 Nejprve uvedu několik pojmů z teorie pravděpodobnosti, se kterými budu v následujících podsekcích pracovat.
 
@@ -656,34 +656,34 @@ $F(x) = P(X \leq x) = P(\{ \omega \in \Omega: X(\omega) \leq x \})$.
 
 Vyjadřuje tedy pravděpodobnost, že hodnota náhodné veličiny $X$ nabude hodnoty menší nebo rovné zadané hodnotě (libovolnému $x \in R$). Distribuční funkce určuje rozdělení pravděpodobnosti.
 
-\subsection{Kvantilová funkce (inverzní distribuční funkce)}
+\subsection{Kvantilová funkce}
+Podobně jako distribuční funkce, i kvantilová funkce se týká rozdělení pravděpodobnosti. Lze ji považovat za funkci inverzní k distribuční funkci, neboť zatímco distribuční funkce $y = F(x)$ vyjadřuje pravděpodobnost, s jakou bude hodnota náhodné veličiny $X$ menší nebo rovna $x \in R$, výsledkem kvantilové funkce $x = F(y)^{-1}$ je hodnota $x$, pro jakou je výsledek náhodného pokusu se zadanou pravděpodobností $y$ menší nebo roven $x$. Jinými slovy hledáme taková $x$, kterým odpovídá určitá hodnota distribuční funkce $F(x)$. Hodnoty této funkce jsou tedy \emph{kvantily}~\cite{pst2}.
 
-Computes the quantile function of this distribution
-
-\subsubsection{Rozdělení pravděpodobnosti}
+\subsection{Rozdělení pravděpodobnosti}
 Někdy se též označuje jako distribuce pravděpodobnosti náhodné veličiny $X$. 
 Rozdělení pravděpodobnosti každému jevu popsanému veličinou $X$ přiřazuje určitou pravděpodobnost. V diskrétním případě přiřazujeme pravděpodobnosti jednotlivým hodnotám (lze si představit jako samostatné body v grafu), ve spojitém případě pak intervalu hodnot náhodné veličiny. 
 
 Rozdělení pravděpodobnosti je celá řada, z diskrétních je známé například binomické ($n$ pokusů s rovnocennou pravděpodobností) či geometrické rozdělení. Ze spojitých například normální rozdělení, exponenciální rozdělení nebo beta rozdělení.
 
-\subsection{Beta rozdělení pravděpodobnosti}
+\subsection{Beta rozdělení}
+Beta rozdělení (${Beta}(\alpha, \beta)$) je spojité pravděpodobnostní rozdělení definované na intervalu $\langle0,1\rangle$. Rozdělení má dva vstupní parametry $\alpha$ a $\beta$ určující tvar. Rozdělení se používá k modelování chování náhodných veličin, které jsou omezené na konečné intervaly. 
 
-\subsection{Střední hodnota náhodné veličiny}
+\subsection{Bayesovská statistika}
+Jedná se o moderní větev statistiky pracující s podmíněnou pravděpodobností. Základem bayesovské statistiky je známý Bayesův teorém (často označovaný jako Bayesova věta) vyjadřující pravděpodobnost hypotézy ($H_j$) v závislosti na datech ($D$) a případně modelu ($M$). Lze pomocí ni stanovit pravděpodobnost, aniž bychom měli známá fakta z minulosti (oproti klasickému statistickému přístupu). Oproti klasické statistice taktéž netestujeme hypotézy, ale děláme intervalové odhady. 
 
-beta nextMean
-Returns a random number from the distribution.
-   *
-   * @return A new sample from this distribution.
+\subsubsection{Apriorní pravděpodobnost}
+Pravděpodobnost $P(H_j | M)$, označována jako \emph{prior}. Značí to, co víme nebo si myslíme předem, ještě před získáním dat (např. výsledky předchozích experimentů)~\cite{pst4}. Lze jí vyjádřit určitou míru nejistoty, například podíl voličů, kteří budou v budoucích volbách hlasovat pro nějakého konkrétního politika. 
 
-\subsection{Kvantilová funkce (inverzní distribuční funkce)}
+\subsubsection{Aposteriorní pravděpodobnost}
+Pravděpodobnost $P(H_j | D, M)$, označována jako \emph{posterior}. Udává výsledek celého snažení, tedy pravděpodobnost naší hypotézy v závislosti na předchozích znalostech (prior) a současně nových datech~\cite{pst4}.
 
-Computes the quantile function of this distribution
+Díky uvedeným pravidlům je možné s každou další objevenou skutečností zpřesňovat pravděpodobnost výchozí hypotézy. 
 
-//sample from the bandits's priors, and select the largest sample (prior?)
+\subsection{Náhodný výběr}
+Náhodného výběru se využívá k rozpoznání charakteru rozdělení z toho, že opakované pokusy dávají za stejných podmínek různé výsledky odpovídající hodnotám jednotlivých realizací náhodné veličiny. Jedná se o uspořádanou $n$-tici ($X_1$, $X_2$, \ldots, $X_n$) náhodných veličin $X_i$, $1 \leq i \leq n$, které jsou nezávislé a mají stejné rozdělení~\cite{pst3}.
 
 \subsection{Multi-armed Bandits}
 Jedná se o jeden z klasických učících problémů zasahující do teorie pravděpodobnosti. Herní strategie je podobná filosofii tradičního výherního automatu (představujícího \emph{one-armed strategii}) s tím rozdílem, že multi-armed varianta má více herních pák, a proto lze v každém kole pro jednu hru volit mezi více automaty. Detailněji v sekci~\ref{sec:multi}.
-
 
 
 you can sample from any of a finite number of distributions and your goal is to maximize the average value of the values that you get.
@@ -729,7 +729,7 @@ Navrhovaná strategie je též nazývána jako \emph{online učení}. Nutno zmí
 
 Z matematického hlediska má online učení propojení na klasické online algoritmy, teorii (opakovaných) her a teorii pravděpodobnosti. Díky těmto znalostem tak můžeme navrhovat pravděpodobností dynamické systémy, kterými lze modelovat složitá průmyslová zařízení nebo třeba výherní automat známý jako mnohoruký bandita (Multi-Armed Bandit).
 
-\section{Multi-armed Bandit algoritmus}
+\section{Multi-armed Bandits algoritmus}
 \label{sec:multi}
 \url{http://tdunning.blogspot.cz/2012/10/references-for-on-line-algorithms.html}
 \url{http://tdunning.blogspot.cz/search?q=bandit}
@@ -775,8 +775,7 @@ Právě to jedno z mnoha takových řešení (které lze velice dobře škálova
 NEMOJE PRUBEH ALGORITMU
 Bayesovské řešení začíná stanovením pravděpodobností výhry pro každého banditu z předchozích zkušeností. V našem případě jsou tyto pravděpodbnosti od 0 do 1. 
 
-Prior a posterior by Verča
-"před provedením pokusu" - např. pravděpodobnost, že hodím sudý číslo na kostce je 1/2, a "aposteriori" je po provedení pokusu - nedřív uděláš pokus - to se používa třeba u Bayesova vzorce. ale tý tabulce upřímně moc nerozumím... to prior má bejt asi jakože to, co předpokládáš, že bys měl mít a to posterior je, jak to jakože "odhadneš" třeba  zdat - jakože pokusem
+Bandité jsou uspořádaná $n-tice$ ($X_1$, $X_2$, \ldots, $X_n$) náhodných veličin $X_i$, $1 \leq i \leq n$, které jsou nezávislé a mají stejné rozdělení.
 
 V každém kole:
 Vzorkování náhodné veličiny Xb 

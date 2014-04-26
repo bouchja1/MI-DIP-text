@@ -207,7 +207,7 @@ howpublished = "[online]"
 @misc{itemcf,
 author = {Dhoha Almazro and Ghadeer Shahatah and Lamia Albdulkarim and Mona Kherees and Romy Martinez and Lamia Albdulkarim and William Nzoukou},
 title = {A Survey Paper on Recommender Systems},
-note="stav ze dne 24.4.2012",
+note="stav ze dne 26.4.2012",
 url="http://arxiv.org/pdf/1006.5278v4.pdf",
 howpublished = "[online]"
 }
@@ -215,16 +215,30 @@ howpublished = "[online]"
 @misc{pst0,
 author = "Rudolf B. Blažek and Roman Kotecký and Jitka Hrabáková and Daniel Vašata",
 title = {BI-PST – Pravděpodobnost a statistika, přednáška 1},
-note="stav ze dne 24.4.2012",
+note="stav ze dne 25.4.2012",
 url="https://edux.fit.cvut.cz/courses/BI-PST/_media/lectures/1_handout_pst.pdf",
 howpublished = "[online]"
 }
 
 @misc{pst1,
-author = "Rudolf B. Blažek, Roman Kotecký, Jitka Hrabáková, Daniel Vašata",
+author = "Rudolf B. Blažek and Roman Kotecký and Jitka Hrabáková and Daniel Vašata",
 title = {BI-PST – Pravděpodobnost a statistika, přednáška 3},
-note="stav ze dne 24.4.2012",
+note="stav ze dne 26.4.2012",
 url="https://edux.fit.cvut.cz/courses/BI-PST/_media/lectures/3_handout_pst-v2.pdf",
+howpublished = "[online]"
+}
+
+@misc{pst2,
+title = {Kvantily},
+note="stav ze dne 26.4.2012",
+url="http://www-troja.fjfi.cvut.cz/~limpouch/sigdat/pravdh/node8.html",
+howpublished = "[online]"
+}
+
+@misc{pst3,
+title = {Náhodný výběr},
+note="stav ze dne 26.4.2012",
+url="ftp://math.feld.cvut.cz/pub/prucha/ubmi/predn/u12.pdf",
 howpublished = "[online]"
 }
 
