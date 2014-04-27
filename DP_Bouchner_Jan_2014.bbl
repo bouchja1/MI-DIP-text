@@ -82,6 +82,11 @@ Blažek, R.~B.; Kotecký, R.; Hrabáková, J.; aj.: BI-PST – Pravděpodobnost
 Brodt, T.: Open Recommendation Platform. 2013, [Online; stav z 23. dubna 2014].
 \urlprefix\biburl{http://www.slideshare.net/d0nut/open-recommendation-platform}
 
+\bibitem{cassdoc}
+DataStax: Architecture in brief | DataStax Cassandra 2.0 Documentation.
+  [online], stav ze dne 27.4.2012.
+\urlprefix\biburl{http://www.datastax.com/documentation/cassandra/2.0/cassandra/architecture/architectureIntro_c.html}
+
 \bibitem{zeromq1}
 Dennis, J.: ZeroMQ: Super Sockets. [online], stav ze dne 27.4.2012.
 \urlprefix\biburl{http://www.slideshare.net/j2d2/zeromq-super-sockets-by-j2-labs}

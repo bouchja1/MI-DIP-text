@@ -879,10 +879,6 @@ Já osobně jsem se pro účely Recommeng systému rozhodl využít čistou Java
 
 \subsection{Úložiště dat}
 
-\subsubsection{Apache Cassandra}
-\textbf{Apache Cassandra}
-
-
 \subsubsection{Apache Solr}
 \textbf{Apache Solr}~\footnote{\url{https://lucene.apache.org/solr}} je populární~\footnote{Viz seznam serverů využívajících služeb Solr \url{https://wiki.apache.org/solr/PublicServers}} open-source platforma pro vyhledávání napsaná v programovacím jazyce Java. Jejími charakteristickými vlastnosti jsou podpora pro fulltextové vyhledávání, fasetové vyhledávání (analogie ke konstrukci GROUP BY v RDBMS), dobrá škálovatelnost pomocí kešování a distribuovaného vyhledávání, využívání vyhledávací konstrukce \emph{more like this}, o které bude řeč v sekci~\ref{sec:alg}, a také například tzv. \emph{near real-time indexing}~\footnote{\url{https://cwiki.apache.org/confluence/display/solr/Near+Real+Time+Searching}} (dokumenty je možné vyhledávat téměř ihned po jejich zaindexování).
 
@@ -931,6 +927,19 @@ Ukázka reprezentace dokumentu ve výsledku vyhledávání pomocí Apache Solr v
 Formu jejich spolupráce lze popsat tak, že Apache Solr nabízí k vyhledávání RESTful API, za kterým je skryto a voláno JAVA API knihovny Lucene. Díky tomu je možné pomocí protokolu HTTP komunikovat se Solr z jakékoliv platformy napsané v jakémkoliv programovacím jazyce. 
 
 K integraci Apache Solr s dalšími aplikacemi je možné vybírat ze spousty nástrojů a knihoven~\footnote{\url{http://wiki.apache.org/solr/IntegratingSolr}}. Pro účely mé aplikace psané v programovacím jazyce Java jsem si zvolil klientskou aplikaci \textbf{SolrJ}~\footnote{\url{http://wiki.apache.org/solr/Solrj}} s rozhraním pro vyhledávání, přidávání a aktualizaci indexu. 
+
+\subsubsection{Apache Cassandra 2.0}
+\textbf{Apache Cassandra 2.0}~\footnote{\url{http://cassandra.apache.org}} je open-source distribuovaný DBMS navržený pro obsluhu velkého množství dat. Z hlediska datového modelu je Cassandra jakýmsi hybridem mezi key-value (pod 1 klíčem je uložena 1 hodnota) a column-oriented databázemi. V dokumentaci~\cite{cassdoc} se lze dočíst, že jde o row-oriented databázi.
+
+Základem modelu je \emph{column family} (analogie tabulky v RDBMS), jež je složena z řádků a sloupců. Každý řádek má unikátní identifikátor ve formě klíče – každý řádek obsahuje více sloupců. Sloupce mají jméno, hodnotu a časovou značku. Výhodou oproti RDBMS přístupu je to, že rozdílné řádky ze stejné column family nemusí sdílet stejnou množinu sloupců – do jedné nebo více řádek lze totiž v libovolný čas zapsat jakýkoliv sloupec.
+
+Vzhledem k tomu, že jedním z vyzdvihovaných případů užití databáze je uchovávání časových snímků, rozhodl jsem se ji experimentálně zapojit do vytvářeného Recommeng systému. Ještě předtím jsem však detailněji zkoumal možnost použití jiné NoSQL databáze, a to \textbf{Redis}. 
+
+Redis je klasickou key-value databází uchovávající data primárně v paměti. Postupným vývojem se jeho funkcionalita propracovala k tomu, že pod jeden klíč je nyní možné uložit několik datových struktur (např. množiny a asociativní pole). Vzhledem k ukládání dat do paměti disponuje značnou rychlostí, navíc jej lze dle konfigurace nastavit tak, aby se obsah paměti průběžně ukládal na disk pro potřeby snadného obnovení dat v případě pádu aplikace.
+
+Jeho zapojení do aplikace jsem zvažoval ve fázi zkoumání, jakým způsobem bude v adaptibilním systému řešen failover dat. Po následném návrhu datového modelu pro ukládání časových snímků stavu aplikace jsem však sáhl po použití Apache Cassandra jako po lepší z nabízených variant pro budoucí potřeby práce (rozsahové dotazy, vizualizace vývoje systému apod.). 
+
+Velkým benefitem je podpora Cassandra Query Language (CQL), dotazovacího jazyka umožňujícího vytvářet podobné konstrukty, jaké nabízí jazyk SQL. CQL je nyní k dispozici ve verzi 3.1 a s pomocí \textbf{DataStax Java Driver 2.0} mohu snadno manipulovat s databází přímo ze své aplikace. 
 
 \subsection{Ostatní použité technologie}
 
@@ -1046,6 +1055,9 @@ router asynchrone obsluhuje *REQ sockets, muze obsluhovat take dealera sockety
 \subsection{Adaptibilní systém}
 \subsubsection{Parametrizace}
 volba parametrů, ať už těch, co ovlivňují tresty nebo třeba úložiště (redis...)
+
+\subsubsection{Pravidelné ukládání časových snímků}
+\url{http://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-using-environment-specific-cron-expressions-with-the-scheduled-annotation/}
 
 \subsection{Sada algoritmů}
 \label{sec:alg}
