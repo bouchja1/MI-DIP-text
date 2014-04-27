@@ -26,6 +26,8 @@
 \newcommand{\tg}{\mathop{\mathrm{tg}}} %cesky tangens
 \newcommand{\cotg}{\mathop{\mathrm{cotg}}} %cesky cotangens
 
+\setcounter{tocdepth}{2}
+
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % ODTUD DAL VSE ZMENTE
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
@@ -340,7 +342,7 @@ Lze definovat i tzv. \textbf{nefunkční požadavky} specifikující vlastnosti 
 \begin{itemize}
 	\item Systém bude postaven na platformě Java.
 	\item Pro uchování informací o uživatelích, položkách a jejich vzájemné interakci bude využita platforma pro vyhledávání v textu Apache Solr.
-	\item Rozhraní systému pro komunikaci s klientem bude navrženo a implementováno v podobě služeb REST (vychází ze zadání).
+	\item Systém bude umožňovat přístup aplikacím třetích stran prostřednictvím RESTful webových služeb (vychází ze zadání).
 	\item Systém bude postaven tak, aby se dal snadno parametrizovat. 
 	\item Systém bude připraven na situaci, že jej bude využívat více uživatelů současně.
 	\item Systém poběží jako samostatná aplikace na serveru naslouchající na volném TCP portu. Veškerá komunikace s ní bude probíhat formou zasílaných zpráv.
@@ -397,7 +399,7 @@ Na aplikačním serveru poběží dvě aplikace.
 	(viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 1}) Aplikace bude mít na starosti obsluhu klientských požadavků na systém prováděných prostřednictvím protokolu HTTP. Zároveň bude disponovat sadou algoritmů, které lze použít pro doporučení obsahu. Dále bude aplikace obstarávat komunikační režii s druhou aplikací běžící na aplikačním serveru (\emph{Web Application 2}), kterou je platforma pro vyhledávání v textu – Apache Solr.
 
 	\item[Apache Solr]
-	(viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 2}) Přítomnost této aplikace vychází z nefunkčních požadavků. Apache Solr funguje jako samostatná komponenta umožňující fulltextové vyhledávání~\footnote{\emph{Obecné označení pro vyhledávače fungující na základě porovnávání fráze se všemi ostatními slovy v daném dokumentu. Fulltext je tedy souhrn algoritmů, které dokáží z daného dokumentu vytvořit podrobnou statistiku výskytu jednotlivých pojmů a tu zanést do databáze (říkáme, že dokument naindexují). Při vyhledávání pak algoritmy fulltextu porovnají hledané klíčové slovo s touto databází.}~\cite{fulltext}} nad dokumenty. K indexování a vyhledávání Solr používá knihovnu Apache Lucene (detaily v kapitole~\ref{chap:impl}).
+	(viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 2}) Přítomnost této aplikace vychází z nefunkčních požadavků. Apache Solr funguje jako samostatná komponenta umožňující fulltextové vyhledávání (detaily v kapitole~\ref{chap:impl}).
 \end{description}
 
 \subsubsection{Databáze}
@@ -406,7 +408,7 @@ Kvůli potřebě ukládání průběžného stavu aplikace (časové snímky) a 
 
 \subsubsection{Reccomeng Application}
 
-Komunikaci s aplikací bude umožňovat zapojení systému pro zprávy (Messaging System) s využitím fronty zpráv (Message Queue). Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
+Komunikaci s aplikací bude umožňovat systém pro zprávy (Messaging System) s využitím fronty zpráv (Message Queue). Toto řešení je nasnadě kvůli očekávání většího množství žádostí směřujících na systém a snadnější škálovatelnosti aplikace. Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
 
 Producenti zpráv (klienti využívající aplikaci) vytvářejí zprávy, které jsou zasílány do fronty. Zprávy jsou z fronty postupně odebírány konzumenty, kteří mají jejich zpracování na starosti. Výhodou je časová nezávislost mezi producenty zpráv a jejich konzumenty – producent tak může zasílat zprávy i tehdy, když žádný z producentů není k dispozici. Zprávy pak existují ve frontě, dokud se o jejich zpracování konzument nepřihlásí.
 
@@ -699,9 +701,9 @@ Toho lze využít například k cílenému doporučování reklamy nebo výběru
 \section{Význam strojového učení v návrhu systému}
 \label{sec:machine}
 
-Jak vyplynulo z rešerše existujících řešení~\ref{chap:current} a analýzy~\ref{chap:analysis}, vzhledem k povaze řešeného problému je nutné zaměřit se na metody tzv. \emph{strojového učení}. 
+Jak vyplynulo z rešerše existujících řešení~\ref{chap:current} a analýzy~\ref{chap:analysis}, vzhledem k povaze řešeného problému je nutné zaměřit se na metody \emph{strojového učení}. 
 
-Těmito metodami učení lze například dosáhnout generalizace vstupních instancí na správné výsledky nebo adaptovat existující systém na změny okolí. Používají se ve všech oblastech informačních věd od analýzy snímků, analýzy DNA a textu, až po simulace chování člověka. 
+Těmito metodami učení lze dosáhnout generalizace vstupních instancí na správné výsledky nebo adaptovat existující systém na změny okolí. Používají se ve všech oblastech informačních věd od analýzy snímků, analýzy DNA a textu, až po simulace chování člověka. 
 
 Typickým příkladem je vytvořit z dostupných dat model, který dokáže:
 
@@ -715,8 +717,8 @@ Typickým příkladem je vytvořit z dostupných dat model, který dokáže:
 Algoritmy strojového učení dělíme do taxonomie (nadtříd a podtříd) založené na požadovaném výsledku nebo typu vstupu, jenž je k dispozici během trénování stroje. Algoritmů je celá řada, bude tedy vhodné zmínit zde alespoň ty nejtypičtější. 
 
 \begin{description}
-  \item[Supervised learning]~\footnote{učení s učitelem} je typ učení, které se používá v případě, že máme k našim trénovacím instancím korektní výsledky. Pomocí kombinace trénovacích vstupních instancí a jejich požadovaných výsledků lze systém naučit na situaci, aby dokázal automaticky předpovídat výsledek pro každý další platný vstup.~\cite{aihorizon}
-  \item[Unsupervised learning]~\footnote{učení bez učitele} je již ze samotné podstaty absence informace od učitele obtížným problémem. Učení bez učitele se používá pro analýzu pozorování (nebo dat), když není k dispozici informace od učitele, tj. trénovací multimnožina. Pozorovaná data se mají vysvětlit pomocí matematického modelu.~\cite{hlavac}
+  \item[Supervised learning]~\footnote{učení s učitelem} je typ učení, které se používá v případě, že máme k našim trénovacím instancím korektní výsledky. Pomocí kombinace trénovacích vstupních instancí a jejich požadovaných výsledků lze systém naučit na situaci, aby dokázal automaticky předpovídat výsledek pro každý další platný vstup. Využití nachází například v oblastech rozpoznávání řeči či detekci spamu.~\cite{aihorizon}
+  \item[Unsupervised learning]~\footnote{učení bez učitele} je již ze samotné podstaty absence informace od učitele obtížným problémem. Učení bez učitele se používá pro analýzu pozorování (nebo dat), když není k dispozici informace od učitele, tj. trénovací multimnožina. Pozorovaná data se mají vysvětlit pomocí matematického modelu. Používá se v oblasti rozpoznávání vzorů.~\cite{hlavac}
   \item[Reinforcement learning]~\footnote{zpětnovazební učení nebo též učení posilováním} je oblast informatiky tykající se chování agentů. Jedná se o metodu, při které se agent učí, jakým způsobem má volit akce, aby nalezl optimální strategii pro dané prostředí. Jedná se o učení bez učitele. Agent sice dostává odezvu, ale přímo z prostředí, takže musí experimentovat a zjišťovat, které stavy jsou nějakým způsobem dobré, a kterým stavům je lepší se vyhnout. Průzkum probíhá na principu zpětné vazby v podobě odměny za akce dosahující cíle nebo trestu v opačném případě. Řeší se zde problém explorace vs. exploatace~\ref{sub:explo}. 
 \end{description}
 
@@ -819,51 +821,197 @@ Pokud rate menší než 1, algoritmus bude zapomínat předchozí výsledky rych
 \chapter{Realizace}
 \label{chap:impl}
 
-Jednou z mnoha výzev pro někoho, kdo se snaží vybudovat doporučovací systém, je to, že je velice těžké dopředu říct, zda budou naše předpovědi dost přesné. Alespoň do té doby, dokud je nezačneme dělat a nebudeme pozorovat, jak často naši uživatelé přijímají naše návrhy. Je zde obrovský prostor možností (možných metod), z čeho vybírat. 
-
-Pro implementaci aplikace byly použity technologie uvedené níže.
+Tato kapitola se zaměřuje na popis programátorských principů následovaných při realizaci systému, stejně tak popisuje technologie použité při implementaci a vzniklé výsledné řešení.
 
 \section{Principy a technologie}
 \label{sec:sysanalys}
 
-\subsection{Síťová komunikace a fronta zpráv}
-ZeroMQ
+K implementaci aplikace byly použity principy a technologie uvedené níže.
 
-\subsection{REST}
+\subsection{RESTful API}
 
-\subsection{Aplikační server}
+\subsubsection{REST}
+\textbf{REpresentational State Transfer (REST)} je architektonický styl definující určitá pravidla a vlastnosti návrhu API webových služeb orientovaných na zdroje. REST je silně založen na architektuře Klient-Server (server poskytuje přístup ke zdrojům, klient k nim může přistupovat a modifikovat je) a k jeho realizaci je možné využít protokolu HTTP (takovou realizaci pak nazýváme jako RESTful). Role protokolu HTTP zde není nikterak náhodná, neboť autorem REST není nikdo jiný než Roy Fielding, jenž je u protokolu HTTP podepsaný jako spoluautor~\cite{Fielding:2000:ASD:932295}. 
 
-\subsection{Databáze}
+Díky protokolu HTTP lze stanovit mnoho vlastností návrhu, například přítomnost adresovatelných zdrojů, kdy je každý zdroj adresovatelný pomocí Uniform Resource Identifier (URI). RESTful pro manipulaci se svými zdroji používá HTTP metody (v základu GET, POST, PUT, DELETE, ale i další, například OPTIONS či PATCH). Další vlastností je užívání standardních stavových kódů~\footnote{Definici všech stavových kódů viz \url{http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html}.} HTTP (typicky 2xx, 3xx, 4xx, 5xx) v odpovědi na žádost či bezestavová komunikace.
+
+Data mohou být reprezentována v rozličných formátech jako XML, JSON či YAML.
+
+Padla zde zmínka o bezestavosti. Aplikační servery určené pro běh aplikací jsou dvojího typu – stavové a bezestavové. Rozdíl je v uchovávání stavu aplikace během komunikace a mezi jednotlivými připojeními. V případě REST uvažujeme bezestavovost a k vyjádření přechodů mezi stavy aplikace používáme odkazy. Tento princip je nazývána jako Hypertext as the Engine of Application State (HATEOAS). 
+
+\subsubsection{Jersey (JAX-RS)}
+\textbf{Java API for RESTful Web Services (JAX-RS)}~\footnote{https://jax-rs-spec.java.net} je standard definovaný v Java Specification Request 311~\footnote{https://jcp.org/en/jsr/detail?id=311}. Jedná se o specifikaci pro RESTful webové služby implementované v programovacím jazyce Java. Pomocí JAX-RS lze s využíváním anotací jednoduše a přehledně definovat sémantiku jednotlivých tříd a jejich metod z hlediska využití v architektuře REST. Příklady anotací jsou \emph{@Path(relativni\_cesta)} pro specifikaci relativní cesty zdroje, \emph{@GET} či \emph{@POST} specifikující typ žádosti nebo třeba \emph{@QueryParam} pro přiřazení parametru HTTP dotazu k hodnotě parametru příslušné metody třídy.
+
+Pro účely implementace rozhraní systému Recommeng jsem zvolil vzhledem k předchozím zkušenostem referenční implementaci tohoto standardu v podobě frameworku \textbf{Jersey 2.x}. 
+
+\subsection{Fronta zpráv a síťová komunikace}
+
+\subsubsection{ØMQ}
+\textbf{ØMQ (ZeroMQ)}~\footnote{http://zeromq.org} je vysoce výkonná~\footnote{Viz výkonnostní testy na oficiální stránce \url{http://zeromq.org/results:_start}.} síťová knihovna napsaná v jazyce C++ vhodná k nasazení v distribuovaných a vícevláknových aplikacích vyžadujících velkou škálovatelnost. S jejím využitím lze poměrně snadno navrhnout komplexní komunikační systém. Ke komunikaci užívá socketů~\footnote{Socket je mechanismus, kterým je možno zprostředkovat lokální čí vzdálenou komunikaci dvou uzlů, která má charakter klient/server~\cite{socket}.}. Duchovním otcem a spoluautorem knihovny je slovenský expert na oblast messaging middleware Martin Sústrik~\footnote{\url{http://250bpm.com/contact}}.
+
+Hned na úvod je nutné sdělit, že se nejedná o klasický messaging system (message-oriented middleware) typu Apache ActiveMQ~\footnote{\url{http://activemq.apache.org}} a další jemu podobné. Takové systémy jsou většinou hotová řešení připravená k okamžitému nasazení a integraci s dalšími službami, zatímco filosofie ZeroMQ je jiná.
+
+ZeroMQ je tedy multiplatformní knihovna určená k programovému využití (nabízí podporu více než 30 programovacích jazyků~\footnote{TODO}). Pomocí jednoduchého socketového API umožňuje programátorovi sestavit si vlastní messaging system dle svého nejlepšího uvážen. Programátor využívá ze strany API veškerou podporu usnadňující práci se sítí a s trochou nadsázky lze prohlásit, že se stará pouze o zasílání zpráv. Sama socketová komunikace je výrazně zjednodušena od komunikace přes raw sockety (kde se musí průběžně krmit socketový buffer). Navíc nám dává kompletní svobodu v tom, jakým způsobem zakódujeme naši zprávu (JSON, BSON nebo jakýkoliv vlastní navržený formát).
+
+Podporovány jsou čtyři protokoly pro komunikaci~\cite{zeromq1}:
+
+\begin{description}
+	\item[tcp] jako síťově založený přenos (procesy na jedné síti)
+	\item[inproc] alias model komunikace vláken uvnitř jednoho procesu
+	\item[ipc] alias model komunikace mezi procesy (procesy out-of-box)
+	\item[multicast]	komunikující skrze PGM~\footnote{\url{http://tools.ietf.org/html/rfc3208}}.
+\end{description}
+
+Knihovna také nabízí základní messaging patterns nabízející různé formy práce, ať už se jedná o doručování zpráv na jednotlivé uzly, mapování uzlů na vlákna, procesy, filosofii zpracování zasílaných zpráv či umisťování zpráv do fronty~\footnote{\url{http://zguide.zeromq.org/page:all\#Messaging-Patterns}}. Každý vzor určuje jistou síťovou topologii.
+
+Vestavěnými vzory jsou:
+
+\begin{itemize}
+	\item Request-reply
+	\item Pub-sub
+	\item Pipeline		
+	\item Exclusive pair
+\end{itemize}
+
+Nejvhodnějším vzorem pro mou práci je vzor Request-reply, jehož konkrétní použití a vysvětlení, proč byl zvolen právě on, následuje záhy v sekci \nameref{sec:impl}. Ostatní vzory nemá smysl v rámci této práce popisovat.
+
+Já osobně jsem se pro účely Recommeng systému rozhodl využít čistou Java implementaci této knihovny v podobě knihovny jeroMQ~\footnote{\url{https://github.com/zeromq/jeromq}}, která z výkonnostního hlediska za původním řešením zaostává jen nepatrně~\footnote{Viz srovnávací testy \url{https://github.com/zeromq/jeromq/wiki/Perfomance}.}.
+
+\subsection{Úložiště dat}
+
+\subsubsection{Apache Cassandra}
+\textbf{Apache Cassandra}
+
+
+\subsubsection{Apache Solr}
+\textbf{Apache Solr} je serverová webová aplikace, pomocí které lze provádět fulltextové vyhledávání nad dokumenty. Pro indexaci a vyhledávání využívá knihovnu Apache Lucene a pomocí knihovny SolrJ nabízí pohodlnou komunikaci z prostředí jakéhokoliv podporovaného programovacího jazyka. 
 
 \url{http://is.muni.cz/th/256499/fi_m/thesis_sikora.pdf}
 
-\subsection{Vyhledávací platforma}
+\subsection{Ostatní použité technologie}
 
-\subsection{Doporučování}
-mahout
+\subsubsection{Apache Mahout}
+\textbf{Apache Mahout}~\footnote{\url{https://mahout.apache.org}} je knihovna napsaná v programovacím jazyce Java, jež poskytuje implementaci rozličných technik z oblasti strojového učení:
 
-\section{Popis implementace}
+\begin{itemize}
+	\item \textbf{shlukování (clustering)} – položky nacházejících se v určitých třídách (například webové stránky či novinové články) jsou organizovány do skupin tak, že položky v těchto skupinách jsou si vzájemně podobné
+	\item \textbf{klasifikace (classification)} – učení se ze stávajících kategorizací a zařazování neklasifikovaných položek do nejvhodnější kategorie
+	\item \textbf{doporučování (recommendation)}
+	\item \textbf{často se vyskytující skupiny položek (frequent itemset mining)} – analýza položek v rámci nějaké skupiny (například nákupní košík) a identifikace, které položky se nejčastěji vyskytují pohromadě
+\end{itemize}
+
+Pro tyto techniky realizuje příslušné algoritmy jako například kolaborativní filtrování, k-means, náhodné lesy, skryté markovské modely a další. Některé algoritmy jsou připraveny pro běh v distribuovaném módu s využitím paradigmatu Map/Reduce, některé pak v lokálním módu (samotný Mahout je založen na Apache Hadoop, ale lze jej pohodlně využívat i bez něj)~\cite{mahouttut}. Mahout poskytuje též knihovny pro obecné matematické operace (zaměřené hlavně na oblast statistiky) a kolekce~\footnote{\url{https://mahout.apache.org/users/basics/mahout-collections.html}}. 
+
+Využít jej pro potřeby své práce jsem se rozhodl poté, co jsem na něj narazil v projektu Mendeley během zkoumání existujících řešení doporučovacích systémů. 
+
+\subsubsection{Spring Framework}
+Při tvorbě každého nového Java projektu od základu je dobré zamyslet se nad možností využití některého z mnoha frameworků a dalších užitečných nástrojů, s jejichž pomocí si lze do značné míry usnadnit proces vývoje. Díky dobrým zkušenostem z dřívějších projektů jsem zvolil open-source framework pro tvorbu moderních enterprise aplikací \textbf{Spring}~\footnote{\url{http://projects.spring.io/spring-framework}}. 
+
+Jeho výhodami jsou snadná konfigurovatelnost, podpora dependency injection, rozšiřitelnost a také integrace s jinými frameworky. V mém případě to byla integrace s frameworkem Jersey, kterou jsem využil při implementaci RESTful API.
+
+\subsubsection{Apache Tomcat}
+\textbf{Apache Tomcat} je známý open-source webový server a servletový kontejner. Jedná se o oficiální referenční implementaci technologií Java Servlet a Java Server Pages (JSP). Na serveru mohou běžet uživatelské servlety (programy napsané v Javě), které umí zpracovávat požadavky zasílané pomocí HTTP protokolu a tímtéž protokolem na ně odpovídat. Apache Tomcat zde slouží jako zásobník servletů starající se o jejich spouštění, běh, ukončování a podobně.
+
+\subsubsection{Správa závislostí}
+Často slýchaným pojmem z úst mnoha vývojářů v programovacím jazyce Java je tzv. \emph{classpath hell}. V podstatě jde o problémy spojené s načítáním programových tříd. V dnešní době existuje spousta nástrojů schopných tento problém efektivně řešit používáním správně projektové struktury, sestavovacích nástrojů a nástrojů pro správu závislostí. Jmenujme například Apache Ant společně s Apache Ivy, Gradle nebo třeba Apache Maven.
+
+Nástroj \textbf{Apache Maven} jsem využil při implementaci všech komponent aplikace Recommeng.
+
+\section{Popis realizace adaptibilního systému}
 \label{sec:impl}
 
-\section{Server}
+\subsection{Vrstva pro obsluhu zpráv}
+Následující text popisuje postup, jakým jsem realizoval vrstvu pro obsluhu zpráv pomocí síťové knihovny ZeroMQ. Postup by se dal shrnout do třech bodů:
 
-\subsection{Parametrizace}
+\begin{itemize}
+	\item rozhodnutí o komunikačním protokolu
+	\item definice síťové infrastruktury
+	\item výběr vzoru pro zasílání zpráv (messaging pattern)
+\end{itemize}
+
+\subsubsection{Komunikační protokol}
+V prvním kroku bylo nutné rozhodnout o tom, jakým způsobem bude probíhat přenos dat směrem k aplikaci a naopak. Má volba padla na síťově založený přenos přes \textbf{TCP} z toho důvodu, že dle návrhu architektury má adaptibilní systém běžet na vlastním serveru a uživatelé navazovat spojení zvenčí mimo server. 
+
+\subsubsection{Infrastruktura}
+Dále bylo nutné definovat, jakým způsobem budou vzájemně propojeny odlišné komponenty systému. Vyšel jsem z nativní povahy Klient-Server architektury, kde server zastupuje roli stabilnější komponenty v síti. Bude tedy zastávat roli BIND a přijímat spojení na socketu na specifikovaném portu. Klienti jsou dynamičtější, přiřadíme jim proto roli CONNECT a budou se připojovat k socketu.
+
+TODO obrázek z visio KLIENT - fronta - SERVER
+
+Zároveň jsem mezi ně umístil prostředníka, ke kterému se mohou jak klient, tak i server připojit. Tímto krokem jsem si navíc ulehčil práci, neboť používáním této komponenty odpadá potřeba řešit další logiku aplikace starající se o seznam připojených peerů. 
+
+V případě messaging patternu REQ/RESP se prostředník nazývá fronta.
+
+\subsubsection{Zasílání zpráv}
+Zbývá ještě specifikovat tok zpráv. Z požadavků na systém vyplývala v podstatě jediná možnost volby vzoru, a to obousměrný, stavově založený \emph{Request Reply} vzor s podporou vyvažování zátěže (load balancing). Toto paradigma je známé z většiny typů serverů
+
+TODO POPIS Z 
+
+\url{http://nichol.as/zeromq-an-introduction}
+a
+\url{https://docs.google.com/document/d/1Aqpz4JjIsz_YXll8RPzItv4CAbugCnIvyicnZc5Qq8s/edit#}
+
+a tady je multithreading a ZMQ
+\url{http://zguide.zeromq.org/page:all#Multithreading-with-MQ}
+\\
+
+TODO format zasilani zprav
+
+\subsubsection{Vícevláknový server}
+\begin{figure}\centering
+	\includegraphics[width=0.8\textwidth]{obr/multithreadingServer.png}
+ 	\caption[Vícevláknový server s využitím ROUTER a DEALER.]{Vícevláknový server s využitím ROUTER a DEALER. Zdroj: \cite{mtserver}}\label{fig:mtserver}
+\end{figure}	
+
+Ja budu pouzivat vzor: XREQ/XREP
+dela asynchronni komunikaci
+XREQ je historicky jmeno pro dealera, dealer asynchrone odesila to *REP  sockets, muze odeslat na XREP (router) sockety take
+
+XREP je historicke jmeno pro router
+router asynchrone obsluhuje *REQ sockets, muze obsluhovat take dealera sockety
+
+\begin{verbatim}
+    // Prepare our context and socket
+    ZMQ.Context context = ZMQ.context(1);
+    // Socket to talk to clients
+    ZMQ.Socket clients = context.socket(ZMQ.ROUTER);
+    clients.bind("tcp://" + host + ":" + port);
+
+    // Socket to talk to workers
+    ZMQ.Socket workers = context.socket(ZMQ.DEALER);
+    workers.bind("inproc://workers");
+
+    // Create worker threads pool
+    Thread threads[] = new Thread[10];
+
+    // Launch worker threads
+    for (int i = 0; i < threads.length; i++) {
+    		threads[i] = new MultiThreadServer.WorkerThread(
+    		     i, context, api, new RequestHandlerJson()
+    		);
+        threads[i].start();
+    }
+    // Connect work threads to client threads via a queue
+    ZMQQueue queue = new ZMQQueue(context, clients, workers);
+
+    logger.info("Application started successfully!");
+
+    //Forwards messages from router to dealer and vice versa.
+     new Thread(queue).start();
+\end{verbatim}
+
+\subsubsection{Parametrizace}
 volba parametrů, ať už těch, co ovlivňují tresty nebo třeba úložiště (redis...)
 
-\section{Klient}
-
-\section{Sada algoritmů}
+\subsection{Sada algoritmů}
 \label{sec:alg}
 
-\section{Návrh komunikace}
-router, dealer, worker thready
-
-\subsection{Komunikační protokol}
-
-\subsection{Formát zasílaných zpráv}
+\subsection{Rozhraní}
 
 \chapter{Experimenty a vyhodnocení}
 \label{chap:tests}
+
+Jednou z mnoha výzev pro někoho, kdo se snaží vybudovat doporučovací systém, je to, že je velice těžké dopředu říct, zda budou naše předpovědi dost přesné. Alespoň do té doby, dokud je nezačneme dělat a nebudeme pozorovat, jak často naši uživatelé přijímají naše návrhy. Je zde obrovský prostor možností (možných metod), z čeho vybírat. 
+
 kecy o testování
 \section{Testování různých způsobů chování}
 viz jak jarda vymyslel těch zhruba 5 příkladů, co mohou nastat

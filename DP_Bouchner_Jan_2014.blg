@@ -14,49 +14,50 @@ Warning--to sort, need author or key in ziteflip
 Warning--to sort, need author or key in zitecnn
 Warning--to sort, need author or key in mendeleylastfm
 Warning--to sort, need author or key in easyrec
-Warning--to sort, need author or key in fulltext
 Warning--to sort, need author or key in pst2
 Warning--to sort, need author or key in pst3
+Warning--to sort, need author or key in mtserver
+Warning--missing school in Fielding:2000:ASD:932295
 Warning--empty pages in googlenews
-You've used 29 entries,
+You've used 33 entries,
             3151 wiz_defined-function locations,
-            779 strings with 9563 characters,
-and the built_in function-call counts, 8790 in all, are:
-= -- 626
-> -- 209
+            800 strings with 10133 characters,
+and the built_in function-call counts, 9987 in all, are:
+= -- 711
+> -- 237
 < -- 0
-+ -- 111
-- -- 56
-* -- 416
-:= -- 912
-add.period$ -- 58
-call.type$ -- 29
-change.case$ -- 112
++ -- 123
+- -- 64
+* -- 472
+:= -- 1060
+add.period$ -- 66
+call.type$ -- 33
+change.case$ -- 128
 chr.to.int$ -- 0
-cite$ -- 43
-duplicate$ -- 863
-empty$ -- 962
-format.name$ -- 61
-if$ -- 1940
+cite$ -- 48
+duplicate$ -- 983
+empty$ -- 1086
+format.name$ -- 69
+if$ -- 2193
 int.to.chr$ -- 0
-int.to.str$ -- 29
-missing$ -- 203
-newline$ -- 125
-num.names$ -- 32
-pop$ -- 596
+int.to.str$ -- 33
+missing$ -- 232
+newline$ -- 140
+num.names$ -- 40
+pop$ -- 672
 preamble$ -- 1
-purify$ -- 84
+purify$ -- 96
 quote$ -- 0
-skip$ -- 306
+skip$ -- 339
 stack$ -- 0
-substring$ -- 199
-swap$ -- 364
+substring$ -- 227
+swap$ -- 416
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 116
-warning$ -- 14
-while$ -- 32
-width$ -- 31
-write$ -- 260
-(There were 14 warnings)
+type$ -- 132
+warning$ -- 15
+while$ -- 40
+width$ -- 35
+write$ -- 296
+(There were 15 warnings)

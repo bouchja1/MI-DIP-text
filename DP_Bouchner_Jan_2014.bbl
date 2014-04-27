@@ -20,10 +20,6 @@ CNN Acquires Zite. [online], stav ze dne 21.4.2012.
 easyrec: Recommendation Engine. [online], stav ze dne 24.4.2012.
 \urlprefix\biburl{http://easyrec.org/recommendation-engine}
 
-\bibitem{fulltext}
-Fulltext. [online], stav ze dne 24.4.2012.
-\urlprefix\biburl{http://www.adaptic.cz/znalosti/slovnicek/fulltext/}
-
 \bibitem{amazonrec}
 How does the Amazon Recommendation feature work? [online], stav ze dne
   21.4.2012.
@@ -64,6 +60,10 @@ What Is Affinity Analysis? [online], stav ze dne 21.4.2012.
 Zite is Flipping out. [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://blog.zite.com/2014/03/05/zite-is-flipping-out/}
 
+\bibitem{mtserver}
+ØMQ - The Guide. [online], stav ze dne 26.4.2012.
+\urlprefix\biburl{http://zguide.zeromq.org/page:all}
+
 \bibitem{itemcf}
 Almazro, D.; Shahatah, G.; Albdulkarim, L.; aj.: A Survey Paper on Recommender
   Systems. [online], stav ze dne 26.4.2012.
@@ -82,10 +82,18 @@ Blažek, R.~B.; Kotecký, R.; Hrabáková, J.; aj.: BI-PST – Pravděpodobnost
 Brodt, T.: Open Recommendation Platform. 2013, [Online; stav z 23. dubna 2014].
 \urlprefix\biburl{http://www.slideshare.net/d0nut/open-recommendation-platform}
 
+\bibitem{zeromq1}
+Dennis, J.: ZeroMQ: Super Sockets. [online], stav ze dne 27.4.2012.
+\urlprefix\biburl{http://www.slideshare.net/j2d2/zeromq-super-sockets-by-j2-labs}
+
 \bibitem{cf}
 Drachsler, H.: Recommender Systems and Learning Analytics in TEL. University
   Lecture, 2014, stav ze dne 24.4.2012.
 \urlprefix\biburl{http://www.slideshare.net/Drachsler/rec-sys-mupplelecturekmi}
+
+\bibitem{Fielding:2000:ASD:932295}
+Fielding, R.~T.: \emph{Architectural Styles and the Design of Network-based
+  Software Architectures}. Dizerta\v cn\'\i{} pr\'ace, 2000, aAI9980887.
 
 \bibitem{hlavac}
 Hlaváč, V.: Učení bez učitele. University Lecture, 2014, stav ze dne
@@ -116,10 +124,18 @@ Liu, J.; Pedersen, E.; Dolan, P.: Personalized News Recommendation Based on
   Click Behavior. In \emph{2010 International Conference on Intelligent User
   Interfaces}, 2010.
 
+\bibitem{mahouttut}
+Musto, C.: Apache Mahout – Tutorial (2014). [online], stav ze dne 27.4.2012.
+\urlprefix\biburl{http://www.slideshare.net/Cataldo/apache-mahout-tutorial-recommendation-20132014}
+
 \bibitem{vitvarMq}
 Vitvar, T.: Lecture 5: Application Server Services. University Lecture, 2014,
   stav ze dne 24.4.2012.
 \urlprefix\biburl{http://humla.vitvar.com/slides/mdw/lecture5-1p.pdf}
+
+\bibitem{socket}
+Vychodil, V.: Komunikace pomocí Socketu. [online], stav ze dne 27.4.2012.
+\urlprefix\biburl{http://vychodil.inf.upol.cz/publications/white-papers/socket-referat.pdf}
 
 \bibitem{pst5}
 Vychodil, V.: Pravděpodobnost a statistika: Normální rozdělení a
