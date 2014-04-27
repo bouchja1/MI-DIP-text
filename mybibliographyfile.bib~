@@ -212,11 +212,11 @@ url="http://www.slideshare.net/j2d2/zeromq-super-sockets-by-j2-labs",
 howpublished = "[online]"
 }
 
-@MISC{zeromq1,
-author = "James Dennis",
-title="ZeroMQ: Super Sockets",
+@MISC{mahouttut,
+author = "Cataldo Musto",
+title="Apache Mahout – Tutorial (2014)",
 note="stav ze dne 27.4.2012",
-url="http://www.slideshare.net/j2d2/zeromq-super-sockets-by-j2-labs",
+url="http://www.slideshare.net/Cataldo/apache-mahout-tutorial-recommendation-20132014",
 howpublished = "[online]"
 }
 

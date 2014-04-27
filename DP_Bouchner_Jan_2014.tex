@@ -884,9 +884,53 @@ Já osobně jsem se pro účely Recommeng systému rozhodl využít čistou Java
 
 
 \subsubsection{Apache Solr}
-\textbf{Apache Solr} je serverová webová aplikace, pomocí které lze provádět fulltextové vyhledávání nad dokumenty. Pro indexaci a vyhledávání využívá knihovnu Apache Lucene a pomocí knihovny SolrJ nabízí pohodlnou komunikaci z prostředí jakéhokoliv podporovaného programovacího jazyka. 
+\textbf{Apache Solr}~\footnote{\url{https://lucene.apache.org/solr}} je populární~\footnote{Viz seznam serverů využívajících služeb Solr \url{https://wiki.apache.org/solr/PublicServers}} open-source platforma pro vyhledávání napsaná v programovacím jazyce Java. Jejími charakteristickými vlastnosti jsou podpora pro fulltextové vyhledávání, fasetové vyhledávání (analogie ke konstrukci GROUP BY v RDBMS), dobrá škálovatelnost pomocí kešování a distribuovaného vyhledávání, využívání vyhledávací konstrukce \emph{more like this}, o které bude řeč v sekci~\ref{sec:alg}, a také například tzv. \emph{near real-time indexing}~\footnote{\url{https://cwiki.apache.org/confluence/display/solr/Near+Real+Time+Searching}} (dokumenty je možné vyhledávat téměř ihned po jejich zaindexování).
 
-\url{http://is.muni.cz/th/256499/fi_m/thesis_sikora.pdf}
+Z hlediska architektury programu jde o samostatný server pro fulltextové vyhledávání běžící v servletovém kontejneru (například Apache Tomcat). K indexaci a fulltextovému vyhledávání využívá ve svém jádru knihovnu Apache Lucene. 
+
+\textbf{Apache Lucene}~\footnote{\url{http://lucene.apache.org/core}} je vysoce výkonná knihovna pro účely vyhledávání v textu a indexování.
+
+Vstupem pro indexaci jsou dokumenty. Každý takový dokument obsahuje množinu elementů, kde je tento element nazvaný jako \emph{field}). Každý field má své jméno, datový typ a případně další atributy.
+
+Vstupem pro vyhledávání jsou textové řetězce (viz syntax~\footnote{\url{http://lucene.apache.org/core/2_9_4/queryparsersyntax.html}}, případně dotazované objekty.
+
+Index je uložen na disku ve formě souborů ve struktuře invertovaného indexu dokumentů~\cite{wiki:invindex}.
+
+Ukázka definice několika field dokumentu ve schématu Solr:
+
+\begin{verbatim}
+   <field name="userId" type="int" indexed="true" stored="true"
+      multiValued="true"/>	
+   <field name="time" type="date" indexed="true" stored="true"/>
+   <field name="usedInRec" type="boolean" indexed="true"
+      stored="true"/>
+\end{verbatim}
+
+Ukázka reprezentace dokumentu ve výsledku vyhledávání pomocí Apache Solr ve formátu XML:
+
+\begin{verbatim}
+   <doc>
+      <int name="id">1</int>
+      <str name="articleId">http://somedomain.org/somearticle.html</str>
+      <str name="articleText">Hello Bob and Alice!</str>
+      <int name="group">123</int>
+      <bool name="usedInRecommendation">true</bool>
+      <date name="time">2009-04-12T20:44:55Z</date>
+      <float name="1_rating">0.1</float>
+      <float name="2_rating">0.5</float>
+      <float name="3_rating">0.5</float>      
+      <arr name="userId">
+         <int>1</int>
+         <int>2</int>
+         <int>3</int>
+      </arr>
+      <long name="_version_">1465487644804775936</long>      
+</doc>
+\end{verbatim}
+
+Formu jejich spolupráce lze popsat tak, že Apache Solr nabízí k vyhledávání RESTful API, za kterým je skryto a voláno JAVA API knihovny Lucene. Díky tomu je možné pomocí protokolu HTTP komunikovat se Solr z jakékoliv platformy napsané v jakémkoliv programovacím jazyce. 
+
+K integraci Apache Solr s dalšími aplikacemi je možné vybírat ze spousty nástrojů a knihoven~\footnote{\url{http://wiki.apache.org/solr/IntegratingSolr}}. Pro účely mé aplikace psané v programovacím jazyce Java jsem si zvolil klientskou aplikaci \textbf{SolrJ}~\footnote{\url{http://wiki.apache.org/solr/Solrj}} s rozhraním pro vyhledávání, přidávání a aktualizaci indexu. 
 
 \subsection{Ostatní použité technologie}
 
@@ -999,13 +1043,14 @@ router asynchrone obsluhuje *REQ sockets, muze obsluhovat take dealera sockety
      new Thread(queue).start();
 \end{verbatim}
 
+\subsection{Adaptibilní systém}
 \subsubsection{Parametrizace}
 volba parametrů, ať už těch, co ovlivňují tresty nebo třeba úložiště (redis...)
 
 \subsection{Sada algoritmů}
 \label{sec:alg}
 
-\subsection{Rozhraní}
+\subsection{RESTful API}
 
 \chapter{Experimenty a vyhodnocení}
 \label{chap:tests}
