@@ -112,7 +112,8 @@ howpublished = "[online]"
 }
 
 @MISC{netflixrules,
-title="Netflix offers streaming movies to subscribers",
+author={Netflix Prize},
+title="The Netflix Prize Rules",
 note="stav ze dne 28.4.2012",
 url="http://www.netflixprize.com/rules",
 howpublished = "[online]"
