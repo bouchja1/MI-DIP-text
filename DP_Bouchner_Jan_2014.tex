@@ -331,44 +331,43 @@ Navíc se zdá, že době, kdy obchodníkům stačilo na svůj elektronický obc
 \chapter{Analýza a návrh řešení}
 \label{chap:analysis}
 
-Zatímco v předchozí kapitole jsem se zabýval popisem existujících řešení a zkoumal, jaké možnosti nabízejí současné doporučovací systémy, tato kapitola je celá věnována analýze požadovaného chování mnou vyvíjeného systému.
+Tato kapitola je celá věnována analýze požadovaného chování systému.
 
-Nejprve se budu zabývat požadavky na systém, které vyplynuly z úvodních konzultací s vedoucím práce a vlastním zkoumáním problému. Se znalostí těchto požadavků bude možné provést hrubý návrh architektury systému včetně technického řešení součástí, kterými bude systém disponovat.
+Nejprve se budu zabývat požadavky, které vyplynuly z úvodních konzultací s vedoucím práce a též po vlastním zkoumání řešeného problému. Se znalostí těchto požadavků pak bude možné provést hrubý návrh architektury systému včetně technického řešení komponent, jimiž bude systém disponovat.
 
-Prostřednictvím výstupů získaných v této kapitole budu schopen provést implementaci systému.
+S ohledem na výstupy získané v této kapitole bude možné provést implementaci systému.
 
 \section{Požadavky}
 
-Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požadavky strukturovat do zastřešujících skupin trojího typu (globální požadavky, rozhraní a systém). Nakonec se ale ukázalo, že mezi skupinami \emph{rozhraní} a \emph{systém} existuje velmi tenká hranice (z hlediska požadovaného chování, nikoliv implementačního), proto byly skupiny redukovány na dvě.
+Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požadavky strukturovat do zastřešujících skupin trojího typu (globální požadavky, rozhraní a systém). Nakonec se ukázalo, že mezi skupinami \emph{rozhraní} a \emph{systém} existuje tak tenká hranice (z hlediska požadovaného chování, nikoliv z hlediska implementačního), že jsem skupiny redukovány na dvě.
 
 \subsection{Globální požadavky na systém}
 
 \begin{itemize}
+	\item Systém bude klást důraz na zpětnou vazbu, podle které bude přizpůsobovat své chování.
+	\item Systém bude zpětnou vazbu přijímat na principu odměny za dobré doporučení (přičítání v poměru) a trestu za špatné (odečítání v poměru).
 	\item Systém bude v pravidelných intervalech ukládat do databáze svůj aktuální stav.
 	\item Systém bude schopen v případě pádu aplikace a po jejím opětovném spuštění načíst naposledy uložený stav.
 	\item Systém bude veškeré své operace týkající se doporučování provádět a vyhodnocovat v reálném čase (live read \& live write).
+	\item Systém bude schopen automaticky se přizpůsobovat vývoji v čase normalizováním ukládaných hodnoty (z důvodu ochrany proti přetečení datových typů).	
 	\item Systém bude na každou klientskou žádost vracet příslušnou odpověď (i chybovou) – neexistuje nic jako odpověď \emph{null}.	
-	\item Systém bude klást důraz na zpětnou vazbu, podle které bude přizpůsobovat své chování.
-	\item Systém bude zpětnou vazbu přijímat na principu odměny za dobré doporučení (přičítání v poměru) a trestu za špatné (odečítání v poměru).
-	\item Systém bude schopen automaticky se přizpůsobovat vývoji v čase normalizováním ukládaných hodnoty (z důvodu ochrany proti přetečení datových typů).
-	\item Bude existovat možnost zobrazit dosavadní průběh doporučování systémem v čase.	
 \end{itemize}
 
-\subsection{Systém \& Rozhraní}
+\subsection{Uživatel systému \& systémové rozhraní}
 
 \begin{itemize}
-	\item Uživatel bude mít možnost vytvářet skrze systémové rozhraní kolekce se seznamem algoritmů určených pro následnou predikci.
-	\item Uživatel bude mít možnost zaslat systému žádost o radu a obdržet informaci o tom, který algoritmus pro doporučení obsahu by měl v danou chvíli zvolit.
-	\item Uživatel bude mít možnost zaslat systému informaci o tom, jaký algoritmus pro doporučení se rozhodl si zvolit.
-	\item Uživatel bude mít možnost zažádat si o doporučení obsahu prostřednictvím algoritmu, jenž mu byl navržen systémem.
-	\item Uživatel bude mít možnost zaslat systému informaci o zpětné vazbě pro daný algoritmus, který si zvolil.
-	\item Aplikace bude umožňovat prostřednictvím svého rozhraní zpracování informace, že jeden uživatel dělá něco s jedním dokumentem (reakce na zpětnou vazbu).
-	\item Aplikace bude umožňovat prostřednictvím svého rozhraní mazání či zneviditelnění pro doporučování již neaktuálních informací.
+	\item Uživatel bude mít možnost vytvářet skrze systémové rozhraní kolekce se seznamem algoritmů určených pro kombinování a následnou predikci.
+	\item Uživatel bude mít možnost zaslat systému žádost o radu a obdržet informaci, který algoritmus pro doporučení obsahu by měl v danou chvíli zvolit.
+	\item Uživatel bude mít možnost zaslat systému informaci o tom, pro jaký algoritmus doporučení se rozhodl.
+	\item Uživatel bude mít možnost zažádat o doporučení obsahu prostřednictvím algoritmu, jenž mu byl navržen systémem.
+	\item Uživatel bude mít možnost zaslat systému informaci o zpětné vazbě týkající se algoritmu, jenž si pro doporučení zvolil.
+	\item Aplikace bude umožňovat prostřednictvím svého rozhraní zpracovat informaci, že jeden uživatel dělá něco s jedním dokumentem (reakce na zpětnou vazbu).
+	\item Aplikace bude umožňovat prostřednictvím svého rozhraní mazat či zneviditelnit data již neaktuální pro doporučování.
 \end{itemize}
 
-Dle disciplín softwarového inženýrství je výčet uvedený výše označován jako \textbf{funkční požadavky}.
+Dle disciplín softwarového inženýrství lze výčet uvedený výše označit za \textbf{funkční požadavky}.
 
-Lze definovat i tzv. \textbf{nefunkční požadavky} specifikující vlastnosti a omezující podmínky kladené na systém:
+Definuje nyní i tzv. \textbf{nefunkční požadavky}, které specifikují vlastnosti a omezující podmínky kladené na systém:
 
 \begin{itemize}
 	\item Systém bude postaven na platformě Java.
@@ -376,35 +375,37 @@ Lze definovat i tzv. \textbf{nefunkční požadavky} specifikující vlastnosti 
 	\item Systém bude umožňovat přístup aplikacím třetích stran prostřednictvím RESTful webových služeb (vychází ze zadání).
 	\item Systém bude postaven tak, aby se dal snadno parametrizovat. 
 	\item Systém bude připraven na situaci, že jej bude využívat více uživatelů současně.
-	\item Systém poběží jako samostatná aplikace na serveru naslouchající na volném TCP portu. Veškerá komunikace s ní bude probíhat formou zasílaných zpráv.
-	\item Pro snadné nasazení a otestování systému na libovolné pracovní stanici bude nutné vytvořit Chef cookbook a bude jej možno zavést nástrojem Vagrant.
+	\item Systém poběží jako samostatná aplikace na serveru naslouchající na TCP portu. Veškerá komunikace s ní bude probíhat formou zasílání zpráv a volání procedur.
+	\item Pro snadné nasazení a testování systému na libovolné pracovní stanici bude nutné vytvořit Chef cookbook/recipe~\footnote{\url{http://community.opscode.com/}}.
 \end{itemize}
 
 \section{Adaptibilní systém}
 
-Pro implementaci systému splňujícího požadavky vzešlé z analýzy výše je třeba důkladně zvážit, jaké všechny komponenty bude tento systém obsahovat a případně jaké algoritmické postupy bude vhodné využít. Na základě zkoumání existujících implementací v kapitole~\ref{chap:current} mě zaujal projekt \emph{Open recommendation Platorm} (zkr. ORP) společnosti plista~\footnote{\url{https://www.plista.com}} prezentovaný na posledním ročníku konference ACM RecSys 2013 v Hong Kongu. 
+Pro zdárnou implementaci systému splňujícího všechny požadavky vzešlé z analýzy výše je třeba důkladně zvážit, jaké komponenty bude tento systém obsahovat a případně jaké algoritmické postupy bude vhodné využít. Na základě zkoumání existujících implementací v kapitole~\ref{chap:current} mě zaujal projekt \emph{Open recommendation Platorm} (zkr. ORP) společnosti \textbf{plista}~\footnote{\url{https://www.plista.com}} prezentovaný na posledním ročníku konference ACM RecSys 2013 v Hong Kongu. 
 
 Motivací ORP bylo dosáhnout lepších výsledků kombinací více metod doporučování obsahu společně se zapojením kontextu uživatele (informacemi čerpanými převážně z HTTP hlaviček). Takovými informacemi mohou být:
 
 \begin{itemize}
 	\item IP adresa, která může prozradit geologickou lokaci uživatele
 	\item denní doba, kdy uživatel přistupuje ke stránce
-	\item user agent informující o zařízení, ze kterého bylo k obsahu přistoupeno (mobilní telefon, PC)
+	\item user agent prohlížeče informující o zařízení, ze kterého bylo k obsahu přistoupeno (mobilní telefon, PC)
 	\item referer pro zjištění způsobu přístupu (přístup z vyhledávání nebo přímý přístup) 
 \end{itemize}
 
-Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}, na kterém je systém zachycen jako \emph{Ensemble}. Ensemble je schopen dle uživatelských preferencí vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, jenž použije pro publikování obsahu. Konzumenti doporučeného obsahu (\emph{Visitors}) zasílají poté systému zpětnou vazbu, díky které dojde k rekalkulaci preferencí, což ovlivní výběr budoucího algoritmu.
+Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}, na kterém je systém zachycen jako \emph{Ensemble}. Ensemble je schopen dle uživatelských preferencí vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, jenž pak použije k publikování obsahu pro daného uživatele. Konzumenti obsahu (\emph{Visitors}) poté zasílají systému zpětnou vazbu, díky které dochází k rekalkulaci preferencí, což ovlivní výběr nejlepšího algoritmu pro další doporučení.
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/plistaEnsemble.png}
  	\caption[Abstraktní pohled na systém společnosti plista]{Abstraktní pohled na systém společnosti plista. Zdroj: \cite{slideshare:plista}}\label{fig:plista}
 \end{figure}	
 
-V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechno by měl systém podobného typu umět. Zmíněna je potřeba rychlého webového serveru, na kterém bude aplikace běžet, dále nutnost rychlého síťového protokolu a rychlé fronty zpráv. Padla zde též nutnost rychlého úložiště dat. K dosažení funkcionality pro výběr nejlepšího algoritmu za daných podmínek společnost používá tzv. \emph{multi-armed bayesian bandit}, což byla i jedna ze strategií, které mi na úvodní schůzce doporučil vedoucí této práce.
+V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechno by měl systém podobného typu umět. Zmíněna je potřeba rychlého webového serveru, na kterém bude aplikace běžet, dále nutnost rychlého síťového protokolu a rychlé fronty zpráv. Padla zde též potřeba rychlého úložiště pro data.
 
-Se spoustou rad z této prezentace jsem se ztotožnil a vyhodnotil, že s jejich pomocí by mohla být uspokojena velká část požadavků na systém stanovených výše.
+K dosažení správné funkcionality pro výběr nejlepšího algoritmu společnost používá tzv. \emph{multi-armed bayesian bandit}, což je i jedna ze strategií, které mi na úvodní schůzce doporučil vedoucí této práce.
 
-Ukázalo se, že strategie \emph{multi-armed bayesian bandit} je pro mou práci natolik významná, že jsem se rozhodl věnovat jí samostatnou kapitolu~\ref{chap:adapt}.
+Se spoustou rad z této prezentace jsem se ztotožnil a vyhodnotil, že jejich naplněním by mohla být uspokojena velká část požadavků na systém stanovených výše.
+
+Dalším studiem strategie \emph{multi-armed bayesian bandit} jsem zjistil, že pro potřeby mé práce je natolik významná, že jsem se rozhodl věnovat jí samostatnou kapitolu~\ref{chap:adapt}.
 
 \section{Architektura systému}
 
@@ -419,7 +420,7 @@ Stěžejní serverovou komponentou je doporučovací platforma. Tu jsem pracovn�
 
 Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové platformy. Mou snahou bylo zachytit přítomnost jednotlivých komponent systému, formu jejich vzájemné komunikace a též základní interakci uživatele se systémem.
 
-V rámci ucelenosti zde uvádím přehled všech komponent nacházející se na serverové straně.
+V rámci ucelenosti zde uvádím přehled všech komponent nacházející se na serverové straně:
 
 \subsubsection{Aplikační server}
 
@@ -435,15 +436,21 @@ Na aplikačním serveru poběží dvě aplikace.
 
 \subsubsection{Databáze}
 
-Kvůli potřebě ukládání průběžného stavu aplikace (časové snímky) a snadného obnovení v případě přerušení běhu systému je nutné zapojit do návrhu databázi. Database Management System (DBMS) hraje důležitou roli i při škálování aplikací. V minulosti tolik používané standardní relační DBMS mohou způsobovat zpoždění při provádění čtení/zápisu a v některých případech hrát roli úzkého hrdla aplikace (bottleneck). Ohledně tohoto problému by možná stálo za úvahu prozkoumat možnosti použití NoSQL databází, které jsou již ze svého principu navrženy pro spolupráci s aplikacemi se zaměřením na výkon a škálovatelnost.
+Kvůli potřebě ukládat průběžný stav aplikace (časové snímky) a snadného obnovení znalostí systému v případě přerušení běhu je nutné zapojit do návrhu Database Management System (DBMS).
 
-\subsubsection{Reccomeng Application}
+Volba DBMS hraje důležitou roli i při škálování aplikací. V minulosti tolik používané standardní relační DBMS mohou způsobovat zpoždění při provádění čtení/zápisu a v některých případech hrát roli úzkého hrdla aplikace (bottleneck).
 
-Komunikaci s aplikací bude umožňovat systém pro zprávy (Messaging System) s využitím fronty zpráv (Message Queue). Toto řešení je nasnadě kvůli očekávání většího množství žádostí směřujících na systém a snadnější škálovatelnosti aplikace. Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
+Ohledně tohoto problému by možná stálo za úvahu prozkoumat možnosti použití NoSQL databází, které jsou již ze svého principu navrženy pro spolupráci s aplikacemi zaměřenými na výkon a škálovatelnost.
 
-Producenti zpráv (klienti využívající aplikaci) vytvářejí zprávy, které jsou zasílány do fronty. Zprávy jsou z fronty postupně odebírány konzumenty, kteří mají jejich zpracování na starosti. Výhodou je časová nezávislost mezi producenty zpráv a jejich konzumenty – producent tak může zasílat zprávy i tehdy, když žádný z producentů není k dispozici. Zprávy pak existují ve frontě, dokud se o jejich zpracování konzument nepřihlásí.
+\subsubsection{Recomeng systém}
 
-Aplikace taktéž komunikuje s databází, ale využívá ji pouze pro ukládání informací o stavu, které je prováděno v pravidelných časových intervalech, respektive pro načítání posledního uloženého stavu při startu aplikace. Důvodem pro vynechání komunikačního mezikroku s databází je požadavek na rychlost systému – veškerá data pro výpočet a predikci budou udržována přímo ve vnitřní paměti (uvnitř JVM). 
+Komunikaci s aplikací bude umožňovat systém pro zasílání zpráv (Messaging System) s využitím fronty zpráv (Message Queue). Toto řešení je zde nasnadě kvůli očekávání většího množství žádostí směřujících na systém a snadnější škálovatelnosti aplikace. Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
+
+Producenti zpráv (klienti využívající aplikaci) vytvářejí zprávy, které jsou zasílány do fronty. Zprávy jsou z fronty postupně odebírány konzumenty, kteří mají jejich zpracování na starosti. Výhodou je časová nezávislost mezi producenty zpráv a konzumenty – producent tak může zasílat zprávy i tehdy, když žádný z producentů není k dispozici. Zprávy pak existují ve frontě, dokud se o jejich zpracování konzument nepřihlásí.
+
+Recommeng systém bude taktéž komunikovat s databází, ale využívat ji pouze pro ukládání informací o stavu (což bude prováděno v pravidelných časových intervalech), respektive pro načítání posledního uloženého stavu při novém startu aplikace.
+
+Důvodem pro vynechání komunikačního mezikroku s databází je požadavek na rychlost systému – veškerá data pro výpočet a predikci budou udržována přímo ve vnitřní paměti (uvnitř JVM). 
 
 \begin{figure}\centering
 	\includegraphics[width=1.2\textwidth]{obr/vitvar_mq.png}
@@ -461,7 +468,7 @@ Klientská strana není nikterak složitá. Potenciální uživatel aplikace má
 
 Některé ze systémových funkcionalit nelze bez komunikace s REST API využívat. Do této kategorie spadá například přidání nového vztahu k položce ve fulltextovém indexu nebo zaslání žádosti o doporučení obsahu některým z podporovaných algoritmů. 
 
-Přímé spojení s platformou skrze frontu zpráv bez nutnosti zapojení prostředníka v podobě REST API by ale měly umožňovat všechny možnosti použití Recommeng systému. Jmenovitě vytváření kolekcí se seznamem algoritmů, dále zasílání žádostí o radu pro výběr algoritmu a též metody informující systém o uživatelském chování jako zvolení konkrétního algoritmu nebo zaslání zpětné vazby o doporučení. 
+Přímé spojení s platformou skrze frontu zpráv bez nutnosti zapojení prostředníka v podobě REST API by ale měly umožňovat všechny možnosti použití Recommeng systému. Jmenovitě vytváření kolekcí se seznamem algoritmů, dále zasílání žádostí o radu pro výběr algoritmu a též metody informující systém o uživatelově chování jako zvolení konkrétního algoritmu nebo zaslání zpětné vazby o doporučení. 
 
 V diagramu~\ref{fig:recommeng} jsem se snažil zachytit různé formy komunikace klienta se systémem. Pro lepší názornost jsou jednotlivé žádosti barevně odlišeny. Ty lze považovat za modelové případy užití inspirované systémovými požadavky.
 
@@ -486,7 +493,7 @@ Fialová varianta může též představovat situaci, kdy klient žádá systém
 \begin{itemize}
 	\item klient zašle žádost na rozhraní
 	\item aplikace (Web Application 1) za rozhraním se pokusí přistoupit k frontě zpráv
-	\item pokud fronta existuje, žádost je předána do fronty pro zpracování konzumentem (aplikace Recommeng)
+	\item pokud fronta existuje, žádost je přidána do fronty pro zpracování konzumentem (Recommeng systém)
 	\item konzument zpracuje žádost a zasílá odpověď, kterou systém zpráv předá zpět do aplikace
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
@@ -501,7 +508,7 @@ Toto doporučení klient poptává na základě odpovědi na žádost, která mu
 \begin{itemize}
 	\item klient zašle žádost na rozhraní
 	\item aplikace (Web Application 1) za rozhraním zvolí vybraný algoritmus pro doporučení
-	\item algoritmus přistoupí k datům v indexu, nad kterými provede doporučení
+	\item algoritmus přistoupí k datům v indexu, nad kterými se provede doporučení
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
 
@@ -511,13 +518,13 @@ Aneb klient, který se rozhodl nevyužít možnosti komunikovat prostřednictví
 
 \begin{itemize}
 	\item klient zašle žádost do fronty
-	\item pokud fronta existuje, žádost je předána do fronty pro zpracování konzumentem (aplikace Recommeng)
+	\item pokud fronta existuje, žádost je přidána do fronty pro zpracování konzumentem (aplikace Recommeng)
 	\item konzument zpracuje žádost a zasílá klientovi odpověď
 \end{itemize}
 
 \subsection{Komunikace}
 
-Výše jsme měli možnost poznat dva způsoby komunikace uživatele s doporučovací platformou. Dalším úkolem je navrhnout formát, jakým si budou vyměňovat producent s konzumentem data prostřednictvím fronty zpráv za účelem vzdáleného volání metod Recommeng systému.
+Výše jsme měli možnost poznat dva způsoby komunikace uživatele s doporučovací platformou. Dalším úkolem je navrhnout formát, jakým si budou vyměňovat producent s konzumentem data prostřednictvím volání vzdálených procedur Recommeng systému.
 
 Vzhledem k obecné známosti protokolu HTTP jsem se rozhodl napodobit jeho chování a zachovat sémantiku:
 
@@ -527,11 +534,11 @@ Vzhledem k obecné známosti protokolu HTTP jsem se rozhodl napodobit jeho chov�
 	\item tělo zprávy (body)
 \end{itemize}
 
-Podobně jako nabízí HTTP, na každou žádost ve tvaru \emph{method, path} a \emph{body} přijde odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status).
+Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status).
 
 \section{Rozhraní}
 
-Platforma poskytuje API pro interakci s daty formou RESTful (HTTP implementace REST). Každý uživatel tak může interagovat s rozhraním prostřednictvím veřejných REST endpointů.
+Platforma poskytuje API pro interakci se systémem a daty formou RESTful (HTTP implementace REST~\ref{rest}). Každý uživatel tak může interagovat s rozhraním prostřednictvím zveřejněných endpointů.
 
 Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. K dispozici je diagram~\ref{fig:rest}, který by měl celou věc osvětlit. 
 
@@ -542,7 +549,7 @@ Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, �
 
 \subsection{Rozhraní pro Recommeng}
 
-Komunikace s rozhraním by měla umožňovat vytvářet v Recommeng aplikaci kolekce s identifikátory algoritmů, jenž budou zapojeny do predikce. 
+Komunikace s rozhraním by měla umožňovat vytvářet v Recommeng aplikaci kolekce s identifikátory algoritmů, jenž budou zapojeny do kombinování a predikce. 
 
 K tomu účelu bude sloužit endpoint:
 
@@ -550,7 +557,7 @@ K tomu účelu bude sloužit endpoint:
 	/recommeng/ensemble/collection
 \end{verbatim}
 
-Pokud uživatel zašle metodou POST žádost na tento endpoint (obsahující identifikátor kolekce a seznam algoritmů), v případě neexistence v systému bude kolekce vytvořena a připravena k predikci. 
+Pokud uživatel zašle metodou POST žádost na tento endpoint (obsahující identifikátor kolekce a seznam algoritmů), v případě dosavadní neexistence v systému bude kolekce vytvořena a připravena k predikci. 
 
 Dále by měla existovat možnost zaslat na kolekci prosbu o predikci nejlepšího jejího algoritmu pro doporučení.
 
@@ -622,13 +629,13 @@ Rozlišují se dva hlavní způsoby filtrování.
 
 \emph{``You may like it because your friends liked it.''}~\cite{cf}
 
-Aneb filtrování založené na uživatelích. Jedná se o starší variantu kolaborativního filtrování. Podstatou je vzít na základě určité podobnosti skupinu (zdroj~\cite{cf} udává cca 20 až 50) uživatelů s podobných vkusem jako má uživatel, pro něhož je doporučení konstruováno, a poté předpovědět, jak moc zajímavá by pro uživatele byla pro něj neznámá položka, se kterou jsou spojení uživatelé se stejným vkusem.
+Aneb filtrování založené na uživatelích. Jedná se o starší variantu kolaborativního filtrování. Podstatou je vzít na základě určité podobnosti skupinu uživatelů (zdroj~\cite{cf} udává cca 20 až 50) s podobných vkusem jako má uživatel, pro něhož je doporučení konstruováno, a poté předpovědět, jak moc zajímavá by pro uživatele byla pro něj dosud neznámá položka, se kterou jsou spojení uživatelé se stejným vkusem.
 
 \subsubsection{Item-based}
 
 \emph{``You tend to like that item because you have liked those items.''}~\cite{cf}
 
-Aneb filtrování založené na položkách, které použila v roce 2001 jako první společnost Amazon. Myšlenka je taková, že uživatel, který si v minulosti zakoupil nějakou položku, bude v budoucnu při dalším nákupu vyhledávat položku podobnou. Například předpověď toho, co si uživatel zakoupí v budoucnu, lze uskutečnit analýzou uživatelovi historie nákupů~\cite{itemcf}. 
+Aneb filtrování založené na položkách, které použila v roce 2001 jako první společnost Amazon. Myšlenka je taková, že uživatel, který si v minulosti zakoupil nějakou položku, bude v budoucnu při dalším nákupu vyhledávat položku podobnou. Například předpověď toho, co si uživatel zakoupí v budoucnu, lze uskutečnit analýzou historie nákupů uživatele~\cite{itemcf}. 
 
 \chapter{Adaptibilní systém}
 \label{chap:adapt}
@@ -859,7 +866,7 @@ Tato kapitola se zaměřuje na popis programátorských principů následovanýc
 K implementaci aplikace byly použity principy a technologie uvedené níže.
 
 \subsection{RESTful API}
-
+\label{rest}
 \subsubsection{REST}
 \textbf{REpresentational State Transfer (REST)} je architektonický styl definující určitá pravidla a vlastnosti návrhu API webových služeb orientovaných na zdroje. REST je silně založen na architektuře Klient-Server (server poskytuje přístup ke zdrojům, klient k nim může přistupovat a modifikovat je) a k jeho realizaci je možné využít protokolu HTTP (takovou realizaci pak nazýváme jako RESTful). Role protokolu HTTP zde není nikterak náhodná, neboť autorem REST není nikdo jiný než Roy Fielding, jenž je u protokolu HTTP podepsaný jako spoluautor~\cite{Fielding:2000:ASD:932295}. 
 
