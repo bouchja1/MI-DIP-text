@@ -19,45 +19,45 @@ Warning--to sort, need author or key in pst3
 Warning--to sort, need author or key in mtserver
 Warning--missing school in Fielding:2000:ASD:932295
 Warning--empty pages in googlenews
-You've used 35 entries,
+You've used 36 entries,
             3151 wiz_defined-function locations,
-            808 strings with 10476 characters,
-and the built_in function-call counts, 10581 in all, are:
-= -- 753
-> -- 251
+            812 strings with 10571 characters,
+and the built_in function-call counts, 10880 in all, are:
+= -- 774
+> -- 258
 < -- 0
-+ -- 129
-- -- 68
-* -- 498
-:= -- 1132
-add.period$ -- 70
-call.type$ -- 35
-change.case$ -- 136
++ -- 133
+- -- 70
+* -- 511
+:= -- 1168
+add.period$ -- 72
+call.type$ -- 36
+change.case$ -- 140
 chr.to.int$ -- 0
-cite$ -- 50
-duplicate$ -- 1041
-empty$ -- 1150
-format.name$ -- 73
-if$ -- 2321
+cite$ -- 51
+duplicate$ -- 1070
+empty$ -- 1182
+format.name$ -- 75
+if$ -- 2385
 int.to.chr$ -- 0
-int.to.str$ -- 35
-missing$ -- 246
-newline$ -- 148
-num.names$ -- 44
-pop$ -- 711
+int.to.str$ -- 36
+missing$ -- 253
+newline$ -- 152
+num.names$ -- 46
+pop$ -- 731
 preamble$ -- 1
-purify$ -- 102
+purify$ -- 105
 quote$ -- 0
-skip$ -- 356
+skip$ -- 364
 stack$ -- 0
-substring$ -- 241
-swap$ -- 440
+substring$ -- 249
+swap$ -- 452
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 140
+type$ -- 144
 warning$ -- 15
-while$ -- 44
-width$ -- 37
-write$ -- 314
+while$ -- 46
+width$ -- 38
+write$ -- 323
 (There were 15 warnings)
