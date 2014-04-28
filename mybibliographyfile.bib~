@@ -111,6 +111,13 @@ url="http://arstechnica.com/uncategorized/2007/01/8627/",
 howpublished = "[online]"
 }
 
+@MISC{netflixrules,
+title="Netflix offers streaming movies to subscribers",
+note="stav ze dne 28.4.2012",
+url="http://www.netflixprize.com/rules",
+howpublished = "[online]"
+}
+
 @MISC{bellkor,
 title="BellKor, AT\&T Labs, Inc. – Research",
 note="stav ze dne 21.4.2012",
@@ -225,6 +232,14 @@ author = "Cataldo Musto",
 title="Apache Mahout – Tutorial (2014)",
 note="stav ze dne 27.4.2012",
 url="http://www.slideshare.net/Cataldo/apache-mahout-tutorial-recommendation-20132014",
+howpublished = "[online]"
+}
+
+@MISC{camdp,
+author = "Cam Davidson-Pilon",
+title="The Multi-Armed Bandit Problem",
+note="stav ze dne 27.4.2012",
+url="http://camdp.com/blogs/multi-armed-bandits",
 howpublished = "[online]"
 }
 
