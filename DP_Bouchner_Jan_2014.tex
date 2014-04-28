@@ -257,7 +257,7 @@ V srpnu 2011 o technologii vyjádřila zájem společnost CNN~\cite{zitecnn} a Z
 Společným cílem je vystavět nejlepší systém pro personalizované čtení novinových zpráv. 
 
 \subsection{Mendeley}	
-
+\label{mendeley}
 \textbf{Mendeley}~\footnote{\url{http://www.mendeley.com}} je systém určený k doporučování vědeckých článků využívající jako svou výpočetní vrstvu technologii Apache Mahout~\footnote{https://mahout.apache.org}. Cílem systému je spojovat dohromady výzkumníky a jejich data. Svým uživatelům napomáhá v organizaci výzkumu, umožňuje jim navázat potenciální spolupráci s dalšími uživateli aplikace a napomáhá též k objevení nových podnětů pro vlastní práci. Uživateli této aplikace jsou přední světové university jako University of Cambridge, Stanford University, MIT či University of Michigan. Data pro aplikaci pocházejí z vlastních importů uživateli i z externích importů skrze různé katalogy vědeckých prací. 
 
 Projekt samotný se v jedné ze svých prezentací~\cite{mendeleylastfm} přirovnává k největší hudební databázi na internetu – last.fm~\footnote{http://www.last.fm}. Ta funguje na principu, že potenciální uživatel provede na svém počítači instalaci desktopové aplikace, následně s již instalovanou aplikací začne poslouchat hudbu a tím je zahájeno automatické odesílání informace o skladbě (interpret, žánr) na server last.fm. Podle dat odeslaných na server jsou uživateli v budoucnu doporučovány další skladby. 
@@ -879,50 +879,52 @@ Pokud stanovíme míru $<<$ 1, algoritmus bude předchozí výsledky zapomínat 
 \chapter{Realizace}
 \label{chap:impl}
 
-Tato kapitola se zaměřuje na popis programátorských principů následovaných při realizaci systému, stejně tak popisuje technologie použité při implementaci a vzniklé výsledné řešení.
+Následující kapitola se zaměřuje na popis programátorských principů, které jsem následoval při práci na realizaci systému, stejně tak popisuje technologie použité při implementaci a vzniklé výsledné řešení.
 
 \section{Principy a technologie}
 \label{sec:sysanalys}
 
-K implementaci aplikace byly použity principy a technologie uvedené níže.
-
 \subsection{RESTful API}
 \label{rest}
 \subsubsection{REST}
-\textbf{REpresentational State Transfer (REST)} je architektonický styl definující určitá pravidla a vlastnosti návrhu API webových služeb orientovaných na zdroje. REST je silně založen na architektuře Klient-Server (server poskytuje přístup ke zdrojům, klient k nim může přistupovat a modifikovat je) a k jeho realizaci je možné využít protokolu HTTP (takovou realizaci pak nazýváme jako RESTful). Role protokolu HTTP zde není nikterak náhodná, neboť autorem REST není nikdo jiný než Roy Fielding, jenž je u protokolu HTTP podepsaný jako spoluautor~\cite{Fielding:2000:ASD:932295}. 
+\textbf{REpresentational State Transfer (REST)} je architektonický styl definující určitá pravidla a vlastnosti návrhu API webových služeb orientovaných na zdroje. REST je silně založen na architektuře Klient-Server (server poskytuje přístup ke zdrojům, klient k nim může přistupovat a modifikovat je) a k jeho realizaci je možné využít protokolu HTTP (takovou realizaci pak nazýváme jako RESTful). Role tohoto protokolu zde není nikterak náhodná, neboť autorem REST není nikdo jiný než Roy Fielding, jenž je u protokolu HTTP podepsaný jako spoluautor~\cite{Fielding:2000:ASD:932295}. 
 
-Díky protokolu HTTP lze stanovit mnoho vlastností návrhu, například přítomnost adresovatelných zdrojů, kdy je každý zdroj adresovatelný pomocí Uniform Resource Identifier (URI). RESTful pro manipulaci se svými zdroji používá HTTP metody (v základu GET, POST, PUT, DELETE, ale i další, například OPTIONS či PATCH). Další vlastností je užívání standardních stavových kódů~\footnote{Definici všech stavových kódů viz \url{http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html}.} HTTP (typicky 2xx, 3xx, 4xx, 5xx) v odpovědi na žádost či bezestavová komunikace.
+Díky protokolu HTTP lze následovat mnoho pravidel návrhu RESTful API, například přítomnost adresovatelných zdrojů, kdy je každý zdroj adresovatelný pomocí Uniform Resource Identifier (URI). RESTful pro manipulaci se svými zdroji používá též HTTP metody (GET, POST, PUT, DELETE, ale i další, například OPTIONS či PATCH). Další vlastností je užívání standardních stavových kódů~\footnote{Definici všech stavových kódů viz \url{http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html}.} HTTP (typicky 2xx, 3xx, 4xx, 5xx) v odpovědi na žádost či bezestavová komunikace.
 
 Data mohou být reprezentována v rozličných formátech jako XML, JSON či YAML.
 
-Padla zde zmínka o bezestavosti. Aplikační servery určené pro běh aplikací jsou dvojího typu – stavové a bezestavové. Rozdíl je v uchovávání stavu aplikace během komunikace a mezi jednotlivými připojeními. V případě REST uvažujeme bezestavovost a k vyjádření přechodů mezi stavy aplikace používáme odkazy. Tento princip je nazývána jako Hypertext as the Engine of Application State (HATEOAS). 
+Padla zde zmínka o bezestavosti. V případě REST k vyjádření přechodů mezi stavy aplikace používáme odkazy. Tento princip je nazýván jako \emph{Hypertext as the Engine of Application State} (HATEOAS). 
 
 \subsubsection{Jersey (JAX-RS)}
-\textbf{Java API for RESTful Web Services (JAX-RS)}~\footnote{https://jax-rs-spec.java.net} je standard definovaný v Java Specification Request 311~\footnote{https://jcp.org/en/jsr/detail?id=311}. Jedná se o specifikaci pro RESTful webové služby implementované v programovacím jazyce Java. Pomocí JAX-RS lze s využíváním anotací jednoduše a přehledně definovat sémantiku jednotlivých tříd a jejich metod z hlediska využití v architektuře REST. Příklady anotací jsou \emph{@Path(relativni\_cesta)} pro specifikaci relativní cesty zdroje, \emph{@GET} či \emph{@POST} specifikující typ žádosti nebo třeba \emph{@QueryParam} pro přiřazení parametru HTTP dotazu k hodnotě parametru příslušné metody třídy.
+\textbf{Java API for RESTful Web Services (JAX-RS)}~\footnote{https://jax-rs-spec.java.net} je standard definovaný v Java Specification Request 311~\footnote{https://jcp.org/en/jsr/detail?id=311}. Jedná se o specifikaci pro RESTful webové služby implementované v programovacím jazyce Java.
+
+Pomocí JAX-RS lze s využíváním anotací jednoduše a přehledně definovat sémantiku jednotlivých tříd a jejich metod z hlediska využití v architektuře REST. Příklady anotací jsou \emph{@Path(relativni\_cesta)} pro specifikaci relativní cesty zdroje, \emph{@GET} či \emph{@POST} specifikující typ žádosti nebo třeba \emph{@QueryParam} pro přiřazení parametru HTTP dotazu k hodnotě parametru příslušné metody třídy.
 
 Pro účely implementace rozhraní systému Recommeng jsem zvolil vzhledem k předchozím zkušenostem referenční implementaci tohoto standardu v podobě frameworku \textbf{Jersey 2.x}. 
 
 \subsection{Fronta zpráv a síťová komunikace}
 
 \subsubsection{ØMQ}
-\textbf{ØMQ (ZeroMQ)}~\footnote{http://zeromq.org} je vysoce výkonná~\footnote{Viz výkonnostní testy na oficiální stránce \url{http://zeromq.org/results:_start}.} síťová knihovna napsaná v jazyce C++ vhodná k nasazení v distribuovaných a vícevláknových aplikacích vyžadujících velkou škálovatelnost. S jejím využitím lze poměrně snadno navrhnout komplexní komunikační systém. Ke komunikaci užívá socketů~\footnote{Socket je mechanismus, kterým je možno zprostředkovat lokální čí vzdálenou komunikaci dvou uzlů, která má charakter klient/server~\cite{socket}.}. Duchovním otcem a spoluautorem knihovny je slovenský expert na oblast messaging middleware Martin Sústrik~\footnote{\url{http://250bpm.com/contact}}.
+\textbf{ØMQ (ZeroMQ)}~\footnote{http://zeromq.org} je vysoce výkonná~\footnote{Viz výkonnostní testy na oficiální stránce \url{http://zeromq.org/results:_start}.} síťová knihovna napsaná v programovacím jazyce C++ vhodná k nasazení v distribuovaných a vícevláknových aplikacích, které vyžadují velkou škálovatelnost. S jejím využitím lze poměrně snadno navrhnout komplexní komunikační systém. Ke komunikaci užívá socketů~\footnote{Socket je mechanismus, kterým je možno zprostředkovat lokální čí vzdálenou komunikaci dvou uzlů, která má charakter klient/server~\cite{socket}.}. Duchovním otcem a spoluautorem knihovny je slovenský expert na oblast messaging middleware Martin Sústrik~\footnote{\url{http://250bpm.com/contact}}.
 
-Hned na úvod je nutné sdělit, že se nejedná o klasický messaging system (message-oriented middleware) typu Apache ActiveMQ~\footnote{\url{http://activemq.apache.org}} a další jemu podobné. Takové systémy jsou většinou hotová řešení připravená k okamžitému nasazení a integraci s dalšími službami, zatímco filosofie ZeroMQ je jiná.
+Hned na úvod je nutné sdělit, že se nejedná o klasický messaging system (message-oriented middleware) takového typu, jakým je například Apache ActiveMQ~\footnote{\url{http://activemq.apache.org}} a jemu podobné systémy. Takové systémy jsou většinou hotová řešení připravená k okamžitému nasazení a integraci s dalšími službami. 
 
-ZeroMQ je tedy multiplatformní knihovna určená k programovému využití (nabízí podporu více než 30 programovacích jazyků~\footnote{TODO}). Pomocí jednoduchého socketového API umožňuje programátorovi sestavit si vlastní messaging system dle svého nejlepšího uvážen. Programátor využívá ze strany API veškerou podporu usnadňující práci se sítí a s trochou nadsázky lze prohlásit, že se stará pouze o zasílání zpráv. Sama socketová komunikace je výrazně zjednodušena od komunikace přes raw sockety (kde se musí průběžně krmit socketový buffer). Navíc nám dává kompletní svobodu v tom, jakým způsobem zakódujeme naši zprávu (JSON, BSON nebo jakýkoliv vlastní navržený formát).
+Filosofie ZeroMQ je jiná, neboť jde především o multiplatformní knihovnu určenou k programovému využití (nabízí podporu více než 30 programovacích jazyků~\footnote{TODO}). Pomocí jednoduchého socketového API umožňuje programátorovi sestavit si vlastní messaging system dle svého nejlepšího uvážen. Programátor využívá ze strany API veškerou podporu usnadňující práci se sítí a s trochou nadsázky lze prohlásit, že se stará pouze o zasílání zpráv. Sama socketová komunikace je výrazně zjednodušena.
+
+Knihovna nám navíc dává kompletní svobodu v tom, jakým způsobem zakódujeme naši zprávu (JSON, BSON nebo jakýkoliv vlastní navržený formát).
 
 Podporovány jsou čtyři protokoly pro komunikaci~\cite{zeromq1}:
 
 \begin{description}
-	\item[tcp] jako síťově založený přenos (procesy na jedné síti)
-	\item[inproc] alias model komunikace vláken uvnitř jednoho procesu
-	\item[ipc] alias model komunikace mezi procesy (procesy out-of-box)
+	\item[tcp] jako model síťově založeného přenosu (procesy na jedné síti)
+	\item[inproc] jako model komunikace vláken uvnitř jednoho procesu
+	\item[ipc] jako model komunikace mezi procesy (procesy out-of-box)
 	\item[multicast]	komunikující skrze PGM~\footnote{\url{http://tools.ietf.org/html/rfc3208}}.
 \end{description}
 
-Knihovna také nabízí základní messaging patterns nabízející různé formy práce, ať už se jedná o doručování zpráv na jednotlivé uzly, mapování uzlů na vlákna, procesy, filosofii zpracování zasílaných zpráv či umisťování zpráv do fronty~\footnote{\url{http://zguide.zeromq.org/page:all\#Messaging-Patterns}}. Každý vzor určuje jistou síťovou topologii.
+Knihovna také definuje základní vzory zasílání zpráv, ať už se jedná o doručování zpráv na jednotlivé uzly, mapování uzlů na vlákna, procesy či umisťování zpráv do fronty~\footnote{\url{http://zguide.zeromq.org/page:all\#Messaging-Patterns}}. Každý vzor zároveň určuje jinou síťovou topologii.
 
-Vestavěnými vzory jsou:
+Základními vzory jsou:
 
 \begin{itemize}
 	\item Request-reply
@@ -931,9 +933,9 @@ Vestavěnými vzory jsou:
 	\item Exclusive pair
 \end{itemize}
 
-Nejvhodnějším vzorem pro mou práci je vzor Request-reply, jehož konkrétní použití a vysvětlení, proč byl zvolen právě on, následuje záhy v sekci \nameref{sec:impl}. Ostatní vzory nemá smysl v rámci této práce popisovat.
+Nejvhodnějším vzorem pro mou práci je díky nátuře navrhovaného systému (zasílání zpráv a odpovědi na ně) vzor Request-reply, jehož konkrétní použití následuje záhy v sekci \nameref{sec:impl}. Ostatní vzory nemá smysl v rámci této práce popisovat.
 
-Já osobně jsem se pro účely Recommeng systému rozhodl využít čistou Java implementaci této knihovny v podobě knihovny jeroMQ~\footnote{\url{https://github.com/zeromq/jeromq}}, která z výkonnostního hlediska za původním řešením zaostává jen nepatrně~\footnote{Viz srovnávací testy \url{https://github.com/zeromq/jeromq/wiki/Perfomance}.}.
+Pro účely Recommeng systému jsem se rozhodl využít čistou Java implementaci knihovny ZeroMQ v podobě knihovny \textbf{jeroMQ}~\footnote{\url{https://github.com/zeromq/jeromq}}. Z výkonnostního hlediska za původním řešením zaostává jen nepatrně~\footnote{Viz srovnávací testy \url{https://github.com/zeromq/jeromq/wiki/Perfomance}.} a navíc je mnohem jednodušší integrovat ji do vyvíjené aplikace prostým přidáním knihovny do projektu.
 
 \subsection{Úložiště dat}
 
@@ -982,14 +984,14 @@ Ukázka reprezentace dokumentu ve výsledku vyhledávání pomocí Apache Solr v
 </doc>
 \end{verbatim}
 
-Formu jejich spolupráce lze popsat tak, že Apache Solr nabízí k vyhledávání RESTful API, za kterým je skryto a voláno JAVA API knihovny Lucene. Díky tomu je možné pomocí protokolu HTTP komunikovat se Solr z jakékoliv platformy napsané v jakémkoliv programovacím jazyce. 
+Formu jejich spolupráce lze popsat tak, že Apache Solr poskytuje pro vyhledávání RESTful API, za kterým je skryto a voláno JAVA API knihovny Lucene. Díky tomu je možné pomocí protokolu HTTP komunikovat s Apache Solr z jakékoliv platformy napsané v jakémkoliv programovacím jazyce. 
 
-K integraci Apache Solr s dalšími aplikacemi je možné vybírat ze spousty nástrojů a knihoven~\footnote{\url{http://wiki.apache.org/solr/IntegratingSolr}}. Pro účely mé aplikace psané v programovacím jazyce Java jsem si zvolil klientskou aplikaci \textbf{SolrJ}~\footnote{\url{http://wiki.apache.org/solr/Solrj}} s rozhraním pro vyhledávání, přidávání a aktualizaci indexu. 
+K integraci Apache Solr s dalšími aplikacemi je možné vybírat ze spousty nástrojů a knihoven~\footnote{\url{http://wiki.apache.org/solr/IntegratingSolr}}. Pro účely mé aplikace psané v programovacím jazyce Java jsem zvolil knihovnu \textbf{SolrJ}~\footnote{\url{http://wiki.apache.org/solr/Solrj}} s klientským rozhraním pro vyhledávání, přidávání a aktualizaci indexu. 
 
 \subsubsection{Apache Cassandra 2.0}
 \textbf{Apache Cassandra 2.0}~\footnote{\url{http://cassandra.apache.org}} je open-source distribuovaný DBMS navržený pro obsluhu velkého množství dat. Z hlediska datového modelu je Cassandra jakýmsi hybridem mezi key-value (pod 1 klíčem je uložena 1 hodnota) a column-oriented databázemi. V dokumentaci~\cite{cassdoc} se lze dočíst, že jde o row-oriented databázi.
 
-Základem modelu je \emph{column family} (analogie tabulky v RDBMS), jež je složena z řádků a sloupců. Každý řádek má unikátní identifikátor ve formě klíče – každý řádek obsahuje více sloupců. Sloupce mají jméno, hodnotu a časovou značku. Výhodou oproti RDBMS přístupu je to, že rozdílné řádky ze stejné column family nemusí sdílet stejnou množinu sloupců – do jedné nebo více řádek lze totiž v libovolný čas zapsat jakýkoliv sloupec.
+Základem modelu je \emph{column family} (analogie tabulky v RDBMS), jež je složena z řádků a sloupců. Každý řádek má unikátní identifikátor ve formě klíče – každý řádek obsahuje více sloupců. Sloupce mají jméno, hodnotu a časovou značku. Výhodou proti RDBMS přístupu je to, že rozdílné řádky ze stejné column family nemusí sdílet stejnou množinu sloupců – do jedné nebo více řádek lze v libovolný čas zapsat jakýkoliv sloupec.
 
 Vzhledem k tomu, že jedním z vyzdvihovaných případů užití databáze je uchovávání časových snímků, rozhodl jsem se ji experimentálně zapojit do vytvářeného Recommeng systému. Ještě předtím jsem však detailněji zkoumal možnost použití jiné NoSQL databáze, a to \textbf{Redis}. 
 
@@ -1005,7 +1007,7 @@ Velkým benefitem je podpora Cassandra Query Language (CQL), dotazovacího jazyk
 \textbf{Apache Mahout}~\footnote{\url{https://mahout.apache.org}} je knihovna napsaná v programovacím jazyce Java, jež poskytuje implementaci rozličných technik z oblasti strojového učení:
 
 \begin{itemize}
-	\item \textbf{shlukování (clustering)} – položky nacházejících se v určitých třídách (například webové stránky či novinové články) jsou organizovány do skupin tak, že položky v těchto skupinách jsou si vzájemně podobné
+	\item \textbf{shlukování (clustering)} – položky nacházejících se v určitých třídách (například webové stránky či novinové články) jsou organizovány do skupin tak, že položky nacházející se v těchto skupinách jsou si vzájemně podobné
 	\item \textbf{klasifikace (classification)} – učení se ze stávajících kategorizací a zařazování neklasifikovaných položek do nejvhodnější kategorie
 	\item \textbf{doporučování (recommendation)}
 	\item \textbf{často se vyskytující skupiny položek (frequent itemset mining)} – analýza položek v rámci nějaké skupiny (například nákupní košík) a identifikace, které položky se nejčastěji vyskytují pohromadě
@@ -1013,10 +1015,10 @@ Velkým benefitem je podpora Cassandra Query Language (CQL), dotazovacího jazyk
 
 Pro tyto techniky realizuje příslušné algoritmy jako například kolaborativní filtrování, k-means, náhodné lesy, skryté markovské modely a další. Některé algoritmy jsou připraveny pro běh v distribuovaném módu s využitím paradigmatu Map/Reduce, některé pak v lokálním módu (samotný Mahout je založen na Apache Hadoop, ale lze jej pohodlně využívat i bez něj)~\cite{mahouttut}. Mahout poskytuje též knihovny pro obecné matematické operace (zaměřené hlavně na oblast statistiky) a kolekce~\footnote{\url{https://mahout.apache.org/users/basics/mahout-collections.html}}. 
 
-Využít jej pro potřeby své práce jsem se rozhodl poté, co jsem na něj narazil v projektu Mendeley během zkoumání existujících řešení doporučovacích systémů. 
+Využít jej pro potřeby své práce jsem se rozhodl poté, co jsem na něj narazil v projektu Mendeley~\ref{mendeley} během zkoumání existujících řešení doporučovacích systémů. 
 
 \subsubsection{Spring Framework}
-Při tvorbě každého nového Java projektu od základu je dobré zamyslet se nad možností využití některého z mnoha frameworků a dalších užitečných nástrojů, s jejichž pomocí si lze do značné míry usnadnit proces vývoje. Díky dobrým zkušenostem z dřívějších projektů jsem zvolil open-source framework pro tvorbu moderních enterprise aplikací \textbf{Spring}~\footnote{\url{http://projects.spring.io/spring-framework}}. 
+Při tvorbě každého nového Java projektu od základu je dobré zamyslet se nad možností využít některý z mnoha frameworků a dalších užitečných nástrojů, s jejichž pomocí si lze do značné míry usnadnit proces vývoje. Díky dobrým zkušenostem z dřívějších projektů jsem zvolil open-source framework pro tvorbu moderních enterprise aplikací \textbf{Spring}~\footnote{\url{http://projects.spring.io/spring-framework}}. 
 
 Jeho výhodami jsou snadná konfigurovatelnost, podpora dependency injection, rozšiřitelnost a také integrace s jinými frameworky. V mém případě to byla integrace s frameworkem Jersey, kterou jsem využil při implementaci RESTful API.
 
@@ -1026,7 +1028,7 @@ Jeho výhodami jsou snadná konfigurovatelnost, podpora dependency injection, ro
 \subsubsection{Správa závislostí}
 Často slýchaným pojmem z úst mnoha vývojářů v programovacím jazyce Java je tzv. \emph{classpath hell}. V podstatě jde o problémy spojené s načítáním programových tříd. V dnešní době existuje spousta nástrojů schopných tento problém efektivně řešit používáním správně projektové struktury, sestavovacích nástrojů a nástrojů pro správu závislostí. Jmenujme například Apache Ant společně s Apache Ivy, Gradle nebo třeba Apache Maven.
 
-Nástroj \textbf{Apache Maven} jsem využil při implementaci všech komponent aplikace Recommeng.
+\textbf{Apache Maven} jsem použil při implementaci všech komponent aplikace.
 
 \section{Popis realizace adaptibilního systému}
 \label{sec:impl}
