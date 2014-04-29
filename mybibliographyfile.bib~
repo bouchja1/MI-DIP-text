@@ -37,6 +37,16 @@
    howpublished = "[online]"
  }
 
+ @misc{longtail2,
+   author = "Chris Anderson",
+   title = "The 80/20 Rule Revisited",
+   year = "2005",
+   url = {http://www.slideshare.net/d0nut/open-recommendation-platform},
+   note = "[Online; stav z 23. dubna 2014]"
+ }
+
+http://www.longtail.com/the_long_tail/2005/08/the_8020_rule_r.html
+
 @MISC{digitaluniverse,
    author =       {John Gantz, David Reinsel},
    title =        {Extracting Value from Chaos},
@@ -47,13 +57,6 @@
    howpublished = "[online]"
  }
 
- @misc{wiki:longtail,
-   author = "Wikipedia",
-   title = "Long tail --- Wikipedia{,} The Free Encyclopedia",
-   year = "2014",
-   url = {http://en.wikipedia.org/w/index.php?title=Long_tail&oldid=603431399},
-   note = "[Online; stav z 19. dubna 2014]"
- }
 
  @misc{slideshare:plista,
    author = "Torben Brodt",
@@ -119,18 +122,18 @@ url="http://www.netflixprize.com/rules",
 howpublished = "[online]"
 }
 
-@MISC{solrj,
+@MISC{metawerx,
 author={Metawerx Java Wiki},
 title="Connection Leak",
 note="stav ze dne 29.4.2012",
-url="https://wiki.apache.org/solr/Solrj",
+url="http://wiki.metawerx.net/wiki/ConnectionLeak",
 howpublished = "[online]"
 }
 
 @MISC{solrj,
 title="SorlJ",
 note="stav ze dne 29.4.2012",
-url="http://wiki.metawerx.net/wiki/ConnectionLeak",
+url="https://wiki.apache.org/solr/Solrj",
 howpublished = "[online]"
 }
 

@@ -22,12 +22,12 @@ Warning--missing school in Fielding:2000:ASD:932295
 Warning--empty pages in googlenews
 You've used 39 entries,
             3151 wiz_defined-function locations,
-            825 strings with 10823 characters,
-and the built_in function-call counts, 11724 in all, are:
+            826 strings with 10798 characters,
+and the built_in function-call counts, 11726 in all, are:
 = -- 834
 > -- 273
 < -- 0
-+ -- 141
++ -- 142
 - -- 74
 * -- 548
 := -- 1258
@@ -51,7 +51,7 @@ purify$ -- 113
 quote$ -- 0
 skip$ -- 390
 stack$ -- 0
-substring$ -- 271
+substring$ -- 272
 swap$ -- 486
 text.length$ -- 0
 text.prefix$ -- 0

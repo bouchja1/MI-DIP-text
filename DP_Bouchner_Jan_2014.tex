@@ -95,115 +95,79 @@ breaklines=true
 \qitem{We are leaving the age of information and entering the age of recommendation.}%
  {---\textsc{Chris Anderson, 2004}}
  \end{epigraphs}	
-	Hned na úvod práce jsem si dovolil použít citát z článku \emph{The Long Tail}~\cite{anderson} bývalého šéfredaktora časopisu Wired, Chrise Andersona, který je též autorem stejnojmenné teorie. Ta je založena na tom, že díky rozvoji internetu lze nabízet daleko širší paletu produktů, se kterými lze slavit prodejní úspěchy, což by dříve kvůli nízké poptávce nebylo možné. 
+	Hned na úvod práce jsem si dovolil použít citát z článku \emph{The Long Tail}~\cite{anderson} bývalého šéfredaktora časopisu Wired Chrise Andersona, který je též autorem stejnojmenné teorie. Ta je založena na tom, že díky rozvoji internetu lze dnes nabízet daleko širší paletu produktů než bylo možné dříve.
 	
-	Co je myšleno tvrzením \uv{které by dříve mohly jen sotva slavit prodejní úspěchy}? Myšlenky se lze dopátrat v následující sekci~\nameref{sub:lidinf}, po kterémžto vysvětlení bude vše zasazeno do kontextu zmiňované teorie (podsekce~\nameref{sub:ltl}) a její souvislosti s potřebou doporučování informací, jež je popsána v sekci~\nameref{sub:recsys}.
-	
-	Sekce~\nameref{sec:motivation} popisuje vizi a potřebu systému schopného přizpůsobit se podmínkám a predikovat doporučení na základě předchozích a aktuálních zkušeností.
-	
-	Popisu nároků na takový systém, jenž jsem prostřednictvím této práce navrhl a následně implementoval, je věnována sekce~\nameref{sec:objectives}. V sekci jsou též stanoveny cíle, kterých by měl implementovaný produkt nabývat. 
-	
-	Struktuře práce vzhledem k vytyčeným cílům je věnována příslušná sekce~\nameref{sec:structure}.
-	
-\section{Lidstvo a informace}	
-	\label{sub:lidinf}
-	Význam sběru informací a dat je pro lidstvo odjakživa nezpochybnitelný. Již před nástupem digitálního věku byl jejich objem značný a dostat se ke všem informacím, na základě kterých by byl jedinec schopen utvořit si vlastní názor, nebylo dvakrát tak snadné.
-	
-	Lidé se tak v mnoha případech spoléhali spíše na obecnou oblíbenost daného produktu (zboží, článek, hudební interpret a další), než na vlastní úsudek. Oblíbenost produktu byla přitom více než cokoliv jiného určována aktuálním společenským trendem.
-	
-	Informace bylo dále možné v omezené míře čerpat například z doporučení známých pramenících z jejich zkušeností.
+	Před nástupem digitálního věku spoléhali lidé při svých nákupech spíše na obecnou oblíbenost daného produktu, než na vlastní úsudek. Oblíbenost byla přitom více než cokoliv jiného určována aktuálním společenským trendem či preferencemi známých.	
 
-\subsection{Nástup internetu}		
-	S masovým rozvojem internetu začalo růst množství dostupných informací obřím tempem (organizace IDC došla v článku \emph{Extracting Value from Chaos}~\cite{digitaluniverse} k závěru, že objem světových dat se každé dva roky zdvojnásobuje).
+	S masovým rozvojem internetu začalo růst množství dostupných informací obřím tempem (organizace IDC došla v článku~\emph{Extracting Value from Chaos} k závěru, že objem světových dat se každé dva roky zdvojnásobuje~\cite{digitaluniverse}), nové informace jsou produkovány takřka každou sekundu a na jejich setřídění máme čím dál tím méně času.
 	
-	Nové informace jsou produkovány takřka každou sekundu a na jejich setřídění máme mnohem méně času než kdy dříve. Není již v lidských silách udržovat si o všem přehled.
+	Takovýmto vývojem se přirozeně změnil i lidský přístup ke zpracování informací. Naším cílem již není nashromáždit jich co nejvíce – tímto pokusem bychom se zanedlouho dostali do stavu informačního zahlcení. Ceněným uměním je naopak schopnost vytěžit maximum užitečných informací a ty využít k nabytí nových vědomostí.
 	
-	Takovýmto vývojem se přirozeně změnil i pohled na data. Cílem již není shromáždit jich co nejvíce, neboť tímto pokusem bychom se zanedlouho dostali až do stavu informačního zahlcení.
+	Úvahy v předchozích odstavcích směřují k již zmíněné teorii The Long Tail. S nárůstem dostupných informací dochází ke snižování prodeje produktů, které dříve určoval trend, ve prospěch produktů nacházejících se v takzvaném dlouhém chvostu. V nikterak závratné míře, přesto se jedná o jisté procento (pravidlo je uváděno jako 80/20~\cite{longtail2}). 
 	
-	Ceněným uměním je nyní schopnost vytěžit maximální množství užitečných informací a ty využít k nabytí nových vědomostí a získat tak alespoň přibližně správnou odpověď na potřeby konkrétního jedince.
-	
-\subsection{Informace a The Long Tail Theory}	
-	\label{sub:ltl}
-	Vraťme se nyní ještě jednou k teorii The Long Tail. Pro účely této práce nemá smysl vysvětlovat její význam dopodrobna, nicméně je vhodné zmínit alespoň hlavní myšlenku vycházející z úvah výše v textu.
-	
-	Nejdůležitějším poznatkem z pohledu obchodního je to, že s nárůstem informací dochází ke snižování prodeje produktů, které dříve určoval trend (několik málo produktů, které se na daném trhu dostaly k masovému publiku) ve prospěch produktů nacházejících se v takzvaném dlouhém chvostu (the long tail).
-	
-	Uživatel samotný se tak může dopátrat informací, na které by obyčejným vyhledáváním neměl šanci nikdy narazit (za předpokladu, že by opravdu přesně nevěděl, co nebo koho hledá).
-	
-	Bližší představu si lze utvořit pohledem na obrázek~\ref{fig:longtail}. Představme si, že na vodorovné ose leží jednotlivé produkty. Svislá osa pak znázorňuje objem prodeje pro dané produkty (stejně tak se může jednat například o popularitu). Zelená část pod grafem nalevo znázorňuje těch několik dominujících produktů (označuje se též jako \emph{hlava}). Žlutá část pod grafem vpravo pak reprezentuje dlouhý chvost (zhruba 80 procent produktů, po kterých je na trhu poptávka v menších objemech).
-	
-	Tento fenomén lze dost dobře ilustrovat na příkladu hudebního průmyslu. Díky obrovským databázím~\footnote{Spotify, last.fm, Grooveshark, Google Music a řada dalších} hudebních interpretů a skladeb již nedochází k selekci a prodeji/poslechu zlomku těch potenciálně nejúspěšnějších. Uživatelé jsou konfrontování s mnohem širším výběrem a je pouze na nich, kterého interpreta či skladbu si k poslechu zvolí.
-	
-\begin{figure}\centering
-	\includegraphics[width=0.8\textwidth]{obr/longtail.png}
- 	\caption[Příklad rozdělení zobrazující popularitu hodnocení]{Příklad rozdělení zobrazující popularitu hodnocení. Zdroj: \url{http://en.wikipedia.org/} \cite{wiki:longtail}}\label{fig:longtail}
-\end{figure}	
+	Tento fenomén lze dost dobře ilustrovat na příkladu hudebního průmyslu. Díky obrovským databázím\footnote{Servery jako Spotify, last.fm, Grooveshark, Google Music a řada dalších.} hudebních interpretů a skladeb již nedochází k selekci a prodeji či poslechu zlomku těch potenciálně nejúspěšnějších. Uživatelé jsou konfrontování s mnohem širším výběrem a je pouze na nich, kterého interpreta či skladbu si k poslechu zvolí.		
 
-	Všechny výše zmiňované faktory přirozeným způsobem zapříčinily rozvoj přístupu zvaného \emph{informační filtrování}. Tedy jakési selekce a redukce informací na základě volených parametrů. Odtud už je pak jen krok k doporučování obsahu uživateli na míru, které se v posledních několika letech rozmáhá se zaváděním tzv. \emph{doporučovacích systémů}.
-
-\section{Doporučovací systémy}
+\section{Doporučování obsahu}
 \label{sub:recsys}
-Doporučovací systém je druh inteligentního systému, jenž je svému uživateli nápomocný v tom smyslu, že z obrovské množiny informací dokáže různými způsoby filtrovat pro něj relevantní podmnožinu. Tato filtrace probíhá na základě zkoumání určitých vlastností uživatelova profilu (z minulosti i současnosti).
- 
-\subsubsection{Typy systémů}
+	Všechny výše zmiňované faktory přirozeným způsobem zapříčinily rozvoj přístupu zvaného jako \emph{informační filtrování}. Tím je myšlena selekce a redukce informací (na základě jistých volených parametrů). Odtud už je pak jen krok k doporučování obsahu uživateli na míru, které se v posledních několika letech rozmáhá se zaváděním tzv. \emph{doporučovacích systémů}.
 
-Doporučovací systémy lze dělit do dvou skupin dle způsobu práce, jíž vykonávají. 
+Doporučování lze dělit do dvou skupin dle způsobu vykonávané práce. 
 
 \begin{description}
-	\item[Kolaborativní filtrování.] Do první skupiny patří systémy fungující na principu takzvaného kolaborativního filtrování. Tento princip má navíc ještě dvě odnože lišící se dle toho, zda je doporučování založeno na podobnosti uživatelů (User-based) či podobnosti položek (Item-based). 
+	\item[Kolaborativní filtrování.] Doporučení z této skupiny nejčastěji využívají stránky zabývající se prodejem různých produktů.
 	
-	Doporučení z této skupiny nejčastěji využívají stránky zabývající se prodejem různých produktů.
-	
-	\item[Doporučení založená na obsahu.] Druhou skupinou jsou doporučení založená na obsahu. Pro ty se nejčastěji využívá textové podobnosti. Výhodou systémů využívajících doporučení z této skupiny je rychlé absorbování nových položek. Již na malé množině dat lze dostávat poměrně uspokojivá doporučení.
+	\item[Doporučení založená na obsahu.] Druhou skupinou jsou doporučení založená na obsahu, nejčastěji na textové podobnosti.
 \end{description}
- 
-Další informace týkající se doporučovacích systémů lze načerpat z následující kapitoly~\ref{chap:current}. Technické detaily jsou pak v menší míře k nalezení v sekci~\ref{sec:alg} kapitoly~\ref{chap:impl}.
+
+	Vývoj v oblasti informačních věd je však rychlý. V dnešní době již není zárukou, že server s aktuálními novinkami ze světa, který za účelem zvýšení čtenosti svých článků nasadí některé z nabízených doporučení do architektury svého systému, dosáhne tímto krokem výrazného zlepšení.
+	
+	Roste potřeba systémů kombinujících více doporučovacích metod, které jsou schopny přizpůsobit se svým uživatelům na míru a pružně reagovat na neustále se měnící preference v průběhu času. 
 
 \section{Motivace} 	
 \label{sec:motivation}
-	Představme si rádce, který je v každém okamžiku schopen rozhodnout, co je pro nás za daných okolností nejvhodnější.
+
+	Představme si nyní takový systém jako rádce, který je v každém okamžiku schopen rozhodnout, co je pro uživatele za daných okolností nejvhodnější.
 	
-	To, o čem rádce rozhoduje, je volba algoritmu, jakým si má uživatel nechat v danou chvíli doporučit obsah. Pokud by uživatel dbal rádcových rad, pak by s největší pravděpodobností obdržel vhodné doporučení a svou spokojenost by vyjádřil například tím, že by si jednu z doporučených položek otevřel pro bližší zkoumání nebo by ji ohodnotil na škále od jedné do pěti.
+	To, o čem rádce rozhoduje, je volba algoritmu, jakým si má uživatel nechat v danou chvíli doporučit obsah. Pokud by uživatel dbal rádcových rad, pak by s největší pravděpodobností obdržel vhodné doporučení a svou spokojenost by vyjádřil například tím, že by u jedné z doporučených položek zažádal o bližší detaily, případně ji ohodnotil na škále od jedné do pěti.
 	
-	Rádce neprovádí žádné operace, dokud k nim není explicitně vyzván uživatelem. Jinými slovy vyčkává na okamžik, kdy je požádán o radu.
+	Rádce sám neprovádí žádné operace, dokud k nim není explicitně vyzván uživatelem.
 	
-	Jeho hlavním benefitem je to, že dokáže pružně reagovat na situaci, při níž dojde k náhlé změně preferencí konzumace obsahu nebo vyvstanou jiné neočekávané události, jež by jinak měly za následek dlouhodobější doporučování nevhodného obsahu.
+	Jeho silnou stránkou je to, že díky průběžné analýze a neustálému přepočítávání možností dokáže pružně reagovat na situace, kdy dojde k náhlé a hromadnější změně preferencí nebo vyvstanou jiné neočekávané události, jež by měly za následek dlouhodobější doporučování nevhodného obsahu.
 	
 \section{Cíle práce}
 \label{sec:objectives}
-	Cílem práce je vyvinout aplikaci vykazující podobné znaky chování jako rádce popsaný výše.
+	Cílem je vyvinout aplikaci s podobnými znaky chování, jaké vykazuje rádce výše.
 
-	Nejdůležitějším cílem této práce je tedy návrh a implementace adaptibilního systému, který by byl schopen automaticky a vhodně kombinovat metody pro doporučování obsahu. Metodami jsou zde zamýšleny algoritmy pro doporučování obsahu (výběr vhodné sady algoritmů je též jedna ze součástí této práce).
+	Nejdůležitějším cílem této práce je tedy návrh a implementace adaptibilního systému, který by byl schopen automaticky a vhodně kombinovat metody pro doporučování obsahu. Metodami jsou zde zamýšleny algoritmy. Výběr vhodné sady algoritmů je též jedna ze součástí této práce.
 	
-	Systém bude dále zpracovávat zpětnou vazbu od uživatelů ohledně kvality zvoleného doporučení, která principem odměny za dobré doporučení nebo trestu za špatné ovlivní preference při kombinování.
+	Dále bude systém zpracovávat zpětnou vazbu od uživatelů týkající se kvality zvoleného doporučení, která principem odměny za dobré doporučení nebo trestu za špatné ovlivní preference při kombinování.
 	
-	Systém bude zároveň zodpovědný za poskytování podpory většímu množství uživatelů zasílajících žádosti na systém.
+	Systém bude též zodpovědný za poskytování podpory většímu množství uživatelů zasílajících žádosti na systém.
 	
-	Nezbytnou součástí diplomové práce je též osvojení základních pojmů a pravidel z oblasti strojového učení, teorie pravděpodobnosti a statistiky užívaných zejména v části zabývající se predikcí vhodného algoritmu a dopadem zpětné vazby. 
+	Nezbytnou součástí diplomové práce je osvojení základních pojmů a pravidel z oblasti strojového učení, teorie pravděpodobnosti a statistiky užívaných zejména v části práce týkající se predikce vhodného algoritmu a dopadu zpětné vazby. 
 	
-	Vzhledem k povaze projektu bude nutné navrhnout obecné rozhraní jak pro manipulaci s doporučovacími algoritmy, tak pro adaptibilní systém (zahrnující též zpětnou vazbu).
+	Vzhledem k povaze projektu bude nutné navrhnout obecné rozhraní jak pro manipulaci s doporučovacími algoritmy, tak pro tento adaptibilní systém.
 	
 	Funkčnost navrženého systému bude ověřena implementací prototypu a jeho spuštěním na modelové úloze.
 	
-Následuje seznam modulů, které byly pro potřeby práce vyvinuty:
+	K dosažení těchto cílů bude zapotřebí vyvinout následující moduly:
 
 \begin{itemize}
   \item \textbf{adaptibilní systém pro doporučování obsahu}
   \item \textbf{sada základních algoritmů určených k doporučování}
   \item \textbf{obecné rozhraní pro manipulaci s doporučovacími algoritmy a systémem}
-  \item \textbf{generátor dokumentů, pomocí kterých byly prováděny experimenty}
 \end{itemize}	
 
 \section{Struktura práce}
 \label{sec:structure}
-	Tato práce je strukturována do pěti různých kapitol a popisuje celý vývojový cyklus systému. Kapitoly jsou řazeny v pořadí, v jakém probíhaly jednotlivé fáze vývoje.	
+	Tato práce je strukturována do pěti různých kapitol. Kapitoly jsou řazeny v pořadí, v jakém probíhaly jednotlivé fáze vývoje.	
 
 \begin{description}
-  \item[Kapitola] \nameref{chap:current} popisuje historické pozadí i trendy používané současnými doporučovacími systémy. Z této rešerše se snaží vyvodit některé závěry, jež by mohly být užitečné pro náplň některé z dalších kapitol.
-  \item[Kapitola] \nameref{chap:analysis} shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. 
-  \item[Kapitola] \nameref{chap:adapt} detailně popisuje algoritmické a matematické postupy použité při návrhu adaptibilního systému. 
-  \item[Kapitola] \nameref{chap:impl} popisuje vývoj aplikace na základě provedené analýzy a návrhu.
-  \item[Kapitola] \nameref{chap:tests} shrnuje poznatky nabyté z provedených experimentů se systémem a hodnotí vyvinutou aplikaci. 
+  \item[Kapitola \nameref{chap:current}] popisuje historické pozadí i trendy používané současnými doporučovacími systémy. Snahou této rešerše je vyvodit závěry, jež by mohly být užitečné pro náplň dalších kapitol.
+  \item[Kapitola \nameref{chap:analysis}] shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. 
+  \item[Kapitola \nameref{chap:adapt}] detailně popisuje algoritmické a matematické postupy použité při návrhu adaptibilního systému. 
+  \item[Kapitola \nameref{chap:impl}] popisuje vývoj aplikace na základě provedené analýzy a návrhu.
+  \item[Kapitola \nameref{chap:tests}] shrnuje poznatky nabyté z provedených experimentů se systémem a hodnotí vyvinutou aplikaci. 
 \end{description}
 	
 \end{introduction}

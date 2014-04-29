@@ -77,6 +77,10 @@ Almazro, D.; Shahatah, G.; Albdulkarim, L.; aj.: A Survey Paper on Recommender
 Anderson, C.: The Long Tail. [online], říjen 2004.
 \urlprefix\biburl{http://archive.wired.com/wired/archive/12.10/tail.html}
 
+\bibitem{longtail2}
+Anderson, C.: The 80/20 Rule Revisited. 2005, [Online; stav z 30. dubna 2014].
+\urlprefix\biburl{http://www.longtail.com/the_long_tail/2005/08/the_8020_rule_r.html}
+
 \bibitem{pst1}
 Blažek, R.~B.; Kotecký, R.; Hrabáková, J.; aj.: BI-PST – Pravděpodobnost
   a statistika, přednáška 3. [online], stav ze dne 26.4.2012.
@@ -168,11 +172,6 @@ Wiki, M.~J.: Connection Leak. [online], stav ze dne 29.4.2012.
 Wikipedia: Inverted index --- Wikipedia{,} The Free Encyclopedia. 2014,
   [Online; stav z 27. dubna 2014].
 \urlprefix\biburl{http://en.wikipedia.org/w/index.php?title=Inverted_index&oldid=591814302}
-
-\bibitem{wiki:longtail}
-Wikipedia: Long tail --- Wikipedia{,} The Free Encyclopedia. 2014, [Online;
-  stav z 19. dubna 2014].
-\urlprefix\biburl{http://en.wikipedia.org/w/index.php?title=Long_tail&oldid=603431399}
 
 \bibitem{aihorizon}
 aihorizon: Your Online Artificial Intelligence~Resource: Machine Learning, Part
