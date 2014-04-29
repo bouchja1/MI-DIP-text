@@ -10,6 +10,43 @@
 
 \usepackage[utf8]{inputenc} % LaTeX source encoded as UTF-8
 
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{darkgray}{rgb}{0.4, 0.4, 0.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\definecolor{editorGray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{editorOcher}{rgb}{1, 0.5, 0} % #FF7F00 -> rgb(239, 169, 0)
+\definecolor{editorGreen}{rgb}{0, 0.5, 0} % #007C00 -> rgb(0, 124, 0)
+\definecolor{orange}{rgb}{1,0.45,0.13}
+\definecolor{olive}{rgb}{0.17,0.59,0.20}
+\definecolor{brown}{rgb}{0.69,0.31,0.31}
+\definecolor{purple}{rgb}{0.38,0.18,0.81}
+\definecolor{lightblue}{rgb}{0.1,0.57,0.7}
+\definecolor{lightred}{rgb}{1,0.4,0.5}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\usepackage{courier}
+%\usepackage{acronym}
+\usepackage[printonlyused,withpage]{acronym}
+%\usepackage[printonlyused,withpage]{acronym} \usepackage[printonlyused,withpage]{acronym} % ukaze jen pouzite zkratky, ukaze cislo stranky, kde byla zkratka poprve pouzita
+\usepackage{enumitem}
+\setlist{parsep=0pt,listparindent=\parindent}
+\usepackage{listings}
+
+\lstset{backgroundcolor=\color{lightgray},
+keywordstyle=\color{blue},
+stringstyle=\color{mymauve},
+commentstyle=\color{mygreen},
+morecomment=[l][\color{magenta}]{\#},
+basicstyle=\footnotesize\ttfamily,
+breaklines=true
+}
+
+
 \usepackage{graphicx} %graphics files inclusion
 % \usepackage{amsmath} %advanced maths
 % \usepackage{amssymb} %additional math symbols
@@ -29,8 +66,6 @@
 
 \newcommand{\tg}{\mathop{\mathrm{tg}}} %cesky tangens
 \newcommand{\cotg}{\mathop{\mathrm{cotg}}} %cesky cotangens
-
-\setcounter{tocdepth}{2}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % ODTUD DAL VSE ZMENTE
@@ -955,35 +990,33 @@ Index je uložen na disku ve formě souborů ve struktuře invertovaného indexu
 
 Ukázka definice několika field dokumentu ve schématu Solr:
 
-\begin{verbatim}
-   <field name="userId" type="int" indexed="true" stored="true"
-      multiValued="true"/>	
-   <field name="time" type="date" indexed="true" stored="true"/>
-   <field name="usedInRec" type="boolean" indexed="true"
-      stored="true"/>
-\end{verbatim}
+\begin{lstlisting}[language=xml]
+<field name="userId" type="int" indexed="true" stored="true" multiValued="true"/>	
+<field name="time" type="date" indexed="true" stored="true"/>
+<field name="usedInRec" type="boolean" indexed="true" stored="true"/>
+\end{lstlisting}
 
 Ukázka reprezentace dokumentu ve výsledku vyhledávání pomocí Apache Solr ve formátu XML:
 
-\begin{verbatim}
-   <doc>
-      <int name="id">1</int>
-      <str name="articleId">http://somedomain.org/somearticle.html</str>
-      <str name="articleText">Hello Bob and Alice!</str>
-      <int name="group">123</int>
-      <bool name="usedInRecommendation">true</bool>
-      <date name="time">2009-04-12T20:44:55Z</date>
-      <float name="1_rating">0.1</float>
-      <float name="2_rating">0.5</float>
-      <float name="3_rating">0.5</float>      
-      <arr name="userId">
-         <int>1</int>
-         <int>2</int>
-         <int>3</int>
-      </arr>
-      <long name="_version_">1465487644804775936</long>      
+\begin{lstlisting}[language=xml]
+<doc>
+   <int name="id">1</int>
+   <str name="articleId">http://somedomain.org/somearticle.html</str>
+   <str name="articleText">Hello Bob and Alice!</str>
+   <int name="group">123</int>
+   <bool name="usedInRecommendation">true</bool>
+   <date name="time">2009-04-12T20:44:55Z</date>
+   <float name="1_rating">0.1</float>
+   <float name="2_rating">0.5</float>
+   <float name="3_rating">0.5</float>      
+   <arr name="userId">
+      <int>1</int>
+      <int>2</int>
+      <int>3</int>
+   </arr>
+   <long name="_version_">1465487644804775936</long>      
 </doc>
-\end{verbatim}
+\end{lstlisting}
 
 Formu jejich spolupráce lze popsat tak, že Apache Solr poskytuje pro vyhledávání RESTful API, za kterým je skryto a voláno JAVA API knihovny Lucene. Díky tomu je možné pomocí protokolu HTTP komunikovat s Apache Solr z jakékoliv platformy napsané v jakémkoliv programovacím jazyce. 
 
@@ -1043,16 +1076,16 @@ Metoda loadConsoleApplication() hraje roli zavaděče aplikace, neboť postupný
 
 Ten je možné velice jednoduše konfigurovat pomocí anotací ve třídě \textbf{AppConfig}:
 
-\begin{verbatim}
-   @Configuration
-   @EnableScheduling
-   @ComponentScan(basePackages = {
-        "cz.cvut.bouchja1.ensemble.spring"
-   })
-   @PropertySource("classpath:application.properties")
-   public class AppConfig {
-   ...
-\end{verbatim}
+\begin{lstlisting}[language=java]
+@Configuration
+@EnableScheduling
+@ComponentScan(basePackages = {
+     "cz.cvut.bouchja1.ensemble.spring"
+})
+@PropertySource("classpath:application.properties")
+public class AppConfig {
+...
+\end{lstlisting}
 
 Anotace \emph{@EnableScheduling} a \emph{@ComponentScan} využijeme pro pravidelné ukládání stavu aplikace~\ref{task}, anotaci \emph{@PropertySource} zase pro možnosti parametrizace systému~\ref{param}.
 
@@ -1062,21 +1095,21 @@ Pro účely experimentování se systémem a testování funkčnosti s různě n
 
 Konfigurační vlastnosti jsou do souboru \emph{application.properties} přidávány ve formátu:
 
-\begin{verbatim}
-   #cassandra or jvm
-   storage=cassandra
-   #storage=jvm
+\begin{lstlisting}
+#cassandra or jvm
+storage=cassandra
+#storage=jvm
    
-   ensemble.machine.rate=0.5
-   ensemble.feedback.possitive.best=1.0
-\end{verbatim}
+ensemble.machine.rate=0.5
+ensemble.feedback.possitive.best=1.0
+\end{lstlisting}
 
 Konkrétní načítání v programu je pak díky použití PropertySourcesPlaceholderConfigurer velice jednoduché:
 
-\begin{verbatim}
-   this.rate = Double.parseDouble(env.getProperty("ensemble.machine.rate"));
-   this.possitiveFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.possitive.best"));
-\end{verbatim}
+\begin{lstlisting}[language=java]
+this.rate = Double.parseDouble(env.getProperty("ensemble.machine.rate"));
+this.possitiveFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.possitive.best"));
+\end{lstlisting}
 
 \subsubsection{Pravidelné ukládání časových snímků}
 \label{task}
@@ -1110,20 +1143,20 @@ Mezi komunikujícími klienty a Recommeng aplikací na serveru jsou vytvářena 
 
 Díky ZeroMQ API stačí připravit kontext a socket a metodě \texttt{bind()} nastavit adresu serveru s příslušným portem. Sama metoda se pak postará o zbylou práci (vytvoření endpointu pro příjem jednotlivých spojení a navázání na socket).
 
-\begin{verbatim}
-   ZMQ.Context context = ZMQ.context(IO_THREADS_COUNT);
-   // Socket to talk to clients
-   ZMQ.Socket clients = context.socket(ZMQ.ROUTER);
-   clients.bind("tcp://" + host + ":" + port);
-\end{verbatim}
+\begin{lstlisting}[language=java]
+ZMQ.Context context = ZMQ.context(IO_THREADS_COUNT);
+// Socket to talk to clients
+ZMQ.Socket clients = context.socket(ZMQ.ROUTER);
+clients.bind("tcp://" + host + ":" + port);
+\end{lstlisting}
 
 \subsubsection{Definice síťové infrastruktury}
 \label{subsub:queue}
 Propojení jednotlivých síťových komponent vychází z nativní povahy architektury Klient-Server. Server zastává roli stabilnější komponenty v síti, bude tedy přijímat spojení (viz ukázka s metodou \texttt{bind()} výše). Zároveň jsem mezi server a připojující se klienty umístil prostředníka v podobě \emph{fronty}, jehož úkolem je jak obsluha všech žádostí na server, tak i odpovědí zpět klientům.
 
-\begin{verbatim}
-  ZMQQueue queue = new ZMQQueue(context, clients, workers);
-\end{verbatim}
+\begin{lstlisting}[language=java]
+ZMQQueue queue = new ZMQQueue(context, clients, workers);
+\end{lstlisting}
 
 V případě více připojených klientů ZeroMQ automaticky obstarává obsluhu všech příchozích žádostí. 
 
@@ -1134,11 +1167,11 @@ Problém je, že vzor Request-Reply toho v základní variantě mnoho neumožňu
 
 Řešení spočívá ve vytvoření více vláken (\emph{workers}), kdy každé vlákno disponuje jedním REP socketem. Za tímto účelem je nutné vytvořit socket typu DEALER, kterému přiřadíme komunikační protokol \emph{inproc://}. Poté, co DEALER obdrží zprávu, přenese ji na jeden z REP socketů. Přitom sleduje, které REP sockety jsou zaneprázdněny, a které mohou naopak zprávu přijmout. Jakmile tento vybraný REP socket zpracuje zprávu, předá ji zpět a DEALER tuto zprávu přepošle tak, jak ji obdržel od socketu.
 
-\begin{verbatim}
-   // Socket to talk to workers
-   ZMQ.Socket workers = context.socket(ZMQ.DEALER);
-   workers.bind("inproc://workers");
-\end{verbatim}
+\begin{lstlisting}[language=java]
+// Socket to talk to workers
+ZMQ.Socket workers = context.socket(ZMQ.DEALER);
+workers.bind("inproc://workers");
+\end{lstlisting}
 
 Kvůli podpoře více TCP spojení utvářených vůči serveru je nutné předřadit před socket typu DEALER ještě další typ socketu, kterým je ROUTER (byl vidět již v ukázce~\ref{subsub:kompr}). 
 
@@ -1151,33 +1184,33 @@ Toto chování je umožněno díky vestavěné funkcionalitě ZMQQueue (viz př�
  	\caption[Vícevláknový server s využitím ROUTER a DEALER.]{Vícevláknový server s využitím ROUTER a DEALER. Zdroj: \cite{mtserver}}\label{fig:mtserver}
 \end{figure}	
 
-\begin{verbatim}
-   //Forwards messages from router to dealer and vice versa.
-   new Thread(queue).start();
-\end{verbatim}
+\begin{lstlisting}[language=java]
+//Forwards messages from router to dealer and vice versa.
+new Thread(queue).start();
+\end{lstlisting}
 
 Vyvoláním metody \texttt{start()} dojde k uzamknutí aktuálního vlákna (důvod, proč pro frontu existuje vlastní vlákno). To je jedna z pokročilých vlastností ZeroMQ – pro vývoj vícevláknových aplikací nejsou potřeba žádné mutexy, zámky, ani jakékoliv další formy komunikace kromě zpráv zasílaných napříč ZeroMQ sockety~\cite{mtserver}.
 
 Na začátku procesu (při spuštění aplikace) je vytvořen ZeroMQ kontext (viz \ref{subsub:kompr}) a ten je předán všem vláknům, která jsou připravena pro komunikaci protokolem inproc:
 
-\begin{verbatim}
-   // Launch worker threads
-   for (int i = 0; i < threads.length; i++) {
-      threads[i] = new MultiThreadServer.WorkerThread(
-         i, context, api, new RequestHandlerJson()
-      );
-      threads[i].start();
-   }
-\end{verbatim}
+\begin{lstlisting}[language=java]
+// Launch worker threads
+for (int i = 0; i < threads.length; i++) {
+   threads[i] = new MultiThreadServer.WorkerThread(
+      i, context, api, new RequestHandlerJson()
+   );
+   threads[i].start();
+}
+\end{lstlisting}
 
 Vláknům je parametrem předána instance třídy \textbf{RequestHandlerJson}, takže jsou schopny obsluhovat příchozí žádosti ve formátu JSON. Jedná se o implementaci rozhraní \textbf{RequestHandler} s jednou definovanou metodou pro obsluhu zpráv. Tento typ přijímají ve svém konstruktoru i pracovní vlákna. Řešení je tedy postaveno tak, aby bylo snadno rozšiřitelné pro jakýkoliv jiný formát komunikace, klidně vlastní.
 
-\begin{verbatim}
-   public interface RequestHandler {
-      public Operation handleMessage(byte[] message)
-         throws MessageFormatException;
-   }
-\end{verbatim}
+\begin{lstlisting}[language=java]
+public interface RequestHandler {
+   public Operation handleMessage(byte[] message)
+      throws MessageFormatException;
+}
+\end{lstlisting}
 
 \subsubsection{Technika zasílání zpráv a WorkerThread}
 O několik řádku výše bylo vysvětleno, jakým způsobem jsou na serveru zpracovány příchozí žádosti. Nyní již víme, že tuto funkcionalitu mají na starosti pracovní vlákna typu \textbf{WorkerThread}.
@@ -1188,44 +1221,45 @@ Třída WorkerThread je vláknová; kromě konstruktoru obsahuje pouze jednu met
 
 V praxi to vypadá tak, že pokud je dané pracovní vlákno aktivní, čte příchozí žádost:
 
-\begin{verbatim}
-   @Override
-   public void run() {
-      ZMQ.Socket receiver = context.socket(ZMQ.REP);
-      receiver.connect("inproc://workers");
-      while (!Thread.currentThread().isInterrupted()) {
-         byte[] request = receiver.recv(0);
-   ...
-\end{verbatim}
+\begin{lstlisting}[language=java]
+@Override
+public void run() {
+   ZMQ.Socket receiver = context.socket(ZMQ.REP);
+   receiver.connect("inproc://workers");
+   while (!Thread.currentThread().isInterrupted()) {
+      byte[] request = receiver.recv(0);
+...
+\end{lstlisting}
 
 Po přečtení žádosti následuje zpracování:
 
-\begin{verbatim}
-   try {
-      Operation op = requestHandler.handleMessage(request);
-      if (op.validateOperation()) {
-         try {
-            Reply reply = op.executeOperation(api);
-            responseHandler.setReply(reply);
-         } catch (Exception ex) {
-            ex.printStackTrace();
-         }
-      } else {
-         responseHandler.createErrorReply(op.getErrorMessage());
-      }
-      
+%\begin{verbatim}
+\begin{lstlisting}[language=java]
+try {
+   Operation op = requestHandler.handleMessage(request);
+   if (op.validateOperation()) {
       try {
-         int sleepTime = (threadNo % 2 == 0) ? 100 : 200;
-         // Handle work, by sleeping for some time
-         Thread.sleep(sleepTime);
-      } catch (InterruptedException e) {
-         e.printStackTrace();
-         Thread.currentThread().interrupt();
+         Reply reply = op.executeOperation(api);
+         responseHandler.setReply(reply);
+      } catch (Exception ex) {
+         ex.printStackTrace();
       }
-   } catch (MessageFormatException | IOException ex) {
-      responseHandler.createErrorReply(ex.getMessage());
+   } else {
+      responseHandler.createErrorReply(op.getErrorMessage());
    }
-\end{verbatim}
+
+   try {
+      int sleepTime = (threadNo % 2 == 0) ? 100 : 200;
+      // Handle work, by sleeping for some time
+      Thread.sleep(sleepTime);
+   } catch (InterruptedException e) {
+      e.printStackTrace();
+      Thread.currentThread().interrupt();
+   }
+} catch (MessageFormatException | IOException ex) {
+   responseHandler.createErrorReply(ex.getMessage());
+}
+\end{lstlisting}
 
 Výsledkem zpracování zprávy je tedy operace realizována návrhovým vzorem Command. \textbf{Operation} je rozhraní deklarující metody pro validaci operace (\texttt{validateOperation()}) a její vykonání (\texttt{executeOperation()}). Každá třída implementující toto rozhraní je pak konkrétní operací, která volá rozhraní systému Recommeng. 
 
@@ -1276,28 +1310,23 @@ Strategii řeší tří třídy umístěné v balíčku:
 	
 	Nejdůležitější metodou této třídy je metoda \texttt{sampleBandits(String banditCollectionId)} starající se jednak o výběr z prior pravděpodobností distribucí banditů nacházejících se v kolekci s identifikátorem \emph{banditCollectionId}, a následně o volbu nejlepšího z banditů. 
 	
-\begin{verbatim}
+\begin{lstlisting}[language=java]
 public Bandit sampleBandits(String banditCollectionId) {
-   // sample from the bandits's priors
-   int banditsCount =  banditsMachine.getBanditList().size();
-   for (int j = 0; j < banditsCount; j++) {
-      BetaDistribution beta = new BetaDistribution(
-         1 + banditsMachine.getBanditAtIndex(j).getSuccesses(),
-         1 + banditsMachine.getBanditAtIndex(j).getTrials() - banditsMachine.getBanditAtIndex(j).getSuccesses()
-      );
+    //sample from the bandits's priors, and select the largest sample
+    for (int j = 0; j < banditsMachine.getBanditList().size(); j++) {
+        BetaDistribution beta = new BetaDistribution(1 + banditsMachine.getBanditAtIndex(j).getSuccesses(), 1 + banditsMachine.getBanditAtIndex(j).getTrials() - banditsMachine.getBanditAtIndex(j).getSuccesses());
 
-      double inverseDistribution = beta.inverseCumulativeProbability(Math.random());
-      roundInverseDistributions.add(inverseDistribution);
-   }
-        
-   // select the largest sample     
-   int banditIndexChoice = MathUtil.argmax(roundInverseDistributions);
+        double inverseDistribution = beta.inverseCumulativeProbability(Math.random());
+        roundInverseDistributions.add(inverseDistribution);
+    }
 
-   roundInverseDistributions.clear();
-        
-   return banditsMachine.getBanditAtIndex(banditIndexChoice);
+    int banditIndexChoice = MathUtil.argmax(roundInverseDistributions);
+
+    roundInverseDistributions.clear();
+
+    return banditsMachine.getBanditAtIndex(banditIndexChoice);
 }
-\end{verbatim}	
+\end{lstlisting}	
 	
 \end{description}
 
