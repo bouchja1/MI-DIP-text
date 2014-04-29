@@ -1540,7 +1540,64 @@ Reprezentace tohoto zdroje ve formátu JSON by pak mohla vypadat například tak
 
 \subsection{Komunikace s Recommeng systémem}
 \label{sec:restrec}
+Vytvořil jsem též službu \textbf{EnsembleEndpoint} pro komunikaci s Recommeng systémem. Rozdíl oproti zbylým dvou službám (AlgorithmEndpoint a CoreEndpoint) je v rozdílném chování a funkčnosti její pomocné třídy \textbf{EnsembleZeroMqHelper}.
 
+Tato služba, ač běžící jako součást serverové aplikace, hraje vůči Recommeng systému roli klientskou. Pro vnější uživatele zastává tradiční roli serveru.
+
+EnsembleZeroMqHelper zpracovává příchozí žádosti od uživatelů prostřednictvím RESTful API a následně tyto žádosti transformuje do formátu JSON dle stanoveného schématu imitujícího chování HTTP protokolu. Poté je pomocníkem vytvořen klientský socket a předřazená klientská žádost je odeslána do systému. Pomocník pak vyčkává na odpověď. Poté, co ji obdrží a zpracuje do formátu HTTP odpovědi, ji vrací zpět žádajícímu klientovi. 
+
+Ukázka komunikace služby EnsembleEndpoint. Stejně jako v předchozích případech předává řízení na svou pomocnou třídu.
+
+\begin{lstlisting}[language=java]
+@Component
+@Path(EnsembleEndpoint.ENDPOINT_PATH)
+public class EnsembleEndpoint {
+    
+    ...
+    @Autowired
+    private EnsembleZeroMqHelper ensembleZeroMqHelper;
+    ...
+	
+    @Path(COLLECTION_PATH + COLLECTION_ID)
+    @GET   
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getBanditCollection(@PathParam(value="collectionId") String collectionId, @QueryParam(value = "filter") String filter) {
+        return ensembleZeroMqHelper.filterBanditCollection(collectionId, filter);
+    }
+    
+    ...
+}
+\end{lstlisting}
+
+Její funkcionalita už je ale oproti předchozím případům odlišná, především kvůli nutnosti vystavět žádost do formátu volání vzdálených procedur Recommeng systému a podobným způsobem zpracovat i odpověď.
+
+\begin{lstlisting}[language=java]
+public Response filterBanditCollection(String collectionId, String filter) {
+    Response resp = null;
+    connect(); // connecting to socket
+
+    SmileRequest req = new SmileRequest();
+    req.setMethod("GET");
+	...
+    req.setPath("/ensemble/services/collection/" + collectionId + "?filter=" + filter);
+
+    try {
+        String json = new ObjectMapper().writeValueAsString(req);
+		...
+        //encode data
+        byte[] smileData = mapper.writeValueAsBytes(req);
+        requester.send(smileData, 0);
+        //Block until we receive a response
+        byte[] reply = requester.recv(0);
+        SmileResponse result = mapper.readValue(reply, SmileResponse.class);
+        json = new ObjectMapper().writeValueAsString(result);
+        logger.info(json);
+        resp = buildResponse(result);            
+     	...
+     }
+    return resp;        
+}    
+\end{lstlisting}
 
 \subsection{Komunikace sady algoritmů pro doporučování}
 \label{sec:alg}
