@@ -746,6 +746,7 @@ Odhadem je myšleno získání číselné hodnoty nebo intervalu hodnot z výbě
 Rozlišujeme dva typy odhadů, a to bodový, kdy odhadem je jedna hodnota, a intervalový, kdy je odhadem interval hodnot. 
 
 \subsection{Multi-armed Bandits}
+\label{sub:mabandit}
 Jeden z klasických učících problémů zasahující do teorie pravděpodobnosti. Herní strategie je podobná filosofii tradičního výherního automatu (představujícího \emph{one-armed strategii}) s tím rozdílem, že multi-armed varianta má více herních pák, a proto lze v každém kole pro jednu hru volit mezi více automaty. Strategií se detailněji zabývá sekce~\ref{sec:multi}.
 
 S pojmy vysvětlenými výše souvisí strategie v tom smyslu, že použitím bayesovské varianty provádíme opakovaný výběr z konečného počtu rozdělení, čímž se snažíme maximalizovat průměrnou hodnotu.
@@ -1033,10 +1034,61 @@ Jeho výhodami jsou snadná konfigurovatelnost, podpora dependency injection, ro
 \section{Popis realizace adaptibilního systému}
 \label{sec:impl}
 
+Adaptibilní systém je samostatná Java Application.
+
+\subsection{Zavedení systému}
+Recommeng aplikace se spouští voláním metody \texttt{main()} třídy \textbf{EnsembleApp}. V této metodě je následně volána metoda \texttt{loadConsoleApplication()} abstraktní rodičovské třídy \textbf{EnsembleAppBase}.
+
+Metoda loadConsoleApplication() hraje roli zavaděče aplikace, neboť postupným voláním v sobě obsažených metod zavádí do provozu celý systém. Hlavní ovládací třídou aplikace je třída \textbf{ApplicationBean}, což je Spring bean typu singleton. Jejím prostřednictvím je zavedena vrstva pro obsluhu zpráv i komponenty pro komunikaci s datovým úložištěm. ApplicationBean je mozkem systému a při zavádění aplikace je získána ze Spring aplikačního kontextu.
+
+Ten je možné velice jednoduše konfigurovat pomocí anotací ve třídě \textbf{AppConfig}:
+
+\begin{verbatim}
+   @Configuration
+   @EnableScheduling
+   @ComponentScan(basePackages = {
+        "cz.cvut.bouchja1.ensemble.spring"
+   })
+   @PropertySource("classpath:application.properties")
+   public class AppConfig {
+   ...
+\end{verbatim}
+
+Anotace \emph{@EnableScheduling} a \emph{@ComponentScan} využijeme pro pravidelné ukládání stavu aplikace~\ref{task}, anotaci \emph{@PropertySource} zase pro možnosti parametrizace systému~\ref{param}.
+
+\subsubsection{Parametrizace}
+\label{param}
+Pro účely experimentování se systémem a testování funkčnosti s různě navolenou konfigurací je nutné načítat konfiguraci z editovatelného \emph{properties} souboru. K tomu jsem využil Spring bean \textbf{PropertySourcesPlaceholderConfigurer}.
+
+Konfigurační vlastnosti jsou do souboru \emph{application.properties} přidávány ve formátu:
+
+\begin{verbatim}
+   #cassandra or jvm
+   storage=cassandra
+   #storage=jvm
+   
+   ensemble.machine.rate=0.5
+   ensemble.feedback.possitive.best=1.0
+\end{verbatim}
+
+Konkrétní načítání v programu je pak díky použití PropertySourcesPlaceholderConfigurer velice jednoduché:
+
+\begin{verbatim}
+   this.rate = Double.parseDouble(env.getProperty("ensemble.machine.rate"));
+   this.possitiveFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.possitive.best"));
+\end{verbatim}
+
+\subsubsection{Pravidelné ukládání časových snímků}
+\label{task}
+Pravidelné ukládání časových snímků jsem realizoval démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} s veřejnou metodou \emph{run()}. Na metodu bylo též nutné aplikovat anotaci s parametrem \emph{@Scheduled(cron = "\$\{scheduling.job.cron\}")}.
+
+Po zavolání této metody dojde k persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze. Za předpokladu, že je možnosti použití databáze v konfiguračním souboru nastavená.
+
 \subsection{Vrstva pro obsluhu zpráv}
+\label{sub:messvrs}
 Následující text popisuje postup, jakým jsem realizoval vrstvu pro obsluhu zpráv pomocí síťové knihovny ZeroMQ.
 
-Většinová funkcionalita je řešena třídou \texttt{MultiThreadServer} (obsahující též vnitřní třídu  \texttt{WorkerThread}) z balíčku projektu Ensemble:
+Většinová funkcionalita je řešena třídou \texttt{MultiThreadServer} (obsahující též vnitřní třídu \textbf{WorkerThread}) z balíčku projektu Ensemble:
 
 \begin{verbatim}
    cz.cvut.fit.bouchja1.ensemble.socket
@@ -1118,7 +1170,7 @@ Na začátku procesu (při spuštění aplikace) je vytvořen ZeroMQ kontext (vi
    }
 \end{verbatim}
 
-Vláknům je parametrem předána instance třídy \texttt{RequestHandlerJson}, takže jsou schopny obsluhovat příchozí žádosti ve formátu JSON. Jedná se o implementaci rozhraní \texttt{RequestHandler} s jednou definovanou metodou pro obsluhu zpráv. Tento typ přijímají ve svém konstruktoru i pracovní vlákna. Řešení je tedy postaveno tak, aby bylo snadno rozšiřitelné pro jakýkoliv jiný formát komunikace, klidně vlastní.
+Vláknům je parametrem předána instance třídy \textbf{RequestHandlerJson}, takže jsou schopny obsluhovat příchozí žádosti ve formátu JSON. Jedná se o implementaci rozhraní \textbf{RequestHandler} s jednou definovanou metodou pro obsluhu zpráv. Tento typ přijímají ve svém konstruktoru i pracovní vlákna. Řešení je tedy postaveno tak, aby bylo snadno rozšiřitelné pro jakýkoliv jiný formát komunikace, klidně vlastní.
 
 \begin{verbatim}
    public interface RequestHandler {
@@ -1128,11 +1180,11 @@ Vláknům je parametrem předána instance třídy \texttt{RequestHandlerJson}, 
 \end{verbatim}
 
 \subsubsection{Technika zasílání zpráv a WorkerThread}
-O několik řádku výše bylo vysvětleno, jakým způsobem jsou na serveru zpracovány příchozí žádosti. Nyní již víme, že tuto funkcionalitu mají na starosti pracovní vlákna typu \texttt{WorkerThread}.
+O několik řádku výše bylo vysvětleno, jakým způsobem jsou na serveru zpracovány příchozí žádosti. Nyní již víme, že tuto funkcionalitu mají na starosti pracovní vlákna typu \textbf{WorkerThread}.
 
 Každý \emph{worker} v sobě udržuje kontext komunikace a pokud je na vstupu validní žádost, pro její zpracování je vyvolána příslušná operace rozhraní systému Recommeng. Sestavená odpověď je zaslána zpátky klientovi.
 
-Třída \texttt{WorkerThread} je vláknová; kromě konstruktoru obsahuje pouze jednu metodu \texttt{run()}. Právě tato metoda má na svědomí veškerou obsluhu žádosti zahrnující zpracování zprávy, volbu správné operace na rozhraní systému a po zpracování pak zaslání odpovědi zpátky k žádajícímu klientovi.
+Třída WorkerThread je vláknová; kromě konstruktoru obsahuje pouze jednu metodu \texttt{run()}. Právě tato metoda má na svědomí veškerou obsluhu žádosti zahrnující zpracování zprávy, volbu správné operace na rozhraní systému a po zpracování pak zaslání odpovědi zpátky k žádajícímu klientovi.
 
 V praxi to vypadá tak, že pokud je dané pracovní vlákno aktivní, čte příchozí žádost:
 
@@ -1175,7 +1227,7 @@ Po přečtení žádosti následuje zpracování:
    }
 \end{verbatim}
 
-Výsledkem zpracování zprávy je tedy operace realizována návrhovým vzorem Command. \texttt{Operation} je rozhraní deklarující metody pro validaci operace (\texttt{validateOperation()}) a její vykonání (\texttt{executeOperation()}). Každá třída implementující toto rozhraní je pak konkrétní operací, která volá rozhraní systému Recommeng. 
+Výsledkem zpracování zprávy je tedy operace realizována návrhovým vzorem Command. \textbf{Operation} je rozhraní deklarující metody pro validaci operace (\texttt{validateOperation()}) a její vykonání (\texttt{executeOperation()}). Každá třída implementující toto rozhraní je pak konkrétní operací, která volá rozhraní systému Recommeng. 
 
 Všechny typy podporovaných operací se nacházejí v aplikaci Ensemble v balíčku:
 
@@ -1192,23 +1244,73 @@ Jedná se o třídy splňující funkcionalitu dle funkčních požadavků~\ref{
 	\item \texttt{OperationDetectBestBandit}			
 \end{itemize}
 
-Výsledkem vykonání operace je vždy odpověď (třída \texttt{Reply} s atributy pro stavový kód a tělo zprávy), která je pomocí třídy \texttt{ResponseHandlerDefault} prezentována zpět klientovi.
+Výsledkem vykonání operace je vždy odpověď (třída \textbf{Reply} s atributy pro stavový kód a tělo zprávy), která je pomocí třídy \textbf{ResponseHandlerDefault} prezentována zpět klientovi.
 
 \subsection{Adaptibilní systém Recommeng}
 
 \subsubsection{API}
+API systému Recommeng reprezentuje interface \textbf{EnsembleApiFacade}. Nejdůležitějšími metodami jsou metody:
+
+\begin{itemize}
+	\item \texttt{createBanditSet(String banditSetId, Set<String> banditIds)}
+	\item \texttt{detectBestBandit(String banditCollectionId, String filter)}
+	\item \texttt{selectBandit(String banditCollectionId, String banditId)}
+	\item \texttt{calculateFeedback(String banditCollectionId, String banditId, String feedbackValue)}			
+\end{itemize}
+
+Tyto metody jsou volány prostřednictvím operací z vrstvy pro obsluhu zpráv~\ref{sub:messvrs}. Metody jsou přímo napojeny na bayesovskou strategii, což je hlavní ovládací prvek Recommeng systému.
+
+\subsubsection{Bayesian Bandits}
+Strategii řeší tří třídy umístěné v balíčku:
+
+\begin{verbatim}
+   cz.cvut.fit.bouchja1.ensemble.bandits
+\end{verbatim}
+
+\begin{description}
+	\item[Bandit] je třída reprezentující jednoho konkrétní banditu. Každý bandita má svůj identifikátor a atributy pro zaznamenávání výher a pokusů během jednotlivých her.
+	\item[BanditsMachine] je třída reprezentující jeden herní automat. Tento automat obsahuje seznam banditů a číselné parametry pro výpočty zpětné vazby a míry učení. V podstatě se jedná o konfiguraci, pomocí které je automat naprogramován. Tato konfigurace se nastavuje ve vnějším soubor (viz~\ref{param}).
+	\item[BayesianStrategy]	je třída reprezentující online učící strategii k řešení strategie Multi-Armed Bandit~\ref{sub:mabandit}. Vzhledem k tomu, že je pro kombinování možné vytvářet více kolekcí s bandity, v systému může nezávisle na sobě fungovat více bayesovských strategií. 
+	
+	Každá z nich je pak reprezentována dle identifikátoru kolekce, každá má přiřazen svůj vlastní herní automat a logiku algoritmu.  
+	
+	Nejdůležitější metodou této třídy je metoda \texttt{sampleBandits(String banditCollectionId)} starající se jednak o výběr z prior pravděpodobností distribucí banditů nacházejících se v kolekci s identifikátorem \emph{banditCollectionId}, a následně o volbu nejlepšího z banditů. 
+	
+\begin{verbatim}
+public Bandit sampleBandits(String banditCollectionId) {
+   // sample from the bandits's priors
+   int banditsCount =  banditsMachine.getBanditList().size();
+   for (int j = 0; j < banditsCount; j++) {
+      BetaDistribution beta = new BetaDistribution(
+         1 + banditsMachine.getBanditAtIndex(j).getSuccesses(),
+         1 + banditsMachine.getBanditAtIndex(j).getTrials() - banditsMachine.getBanditAtIndex(j).getSuccesses()
+      );
+
+      double inverseDistribution = beta.inverseCumulativeProbability(Math.random());
+      roundInverseDistributions.add(inverseDistribution);
+   }
+        
+   // select the largest sample     
+   int banditIndexChoice = MathUtil.argmax(roundInverseDistributions);
+
+   roundInverseDistributions.clear();
+        
+   return banditsMachine.getBanditAtIndex(banditIndexChoice);
+}
+\end{verbatim}	
+	
+\end{description}
+
+\section{Popis realizace RESTful API}
+\label{sub:restapi}
+
+RESTful API je realizováno jako Java Web Application.
 
 
-\subsubsection{Parametrizace}
-volba parametrů, ať už těch, co ovlivňují tresty nebo třeba úložiště (redis...)
 
-\subsubsection{Pravidelné ukládání časových snímků}
-\url{http://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-using-environment-specific-cron-expressions-with-the-scheduled-annotation/}
-
-\subsection{Sada algoritmů}
+\section{Popis realizace sady algoritmů}
 \label{sec:alg}
 
-\subsection{RESTful API}
 
 \chapter{Experimenty a vyhodnocení}
 \label{chap:tests}
