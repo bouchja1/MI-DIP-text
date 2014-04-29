@@ -46,14 +46,6 @@ basicstyle=\footnotesize\ttfamily,
 breaklines=true
 }
 
-\lstdefinelanguage{JavaScript}{
-keywords={break, case, catch, continue, debugger, default, delete, do, else, falic, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
-morecomment=[l]{//},
-morecomment=[s]{/*}{*/},
-morestring=[b]',
-morestring=[b]",
-}
-
 \usepackage{graphicx} %graphics files inclusion
 % \usepackage{amsmath} %advanced maths
 % \usepackage{amssymb} %additional math symbols
@@ -478,7 +470,7 @@ Na aplikačním serveru poběží dvě aplikace.
 
 \subsubsection{Databáze}
 
-Kvůli potřebě ukládat průběžný stav aplikace (časové snímky) a snadného obnovení znalostí systému v případě přerušení běhu je nutné zapojit do návrhu Database Management System (DBMS).
+Kvůli potřebě ukládat uživatelem vytvářené kolekce, též průběžný stav aplikace (časové snímky), a také kvůli snadnému obnovení znalostí systému v případě přerušení běhu, je nutné zapojit do návrhu Database Management System (DBMS).
 
 Volba DBMS hraje důležitou roli i při škálování aplikací. V minulosti tolik používané standardní relační DBMS mohou způsobovat zpoždění při provádění čtení/zápisu a v některých případech hrát roli úzkého hrdla aplikace (bottleneck).
 
@@ -490,9 +482,9 @@ Komunikaci s aplikací bude umožňovat systém pro zasílání zpráv (Messagin
 
 Producenti zpráv (klienti využívající aplikaci) vytvářejí zprávy, které jsou zasílány do fronty. Zprávy jsou z fronty postupně odebírány konzumenty, kteří mají jejich zpracování na starosti. Výhodou je časová nezávislost mezi producenty zpráv a konzumenty – producent tak může zasílat zprávy i tehdy, když žádný z producentů není k dispozici. Zprávy pak existují ve frontě, dokud se o jejich zpracování konzument nepřihlásí.
 
-Recommeng systém bude taktéž komunikovat s databází, ale využívat ji pouze pro ukládání informací o stavu (což bude prováděno v pravidelných časových intervalech), respektive pro načítání posledního uloženého stavu při novém startu aplikace.
+Recommeng systém bude taktéž komunikovat s databází kvůli nutnosti ukládání informací o stavu, respektive kvůli možnosti načíst poslední uložený stav při novém startu aplikace.
 
-Důvodem pro vynechání komunikačního mezikroku s databází je požadavek na rychlost systému – veškerá data pro výpočet a predikci budou udržována přímo ve vnitřní paměti (uvnitř JVM). 
+Veškerá data pro výpočet a predikci budou jinak udržována přímo ve vnitřní paměti (uvnitř JVM). 
 
 \begin{figure}\centering
 	\includegraphics[width=1.2\textwidth]{obr/vitvar_mq.png}
@@ -1120,9 +1112,102 @@ this.possitiveFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.p
 
 \subsubsection{Pravidelné ukládání časových snímků}
 \label{task}
-Pravidelné ukládání časových snímků jsem realizoval démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} s veřejnou metodou \emph{run()}. Na metodu bylo též nutné aplikovat anotaci s parametrem \emph{@Scheduled(cron = "\$\{scheduling.job.cron\}")}.
+Pravidelné ukládání časových snímků jsem realizoval démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} s veřejnou metodou \emph{run()}. Na metodu bylo též nutné aplikovat anotaci s parametrem \emph{@Scheduled(cron = "\$\{scheduling.job.cron\}")}. Tato metoda je tedy automaticky volána systémem, na kterém aplikace běží. 
 
-Po zavolání této metody dojde k persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze. Za předpokladu, že je možnosti použití databáze v konfiguračním souboru nastavená.
+Po automatickém spuštění této metody dojde k vyvolání metody \emph{saveCurrentState()} třídy ApplicationBean, která zprostředkuje persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze.
+
+Samozřejmě za předpokladu, že je použití databáze v konfiguračním souboru nastaveno. V opačném případě by tovární metoda třídy \textbf{StorageFactory} zvolila k použití jinou formu práce s daty.
+
+\begin{lstlisting}[language=java]
+public static IStorage getStorage(Environment env) {
+    switch (env.getProperty("storage")) {
+        case "cassandra" : 
+            return new CassandraStorage(env.getProperty("cassandra.host"), env.getProperty("cassandra.keyspace"));                
+        default : 
+            return new JvmStorage();
+    }
+}
+\end{lstlisting}
+
+Tento přístup vede k rozšiřitelnosti o další typy databází, které by mohl systém v budoucnu podporovat. 
+
+\begin{lstlisting}[language=java]
+@Scope("singleton")
+public class ApplicationBean {
+   ...
+   private IStorage storage;
+   ...
+   
+   public void saveCurrentState() {
+       try {
+           storage.saveCurrentState(strategies);
+       } catch (NullPointerException ex) {
+           logger.error("Application is not initialized yet.", ex);
+       }
+   }
+   ...
+}   
+\end{lstlisting}
+
+\subsection{Databázové úložiště Cassandra}
+Úložiště je realizováno třídou \textbf{CassandraStorage}. Během jejího zavádění do systému při startu aplikace jsou v konstruktoru volány dvě metody – \emph{connect()} a \emph{createSchema()}. V prvním případě dochází ke spojení s databázovým klastrem, pomocí kterého je následně získána \emph{session}.
+
+Pomocí session a její metody \emph{execute()} lze vykonávat jednotlivé dotazy. 
+
+Použita je hned v metodě createSchema(), která je zodpovědná za vytvoření datového modelu navrženého pro systém Recommeng.
+
+Ukázka vytvoření keyspace pro všechny column families aplikace:
+
+\begin{lstlisting}[language=java]
+private void createSchema() {        
+    session.execute("CREATE KEYSPACE IF NOT EXISTS " + keyspace + " WITH replication "
+            + "= {'class':'SimpleStrategy', 'replication_factor':3};");
+\end{lstlisting}
+
+Column families jsem pro účely aplikace vytvořil dvě – \emph{collection} a \emph{algorithm}.
+
+Druhá column family má dělený klíč řádku:
+
+\begin{verbatim}
+PRIMARY KEY ((collection_id, algorithm_id), event_time)
+\end{verbatim}
+
+a reverzní řazení založené na časové značce indikující dobu zápisu do databáze:
+
+\begin{verbatim}
+WITH CLUSTERING ORDER BY (event_time DESC)
+\end{verbatim}
+
+Třída pak implementuje několik metod svého rozhraní IStorage pro uložení aktuálního stavu aplikace, načtení poslední známé konfigurace a vytvoření kolekce banditů. Při realizaci funkcionality metod je bohatě využíváno možností, které nabízí DataStax driver pomocí CQL, například tvorba předpřipravených dotazů konstrukcí \textbf{PreparedStatement}. 
+
+Následuje příklad ukládání aktuálního stavu z paměti systému do databáze.
+
+\begin{lstlisting}[language=java]
+@Override
+public void saveCurrentState(List<BayesianStrategy> strategies) {
+    for (BayesianStrategy strategy : strategies) {
+        List<Bandit> bandits = strategy.getBanditsMachine().getBanditList();
+        if (bandits.size() > 0) {
+            PreparedStatement statement = session.prepare(
+                    "INSERT INTO " + keyspace + ".algorithm "
+                    + "(collection_id, algorithm_id, event_time, probability_in_time, trials_rate, successes_rate) "
+                    + "VALUES (?, ?, ?, ?, ?, ?);");
+
+        ...
+
+            for (Bandit b : bandits) {
+                BoundStatement boundStatement = new BoundStatement(statement);
+                session.execute(boundStatement.bind(
+                        strategy.getCollectionId(),
+                        b.getName(),
+                        actualDate,
+                        b.getProbability(),
+                        b.getTrials(),
+                        b.getSuccesses()));
+                ...
+        ...
+}
+\end{lstlisting}
 
 \subsection{Vrstva pro obsluhu zpráv}
 \label{sub:messvrs}
@@ -1513,24 +1598,22 @@ V modulu pro RESTful API reprezentuji zdroje jako třídy v Javě. Například p
 @XmlRootElement
 public class UserArticleDocument implements Serializable {       
     
-    private static final long serialVersionUID = -8039686696076337053L;
-    
+    private static final long serialVersionUID = -8039686696076337053L;    
     private String articleId;
     private String articleText;
     private String group;
     private int userId;    
     private Date time;    
     private double userRating;
-    
     ...
 \end{lstlisting}
 
 Reprezentace tohoto zdroje ve formátu JSON by pak mohla vypadat například takto:
 
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}
 {
     "articleId":"http://somedomain.org/somearticle.html",
-    "articleText":"Hello Bob and Alice! This is an article about you...",
+    "articleText":"Hello Bob and Alice!",
     "group":"123",
     "userId":42,
     "time":"2009-04-12T20:44:55Z",
@@ -1602,6 +1685,7 @@ public Response filterBanditCollection(String collectionId, String filter) {
 \subsection{Komunikace sady algoritmů pro doporučování}
 \label{sec:alg}
 
+\section{Apache Solr jako úložiště dokumentů}
 
 \chapter{Experimenty a vyhodnocení}
 \label{chap:tests}
