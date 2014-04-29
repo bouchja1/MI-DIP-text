@@ -617,7 +617,9 @@ Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s meto
 	/recommeng/algorithms/{core-id}/{algorithm-id}
 \end{verbatim}
 
-Úkolem je zpracovat žádost uživatele o doporučení algoritmem, jehož identifikátor je uveden v cestě. Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je též nutno uvést). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z té samé skupiny a další.
+Úkolem je zpracovat žádost uživatele o doporučení algoritmem, jehož identifikátor je uveden v cestě. 
+
+Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je též nutno uvést). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z té samé skupiny a další.
 
 \subsection{Rozhraní pro úložiště dat}
 
@@ -1387,6 +1389,9 @@ API systému Recommeng reprezentuje interface \textbf{EnsembleApiFacade}. Nejdů
 Tyto metody jsou volány prostřednictvím operací z vrstvy pro obsluhu zpráv~\ref{sub:messvrs}. Metody jsou přímo napojeny na bayesovskou strategii, což je hlavní ovládací prvek Recommeng systému.
 
 \subsubsection{Bayesian Bandits}
+
+TODOOOOO někam zpětná vazba
+
 Strategii řeší tří třídy umístěné v balíčku:
 
 \begin{verbatim}
@@ -1683,7 +1688,70 @@ public Response filterBanditCollection(String collectionId, String filter) {
 \end{lstlisting}
 
 \subsection{Komunikace sady algoritmů pro doporučování}
+\label{sec:algcom}
+Doporučení je vyvoláno klientskou žádostí na rozhraní reprezentované třídou \textbf{AlgorithmEndpoint}. 
+
+Služby využívají pro zpracování žádostí a vytváření odpovědí pomocnou třídu \textbf{AlgorithmEndpointHelper} (podobně jako~\ref{sec:restrec}). Tato třída v sobě navíc udržuje odkaz v podobě instance třídy \textbf{AlgorithmSolrService}, která svými metodami implementuje funkcionalitu jednotlivých algoritmů pro doporučování v textu.
+
+\emph{Pozn.} Následující text se týká též tříd \textbf{CoresEndpoint} a \textbf{CoresEndpointHelper}. Ke komunikaci se Solr je použito instance třídy \textbf{CoreSolrService}, která též obsahuje komponentu \textbf{SolrService} zajišťující obsluhu spojení.
+
+\subsubsection{Třída SolrService}
+Třída je též prostředníkem mezi REST API a Apache Solr díky komponentě \textbf{SolrService}, která funguje především jako pool instancí serverových spojení pro různá jádra Solr. Vytvoření takového poolu bylo nutností kvůli možnosti znovu použít již vytvořené instance třídy \textbf{HttpSolrServer}.
+
+HttpSolrServer je thread-safe\footnote{Programové operace jsou prováděny správně i tehdy, kdy jsou prováděny více vlákny současně.} a pokud jej použijeme k vytvoření nové instance s URL některého z jader Solr v parametru, je nutné tuto instanci znovu použít pro všechny žádosti směřující na danou URL~\cite{solrj}. 
+
+V opačném případě, kdy jsou instance vytvářeny bez jakéhokoliv rozmyslu a strategie, hrozí \emph{leak} připojení~\cite{metawerx}.
+
+Validní jádra Solr pro připojení do poolu se nastavují v souboru aplikačního kontextu pro Spring:
+
+\begin{lstlisting}[language=xml]
+<bean id="solrService" class="cz.cvut.fit.bouchja1.mi_dip.rest.client.solr.SolrService">
+    <property name="serverUrl" value="http://localhost:8089/solr/"/>
+    <property name="validSolrCores">
+        <set>
+            <value>mi_dip_core1</value>
+            <value>mi_dip_core2</value>
+        </set>
+    </property>        
+</bean>  
+\end{lstlisting}
+
+SolrService je \emph{singleton scope} komponenta s metodou \emph{createValidSolrServers()}, jež je anotována jako \emph{@PostConstruct}. Jejími atributy jsou:
+
+\begin{lstlisting}[language=java]
+private String serverUrl;
+private Map<String, HttpSolrServer> validServers = new HashMap<String, HttpSolrServer>();
+private Set<String> validSolrCores;
+\end{lstlisting}
+
+Metoda s anotací @PostConstruct je vyvolána ještě před samotným vytvořením instance třídy. Účelem je naplnění poolu příslušnými validními instancemi spojení.
+
+\begin{lstlisting}[language=java]
+Iterator<String> validCores = validSolrCores.iterator();
+while (validCores.hasNext()) {
+    String core = validCores.next();
+    validServers.put(core, new HttpSolrServer(serverUrl + core));
+}
+\end{lstlisting}
+
+Kdykoliv pak v metodách třídy AlgorithmSolrService navazujeme spojení se serverem, dle zadaného identifikátoru jádra (coreId) se pokoušíme získat instanci z poolu, který má parametry \emph{HashMap<String, HttpSolrServer>}. 
+
+\begin{lstlisting}[language=java]
+HttpSolrServer server = solrService.getServerFromPool(coreId);
+\end{lstlisting}
+
+\subsection{Implementace základních algoritmů pro doporučování obsahu}
 \label{sec:alg}
+
+\subsubsection{Algoritmus náhodného výběru}
+
+\subsubsection{Algoritmus výběru dle nejnovějších položek}
+
+\subsubsection{Algoritmus výběru nejlépe hodnocených položek}
+
+\subsubsection{Algoritmus výběru dle podobnosti obsahu}
+
+\subsubsection{Algoritmus kolaborativního filtrování}
 
 \section{Apache Solr jako úložiště dokumentů}
 

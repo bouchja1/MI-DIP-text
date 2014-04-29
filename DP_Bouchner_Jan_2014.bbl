@@ -52,6 +52,10 @@ Náhodný výběr. [online], stav ze dne 26.4.2012.
 Proklik. [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://www.adaptic.cz/znalosti/slovnicek/proklik/}
 
+\bibitem{solrj}
+SorlJ. [online], stav ze dne 29.4.2012.
+\urlprefix\biburl{https://wiki.apache.org/solr/Solrj}
+
 \bibitem{affinity}
 What Is Affinity Analysis? [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://www.wisegeek.com/what-is-affinity-analysis.htm}
@@ -155,6 +159,10 @@ Vychodil, V.: Komunikace pomocí Socketu. [online], stav ze dne 27.4.2012.
 Vychodil, V.: Pravděpodobnost a statistika: Normální rozdělení a
   centrální limitní věta. [online], stav ze dne 26.4.2012.
 \urlprefix\biburl{http://vychodil.inf.upol.cz/kmi/pras/pr09.pdf}
+
+\bibitem{metawerx}
+Wiki, M.~J.: Connection Leak. [online], stav ze dne 29.4.2012.
+\urlprefix\biburl{http://wiki.metawerx.net/wiki/ConnectionLeak}
 
 \bibitem{wiki:invindex}
 Wikipedia: Inverted index --- Wikipedia{,} The Free Encyclopedia. 2014,

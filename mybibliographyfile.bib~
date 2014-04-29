@@ -119,6 +119,21 @@ url="http://www.netflixprize.com/rules",
 howpublished = "[online]"
 }
 
+@MISC{solrj,
+author={Metawerx Java Wiki},
+title="Connection Leak",
+note="stav ze dne 29.4.2012",
+url="https://wiki.apache.org/solr/Solrj",
+howpublished = "[online]"
+}
+
+@MISC{solrj,
+title="SorlJ",
+note="stav ze dne 29.4.2012",
+url="http://wiki.metawerx.net/wiki/ConnectionLeak",
+howpublished = "[online]"
+}
+
 @MISC{bellkor,
 title="BellKor, AT\&T Labs, Inc. – Research",
 note="stav ze dne 21.4.2012",
@@ -266,8 +281,6 @@ note="stav ze dne 26.4.2012",
 url="http://zguide.zeromq.org/page:all",
 howpublished = "[online]"
 }
-
-http://zguide.zeromq.org/page:all
 
 @misc{itemcf,
 author = {Dhoha Almazro and Ghadeer Shahatah and Lamia Albdulkarim and Mona Kherees and Romy Martinez and Lamia Albdulkarim and William Nzoukou},
