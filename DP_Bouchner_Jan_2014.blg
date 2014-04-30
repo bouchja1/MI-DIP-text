@@ -4,6 +4,8 @@ The top-level auxiliary file: DP_Bouchner_Jan_2014.aux
 The style file: csn690.bst
 Database file #1: mybibliographyfile.bib
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Warning--to sort, need author or key in pst2
+Warning--to sort, need author or key in pst3
 Warning--to sort, need author or key in affinity
 Warning--to sort, need author or key in proklik
 Warning--to sort, need author or key in amazonrec
@@ -13,8 +15,6 @@ Warning--to sort, need author or key in bellkor
 Warning--to sort, need author or key in mendeleylastfm
 Warning--to sort, need author or key in ibm
 Warning--to sort, need author or key in easyrec
-Warning--to sort, need author or key in pst2
-Warning--to sort, need author or key in pst3
 Warning--to sort, need author or key in mtserver
 Warning--to sort, need author or key in solrj
 Warning--missing school in Fielding:2000:ASD:932295
