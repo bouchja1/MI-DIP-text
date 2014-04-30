@@ -890,7 +890,10 @@ Tento klient se rozhodl nevyužít možnosti komunikovat prostřednictvím REST 
 \subsection{Recommeng systém}
 \label{sec:recommeng}
 
-Pro logiku kombinování metod v systému Recommeng jsem po důkladném studiu vybral jako tu nejvhodnější strategii \emph{multi-armed bayesian bandit}, jíž využívá~\ref{sub:orp}. Jejímu popisu je věnována celá samostatná kapitola~\ref{chap:adapt}.
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/ensembleDiagram.pdf}
+ 	\caption[Zjednodušený návrh spolupráce tříd v adaptibilním systému.]{Zjednodušený návrh spolupráce tříd v adaptibilním systému.}\label{fig:recommengNavrh}
+\end{figure}	
 
 \subsubsection{Komunikace s frontou zpráv Recommeng systému}
 
@@ -919,6 +922,11 @@ Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, �
 
 \subsubsection{Rozhraní pro Recommeng}
 
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/rest1.pdf}
+ 	\caption[Zjednodušený návrh spolupráce tříd v adaptibilním systému.]{Zjednodušený návrh spolupráce tříd v adaptibilním systému.}\label{fig:recommengRestNavrh}
+\end{figure}	
+
 Komunikace s rozhraním by měla umožňovat vytvářet v Recommeng aplikaci kolekce s identifikátory algoritmů, jenž budou zapojeny do kombinování a predikce. 
 
 K tomu účelu bude sloužit endpoint:
@@ -946,6 +954,11 @@ Kvůli učení a vývoji znalostí systému je nezbytně nutné mít možnost za
 Na endpoint výše v takovém případě zašleme metodou PUT upřesňující informaci o operaci, kterou chceme systému sdělit (výběr vs. zpětná vazba).
 
 \subsubsection{Rozhraní pro sadu základních algoritmů}
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/rest2.pdf}
+ 	\caption[Zjednodušený návrh spolupráce tříd v adaptibilním systému.]{Zjednodušený návrh spolupráce tříd v adaptibilním systému.}\label{fig:recommengRestNavrh2}
+\end{figure}	
 
 Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s metodou GET.
 
