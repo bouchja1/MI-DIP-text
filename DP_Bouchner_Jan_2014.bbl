@@ -12,10 +12,6 @@
 BellKor, AT\&T Labs, Inc. – Research. [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://www2.research.att.com/~volinsky/netflix/}
 
-\bibitem{zitecnn}
-CNN Acquires Zite. [online], stav ze dne 21.4.2012.
-\urlprefix\biburl{http://cnnpressroom.blogs.cnn.com/2011/08/30/cnnzite/}
-
 \bibitem{easyrec}
 easyrec: Recommendation Engine. [online], stav ze dne 24.4.2012.
 \urlprefix\biburl{http://easyrec.org/recommendation-engine}
@@ -52,6 +48,11 @@ Náhodný výběr. [online], stav ze dne 26.4.2012.
 Proklik. [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://www.adaptic.cz/znalosti/slovnicek/proklik/}
 
+\bibitem{ibm}
+Recommender systems, Part 2: Introducing open source engines. [online], stav ze
+  dne 30.4.2012.
+\urlprefix\biburl{http://www.ibm.com/developerworks/library/os-recommender2/index.html}
+
 \bibitem{solrj}
 SorlJ. [online], stav ze dne 29.4.2012.
 \urlprefix\biburl{https://wiki.apache.org/solr/Solrj}
@@ -59,10 +60,6 @@ SorlJ. [online], stav ze dne 29.4.2012.
 \bibitem{affinity}
 What Is Affinity Analysis? [online], stav ze dne 21.4.2012.
 \urlprefix\biburl{http://www.wisegeek.com/what-is-affinity-analysis.htm}
-
-\bibitem{ziteflip}
-Zite is Flipping out. [online], stav ze dne 21.4.2012.
-\urlprefix\biburl{http://blog.zite.com/2014/03/05/zite-is-flipping-out/}
 
 \bibitem{mtserver}
 ØMQ - The Guide. [online], stav ze dne 26.4.2012.

@@ -114,9 +114,9 @@ breaklines=true
 Doporučování lze dělit do dvou skupin dle způsobu vykonávané práce. 
 
 \begin{description}
-	\item[Kolaborativní filtrování.] Doporučení z této skupiny nejčastěji využívají stránky zabývající se prodejem různých produktů.
+	\item[Kolaborativní filtrování] Doporučení z této skupiny nejčastěji využívají stránky zabývající se prodejem různých produktů.
 	
-	\item[Doporučení založená na obsahu.] Druhou skupinou jsou doporučení založená na obsahu, nejčastěji na textové podobnosti.
+	\item[Doporučení založená na obsahu] Druhou skupinou jsou doporučení založená na obsahu, nejčastěji na textové podobnosti.
 \end{description}
 
 	Vývoj v oblasti informačních věd je však rychlý. V dnešní době již není zárukou, že server s aktuálními novinkami ze světa, který za účelem zvýšení čtenosti svých článků nasadí některé z nabízených doporučení do architektury svého systému, dosáhne tímto krokem výrazného zlepšení.
@@ -150,12 +150,12 @@ Doporučování lze dělit do dvou skupin dle způsobu vykonávané práce.
 	
 	Funkčnost navrženého systému bude ověřena implementací prototypu a jeho spuštěním na modelové úloze.
 	
-	K dosažení těchto cílů bude zapotřebí vyvinout následující moduly:
+	K dosažení těchto cílů bude zapotřebí vyvinout následující části:
 
 \begin{itemize}
-  \item \textbf{adaptibilní systém pro doporučování obsahu}
-  \item \textbf{sada základních algoritmů určených k doporučování}
-  \item \textbf{obecné rozhraní pro manipulaci s doporučovacími algoritmy a systémem}
+  \item \textbf{adaptibilní systém pro doporučování obsahu,}
+  \item \textbf{sada základních algoritmů určených k doporučování,}
+  \item \textbf{RESTful API pro manipulaci s doporučovacími algoritmy a systémem.}
 \end{itemize}	
 
 \section{Struktura práce}
@@ -163,11 +163,11 @@ Doporučování lze dělit do dvou skupin dle způsobu vykonávané práce.
 	Tato práce je strukturována do pěti různých kapitol. Kapitoly jsou řazeny v pořadí, v jakém probíhaly jednotlivé fáze vývoje.	
 
 \begin{description}
-  \item[Kapitola \nameref{chap:current}] popisuje historické pozadí i trendy používané současnými doporučovacími systémy. Snahou této rešerše je vyvodit závěry, jež by mohly být užitečné pro náplň dalších kapitol.
-  \item[Kapitola \nameref{chap:analysis}] shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. 
-  \item[Kapitola \nameref{chap:adapt}] detailně popisuje algoritmické a matematické postupy použité při návrhu adaptibilního systému. 
-  \item[Kapitola \nameref{chap:impl}] popisuje vývoj aplikace na základě provedené analýzy a návrhu.
-  \item[Kapitola \nameref{chap:tests}] shrnuje poznatky nabyté z provedených experimentů se systémem a hodnotí vyvinutou aplikaci. 
+  \item[Kapitola \nameref{chap:current}] Popisuje historické pozadí i trendy používané současnými doporučovacími systémy. Snahou této rešerše je vyvodit závěry, jež by mohly být užitečné pro náplň dalších kapitol.
+  \item[Kapitola \nameref{chap:analysis}] Shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. 
+  \item[Kapitola \nameref{chap:adapt}] Detailně popisuje algoritmické a matematické postupy použité při návrhu adaptibilního systému. 
+  \item[Kapitola \nameref{chap:impl}] Popisuje vývoj aplikace na základě provedené analýzy a návrhu.
+  \item[Kapitola \nameref{chap:tests}] Shrnuje poznatky nabyté z provedených experimentů se systémem a hodnotí vyvinutou aplikaci. 
 \end{description}
 	
 \end{introduction}
@@ -175,37 +175,39 @@ Doporučování lze dělit do dvou skupin dle způsobu vykonávané práce.
 \chapter{Aktuální stav na poli doporučování}	
 \label{chap:current}
 
-V dnešní moderní době je možné setkat se s celou řadou různých doporučení.
+V dnešní moderní době je možné setkat se s celou řadou různých doporučení, např.: 
 
 \begin{itemize}
-	\item lidé, které byste mohli znát
-	\item uživatelé kupující produkt X kupují též produkt Y
-	\item položky podobné položce XY	
+	\item Lidé, které byste mohli znát.
+	\item Uživatelé kupující produkt X kupují též produkt Y.
+	\item Položky, které jsou podobné položce XY	.
 \end{itemize}
 
 Jak vidno, doporučení nesou různá označení, všechny však sdílejí stejnou myšlenku – zaujmout či upozornit na něco či někoho konkrétního. Spousta elektronických obchodů, renomovaných aukčních domů, ale též serverů se zábavou na nich doslova staví své podnikání, neboť správně navržený a fungující doporučovací systém může přinést výrazné navýšení zisku. 
 
-Sami firemní zákazníci navíc o doporučení stojí. Usnadňuje jim navigaci po stránce a existuje zde vysoká šance, že na jeho základě přizpůsobí své chování.
+Sami firemní zákazníci navíc o doporučení stojí. Usnadňují jim navigaci po stránce a existuje zde vysoká šance, že na jejich základě přizpůsobí své chování.
 
-Nicméně důvěra uživatele v navštívenou stránku je tak velká, jak dobrá doporučení stránka poskytuje. Pokud zákazník dostává samá špatná doporučení, nenásleduje je a ve výsledku odmítá celý systém.
+Důvěra uživatele v navštívenou stránku je nicméně tak velká, jak dobrá doporučení stránka poskytuje. Pokud zákazník dostává samá špatná doporučení, nenásleduje je a ve výsledku odmítá celý systém.
 
-\section{Příklady systémů}
+\section{Analýza vybraných systémů}
 \label{sec:examples}
-Na internetu lze narazit na desítky, ba i stovky systémů zapojených do reálného provozu. Záměrně jsem se snažil vybral pouze zlomek, jenž ale zároveň pokrývá většinu typů doporučovaného obsahu (produkty, články, zábava apod.).
+Na internetu lze narazit na desítky, ba i stovky systémů zapojených do reálného provozu. Záměrně jsem se snažil vybral pouze zlomek, jenž by ale zároveň pokrýval většinu typů doporučovaného obsahu (produkty, články, zábava apod.).
+
+U těchto systémů jsem se snažil identifikovat, jaké postupy jsou prováděny na pozadí jejich doporučování, jaké k tomu využívají metody a vzhledem k povaze řešeného problému jsem zkoumal též znaky týkající se kombinování metod, kterými bych se mohl nechat inspirovat při návrhu svého systému.
 
 \subsection{Amazon.com}
 
-\textbf{Amazon.com, Inc.}~\footnote{\url{http://www.amazon.com}} je jedním z největších a nejstarších internetových prodejců. Společnost začínala jako online knihkupectví, postupem let však zařadila do své prodejní nabídky též hudební a filmové nosiče, software, elektroniku, nábytek a spoustu dalšího zboží včetně vlastní spotřební elektroniky v podobě čtečky elektronických knih a tabletů Kindle či poskytování služeb z oblasti cloud computingu.
+\textbf{Amazon.com, Inc.}\footnote{\url{http://www.amazon.com}} je jedním z největších a nejstarších internetových prodejců. Společnost začínala jako online knihkupectví, postupem let však zařadila do své prodejní nabídky též hudební a filmové nosiče, software, elektroniku, nábytek a spoustu dalšího zboží včetně vlastní spotřební elektroniky v podobě čtečky elektronických knih a tabletů Kindle či poskytování služeb z oblasti cloud computingu.
 
 Firmu lze řadit mezi průkopníky doporučování na internetu. Jako jeden z prvních internetových prodejců začala svým zákazníkům doporučovat výrobky na základě nákupů jiných uživatelů.
 
 Doporučovací systém společnosti je založen na více zdrojích informací:
 
 \begin{itemize}
-	\item porovnávání uživatelem prohlížených položek a položek umístěných uvnitř nákupního košíku s položkami, které se společně s těmito prohlíženými položkami v minulosti často prodávaly~\footnote{affinity analysis – nacházení spojení mezi odlišnými položkami. Základním příkladem budiž vztah mezi šamponem a kondicionérem. Kupující je většinou používá v ten samý čas~\cite{affinity}. Při nákupu jednoho by mohl mít tedy zájem i o druhý.}.
+	\item porovnávání uživatelem prohlížených položek a položek umístěných uvnitř nákupního košíku s položkami, které se společně s těmito prohlíženými položkami v minulosti často prodávaly\footnote{affinity analysis – nacházení spojení mezi odlišnými položkami. Základním příkladem budiž vztah mezi šamponem a kondicionérem. Kupující je většinou používá v ten samý čas~\cite{affinity}. Při nákupu jednoho by mohl mít tedy zájem i o druhý.}.
 	\item uchovávání informací ohledně hodnocení položek uživateli
 	\item zaznamenávání nákupní historie (Pokud uživatel v minulém měsíci zakoupil tři dětské knížky, znamená to, že má dítě?)
-	\item sledování spousty dalších postupů, jako například vyhodnocování demografických informací (dle doručovací adresy), zaznamenávání pohybu po stránce (jaké všechny položky si uživatel prohlédl, než vložil jednu konkrétní do nákupního košíku) nebo sledování prokliků~\footnote{Jako proklik se označuje takové kliknutí na odkaz, které uživatele dovede na cílovou stránku~\cite{proklik}.} z marketingových e-mailů s odkazy na zboží~\cite{amazonrec}.
+	\item sledování spousty dalších postupů, jako například vyhodnocování demografických informací (dle doručovací adresy), zaznamenávání pohybu po stránce (jaké všechny položky si uživatel prohlédl, než vložil jednu konkrétní do nákupního košíku) nebo sledování prokliků\footnote{Jako proklik se označuje takové kliknutí na odkaz, které uživatele dovede na cílovou stránku~\cite{proklik}.} z marketingových e-mailů s odkazy na zboží~\cite{amazonrec}.
 \end{itemize}
 
 Společnost užívá jako svou hlavní doporučovací strategii \emph{item-to-item kolaborativní filtrování}. Fanoušek moderních technologií tak může při návštěvě stránek nalézt odkazy na technologické novinky všeho druhu, zatímco mladá matka bude mít v nabídce té samé stránky ve větší míře zastoupeno dětské zboží.
@@ -214,7 +216,7 @@ Výše jsou samozřejmě popsány pouze základní principy. Doporučovací syst
 
 \subsection{Netflix}
 
-\textbf{Netflix, Inc.}~\footnote{\url{https://www.netflix.com}} je společnost, poskytující v začátcích své služby jako internetová videopůjčovna, jež se v průběhu posledních několika let rozrostla v obrovskou mediální společnost. Strategicky významným byl pro ni rok 2007. Tehdy byla nabídka jejích služeb rozšířena o filmy přenášené přes stream~\footnote{Snímek se fyzicky nenachází na koncovém zařízení, ale přehrává se přímo ze serveru poskytovatele .}~\cite{netflix2007}. Nyní společnost nabízející obsah v podobě filmů a seriálů pro většinu v dnešní době používaných platforem jako PC, Mac, PlayStation3, Wii, Xbox a také pro mobilní telefony a tablety. 
+\textbf{Netflix, Inc.}\footnote{\url{https://www.netflix.com}} je společnost, poskytující v začátcích své služby jako internetová videopůjčovna, jež se v průběhu posledních několika let rozrostla v obrovskou mediální společnost. Strategicky významným byl pro ni rok 2007. Tehdy byla nabídka jejích služeb rozšířena o filmy přenášené přes stream\footnote{Snímek se fyzicky nenachází na koncovém zařízení, ale přehrává se přímo ze serveru poskytovatele .}~\cite{netflix2007}. Nyní společnost nabízí obsah v podobě filmů a seriálů pro většinu v dnešní době používaných platforem jako PC, Mac, PlayStation3, Wii, Xbox a také pro mobilní telefony a tablety. 
 
 Vzhledem k tomu, že firma staví své podnikání na tom, že její zákazníci ji platí za konzumaci zábavy, je v jejím vlastním zájmu, aby těmto uživatelům sledujícím filmy a seriály nabízela automaticky další obsahově či žánrově podobné, zkrátka takové, jenž budou co možná nejvíce lahodit jejich vkusu (dle~\cite{netflixrec} pochází $\frac{2}{3}$ zapůjčených filmů na Netflix z předchozího doporučení). Úspěšné podnikání společnosti je tak přímo závislé na tom, jak kvalitním doporučovacím systém společnost disponuje. 
 
@@ -235,30 +237,15 @@ Data obsahovala 100 480 507 takových hodnocení pro 17 770 filmů od 480 189 u�
 
 Celková výhra byla udělena až v roce 2009 (do té doby sice docházelo k průběžnému zlepšování výsledků, nikdy však nebylo dosaženo požadovaného zlepšení 10 procent) týmu \emph{BellKor's Pragmatic Chaos}, vzniklého spojením tří do té doby samostatně soutěžících týmů.
 
-Vítězný tým dosáhl cíle pomocí pokročilých technik strojového učení. Zjistil přitom především to, že hodnocení každého filmu je silně subjektivní záležitostí, kterou je velmi obtížné programově předpovědět. Ukázalo se také, že ve větší míře záleží na tom, zda uživatel hodnotí právě dosledovaný film nebo film, který zhlédl již před delší dobou. Velkou roli hraje i nálada uživatele v průběhu dne a další faktory~\cite{bellkor}.
+Vítězný tým dosáhl cíle pomocí \emph{pokročilých technik strojového učení}. Zjistil přitom především to, že hodnocení každého filmu je silně subjektivní záležitostí, kterou je velmi obtížné programově předpovědět. Ukázalo se také, že ve větší míře záleží na tom, zda uživatel hodnotí právě dosledovaný film nebo film, který zhlédl již před delší dobou. Velkou roli hraje i nálada uživatele v průběhu dne a další faktory~\cite{bellkor}.
 
-Výsledný algoritmus, jenž získal cenu, vznikl kombinováním zhruba stovky menších algoritmů. S trochou nadsázky lze tedy prohlásit, že jednou z hlavních taktik pro kvalitní doporučení je použití tolika algoritmů, kolik je jen možné.
-
-\subsection{Zite}
-
-\textbf{Zite.com}~\footnote{\url{http://zite.com}} je moderní aplikace pro chytré mobilní telefony a tablety.
-
-Mike Klass (CTO společnosti) v jednom z článků~\cite{ziteflip} prozradil, že vizí bylo vyvinout sofistikovaný, na technikách strojového učení založený systém, jehož účelem nebude pouhé filtrování příchozích novinek, ale především přizpůsobení se svému uživateli studiem vzorců chování (pozorováním zájmů a návyků při čtení článků). Cílem bylo přizpůsobit se uživateli natolik, aby mu bylo možné doporučit přesně to, co v danou chvíli hledá, ale kvůli různým okolnostem (obsah produkovaný neznámým bloggerem apod.) by na to nikdy neměl šanci narazit.
-
-Zite nasazené v systému uživatele je tedy stejně tak unikátní jako jeho uživatel. Každý den vyhodnocuje miliony nových článků, přičemž se zaměřuje na typ, klíčové atributy i na to, jakým způsobem je článek sdílen skrze web. Následně využije tyto informace ke spárování vybraných článků s osobním vkusem uživatele a tyto články mu doručí do aplikace. 
-
-Tak jako Netflix a Amazon doporučují filmy a produkty, které by na základě podobnosti mohly být pro uživatele zajímavé, stejně tak i Zite provádí na pozadí různá porovnání čtenářských profilů – jak v rámci aplikace, tak na webu – a vytváří doporučení.
-
-\subsubsection{Zite \& CNN \& Flipboard}
-V srpnu 2011 o technologii vyjádřila zájem společnost CNN~\cite{zitecnn} a Zite přešlo pod ni. Poslední novinky ze začátku března 2014 ale naznačují~\cite{ziteflip}, že Zite opouští CNN a rozhodlo se spojit síly s aplikací Flipboard~\footnote{https://flipboard.com} vývojářské společnosti Flipboard, Inc., jejíž funkcionalitou je agregování obsahu ze sociálních sítí a jiných stránek a následná nabídka ke čtení v magazínovém formátu umožňujícím jednoduchým způsobem listovat napříč vzájemně souvisejícími tématy.
-
-Společným cílem je vystavět nejlepší systém pro personalizované čtení novinových zpráv. 
+Výsledný algoritmus, jenž získal cenu, vznikl kombinováním zhruba stovky menších algoritmů. S trochou nadsázky lze tedy prohlásit, že jednou z hlavních taktik pro kvalitní doporučení je \emph{použití tolika algoritmů, kolik je jen možné}.
 
 \subsection{Mendeley}	
 \label{mendeley}
-\textbf{Mendeley}~\footnote{\url{http://www.mendeley.com}} je systém určený k doporučování vědeckých článků využívající jako svou výpočetní vrstvu technologii Apache Mahout~\footnote{https://mahout.apache.org}. Cílem systému je spojovat dohromady výzkumníky a jejich data. Svým uživatelům napomáhá v organizaci výzkumu, umožňuje jim navázat potenciální spolupráci s dalšími uživateli aplikace a napomáhá též k objevení nových podnětů pro vlastní práci. Uživateli této aplikace jsou přední světové university jako University of Cambridge, Stanford University, MIT či University of Michigan. Data pro aplikaci pocházejí z vlastních importů uživateli i z externích importů skrze různé katalogy vědeckých prací. 
+\textbf{Mendeley}\footnote{\url{http://www.mendeley.com}} je systém určený k doporučování vědeckých článků využívající jako svou výpočetní vrstvu technologii Apache Mahout\footnote{https://mahout.apache.org}. Cílem systému je spojovat dohromady výzkumníky a jejich data. Svým uživatelům napomáhá v organizaci výzkumu, umožňuje jim navázat potenciální spolupráci s dalšími uživateli aplikace a napomáhá též k objevení nových podnětů pro vlastní práci. Uživateli této aplikace jsou přední světové university jako University of Cambridge, Stanford University, MIT či University of Michigan. Data pro aplikaci pocházejí z vlastních importů uživateli i z externích importů skrze různé katalogy vědeckých prací. 
 
-Projekt samotný se v jedné ze svých prezentací~\cite{mendeleylastfm} přirovnává k největší hudební databázi na internetu – last.fm~\footnote{http://www.last.fm}. Ta funguje na principu, že potenciální uživatel provede na svém počítači instalaci desktopové aplikace, následně s již instalovanou aplikací začne poslouchat hudbu a tím je zahájeno automatické odesílání informace o skladbě (interpret, žánr) na server last.fm. Podle dat odeslaných na server jsou uživateli v budoucnu doporučovány další skladby. 
+Projekt samotný se v jedné ze svých prezentací~\cite{mendeleylastfm} přirovnává k největší hudební databázi na internetu – last.fm\footnote{http://www.last.fm}. Ta funguje na principu, že potenciální uživatel provede na svém počítači instalaci desktopové aplikace, následně s již instalovanou aplikací začne poslouchat hudbu a tím je zahájeno automatické odesílání informace o skladbě (interpret, žánr) na server last.fm. Podle dat odeslaných na server jsou uživateli v budoucnu doporučovány další skladby. 
 
 Mendeley tuto analogii vysvětluje tak, že hudební knihovny jsou v jeho případě výzkumné knihovny, role interpretů zastávají jednotliví výzkumníci, hudební skladby jsou pak jimi publikované články a jednotlivé hudební žánry reprezentují vědecké disciplíny.  
 
@@ -288,21 +275,50 @@ Kombinace mechanismu pro filtraci informací vzešlého z nashromážděných u�
 
 \subsection{Výzkum}
 
-Také současný výzkum v oblasti doporučovacích systémů, zdá se, nezahálí. Zde je výčet několika akcí, jejichž náplní či součástí je problematika doporučování a doporučovacích systémů.
+Také současný výzkum v oblasti doporučovacích systémů, zdá se, nezahálí. Zde uvádím příklad dvou populárních akcí, jejichž náplní či součástí je problematika doporučování a doporučovacích systémů.
 
 \begin{itemize}
   \item \textbf{ACM RecSys conference.}~\footnote{\url{http://recsys.acm.org}} Konference je předním mezinárodním fórem pro prezentaci nových výsledků výzkumu a postupů na poli doporučovacích systémů. RecSys sdružuje hlavní mezinárodní výzkumné skupiny a též mnoho předních světových společností na trhu e-commerce. Nabízí také doprovodný program v podobě zvaných přednášek, konzultace týkající se problematiky RecSys a sympózium studentů doktorských programů. 
   
-  Zajímavé prezentace jsou volně dostupné na internetu, dá se tedy načerpat spousta inspirace do vlastního výzkumu. Mě osobně velmi zaujala prezentace~\footnote{\url{http://www.slideshare.net/d0nut/open-recommendation-platform}} z posledního ročníku konference (Hong Kong, 2013), se kterou vystoupil Torben Brodt, jeden z klíčových řečníků. V prezentaci popisuje tzv. \emph{Open Recommendation Platform}, která je založena na výběru vždy toho nejlepšího algoritmu pro doporučení v závislosti na daném kontextu. 
+  Zajímavé prezentace jsou volně dostupné na internetu, dá se tedy načerpat spousta inspirace do vlastního výzkumu. Mě osobně velmi zaujala prezentace~\footnote{\url{http://www.slideshare.net/d0nut/open-recommendation-platform}} z posledního ročníku konference (Hong Kong, 2013), se kterou vystoupil Torben Brodt, jeden z klíčových řečníků. V prezentaci popisuje tzv. \emph{Open Recommendation Platform}~\ref{sub:orp}. 
   
   \item \textbf{ICWSM: Weblog and Social Media.}~\footnote{\url{http://www.icwsm.org/2014}} The International AAAI Conference on Weblogs and Social Media je mezinárodní konference, na které se střetávají výzkumní pracovníci z oblasti počítačových a společenských věd. Konference je pořádaná za účelem sdílení znalostí, diskutování o nápadech a výměny informací. Probíranými body jsou psychologické a sociální teorie, výpočetní algoritmy pro analýzu sociálních médií a jedním z mnoha témat jsou též doporučovací systémy.
 \end{itemize}
 
-O tématu se též píše spousta článků a každým rokem vzniká několik disertačních prací. Dle dostupných informací z ACM RecSys Wiki~\footnote{\url{http://www.recsyswiki.com/wiki/List_of_recommender_system_dissertations}} jich jen za poslední 4 roky bylo přes 50. 
+O tématu se též píše spousta článků a každým rokem vzniká několik disertačních prací. Dle dostupných informací z ACM RecSys Wiki~\footnote{\url{http://www.recsyswiki.com/wiki/List_of_recommender_system_dissertations}} jich jen za poslední 4 roky bylo přes 50.
 
-Technická knihovna společnosti IBM obsahuje přehledný seznam~\footnote{http://www.ibm.com/developerworks/library/os-recommender2/index.html} několika doporučovacích systémů, z nichž převážná část vznikla jakou součást univerzitního výzkumu.
+\subsection{Open Recommendation Platform}
+\label{sub:orp}
+\textbf{Open recommendation Platorm} (zkr. ORP) je projekt společnosti \textbf{plista}\footnote{\url{https://www.plista.com}} prezentovaný na posledním ročníku konference ACM RecSys 2013 v Hong Kongu. 
 
-Z tohoto seznamu se mi jako velmi zajímavý systém jeví systém \emph{easyrec}~\footnote{\url{http://easyrec.org/recommendation-engine}}. Jedná se o open source webovou aplikaci napsanou v programovacím jazyce Java nabízející personalizovaná doporučení prostřednictvím RESTful webových služeb. Prostřednictvím REST API je možné zasílat uživatelské akce jako prohlížení, nákup či hodnocení položky. Tyto uživatelské akce jsou poté ukládány do databáze easyrec, nad kterou je prováděna analýza a z té jsou generována doporučení pro aplikaci vyvíjenou uživatelem (viz obrázek~\ref{fig:easyrec}).
+Motivací ORP bylo dosáhnout lepších výsledků kombinací více metod doporučování obsahu společně se zapojením kontextu uživatele (informacemi čerpanými převážně z HTTP hlaviček). Takovými informacemi mohou být například:
+
+\begin{itemize}
+	\item IP adresa, která může prozradit geologickou lokaci uživatele,
+	\item denní doba, kdy uživatel přistupuje ke stránce,
+	\item user agent prohlížeče informující o zařízení, ze kterého bylo k obsahu přistoupeno (mobilní telefon, PC),
+	\item referer pro zjištění způsobu přístupu (přístup z vyhledávání nebo přímý přístup). 
+\end{itemize}
+
+Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}, na kterém je systém zachycen jako \emph{Ensemble}. Ensemble je schopen dle uživatelských preferencí vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, jenž pak použije k publikování obsahu pro daného uživatele. Konzumenti obsahu (\emph{Visitors}) poté zasílají systému zpětnou vazbu, díky které dochází k rekalkulaci preferencí, což ovlivní výběr nejlepšího algoritmu pro další doporučení.
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/plistaEnsemble.png}
+ 	\caption[Abstraktní pohled na systém společnosti plista]{Abstraktní pohled na systém společnosti plista. Zdroj: \cite{slideshare:plista}}\label{fig:plista}
+\end{figure}	
+
+V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechno by měl systém podobného typu umět. Zmíněna je potřeba rychlého webového serveru, na kterém bude aplikace běžet, dále nutnost rychlého síťového protokolu a rychlé fronty zpráv. Padla zde též potřeba rychlého úložiště pro data.
+
+K dosažení správné funkcionality pro výběr nejlepšího algoritmu společnost používá tzv. \emph{multi-armed bayesian bandit}~\ref{sub:mabandit} v bayesovské variantě, což je i jedna ze strategií, kterou mi na úvodní schůzce doporučil vedoucí této práce.
+
+\subsection{easyrec}
+Technická knihovna společnosti IBM obsahuje přehledný seznam~\cite{ibm} několika doporučovacích systémů, z nichž převážná část vznikla jakou součást univerzitního výzkumu.
+
+Z tohoto seznamu se mi jako velmi zajímavý jeví systém \textbf{easyrec}\footnote{\url{http://easyrec.org/recommendation-engine}}. Jedná se o open source webovou aplikaci napsanou v programovacím jazyce Java nabízející personalizovaná doporučení prostřednictvím RESTful webových služeb. Díky vystavenému REST API\footnote{REST API systému easyrec: \url{http://easyrec.org/implement}} je vývojáři umožněno napojit svou aplikaci psanou v libovolném jazyce na systém a využívat jejích funkcionalit. Lze tak zasílat uživatelské akce typu prohlížení, provedení nákupu či hodnocení položky a žádat o doporučení. Tyto uživatelské akce jsou ukládány do databáze easyrec.
+
+K doporučování lze přistupovat prostřednictvím specifických endpointů, například \emph{zboží související s danou položkou}, dále \emph{ostatní uživatelé prohlíželi též tyto položky} nebo lze dostávat \emph{specifická doporučení pro daného uživatele}~\cite{ibm}. 
+
+Systém provádí na pozadí analytické operace, obsahuje též databázi asociačních pravidel a podporu online i offline doporučování. Uživatelským aplikacím připojujícím se k systému generuje v odpovědích žádaná doporučení (viz obrázek~\ref{fig:easyrec}).
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/easyrec.png}
@@ -314,17 +330,18 @@ Z tohoto seznamu se mi jako velmi zajímavý systém jeví systém \emph{easyrec
 Z výše uvedených příkladů v sekci~\ref{sec:examples} lze vypozorovat určité společné vlastnosti a zformulovat několik závěrů:
 
 \begin{itemize}
-	\item o uživateli je vedena spousta záznamů, především historie jeho chování na stránkách
-	\item velký důraz je kladen na zpětnou vazbu (vyjádření zájmu uživatele o doporučený obsah)
-	\item stále je využíváno osvědčených přístupů kolaborativního filtrování a filtrování na základě obsahu
-	\item síla není v použití jednoho konkrétního algoritmu, ale v kombinaci více metod a přístupů dohromady
-	\item většina výpočtů běží na pozadí v tom samém čase, co uživatel tráví prohlížením stránek, a je schopna rychle se přizpůsobit okolnostem
-	\item problematika má silnou závislost na strojovém učení a teorii pravděpodobnosti a statistiky (především bayesovské)
+	\item O uživateli je vedena spousta záznamů, především historie jeho chování na stránkách.
+	\item Velký důraz je kladen na zpětnou vazbu (vyjádření zájmu uživatele o doporučený obsah), ať už formou přečtení článku, ohodnocení položky apod.
+	\item Stále je využíváno osvědčených metod kolaborativního filtrování a filtrování na základě obsahu.
+	\item Síla není v použití jednoho konkrétního algoritmu, ale v kombinaci více metod a přístupů dohromady.
+	\item Většina systémových výpočtů běží na pozadí v tom samém čase, co uživatel tráví prohlížením stránky. Systém je schopna rychle se přizpůsobit okolnostem.
+	\item Problematika kombinování metod má silnou závislost na strojovém učení a teorii pravděpodobnosti a statistiky (především bayesovské).
+	\item Realizace RESTful API je poměrně vhodný způsob komunikace s doporučovacím systémem ověřeným v praxi.
 \end{itemize}
 
 Existujících řešení je tedy celá řada. Každé z těchto řešení je přitom využíváno k vlastnímu účelu a není snadno přenositelné.
 
-Navíc se zdá, že době, kdy obchodníkům stačilo na svůj elektronický obchod nasadit jednoduchý algoritmus kolaborativního filtrování, odzvonilo a budoucnost patří systémům schopným nějaké predikce a přizpůsobení svého vývoje, a to vše v reálném čase. 
+Jisté je navíc to, že době, kdy obchodníkům stačilo na svůj elektronický obchod nasadit jednoduchý algoritmus kolaborativního filtrování, odzvonilo a budoucnost patří systémům schopným nějaké predikce a přizpůsobení svého vývoje, a to vše v reálném čase. 
 
 \chapter{Analýza a návrh řešení}
 \label{chap:analysis}
@@ -337,9 +354,17 @@ S ohledem na výstupy získané v této kapitole bude možné provést implement
 
 \section{Požadavky}
 \label{sec:req}
-Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požadavky strukturovat do zastřešujících skupin trojího typu (globální požadavky, rozhraní a systém). Nakonec se ukázalo, že mezi skupinami \emph{rozhraní} a \emph{systém} existuje tak tenká hranice (z hlediska požadovaného chování, nikoliv z hlediska implementačního), že jsem skupiny redukovány na dvě.
+Za účelem vyšší přehlednosti jsem se rozhodl související požadavky strukturovat do zastřešujících skupin dle typu modulu, který je bude obsluhovat.
 
-\subsection{Globální požadavky na systém}
+Vyvíjenými součástmi jsou:
+
+\begin{itemize}
+  \item \textbf{adaptibilní systém pro doporučování obsahu,}
+  \item \textbf{sada základních algoritmů určených k doporučování,}
+  \item \textbf{RESTful API pro manipulaci s doporučovacími algoritmy a systémem.}
+\end{itemize}
+
+\subsection{Požadavky na adaptibilní systém}
 
 \begin{itemize}
 	\item Systém bude klást důraz na zpětnou vazbu, podle které bude přizpůsobovat své chování.
@@ -347,25 +372,32 @@ Za účelem vyšší přehlednosti jsem se nejprve rozhodl související požada
 	\item Systém bude v pravidelných intervalech ukládat do databáze svůj aktuální stav.
 	\item Systém bude schopen v případě pádu aplikace a po jejím opětovném spuštění načíst naposledy uložený stav.
 	\item Systém bude veškeré své operace týkající se doporučování provádět a vyhodnocovat v reálném čase (live read \& live write).
-	\item Systém bude schopen automaticky se přizpůsobovat vývoji v čase normalizováním ukládaných hodnoty (z důvodu ochrany proti přetečení datových typů).	
+	\item Systém bude schopen automaticky se přizpůsobovat vývoji v čase normalizováním ukládaných hodnoty (z důvodu prevence proti přetečení datových typů).	
 	\item Systém bude na každou klientskou žádost vracet příslušnou odpověď (i chybovou) – neexistuje nic jako odpověď \emph{null}.	
 \end{itemize}
 
-\subsection{Uživatel systému \& systémové rozhraní}
-
+\subsection{Požadavky na sadu základních algoritmů}
 \begin{itemize}
-	\item Uživatel bude mít možnost vytvářet skrze systémové rozhraní kolekce se seznamem algoritmů určených pro kombinování a následnou predikci.
-	\item Uživatel bude mít možnost zaslat systému žádost o radu a obdržet informaci, který algoritmus pro doporučení obsahu by měl v danou chvíli zvolit.
-	\item Uživatel bude mít možnost zaslat systému informaci o tom, pro jaký algoritmus doporučení se rozhodl.
-	\item Uživatel bude mít možnost zažádat o doporučení obsahu prostřednictvím algoritmu, jenž mu byl navržen systémem.
-	\item Uživatel bude mít možnost zaslat systému informaci o zpětné vazbě týkající se algoritmu, jenž si pro doporučení zvolil.
-	\item Aplikace bude umožňovat prostřednictvím svého rozhraní zpracovat informaci, že jeden uživatel dělá něco s jedním dokumentem (reakce na zpětnou vazbu).
-	\item Aplikace bude umožňovat prostřednictvím svého rozhraní mazat či zneviditelnit data již neaktuální pro doporučování.
+	\item Algoritmus bude dle typu přijímat různé parametry (uživatel, položka atd.), které využije pro doporučení obsahu.
+	\item Algoritmus bude komunikovat s daty uložených v Apache Solr a nad těmito daty provádět doporučovací operace.
+\end{itemize}
+
+\subsection{Požadavky na RESTful API}
+\begin{itemize}
+	\item Rozhraní bude vytvářet kolekce se seznamem algoritmů určených pro kombinování a následnou predikci.
+	\item Rozhraní bude zpracovávat uživatelské žádosti o radu.
+	\item Rozhraní bude odpovídat na uživatelské žádosti o radu formou informace, který algoritmus pro doporučení obsahu by měl být v danou chvíli zvolen.
+	\item Rozhraní bude zpracovávat informace od uživatelů o tom, pro jaký algoritmus doporučení obsahu se rozhodli.
+	\item Rozhraní bude zpracovávat uživatelské žádosti o doporučení vybraným algoritmem.	
+	\item Rozhraní bude navracet doporučení realizované vybraným algoritmem.
+	\item Rozhraní bude zpracovávat informace od uživatelů zasílajících zpětnou vazbu týkající se algoritmu, kterým si nechali doporučit obsah.
+	\item Rozhraní bude zpracovávat informace od uživatelů zasílajících zpětnou vazbu týkající se doporučených položek (informaci, že 1 konkrétní uživatel dělá něco s 1 konkrétním dokumentem).
+	\item Rozhraní bude mazat či zneviditelňovat z výsledků pro doporučení již nerelevantní položky.
 \end{itemize}
 
 Dle disciplín softwarového inženýrství lze výčet uvedený výše označit za \textbf{funkční požadavky}.
 
-Definuje nyní i tzv. \textbf{nefunkční požadavky}, které specifikují vlastnosti a omezující podmínky kladené na systém:
+Definujme nyní i tzv. \textbf{nefunkční požadavky}, které specifikují vlastnosti a omezující podmínky kladené na systém:
 
 \begin{itemize}
 	\item Systém bude postaven na platformě Java.
@@ -374,38 +406,14 @@ Definuje nyní i tzv. \textbf{nefunkční požadavky}, které specifikují vlast
 	\item Systém bude postaven tak, aby se dal snadno parametrizovat. 
 	\item Systém bude připraven na situaci, že jej bude využívat více uživatelů současně.
 	\item Systém poběží jako samostatná aplikace na serveru naslouchající na TCP portu. Veškerá komunikace s ní bude probíhat formou zasílání zpráv a volání procedur.
-	\item Pro snadné nasazení a testování systému na libovolné pracovní stanici bude nutné vytvořit Chef cookbook/recipe~\footnote{\url{http://community.opscode.com/}}.
+	\item Pro snadné nasazení a testování systému na libovolné pracovní stanici bude nutné vytvořit Chef cookbook/recipe\footnote{\url{http://community.opscode.com/}}.
 \end{itemize}
 
-\section{Adaptibilní systém}
+\section{Architektura platformy}
 
-Pro zdárnou implementaci systému splňujícího všechny požadavky vzešlé z analýzy výše je třeba důkladně zvážit, jaké komponenty bude tento systém obsahovat a případně jaké algoritmické postupy bude vhodné využít. Na základě zkoumání existujících implementací v kapitole~\ref{chap:current} mě zaujal projekt \emph{Open recommendation Platorm} (zkr. ORP) společnosti \textbf{plista}~\footnote{\url{https://www.plista.com}} prezentovaný na posledním ročníku konference ACM RecSys 2013 v Hong Kongu. 
+Pro zdárnou implementaci platformy splňující všechny požadavky vzešlé z analýzy výše je třeba důkladně zvážit, jaké komponenty bude obsahovat.
 
-Motivací ORP bylo dosáhnout lepších výsledků kombinací více metod doporučování obsahu společně se zapojením kontextu uživatele (informacemi čerpanými převážně z HTTP hlaviček). Takovými informacemi mohou být:
-
-\begin{itemize}
-	\item IP adresa, která může prozradit geologickou lokaci uživatele
-	\item denní doba, kdy uživatel přistupuje ke stránce
-	\item user agent prohlížeče informující o zařízení, ze kterého bylo k obsahu přistoupeno (mobilní telefon, PC)
-	\item referer pro zjištění způsobu přístupu (přístup z vyhledávání nebo přímý přístup) 
-\end{itemize}
-
-Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}, na kterém je systém zachycen jako \emph{Ensemble}. Ensemble je schopen dle uživatelských preferencí vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, jenž pak použije k publikování obsahu pro daného uživatele. Konzumenti obsahu (\emph{Visitors}) poté zasílají systému zpětnou vazbu, díky které dochází k rekalkulaci preferencí, což ovlivní výběr nejlepšího algoritmu pro další doporučení.
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/plistaEnsemble.png}
- 	\caption[Abstraktní pohled na systém společnosti plista]{Abstraktní pohled na systém společnosti plista. Zdroj: \cite{slideshare:plista}}\label{fig:plista}
-\end{figure}	
-
-V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechno by měl systém podobného typu umět. Zmíněna je potřeba rychlého webového serveru, na kterém bude aplikace běžet, dále nutnost rychlého síťového protokolu a rychlé fronty zpráv. Padla zde též potřeba rychlého úložiště pro data.
-
-K dosažení správné funkcionality pro výběr nejlepšího algoritmu společnost používá tzv. \emph{multi-armed bayesian bandit}, což je i jedna ze strategií, které mi na úvodní schůzce doporučil vedoucí této práce.
-
-Se spoustou rad z této prezentace jsem se ztotožnil a vyhodnotil, že jejich naplněním by mohla být uspokojena velká část požadavků na systém stanovených výše.
-
-Dalším studiem strategie \emph{multi-armed bayesian bandit} jsem zjistil, že pro potřeby mé práce je natolik významná, že jsem se rozhodl věnovat jí samostatnou kapitolu~\ref{chap:adapt}.
-
-\section{Architektura systému}
+Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové platformy. Mou snahou bylo zachytit přítomnost jednotlivých komponent v systému, formu jejich vzájemné komunikace a spolupráce a též základní interakci uživatele se systémem.
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_env.pdf}
@@ -414,9 +422,7 @@ Dalším studiem strategie \emph{multi-armed bayesian bandit} jsem zjistil, že 
 
 \subsection{Server}
 
-Stěžejní serverovou komponentou je doporučovací platforma. Tu jsem pracovně nazval jako \textbf{Recommeng} (zkratka pro recommendation engine), abych o ní již nadále nemusel mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
-
-Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové platformy. Mou snahou bylo zachytit přítomnost jednotlivých komponent systému, formu jejich vzájemné komunikace a též základní interakci uživatele se systémem.
+Stěžejní serverovou komponentou je adaptibilní systém~\ref{sec:recommeng}. Ten jsem pracovně nazval jako \textbf{Recommeng} systém (zkratka pro recommendation engine), abych o něm nemusel již nadále mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
 
 V rámci ucelenosti zde uvádím přehled všech komponent nacházející se na serverové straně:
 
@@ -440,28 +446,26 @@ Volba DBMS hraje důležitou roli i při škálování aplikací. V minulosti to
 
 Ohledně tohoto problému by možná stálo za úvahu prozkoumat možnosti použití NoSQL databází, které jsou již ze svého principu navrženy pro spolupráci s aplikacemi zaměřenými na výkon a škálovatelnost.
 
-\subsubsection{Recomeng systém}
+\subsubsection{Recommeng systém}
 
 Komunikaci s aplikací bude umožňovat systém pro zasílání zpráv (Messaging System) s využitím fronty zpráv (Message Queue). Toto řešení je zde nasnadě kvůli očekávání většího množství žádostí směřujících na systém a snadnější škálovatelnosti aplikace. Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
-
-Producenti zpráv (klienti využívající aplikaci) vytvářejí zprávy, které jsou zasílány do fronty. Zprávy jsou z fronty postupně odebírány konzumenty, kteří mají jejich zpracování na starosti. Výhodou je časová nezávislost mezi producenty zpráv a konzumenty – producent tak může zasílat zprávy i tehdy, když žádný z producentů není k dispozici. Zprávy pak existují ve frontě, dokud se o jejich zpracování konzument nepřihlásí.
-
-Recommeng systém bude taktéž komunikovat s databází kvůli nutnosti ukládání informací o stavu, respektive kvůli možnosti načíst poslední uložený stav při novém startu aplikace.
-
-Veškerá data pro výpočet a predikci budou jinak udržována přímo ve vnitřní paměti (uvnitř JVM). 
 
 \begin{figure}\centering
 	\includegraphics[width=1.2\textwidth]{obr/vitvar_mq.png}
  	\caption[Příklad MQ systému s producentem zpráv a konzumenty]{Příklad MQ systému s producentem zpráv a konzumenty. Zdroj: \cite{vitvarMq}}\label{fig:vitvarMq}
 \end{figure}	
 
+Recommeng systém bude taktéž komunikovat s databází kvůli nutnosti ukládání informací o stavu, respektive kvůli možnosti načíst poslední uložený stav při novém startu aplikace.
+
+Veškerá data pro výpočet a predikci budou jinak udržována přímo ve vnitřní paměti (uvnitř JVM).
+
 \subsection{Klient}
 
 Klientská strana není nikterak složitá. Potenciální uživatel aplikace má v zásadě dvě možnosti, jak s platformou komunikovat:
 
 \begin{itemize}
-	\item jen a pouze zasíláním žádostí na REST API
-	\item kombinací zasílání žádostí na REST API společně s přímou komunikací s Recommeng systémem prostřednictvím fronty zpráv
+	\item Jen a pouze zasíláním žádostí na REST API.
+	\item Kombinací zasílání žádostí na REST API společně s přímou komunikací s Recommeng systémem prostřednictvím fronty zpráv.
 \end{itemize}
 
 Některé ze systémových funkcionalit nelze bez komunikace s REST API využívat. Do této kategorie spadá například přidání nového vztahu k položce ve fulltextovém indexu nebo zaslání žádosti o doporučení obsahu některým z podporovaných algoritmů. 
@@ -470,9 +474,11 @@ Přímé spojení s platformou skrze frontu zpráv bez nutnosti zapojení prost�
 
 V diagramu~\ref{fig:recommeng} jsem se snažil zachytit různé formy komunikace klienta se systémem. Pro lepší názornost jsou jednotlivé žádosti barevně odlišeny. Ty lze považovat za modelové případy užití inspirované systémovými požadavky.
 
-\subsubsection{Červená varianta}
+\subsubsection{Zaslání zpětné vazby k doporučené položce}
 
-Aneb klient přidávající nový vztah mezi položkou a jejím uživatelem do úložiště.
+\emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen červenou barvou. 
+
+Jedná se o klienta přidávajícího nový vztah mezi položkou a jejím uživatelem do úložiště.
 
 \begin{itemize}
 	\item klient zašle žádost na rozhraní
@@ -481,12 +487,12 @@ Aneb klient přidávající nový vztah mezi položkou a jejím uživatelem do �
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
 
-\subsubsection{Fialová varianta}
+\subsubsection{Žádost o radu při výběru metody pro doporučení obsahu}
 \label{subsub:purple}
 
-Aneb klient zasílající platformě zpětnou vazbu ohledně doporučení, které dostal.
+\emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen fialovou barvou.
 
-Fialová varianta může též představovat situaci, kdy klient žádá systém o radu, kterým algoritmem si má nechat doporučit obsah ve své budoucí žádosti o doporučení (viz žlutá varianta~\ref{subsub:yellow}).
+V diagramu je znázorněna situace, kdy klient zasílá platformě zpětnou vazbu ohledně doporučení, které dostal. Tato varianta může ale též představovat situaci, kdy klient žádá systém o radu, kterou metodou si má nechat doporučit obsah ve své budoucí žádosti o doporučení (viz varianta~\ref{subsub:yellow}).
 
 \begin{itemize}
 	\item klient zašle žádost na rozhraní
@@ -496,12 +502,12 @@ Fialová varianta může též představovat situaci, kdy klient žádá systém
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
 
-\subsubsection{Žlutá varianta}
+\subsubsection{Žádost o doporučení konkrétním algoritmem}
 \label{subsub:yellow}
 
-Aneb klient poptávající doporučení obsahu konkrétním algoritmem.
+\emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen žlutou barvou.
 
-Toto doporučení klient poptává na základě odpovědi na žádost, která mu byla udělena systém (viz fialová varianta~\ref{subsub:purple})). 
+Situace znázorňuje situaci, kdy klient poptává doporučení obsahu konkrétním algoritmem. Toto doporučení klient poptává na základě odpovědi na žádost, která mu byla udělena systém (viz varianta~\ref{subsub:purple})). 
 
 \begin{itemize}
 	\item klient zašle žádost na rozhraní
@@ -510,9 +516,11 @@ Toto doporučení klient poptává na základě odpovědi na žádost, která mu
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
 
-\subsubsection{Modrá varianta}
+\subsubsection{Komunikace bez využití RESTful API}
 
-Aneb klient, který se rozhodl nevyužít možnosti komunikovat prostřednictvím REST API. Svou žádost zasílá přímo do fronty zpráv.
+\emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen modrou barvou.
+
+Tento klient se rozhodl nevyužít možnosti komunikovat prostřednictvím REST API. Svou žádost zasílá přímo do fronty zpráv.
 
 \begin{itemize}
 	\item klient zašle žádost do fronty
@@ -520,7 +528,12 @@ Aneb klient, který se rozhodl nevyužít možnosti komunikovat prostřednictví
 	\item konzument zpracuje žádost a zasílá klientovi odpověď
 \end{itemize}
 
-\subsection{Komunikace}
+\section{Recommeng systém}
+\label{sec:recommeng}
+
+Pro logiku kombinování metod v systému Recommeng jsem po důkladném studiu vybral jako tu nejvhodnější strategii \emph{multi-armed bayesian bandit}, jíž využívá~\ref{sub:orp}. Jejímu popisu je věnována celá samostatná kapitola~\ref{chap:adapt}.
+
+\subsection{Komunikace s frontou zpráv Recommeng systému}
 
 Výše jsme měli možnost poznat dva způsoby komunikace uživatele s doporučovací platformou. Dalším úkolem je navrhnout formát, jakým si budou vyměňovat producent s konzumentem data prostřednictvím volání vzdálených procedur Recommeng systému.
 
@@ -666,7 +679,7 @@ Nejprve uvedu několik pojmů z teorie pravděpodobnosti, se kterými budu v ná
 	\item[Pravděpodobnostní prostor] prováděného náhodného pokusu je tvořen trojicí $(\Omega,\mathcal{F},P)$, kde:
 	\begin{itemize}
 		\item $\Omega$ je prostor elementárních jevů (např. čísla od jedné do šesti na šestistranné hrací kostce), kde elementárním jevem nazýváme libovolný možný výsledek $\omega \in \Omega$ 
-		\item $\mathcal{F}$ je množina náhodných jevů (potenční množina~\footnote{Potenční množina množiny $X$ je množina obsahující všechny podmnožiny množiny $X$} množiny $\Omega$)
+		\item $\mathcal{F}$ je množina náhodných jevů (potenční množina\footnote{Potenční množina množiny $X$ je množina obsahující všechny podmnožiny množiny $X$} množiny $\Omega$)
 		\item $P$ je přiřazení pravděpodobnosti jednotlivým jevům z $\Omega$ ($P(\Omega)=1$)
 	\end{itemize}
 \end{description}
@@ -772,13 +785,13 @@ Typickým příkladem je vytvořit z dostupných dat model, jenž například do
 Algoritmy strojového učení dělíme do taxonomie (nadtříd a podtříd) založené na požadovaném výsledku nebo typu vstupu, jenž máme k dispozici během trénování stroje. Algoritmů je celá řada, zmíním zde alespoň ty nejtypičtější. 
 
 \begin{description}
-  \item[Supervised learning]~\footnote{učení s učitelem} je typ učení, které se používá v případě, že máme k našim trénovacím instancím na vstupu korektní výsledky. Pomocí kombinace trénovacích vstupních instancí a jejich požadovaných výsledků lze systém adaptovat na situaci, že dokáže sám předpovídat výsledky pro každé další platné vstupní instance~\cite{aihorizon}.
+  \item[Supervised learning]\footnote{učení s učitelem} je typ učení, které se používá v případě, že máme k našim trénovacím instancím na vstupu korektní výsledky. Pomocí kombinace trénovacích vstupních instancí a jejich požadovaných výsledků lze systém adaptovat na situaci, že dokáže sám předpovídat výsledky pro každé další platné vstupní instance~\cite{aihorizon}.
   
   Využití nachází například v oblastech rozpoznávání řeči či detekci spamu.
-  \item[Unsupervised learning]~\footnote{učení bez učitele} je již ze samotné podstaty absence učitele obtížným problémem. Učení bez učitele se používá k analýzu dat, když nemáme k dispozici informace od učitele (trénovací množinu). Pozorovaná data se mají vysvětlit pomocí matematických modelů.
+  \item[Unsupervised learning]\footnote{učení bez učitele} je již ze samotné podstaty absence učitele obtížným problémem. Učení bez učitele se používá k analýzu dat, když nemáme k dispozici informace od učitele (trénovací množinu). Pozorovaná data se mají vysvětlit pomocí matematických modelů.
   
   Používá se v oblasti rozpoznávání vzorů~\cite{hlavac}.
-  \item[Reinforcement learning]~\footnote{zpětnovazební učení nebo též učení posilováním} je oblast informatiky tykající se chování agentů~\ref{agent}. Jedná se o metodu, při které se agent učí, jakým způsobem má volit akce, aby nalezl optimální strategii pro dané prostředí.
+  \item[Reinforcement learning]\footnote{zpětnovazební učení nebo též učení posilováním} je oblast informatiky tykající se chování agentů~\ref{agent}. Jedná se o metodu, při které se agent učí, jakým způsobem má volit akce, aby nalezl optimální strategii pro dané prostředí.
   
   Jedná se o učení bez učitele. Agent sice dostává odezvu, ale přímo z prostředí, takže musí experimentovat a zjišťovat, které stavy jsou nějakým způsobem dobré, a kterým stavům je lepší se vyhnout.
   
@@ -890,14 +903,14 @@ Následující kapitola se zaměřuje na popis programátorských principů, kte
 \subsubsection{REST}
 \textbf{REpresentational State Transfer (REST)} je architektonický styl definující určitá pravidla a vlastnosti návrhu API webových služeb orientovaných na zdroje. REST je silně založen na architektuře Klient-Server (server poskytuje přístup ke zdrojům, klient k nim může přistupovat a modifikovat je) a k jeho realizaci je možné využít protokolu HTTP (takovou realizaci pak nazýváme jako RESTful). Role tohoto protokolu zde není nikterak náhodná, neboť autorem REST není nikdo jiný než Roy Fielding, jenž je u protokolu HTTP podepsaný jako spoluautor~\cite{Fielding:2000:ASD:932295}. 
 
-Díky protokolu HTTP lze následovat mnoho pravidel návrhu RESTful API, například přítomnost adresovatelných zdrojů, kdy je každý zdroj adresovatelný pomocí Uniform Resource Identifier (URI). RESTful pro manipulaci se svými zdroji používá též HTTP metody (GET, POST, PUT, DELETE, ale i další, například OPTIONS či PATCH). Další vlastností je užívání standardních stavových kódů~\footnote{Definici všech stavových kódů viz \url{http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html}.} HTTP (typicky 2xx, 3xx, 4xx, 5xx) v odpovědi na žádost či bezestavová komunikace.
+Díky protokolu HTTP lze následovat mnoho pravidel návrhu RESTful API, například přítomnost adresovatelných zdrojů, kdy je každý zdroj adresovatelný pomocí Uniform Resource Identifier (URI). RESTful pro manipulaci se svými zdroji používá též HTTP metody (GET, POST, PUT, DELETE, ale i další, například OPTIONS či PATCH). Další vlastností je užívání standardních stavových kódů\footnote{Definici všech stavových kódů viz \url{http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html}.} HTTP (typicky 2xx, 3xx, 4xx, 5xx) v odpovědi na žádost či bezestavová komunikace.
 
 Data mohou být reprezentována v rozličných formátech jako XML, JSON či YAML.
 
 Padla zde zmínka o bezestavosti. V případě REST k vyjádření přechodů mezi stavy aplikace používáme odkazy. Tento princip je nazýván jako \emph{Hypertext as the Engine of Application State} (HATEOAS). 
 
 \subsubsection{Jersey (JAX-RS)}
-\textbf{Java API for RESTful Web Services (JAX-RS)}~\footnote{https://jax-rs-spec.java.net} je standard definovaný v Java Specification Request 311~\footnote{https://jcp.org/en/jsr/detail?id=311}. Jedná se o specifikaci pro RESTful webové služby implementované v programovacím jazyce Java.
+\textbf{Java API for RESTful Web Services (JAX-RS)}\footnote{https://jax-rs-spec.java.net} je standard definovaný v Java Specification Request 311\footnote{https://jcp.org/en/jsr/detail?id=311}. Jedná se o specifikaci pro RESTful webové služby implementované v programovacím jazyce Java.
 
 Pomocí JAX-RS lze s využíváním anotací jednoduše a přehledně definovat sémantiku jednotlivých tříd a jejich metod z hlediska využití v architektuře REST. Příklady anotací jsou \emph{@Path(relativni\_cesta)} pro specifikaci relativní cesty zdroje, \emph{@GET} či \emph{@POST} specifikující typ žádosti nebo třeba \emph{@QueryParam} pro přiřazení parametru HTTP dotazu k hodnotě parametru příslušné metody třídy.
 
@@ -906,11 +919,11 @@ Pro účely implementace rozhraní systému Recommeng jsem zvolil vzhledem k př
 \subsection{Fronta zpráv a síťová komunikace}
 
 \subsubsection{ØMQ}
-\textbf{ØMQ (ZeroMQ)}~\footnote{http://zeromq.org} je vysoce výkonná~\footnote{Viz výkonnostní testy na oficiální stránce \url{http://zeromq.org/results:_start}.} síťová knihovna napsaná v programovacím jazyce C++ vhodná k nasazení v distribuovaných a vícevláknových aplikacích, které vyžadují velkou škálovatelnost. S jejím využitím lze poměrně snadno navrhnout komplexní komunikační systém. Ke komunikaci užívá socketů~\footnote{Socket je mechanismus, kterým je možno zprostředkovat lokální čí vzdálenou komunikaci dvou uzlů, která má charakter klient/server~\cite{socket}.}. Duchovním otcem a spoluautorem knihovny je slovenský expert na oblast messaging middleware Martin Sústrik~\footnote{\url{http://250bpm.com/contact}}.
+\textbf{ØMQ (ZeroMQ)}\footnote{http://zeromq.org} je vysoce výkonná\footnote{Viz výkonnostní testy na oficiální stránce \url{http://zeromq.org/results:_start}.} síťová knihovna napsaná v programovacím jazyce C++ vhodná k nasazení v distribuovaných a vícevláknových aplikacích, které vyžadují velkou škálovatelnost. S jejím využitím lze poměrně snadno navrhnout komplexní komunikační systém. Ke komunikaci užívá socketů\footnote{Socket je mechanismus, kterým je možno zprostředkovat lokální čí vzdálenou komunikaci dvou uzlů, která má charakter klient/server~\cite{socket}.}. Duchovním otcem a spoluautorem knihovny je slovenský expert na oblast messaging middleware Martin Sústrik\footnote{\url{http://250bpm.com/contact}}.
 
-Hned na úvod je nutné sdělit, že se nejedná o klasický messaging system (message-oriented middleware) takového typu, jakým je například Apache ActiveMQ~\footnote{\url{http://activemq.apache.org}} a jemu podobné systémy. Takové systémy jsou většinou hotová řešení připravená k okamžitému nasazení a integraci s dalšími službami. 
+Hned na úvod je nutné sdělit, že se nejedná o klasický messaging system (message-oriented middleware) takového typu, jakým je například Apache ActiveMQ\footnote{\url{http://activemq.apache.org}} a jemu podobné systémy. Takové systémy jsou většinou hotová řešení připravená k okamžitému nasazení a integraci s dalšími službami. 
 
-Filosofie ZeroMQ je jiná, neboť jde především o multiplatformní knihovnu určenou k programovému využití (nabízí podporu více než 30 programovacích jazyků~\footnote{TODO}). Pomocí jednoduchého socketového API umožňuje programátorovi sestavit si vlastní messaging system dle svého nejlepšího uvážen. Programátor využívá ze strany API veškerou podporu usnadňující práci se sítí a s trochou nadsázky lze prohlásit, že se stará pouze o zasílání zpráv. Sama socketová komunikace je výrazně zjednodušena.
+Filosofie ZeroMQ je jiná, neboť jde především o multiplatformní knihovnu určenou k programovému využití (nabízí podporu více než 30 programovacích jazyků\footnote{TODO}). Pomocí jednoduchého socketového API umožňuje programátorovi sestavit si vlastní messaging system dle svého nejlepšího uvážen. Programátor využívá ze strany API veškerou podporu usnadňující práci se sítí a s trochou nadsázky lze prohlásit, že se stará pouze o zasílání zpráv. Sama socketová komunikace je výrazně zjednodušena.
 
 Knihovna nám navíc dává kompletní svobodu v tom, jakým způsobem zakódujeme naši zprávu (JSON, BSON nebo jakýkoliv vlastní navržený formát).
 
@@ -920,10 +933,10 @@ Podporovány jsou čtyři protokoly pro komunikaci~\cite{zeromq1}:
 	\item[tcp] jako model síťově založeného přenosu (procesy na jedné síti)
 	\item[inproc] jako model komunikace vláken uvnitř jednoho procesu
 	\item[ipc] jako model komunikace mezi procesy (procesy out-of-box)
-	\item[multicast]	komunikující skrze PGM~\footnote{\url{http://tools.ietf.org/html/rfc3208}}.
+	\item[multicast]	komunikující skrze PGM\footnote{\url{http://tools.ietf.org/html/rfc3208}}.
 \end{description}
 
-Knihovna také definuje základní vzory zasílání zpráv, ať už se jedná o doručování zpráv na jednotlivé uzly, mapování uzlů na vlákna, procesy či umisťování zpráv do fronty~\footnote{\url{http://zguide.zeromq.org/page:all\#Messaging-Patterns}}. Každý vzor zároveň určuje jinou síťovou topologii.
+Knihovna také definuje základní vzory zasílání zpráv, ať už se jedná o doručování zpráv na jednotlivé uzly, mapování uzlů na vlákna, procesy či umisťování zpráv do fronty\footnote{\url{http://zguide.zeromq.org/page:all\#Messaging-Patterns}}. Každý vzor zároveň určuje jinou síťovou topologii.
 
 Základními vzory jsou:
 
@@ -936,20 +949,20 @@ Základními vzory jsou:
 
 Nejvhodnějším vzorem pro mou práci je díky nátuře navrhovaného systému (zasílání zpráv a odpovědi na ně) vzor Request-reply, jehož konkrétní použití následuje záhy v sekci \nameref{sec:impl}. Ostatní vzory nemá smysl v rámci této práce popisovat.
 
-Pro účely Recommeng systému jsem se rozhodl využít čistou Java implementaci knihovny ZeroMQ v podobě knihovny \textbf{jeroMQ}~\footnote{\url{https://github.com/zeromq/jeromq}}. Z výkonnostního hlediska za původním řešením zaostává jen nepatrně~\footnote{Viz srovnávací testy \url{https://github.com/zeromq/jeromq/wiki/Perfomance}.} a navíc je mnohem jednodušší integrovat ji do vyvíjené aplikace prostým přidáním knihovny do projektu.
+Pro účely Recommeng systému jsem se rozhodl využít čistou Java implementaci knihovny ZeroMQ v podobě knihovny \textbf{jeroMQ}\footnote{\url{https://github.com/zeromq/jeromq}}. Z výkonnostního hlediska za původním řešením zaostává jen nepatrně\footnote{Viz srovnávací testy \url{https://github.com/zeromq/jeromq/wiki/Perfomance}.} a navíc je mnohem jednodušší integrovat ji do vyvíjené aplikace prostým přidáním knihovny do projektu.
 
 \subsection{Úložiště dat}
 
 \subsubsection{Apache Solr}
-\textbf{Apache Solr}~\footnote{\url{https://lucene.apache.org/solr}} je populární~\footnote{Viz seznam serverů využívajících služeb Solr \url{https://wiki.apache.org/solr/PublicServers}} open-source platforma pro vyhledávání napsaná v programovacím jazyce Java. Jejími charakteristickými vlastnosti jsou podpora pro fulltextové vyhledávání, fasetové vyhledávání (analogie ke konstrukci GROUP BY v RDBMS), dobrá škálovatelnost pomocí kešování a distribuovaného vyhledávání, využívání vyhledávací konstrukce \emph{more like this}, o které bude řeč v sekci~\ref{sec:alg}, a také například tzv. \emph{near real-time indexing}~\footnote{\url{https://cwiki.apache.org/confluence/display/solr/Near+Real+Time+Searching}} (dokumenty je možné vyhledávat téměř ihned po jejich zaindexování).
+\textbf{Apache Solr}\footnote{\url{https://lucene.apache.org/solr}} je populární\footnote{Viz seznam serverů využívajících služeb Solr \url{https://wiki.apache.org/solr/PublicServers}} open-source platforma pro vyhledávání napsaná v programovacím jazyce Java. Jejími charakteristickými vlastnosti jsou podpora pro fulltextové vyhledávání, fasetové vyhledávání (analogie ke konstrukci GROUP BY v RDBMS), dobrá škálovatelnost pomocí kešování a distribuovaného vyhledávání, využívání vyhledávací konstrukce \emph{more like this}, o které bude řeč v sekci~\ref{sec:alg}, a také například tzv. \emph{near real-time indexing}\footnote{\url{https://cwiki.apache.org/confluence/display/solr/Near+Real+Time+Searching}} (dokumenty je možné vyhledávat téměř ihned po jejich zaindexování).
 
 Z hlediska architektury programu jde o samostatný server pro fulltextové vyhledávání běžící v servletovém kontejneru (například Apache Tomcat). K indexaci a fulltextovému vyhledávání využívá ve svém jádru knihovnu Apache Lucene. 
 
-\textbf{Apache Lucene}~\footnote{\url{http://lucene.apache.org/core}} je vysoce výkonná knihovna pro účely vyhledávání v textu a indexování.
+\textbf{Apache Lucene}\footnote{\url{http://lucene.apache.org/core}} je vysoce výkonná knihovna pro účely vyhledávání v textu a indexování.
 
 Vstupem pro indexaci jsou dokumenty. Každý takový dokument obsahuje množinu elementů, kde je tento element nazvaný jako \emph{field}). Každý field má své jméno, datový typ a případně další atributy.
 
-Vstupem pro vyhledávání jsou textové řetězce (viz syntax~\footnote{\url{http://lucene.apache.org/core/2_9_4/queryparsersyntax.html}}, případně dotazované objekty.
+Vstupem pro vyhledávání jsou textové řetězce (viz syntax\footnote{\url{http://lucene.apache.org/core/2_9_4/queryparsersyntax.html}}, případně dotazované objekty.
 
 Index je uložen na disku ve formě souborů ve struktuře invertovaného indexu dokumentů~\cite{wiki:invindex}.
 
@@ -985,10 +998,10 @@ Ukázka reprezentace dokumentu ve výsledku vyhledávání pomocí Apache Solr v
 
 Formu jejich spolupráce lze popsat tak, že Apache Solr poskytuje pro vyhledávání RESTful API, za kterým je skryto a voláno JAVA API knihovny Lucene. Díky tomu je možné pomocí protokolu HTTP komunikovat s Apache Solr z jakékoliv platformy napsané v jakémkoliv programovacím jazyce. 
 
-K integraci Apache Solr s dalšími aplikacemi je možné vybírat ze spousty nástrojů a knihoven~\footnote{\url{http://wiki.apache.org/solr/IntegratingSolr}}. Pro účely mé aplikace psané v programovacím jazyce Java jsem zvolil knihovnu \textbf{SolrJ}~\footnote{\url{http://wiki.apache.org/solr/Solrj}} s klientským rozhraním pro vyhledávání, přidávání a aktualizaci indexu. 
+K integraci Apache Solr s dalšími aplikacemi je možné vybírat ze spousty nástrojů a knihoven\footnote{\url{http://wiki.apache.org/solr/IntegratingSolr}}. Pro účely mé aplikace psané v programovacím jazyce Java jsem zvolil knihovnu \textbf{SolrJ}\footnote{\url{http://wiki.apache.org/solr/Solrj}} s klientským rozhraním pro vyhledávání, přidávání a aktualizaci indexu. 
 
 \subsubsection{Apache Cassandra 2.0}
-\textbf{Apache Cassandra 2.0}~\footnote{\url{http://cassandra.apache.org}} je open-source distribuovaný DBMS navržený pro obsluhu velkého množství dat. Z hlediska datového modelu je Cassandra jakýmsi hybridem mezi key-value (pod 1 klíčem je uložena 1 hodnota) a column-oriented databázemi. V dokumentaci~\cite{cassdoc} se lze dočíst, že jde o row-oriented databázi.
+\textbf{Apache Cassandra 2.0}\footnote{\url{http://cassandra.apache.org}} je open-source distribuovaný DBMS navržený pro obsluhu velkého množství dat. Z hlediska datového modelu je Cassandra jakýmsi hybridem mezi key-value (pod 1 klíčem je uložena 1 hodnota) a column-oriented databázemi. V dokumentaci~\cite{cassdoc} se lze dočíst, že jde o row-oriented databázi.
 
 Základem modelu je \emph{column family} (analogie tabulky v RDBMS), jež je složena z řádků a sloupců. Každý řádek má unikátní identifikátor ve formě klíče – každý řádek obsahuje více sloupců. Sloupce mají jméno, hodnotu a časovou značku. Výhodou proti RDBMS přístupu je to, že rozdílné řádky ze stejné column family nemusí sdílet stejnou množinu sloupců – do jedné nebo více řádek lze v libovolný čas zapsat jakýkoliv sloupec.
 
@@ -1003,7 +1016,7 @@ Velkým benefitem je podpora Cassandra Query Language (CQL), dotazovacího jazyk
 \subsection{Ostatní použité technologie}
 
 \subsubsection{Apache Mahout}
-\textbf{Apache Mahout}~\footnote{\url{https://mahout.apache.org}} je knihovna napsaná v programovacím jazyce Java, jež poskytuje implementaci rozličných technik z oblasti strojového učení:
+\textbf{Apache Mahout}\footnote{\url{https://mahout.apache.org}} je knihovna napsaná v programovacím jazyce Java, jež poskytuje implementaci rozličných technik z oblasti strojového učení:
 
 \begin{itemize}
 	\item \textbf{shlukování (clustering)} – položky nacházejících se v určitých třídách (například webové stránky či novinové články) jsou organizovány do skupin tak, že položky nacházející se v těchto skupinách jsou si vzájemně podobné
@@ -1012,12 +1025,12 @@ Velkým benefitem je podpora Cassandra Query Language (CQL), dotazovacího jazyk
 	\item \textbf{často se vyskytující skupiny položek (frequent itemset mining)} – analýza položek v rámci nějaké skupiny (například nákupní košík) a identifikace, které položky se nejčastěji vyskytují pohromadě
 \end{itemize}
 
-Pro tyto techniky realizuje příslušné algoritmy jako například kolaborativní filtrování, k-means, náhodné lesy, skryté markovské modely a další. Některé algoritmy jsou připraveny pro běh v distribuovaném módu s využitím paradigmatu Map/Reduce, některé pak v lokálním módu (samotný Mahout je založen na Apache Hadoop, ale lze jej pohodlně využívat i bez něj)~\cite{mahouttut}. Mahout poskytuje též knihovny pro obecné matematické operace (zaměřené hlavně na oblast statistiky) a kolekce~\footnote{\url{https://mahout.apache.org/users/basics/mahout-collections.html}}. 
+Pro tyto techniky realizuje příslušné algoritmy jako například kolaborativní filtrování, k-means, náhodné lesy, skryté markovské modely a další. Některé algoritmy jsou připraveny pro běh v distribuovaném módu s využitím paradigmatu Map/Reduce, některé pak v lokálním módu (samotný Mahout je založen na Apache Hadoop, ale lze jej pohodlně využívat i bez něj)~\cite{mahouttut}. Mahout poskytuje též knihovny pro obecné matematické operace (zaměřené hlavně na oblast statistiky) a kolekce\footnote{\url{https://mahout.apache.org/users/basics/mahout-collections.html}}. 
 
 Využít jej pro potřeby své práce jsem se rozhodl poté, co jsem na něj narazil v projektu Mendeley~\ref{mendeley} během zkoumání existujících řešení doporučovacích systémů. 
 
 \subsubsection{Spring Framework}
-Při tvorbě každého nového Java projektu od základu je dobré zamyslet se nad možností využít některý z mnoha frameworků a dalších užitečných nástrojů, s jejichž pomocí si lze do značné míry usnadnit proces vývoje. Díky dobrým zkušenostem z dřívějších projektů jsem zvolil open-source framework pro tvorbu moderních enterprise aplikací \textbf{Spring}~\footnote{\url{http://projects.spring.io/spring-framework}}. 
+Při tvorbě každého nového Java projektu od základu je dobré zamyslet se nad možností využít některý z mnoha frameworků a dalších užitečných nástrojů, s jejichž pomocí si lze do značné míry usnadnit proces vývoje. Díky dobrým zkušenostem z dřívějších projektů jsem zvolil open-source framework pro tvorbu moderních enterprise aplikací \textbf{Spring}\footnote{\url{http://projects.spring.io/spring-framework}}. 
 
 Jeho výhodami jsou snadná konfigurovatelnost, podpora dependency injection, rozšiřitelnost a také integrace s jinými frameworky. V mém případě to byla integrace s frameworkem Jersey, kterou jsem využil při implementaci RESTful API.
 
@@ -1219,7 +1232,7 @@ ZMQQueue queue = new ZMQQueue(context, clients, workers);
 V případě více připojených klientů ZeroMQ automaticky obstarává obsluhu všech příchozích žádostí. 
 
 \subsubsection{Realizace vzoru pro zasílání zpráv REQ/REP}
-Pro zasílání zpráv jsem zvolil obousměrně komunikující vzor \emph{Request Reply}. Toto paradigma je známé z většiny serverových typů~\footnote{HTTP, POP či IMAP}. Klient používá vlastní socket typu \textbf{ZMQ.REQ} k inicializaci žádosti, kterou následně odesílá na server. Server též užívá vlastního socketu \textbf{ZMQ.REP} ke čtení příchozí žádosti, po které zasílá odpověď. 
+Pro zasílání zpráv jsem zvolil obousměrně komunikující vzor \emph{Request Reply}. Toto paradigma je známé z většiny serverových typů\footnote{HTTP, POP či IMAP}. Klient používá vlastní socket typu \textbf{ZMQ.REQ} k inicializaci žádosti, kterou následně odesílá na server. Server též užívá vlastního socketu \textbf{ZMQ.REP} ke čtení příchozí žádosti, po které zasílá odpověď. 
 
 Problém je, že vzor Request-Reply toho v základní variantě mnoho neumožňuje, proto bylo nutné umožnit asynchronní komunikaci implementací rozšíření v podobě socketů \textbf{ROUTER} a \textbf{DEALER} (dříve nazývány jako XREP a XREQ). 
 

@@ -41,11 +41,9 @@
    author = "Chris Anderson",
    title = "The 80/20 Rule Revisited",
    year = "2005",
-   url = {http://www.slideshare.net/d0nut/open-recommendation-platform},
-   note = "[Online; stav z 23. dubna 2014]"
+   url = {http://www.longtail.com/the_long_tail/2005/08/the_8020_rule_r.html},
+   note = "[Online; stav z 30. dubna 2014]"
  }
-
-http://www.longtail.com/the_long_tail/2005/08/the_8020_rule_r.html
 
 @MISC{digitaluniverse,
    author =       {John Gantz, David Reinsel},
@@ -113,6 +111,15 @@ note="stav ze dne 21.4.2012",
 url="http://arstechnica.com/uncategorized/2007/01/8627/",
 howpublished = "[online]"
 }
+
+@MISC{ibm,
+title="Recommender systems, Part 2: Introducing open source engines",
+note="stav ze dne 30.4.2012",
+url="http://arstechnica.com/uncategorized/2007/01/8627/",
+howpublished = "[online]"
+}
+
+http://www.ibm.com/developerworks/library/os-recommender2/index.html
 
 @MISC{netflixrules,
 author={Netflix Prize},

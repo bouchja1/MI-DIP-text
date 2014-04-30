@@ -10,9 +10,8 @@ Warning--to sort, need author or key in amazonrec
 Warning--to sort, need author or key in netflix2007
 Warning--to sort, need author or key in netflixrec
 Warning--to sort, need author or key in bellkor
-Warning--to sort, need author or key in ziteflip
-Warning--to sort, need author or key in zitecnn
 Warning--to sort, need author or key in mendeleylastfm
+Warning--to sort, need author or key in ibm
 Warning--to sort, need author or key in easyrec
 Warning--to sort, need author or key in pst2
 Warning--to sort, need author or key in pst3
@@ -20,45 +19,45 @@ Warning--to sort, need author or key in mtserver
 Warning--to sort, need author or key in solrj
 Warning--missing school in Fielding:2000:ASD:932295
 Warning--empty pages in googlenews
-You've used 39 entries,
+You've used 38 entries,
             3151 wiz_defined-function locations,
-            826 strings with 10798 characters,
-and the built_in function-call counts, 11726 in all, are:
-= -- 834
-> -- 273
+            824 strings with 10792 characters,
+and the built_in function-call counts, 11478 in all, are:
+= -- 816
+> -- 272
 < -- 0
-+ -- 142
++ -- 141
 - -- 74
-* -- 548
-:= -- 1258
-add.period$ -- 78
-call.type$ -- 39
-change.case$ -- 151
+* -- 537
+:= -- 1240
+add.period$ -- 76
+call.type$ -- 38
+change.case$ -- 148
 chr.to.int$ -- 0
-cite$ -- 55
-duplicate$ -- 1155
-empty$ -- 1278
+cite$ -- 53
+duplicate$ -- 1128
+empty$ -- 1246
 format.name$ -- 79
-if$ -- 2571
+if$ -- 2513
 int.to.chr$ -- 0
-int.to.str$ -- 39
-missing$ -- 273
-newline$ -- 164
+int.to.str$ -- 38
+missing$ -- 267
+newline$ -- 160
 num.names$ -- 50
-pop$ -- 791
+pop$ -- 771
 preamble$ -- 1
-purify$ -- 113
+purify$ -- 111
 quote$ -- 0
-skip$ -- 390
+skip$ -- 380
 stack$ -- 0
-substring$ -- 272
-swap$ -- 486
+substring$ -- 265
+swap$ -- 476
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 156
-warning$ -- 16
+type$ -- 152
+warning$ -- 15
 while$ -- 50
-width$ -- 41
-write$ -- 349
-(There were 16 warnings)
+width$ -- 40
+write$ -- 341
+(There were 15 warnings)
