@@ -153,8 +153,8 @@ Doporučování lze dělit do dvou skupin dle způsobu vykonávané práce.
 	K dosažení těchto cílů bude zapotřebí vyvinout následující části:
 
 \begin{itemize}
-  \item \textbf{adaptibilní systém pro doporučování obsahu,}
-  \item \textbf{sada základních algoritmů určených k doporučování,}
+  \item \textbf{Adaptibilní systém pro doporučování obsahu.}
+  \item \textbf{Sada základních algoritmů určených k doporučování.}
   \item \textbf{RESTful API pro manipulaci s doporučovacími algoritmy a systémem.}
 \end{itemize}	
 
@@ -225,8 +225,6 @@ Vzhledem k tomu, že firma staví své podnikání na tom, že její zákazníci
 
 \begin{description}
 	\item[Netflix Prize]
-	
-
 
 \cite{netflixrules} Za tímto účelem vyvinula společnost vlastní systém \emph{Cinematch} napomáhající svým zákazníkům objevit pro ně zajímavé filmy. Postupný vývoj na poli doporučovacích systémů však přivedl společnost na otázku, zda není možné vyvinout systém, jenž by dokázal Cinematch v oblasti předpovídání filmového vkusu porazit.Společnost tak vypsala začátkem října 2006 soutěž známou jako \emph{Netflix Prize}. Týmu, kterému by se podařilo zlepšit dosavadní výsledky systému Cinematch alespoň o 10 procent, by byla přiřknuta odměna ve výši 1 milion amerických dolarů.
 
@@ -334,9 +332,92 @@ Systém provádí na pozadí analytické operace, obsahuje též databázi asoci
  	\caption[Abstraktní model open source systému easyrec]{Abstraktní model open source systému easyrec. Zdroj: \cite{easyrec}}\label{fig:easyrec}
 \end{figure}	
 
-\subsection{Shrnutí poznatků z analýzy}
+\subsection{Shrnutí poznatků z analýzy}  
 
-Z výše uvedených příkladů v sekci~\ref{sec:examples} lze vypozorovat určité společné vlastnosti a zformulovat několik závěrů:
+   \begin{table}
+   \centering
+\begin{tabular}{|c|c|}
+        \hline \bfseries Systém & \bfseries Vlastnosti \\ \hline
+    \hline
+  \bfseries Amazon.com & 
+  \begin{minipage}{3.5in}
+    \vskip 6pt
+    \begin{enumerate}
+   \item Kolaborativní filtrování užívající podobnostní mapování item-to-item~\cite{linden2001collaborative}.
+   \item Personalizovaná doporučování získávaná asociačními pravidly z databáze informací o uživatelích~\cite{jacobi2006personalized}.
+   \end{enumerate}
+   \vskip 6pt
+ \end{minipage}
+ \\
+  \hline
+  
+  \bfseries Netflix & 
+  \begin{minipage}{3.5in}
+    \vskip 6pt
+    \begin{enumerate}
+   \item Predikce uživatelských hodnocení založená na technikách strojového učení~\ref{sec:machine}.
+   \item Pro doporučování je využíváno více jednotlivých algoritmů a jejich kombinování.
+   \end{enumerate}
+   \vskip 6pt
+ \end{minipage}
+ \\
+  \hline  
+  
+  \bfseries Mendeley & 
+  \begin{minipage}{3.5in}
+    \vskip 6pt
+    \begin{enumerate}
+   \item Doporučení založená na kolaborativním filtrování ve variantách user-based i item-based.
+   \item Doporučení založená na podobnosti obsahu (podobnost článků, nadpisů, klíčových slov apod.)
+   \item Důraz na pozitivní a negativní zpětnou vazbu. Negativní zpětná vazba sníží pravděpodobnost budoucího doporučení podobné položky, pozitivní naopak upřesní budoucí doporučované položky.
+   \item Výpočetní vrstva pro doporučování postavená nad Apache Mahout~\ref{mahout}. 
+   \end{enumerate}
+   \vskip 6pt
+ \end{minipage}
+ \\
+  \hline    
+  
+  \bfseries Google News & 
+  \begin{minipage}{3.5in}
+    \vskip 6pt
+    \begin{enumerate}
+   \item Kombinování informací získaných z předchozího chování na stránce a technik kolaborativního filtrování.
+   \end{enumerate}
+   \vskip 6pt
+ \end{minipage}
+ \\
+  \hline   
+  
+  \bfseries ORP & 
+  \begin{minipage}{3.5in}
+    \vskip 6pt
+    \begin{enumerate}
+   \item Kombinování více doporučovacích metod společně s kontextem uživatele.
+   \item Přítomnost mezivrstvy v podobě rádce starajícího se o obsluhu uživatelů a jejich doporučení.
+   \item Silný důraz na zpětnou vazbu a následné přepočítávání budoucích šancí doporučení.
+   \item Ke kombinaci je využíváno strategie Multi-armed bandit~\ref{sec:multi} v bayesovské variantě~\ref{bayes}.
+   \end{enumerate}
+   \vskip 6pt
+ \end{minipage}
+ \\
+  \hline     
+  
+  \bfseries easyrec & 
+  \begin{minipage}{3.5in}
+    \vskip 6pt
+    \begin{enumerate}
+   \item Veškeré uživatelské akce (provedení akce, zpětná vazba, žádost o doporučení konkrétním algoritmem) s doporučovacím systémem probíhají skrze komunikaci s RESTful API.
+   \end{enumerate}
+   \vskip 6pt
+ \end{minipage}
+ \\
+  \hline    
+ \end{tabular}
+     \caption {Shrnutí poznatků o jednotlivých systémech vyplývající z provedené analýzy.}
+     \label{tab:table}
+   \end{table} 
+
+Z výše uvedených příkladů v sekci~\ref{sec:examples} lze vypozorovat určité vlastnosti (shrnutí v tabulce~\ref{tab:table}) a zformulovat několik závěrů:
 
 \begin{itemize}
 	\item O uživateli je vedena spousta záznamů, především historie jeho chování na stránkách.
@@ -357,7 +438,7 @@ Jisté je navíc to, že době, kdy obchodníkům stačilo na svůj elektronick�
 
 \subsection{Minimální teoretický základ}
 
-Ještě předtím, než se pustím do popisu strategie použité v implementaci systému, zopakuji zde některé pojmy týkající se strojového učení, teorie pravděpodobnosti a statistiky. Jedná se o minimální základ potřebný k pochopení postupů popisovaných dále v této sekci. 
+Ještě předtím, než se pustím do popisu strategie, zopakuji zde některé pojmy týkající se strojového učení, teorie pravděpodobnosti a statistiky. Jedná se o minimální základ potřebný k pochopení postupů popisovaných dále v této sekci. 
 
 \subsubsection{Strojové učení}
 Strojové učení je vědecká disciplína (jedna z větví oboru umělé inteligence), jež se zabývá tím, jak se má počítač přizpůsobit určité situaci, aniž by byl pro danou situaci explicitně naprogramován. Detailněji v sekci~\ref{sec:machine}.
@@ -471,22 +552,22 @@ Jeden z klasických učících problémů zasahující do teorie pravděpodobnos
 
 S pojmy vysvětlenými výše souvisí strategie v tom smyslu, že použitím bayesovské varianty provádíme opakovaný výběr z konečného počtu rozdělení, čímž se snažíme maximalizovat průměrnou hodnotu.
 
-Toho lze využít například k cílenému doporučování reklamy nebo výběru personalizované úvodní stránky pro uživatele vstupujícího na naše stránky. Což je vlastně analogie k problému řešenému v této práci.
+Toho lze využít například k cílenému doporučování reklamy nebo výběru personalizované úvodní stránky pro uživatele vstupujícího na naše stránky. Což je vlastně analogie k problému řešeného v této práci.
 
 \subsection{Význam strojového učení při návrhu systému}
 \label{sec:machine}
 
-Jak vyplynulo z rešerše~\ref{chap:current} existujících řešení a provedené analýzy~\ref{chap:analysis}, vzhledem k povaze řešeného problému je nutné zaměřit se na metody \emph{strojového učení}. 
+Jak vyplynulo z rešerše~\ref{chap:current} existujících řešení, vzhledem k povaze řešeného problému je nutné zaměřit se na metody \emph{strojového učení}. 
 
 Těmito metodami lze dosáhnout generalizace vstupních instancí na správné výsledky nebo adaptovat existující systém na změny a reakce okolí. 
 
 Typickým příkladem je vytvořit z dostupných dat model, jenž například dokáže:
 
 \begin{itemize}
-  \item predikovat cenu akcií za 6 měsíců (z aktuální výkonnosti společnosti a dostupných ekonomických dat)
-  \item rozpoznat spam od regulérního e-mailu
-  \item u pacienta hospitalizovaného s infarktem predikovat riziko dalšího infarktu
-  \item napomoci společnostem zabývajících se internetovou reklamou v rozhodování se, kterou reklamní strategii použít k maximalizaci zisku
+  \item predikovat cenu akcií za 6 měsíců (z aktuální výkonnosti společnosti a dostupných ekonomických dat),
+  \item rozpoznat spam od regulérního e-mailu,
+  \item u pacienta hospitalizovaného s infarktem predikovat riziko dalšího infarktu,
+  \item napomoci společnostem zabývajících se internetovou reklamou v rozhodování se, kterou reklamní strategii použít k maximalizaci zisku.
 \end{itemize}
 
 Algoritmy strojového učení dělíme do taxonomie (nadtříd a podtříd) založené na požadovaném výsledku nebo typu vstupu, jenž máme k dispozici během trénování stroje. Algoritmů je celá řada, zmíním zde alespoň ty nejtypičtější. 
@@ -559,6 +640,7 @@ Tato dilemata jsou odborně nazývána jako explorace a exploatace.
 Optimální strategie nemůže být ani čistě explorační, ani čistě exploatační. Hledá se vyvážený kompromis.
 
 \subsection{Bayesian Bandits}
+\label{bayes}
 Nalézt optimální řešení tedy nepatří k triviálním problémům. Systému může trvat léta, než se k němu dopracuje. Naštěstí existuje spousta \emph{přibližně optimálních} řešení.
 
 Jedním z řešení je algoritmus zvaný \emph{Bayesian Bandits}. Algoritmus přímo souvisí s učením založeným na zpětné vazbě.
@@ -595,10 +677,13 @@ Obrázek~\ref{fig:posteriors} znázorňuje postup pro problém tří banditů ($
  	\caption[Vizualizace sekvenčního učení řešení od jedné do tisíce her.]{Vizualizace sekvenčního učení řešení od jedné do tisíce her. Zdroj: \cite{camdp}}\label{fig:posteriors}
 \end{figure}	
 
+\subsubsection{Zpětná vazba a její vliv na vývoj adaptibilního systému}
+TODO
+
 \subsubsection{Stanovení míry učení}
 Vzhledem k tomu, že prostředí se rychle mění v čase, je nutné stanovit míru učení. Technicky vzato je standardní Bayesian Bandits algoritmus schopen učit se sám pomocí aktualizovaných parametrům vstupujících do ${Beta}$ rozdělení po každé hře. Stanovením vhodné míry učení lze docílit toho, že algoritmus se bude přizpůsobovat měnícímu se prostředí rychleji.
 
-Pokud stanovíme míru $<<$ 1, algoritmus bude předchozí výsledky zapomínat rychleji a častěji bude zkoumat nové možnosti. Míra $>>$ 1 implikuje naopak to, že algoritmus bude sázet na časnější dřívější výhry, čímž ale riskuje to, že se nedokáže rychle adaptovat na náhlé změny (je více imunní vůči rychle se měnícímu prostředí).
+Pokud stanovíme míru $<$ 1, algoritmus bude předchozí výsledky zapomínat rychleji a častěji bude zkoumat nové možnosti. Míra $>$ 1 implikuje naopak to, že algoritmus bude sázet na časnější dřívější výhry, čímž ale riskuje to, že se nedokáže rychle adaptovat na náhlé změny (je více imunní vůči rychle se měnícímu prostředí).
 
 \chapter{Praktická část}
 \section{Analýza a návrh řešení}
@@ -1049,6 +1134,7 @@ Velkým benefitem je podpora Cassandra Query Language (CQL), dotazovacího jazyk
 \subsection{Ostatní použité technologie}
 
 \subsubsection{Apache Mahout}
+\label{mahout}
 \textbf{Apache Mahout}\footnote{\url{https://mahout.apache.org}} je knihovna napsaná v programovacím jazyce Java, jež poskytuje implementaci rozličných technik z oblasti strojového učení:
 
 \begin{itemize}
