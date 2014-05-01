@@ -46,6 +46,8 @@ basicstyle=\footnotesize\ttfamily,
 breaklines=true
 }
 
+\setcounter{secnumdepth}{5}
+
 \usepackage{graphicx} %graphics files inclusion
 % \usepackage{amsmath} %advanced maths
 % \usepackage{amssymb} %additional math symbols
@@ -150,7 +152,7 @@ Doporučování lze dělit do dvou skupin dle způsobu vykonávané práce.
 	
 	Funkčnost navrženého systému bude ověřena implementací prototypu a jeho spuštěním na modelové úloze.
 	
-	K dosažení těchto cílů bude zapotřebí vyvinout následující části:
+	K dosažení těchto cílů bude zapotřebí navrhnout a vyvinout následující části:
 
 \begin{itemize}
   \item \textbf{Adaptibilní systém pro doporučování obsahu.}
@@ -160,15 +162,15 @@ Doporučování lze dělit do dvou skupin dle způsobu vykonávané práce.
 
 \section{Struktura práce}
 \label{sec:structure}
-	Tato práce je strukturována do pěti různých kapitol. Kapitoly jsou řazeny v pořadí, v jakém probíhaly jednotlivé fáze vývoje.	
+	Tato práce je strukturována do TODO různých kapitol. Kapitoly jsou řazeny v pořadí, v jakém probíhaly jednotlivé fáze vývoje.	
 
-\begin{description}
-  \item[Kapitola \nameref{chap:current}] Popisuje historické pozadí i trendy používané současnými doporučovacími systémy. Snahou této rešerše je vyvodit závěry, jež by mohly být užitečné pro náplň dalších kapitol.
-  \item[Kapitola \nameref{chap:analysis}] Shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. 
-  \item[Kapitola \nameref{chap:adapt}] Detailně popisuje algoritmické a matematické postupy použité při návrhu adaptibilního systému. 
-  \item[Kapitola \nameref{chap:impl}] Popisuje vývoj aplikace na základě provedené analýzy a návrhu.
-  \item[Kapitola \nameref{chap:tests}] Shrnuje poznatky nabyté z provedených experimentů se systémem a hodnotí vyvinutou aplikaci. 
-\end{description}
+%\begin{description}
+%  \item[Kapitola \nameref{chap:current}] Popisuje historické pozadí i trendy používané současnými doporučovacími systémy. Snahou této rešerše je vyvodit závěry, jež by mohly být užitečné pro náplň dalších kapitol.
+%  \item[Kapitola \nameref{chap:analysis}] Shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. 
+%  \item[Kapitola \nameref{chap:adapt}] Detailně popisuje algoritmické a matematické postupy použité při návrhu adaptibilního systému. 
+%  \item[Kapitola \nameref{chap:impl}] Popisuje vývoj aplikace na základě provedené analýzy a návrhu.
+%  \item[Kapitola \nameref{chap:tests}] Shrnuje poznatky nabyté z provedených experimentů se systémem a hodnotí vyvinutou aplikaci. 
+%\end{description}
 	
 \end{introduction}
 
@@ -223,10 +225,8 @@ Výše jsou samozřejmě popsány pouze základní principy. Doporučovací syst
 
 Vzhledem k tomu, že firma staví své podnikání na tom, že její zákazníci ji platí za konzumaci zábavy, je v jejím vlastním zájmu, aby těmto uživatelům sledujícím filmy a seriály nabízela automaticky další obsahově či žánrově podobné, zkrátka takové, jenž budou co možná nejvíce lahodit jejich vkusu (dle~\cite{netflixrec} pochází $\frac{2}{3}$ zapůjčených filmů na Netflix z předchozího doporučení). Úspěšné podnikání společnosti je tak přímo závislé na tom, jak kvalitním doporučovacím systém společnost disponuje. 
 
-\begin{description}
-	\item[Netflix Prize]
-
-\cite{netflixrules} Za tímto účelem vyvinula společnost vlastní systém \emph{Cinematch} napomáhající svým zákazníkům objevit pro ně zajímavé filmy. Postupný vývoj na poli doporučovacích systémů však přivedl společnost na otázku, zda není možné vyvinout systém, jenž by dokázal Cinematch v oblasti předpovídání filmového vkusu porazit.Společnost tak vypsala začátkem října 2006 soutěž známou jako \emph{Netflix Prize}. Týmu, kterému by se podařilo zlepšit dosavadní výsledky systému Cinematch alespoň o 10 procent, by byla přiřknuta odměna ve výši 1 milion amerických dolarů.
+\paragraph{Netflix Prize}
+Za tímto účelem vyvinula společnost vlastní systém \emph{Cinematch} napomáhající svým zákazníkům objevit pro ně zajímavé filmy. Postupný vývoj na poli doporučovacích systémů však přivedl společnost na otázku, zda není možné vyvinout systém, jenž by dokázal Cinematch v oblasti předpovídání filmového vkusu porazit.Společnost tak vypsala začátkem října 2006 soutěž známou jako \emph{Netflix Prize}. Týmu, kterému by se podařilo zlepšit dosavadní výsledky systému Cinematch alespoň o 10 procent, by byla přiřknuta odměna ve výši 1 milion amerických dolarů.
 
 Do soutěže byla uvolněna sada testovacích dat obsahující:
 
@@ -237,16 +237,13 @@ Do soutěže byla uvolněna sada testovacích dat obsahující:
 	\item datum uskutečnění hodnocení
 \end{itemize}
 
-Data obsahovala 100 480 507 takových hodnocení pro 17 770 filmů od 480 189 uživatelů. Uvolněna byla ještě další sada testovacích dat obsahující stejné informace, jen s vynecháním uživatelských hodnocení. Cílem pak bylo predikovat tato chybějící hodnocení opět na intervalu $\langle1,5\rangle$.
+Data obsahovala 100 480 507 takových hodnocení pro 17 770 filmů od 480 189 uživatelů. Uvolněna byla ještě další sada testovacích dat obsahující stejné informace, jen s vynecháním uživatelských hodnocení. Cílem pak bylo predikovat tato chybějící hodnocení opět na intervalu $\langle1,5\rangle$~\cite{netflixrules}.
 
 Celková výhra byla udělena až v roce 2009 (do té doby sice docházelo k průběžnému zlepšování výsledků, nikdy však nebylo dosaženo požadovaného zlepšení 10 procent) týmu \emph{BellKor's Pragmatic Chaos}, vzniklého spojením tří do té doby samostatně soutěžících týmů.
 
 Vítězný tým dosáhl cíle pomocí \emph{pokročilých technik strojového učení}. Zjistil přitom především to, že hodnocení každého filmu je silně subjektivní záležitostí, kterou je velmi obtížné programově předpovědět. Ukázalo se také, že ve větší míře záleží na tom, zda uživatel hodnotí právě dosledovaný film nebo film, který zhlédl již před delší dobou. Velkou roli hraje i nálada uživatele v průběhu dne a další faktory~\cite{bellkor}.
 
 Výsledný algoritmus, jenž získal cenu, vznikl kombinováním zhruba stovky menších algoritmů. S trochou nadsázky lze tedy prohlásit, že jednou z hlavních taktik pro kvalitní doporučení je \emph{použití tolika algoritmů, kolik je jen možné}.
-	
-	
-\end{description}
 
 \subsubsection{Mendeley}	
 \label{mendeley}
@@ -433,7 +430,7 @@ Existujících řešení je tedy celá řada. Každé z těchto řešení je př
 
 Jisté je navíc to, že době, kdy obchodníkům stačilo na svůj elektronický obchod nasadit jednoduchý algoritmus kolaborativního filtrování, odzvonilo a budoucnost patří systémům schopným nějaké predikce a přizpůsobení svého vývoje, a to vše v reálném čase. 
 
-\section{Adaptibilní systém}
+\section{Teorie adaptibilního systému}
 \label{chap:adapt}
 
 \subsection{Minimální teoretický základ}
@@ -450,31 +447,39 @@ Agent je speciální autonomní program, který jedná samostatně a nezávisle 
 Problematika agentů a agentních systémů je jinak samostatný obor spadající do oblasti umělé inteligence a jeho zkoumání by vydalo na další závěrečnou práci. 
 
 \subsubsection{Zpětná vazba}
+\label{feedback}
 Zpětnou vazbou je označován proces, ve kterém na základě obdržených informací (například při komunikaci s nějakým systémem) a reakcí na ně ovlivňujeme jejich budoucí podobu – část systémového výstupu lze tedy použít jako vstup pro další činnost systému.
 
 Rozlišujeme dva typy reakcí, a to kladnou zpětnou vazbu a zápornou zpětnou vazbu. Téma má blízko k psychologickému zkoumání toho, jakým způsobem dokáže ovlivnit zapojení odměny a trestu lidské chování.
+
+\subsubsection{Explorace vs. exploatace}
+\label{sub:explo}
+
+\begin{description}
+  \item[Explorace] Nacházení nových oblastí hledání, kdy agent nevyužívá předchozích znalostí (agent stále zkouší nové akce, jejichž výsledek nezná).
+  \item[Exploatace] Využívání stávajících znalostí. Hrozí uváznutí v lokálních extrémech. (agent provádí akce, o kterých ví, že mu přinášejí užitek). 
+\end{description}	
+
+Optimální strategie nemůže být ani čistě explorační, ani čistě exploatační. Hledá se vyvážený kompromis.
 
 \subsubsection{Základy teorie pravděpodobnosti}
 
 Nejprve uvedu několik pojmů z teorie pravděpodobnosti, se kterými budu v následujícím textu pracovat.
 
-\begin{description}
-	\item[Pravděpodobnostní prostor] prováděného náhodného pokusu je tvořen trojicí $(\Omega,\mathcal{F},P)$, kde:
+\paragraph{Pravděpodobnostní prostor}
+
+Pravděpodobnostní prostor prováděného náhodného pokusu je tvořen trojicí $(\Omega,\mathcal{F},P)$, kde:
 	\begin{itemize}
 		\item $\Omega$ je prostor elementárních jevů (např. čísla od jedné do šesti na šestistranné hrací kostce), kde elementárním jevem nazýváme libovolný možný výsledek $\omega \in \Omega$ 
 		\item $\mathcal{F}$ je množina náhodných jevů (potenční množina\footnote{Potenční množina množiny $X$ je množina obsahující všechny podmnožiny množiny $X$} množiny $\Omega$)
 		\item $P$ je přiřazení pravděpodobnosti jednotlivým jevům z $\Omega$ ($P(\Omega)=1$)
 	\end{itemize}
-\end{description}
 
-\begin{description}
-	\item[Náhodný jev]
+\paragraph{Náhodný jev}
 	
 Náhodný jev $A$ výsledek náhodného pokusu. Příkladem jevu může být například hod mincí a pozorování, zda padla panna nebo orel. V tomto jevovém prostoru jsou zahrnuty celkem dva elementární jevy (hodnota panna a hodnota orel), které souvisejí s pokusem (pozorování výskytu elementárních jevů během házení).	
-\end{description}
 
-\begin{description}
-	\item[Náhodná veličina]
+\paragraph{Náhodná veličina}
 	\label{randomvel}
 Výsledkem náhodného pokusu nemusí být číslo (v příkladu výše jsme měli dvě hodnoty po stranách mince), proto je vhodné těmto výsledkům kvůli matematickému zpracování čísla přiřazovat. Způsob přiřazení čísla výsledku náhodného pokusu se označuje jako \emph{náhodná veličina $X$}~\cite{pst1}. Pro počítání padlých panen při opakovaném házení mincí by mohlo přiřazení vypadat například takto:
 
@@ -492,7 +497,6 @@ $\{ X \leq x \} = \{ \omega \in \Omega: X(\omega) \leq x \} \in \mathcal{F}, \fo
 Dle typu se rozlišují náhodné veličiny diskrétní a spojité. Diskrétní náhodné veličiny mohou nabývat pouze konečného počtu hodnot z $R$ (například ročník studia), zatímco spojité náhodné veličiny nabývají v určitém intervalu libovolné reálné hodnoty (například čas potřebný k dokončení diplomové práce). 
 
 Pravděpodobnostní rozdělení náhodné veličiny určuje její distribuční funkce. 
-\end{description}	
 
 \subsubsection{Distribuční funkce}
 \label{cdf}
@@ -554,7 +558,7 @@ S pojmy vysvětlenými výše souvisí strategie v tom smyslu, že použitím ba
 
 Toho lze využít například k cílenému doporučování reklamy nebo výběru personalizované úvodní stránky pro uživatele vstupujícího na naše stránky. Což je vlastně analogie k problému řešeného v této práci.
 
-\subsection{Význam strojového učení při návrhu systému}
+\subsection{Význam strojového učení}
 \label{sec:machine}
 
 Jak vyplynulo z rešerše~\ref{chap:current} existujících řešení, vzhledem k povaze řešeného problému je nutné zaměřit se na metody \emph{strojového učení}. 
@@ -583,16 +587,16 @@ Algoritmy strojového učení dělíme do taxonomie (nadtříd a podtříd) zalo
   
   Jedná se o učení bez učitele. Agent sice dostává odezvu, ale přímo z prostředí, takže musí experimentovat a zjišťovat, které stavy jsou nějakým způsobem dobré, a kterým stavům je lepší se vyhnout.
   
-  Průzkum probíhá na principu zpětné vazby v podobě odměny za akce dosahující cíle nebo trestu v opačném případě. Řeší se zde problém explorace vs. exploatace~\ref{sub:explo}. 
+  Průzkum probíhá na principu zpětné vazby~\ref{feedback} v podobě odměny za akce dosahující cíle nebo trestu v opačném případě. Řeší se zde problém explorace vs. exploatace~\ref{sub:explo}. 
 \end{description}
 
 Rozlišujeme několik typů zpětnovazebního učení, například tzv. \emph{single-stage} (agent se snaží uplatňovat zpětnou vazbu ihned po každé provedené akci), oproti kterému stojí typ \emph{sekvenční} (agent uplatňuje zpětnou vazbu po obdržení série akcí). Dalšími typy jsou pak například \emph{pasivní} a \emph{aktivní} zpětnovazební učení přizpůsobující svůj vývoj na základě pevně dané strategie, respektive učení se a rozhodování o prováděných akcích za chodu systému~\cite{reinforcement}.
 
 Algoritmus zpětnovazebního učení začíná při svém spuštění ve stavu nevědomí, kdy neví nic o daných okolnostech a začíná nabývat své vědomosti postupným testováním systému. Postupující dobou běhu (a tím, jak vstřebává data a vyhodnocuje výsledky) se učí rozpoznat, jaké chování je nejlepší.
 
-\subsubsection{Zvolená strategie}
+\subsubsection{Zvolená strategie učení}
 \label{sub:online}
-Za nejvhodnější strategie, která by byla schopna plnit požadavky definované na tuto práci, jsem zvolil \emph{algoritmus zpětnovazebního učení}.
+Za nejvhodnější strategii, která by byla schopna plnit požadavky definované na tuto práci, jsem zvolil \emph{algoritmus zpětnovazebního učení}.
 
 O strategii lze též mluvit jako o \emph{online učení}. Nutno zmínit, že slovem online zde není míněno něco ve smyslu internetu, ale ve smyslu neustále se vyvíjející aktualizace dat. Učící algoritmus v každém kole vykoná nějakou akci, přijme zpětnou vazbu a připíše si daný zisk či ztrátu.
 
@@ -604,18 +608,29 @@ Díky těmto znalostem tak můžeme navrhovat pravděpodobností dynamické syst
 \label{sec:multi}
 
 \subsubsection{Princip algoritmu}
-\cite{camdp} Základ algoritmu si lze představit tak, že hráč stojí před $N$ výherními automaty (ty jsou podle dle strategie nazývány jako bandité) a v každém kole má možnost vybrat si jeden, na kterém bude hrát.
+Základ algoritmu si lze představit tak, že hráč stojí před $N$ výherními automaty (ty jsou podle dle strategie nazývány jako bandité) a v každém kole má možnost vybrat si jeden, na kterém bude hrát.
 
 Strategie je formálně popsána jako skupina výnosových distribučních funkcí~\ref{cdf} $B = \{ A_1, A_2, \ldots, A_N \}$, kde $N$ je počet banditů (každý z banditů má tedy přiřazenu právě jednu distribuční funkci vyjadřující pravděpodobnost úspěchu). 
 
 Hráč zpočátku nedisponuje žádnou informací o průběhu hry, ani o rozložení pravděpodobnosti úspěchu mezi bandity, a maximalizace výhry může dosáhnout pouze tím, že v každém kole vhodně vybere vždy jednoho z banditů.
 
-Kdyby hráč věděl, u kterého z banditů je největší pravděpodobnost výhry, samozřejmě by vždy vybíral právě tohoto. Pravděpodobnosti výher u jednotlivých automatů jsou ale neznámé. Úkolem hráče tedy je nalézt nejlepšího banditu, a to tak rychle, jak jen to je možné, aby jej mohl co nejvíce využívat~\ref{sub:explo}.
+Kdyby hráč věděl, u kterého z banditů je největší pravděpodobnost výhry, samozřejmě by vždy vybíral právě tohoto. Pravděpodobnosti výher u jednotlivých automatů jsou ale neznámé.
 
-\begin{description}
-	\item[Návrh strategie]
+\paragraph{Přizpůsobení algoritmu pro potřeby adaptibilního systému}
+Tradiční varianta pracuje s předem definovaným počtem tahů, kterými je celá hra omezena. Úkolem hráče tedy je nalézt nejlepšího banditu, a to tak rychle, jak jen to je možné, aby jej stihl využít co nejvíce~\cite{camdp}.
+
+Vzhledem k povaze mnou řešeného problému, kdy je cílem navrhnout a vyvinou rádce, jenž naslouchá a odpovídá pouze tedy, kdy je vyzván uživatelem, je chování systému zhruba takové:
+
+\begin{itemize}
+	\item Rádce může udělovat rady klidně až do nekonečna. Pokud ale nebude dostávat pravidelnou zpětnou vazbu o výsledcích svých rad, budou jeho rady čistě náhodné.
+	\item Zpětnou vazbu mu poskytují uživatelé, kteří u něj žádají o radu. Uživatelé poskytují informace dvojího typu – zda se \emph{řídili při volbě algoritmu jeho radou} a zda byli \emph{po doporučení obsahu s výsledkem spokojeni či nikoliv}.  
+\end{itemize}
+
+Popisu toho, jaký vliv má zpětná vazba na vývoj samotného systému, se věnuje příslušná podpodkapitola~\ref{subsub:feedback}.
+
+\paragraph{Návrh strategie učení}
 	
-Návrh strategie spočívá v tom, že systém jednotlivé bandity nejdříve testuje~\ref{inferno} za účelem získání znalostí nutných pro další vývoj. Jakmile nabude více znalostí, je možné zaměřit se na bandity, kteří poskytují díky zužitkovaným znalostem největší odměnu. 
+Návrh strategie spočívá v tom, že systém (rádce) jednotlivé bandity nejdříve testuje~\ref{inferno} za účelem získání znalostí nutných pro další vývoj. Jakmile nabude více znalostí, je možné zaměřit se na bandity, kteří poskytují díky zužitkovaným znalostem největší odměnu. 
 
 Úkol je komplikován stochastickou povahou banditů. Suboptimální bandita může přinášet spoustu výher, což by nás mohlo přimět uvěřit, že právě tento bandita je tím nejlepším. Podobně ale uvažovat i naopak – nejlepší bandita totiž může zpočátku přinášet spoustu proher.
 
@@ -626,24 +641,13 @@ Na místě jsou dvě otázky:
 	\item Pokud nalezneme banditu, který nám přináší \emph{docela dobré} výsledky, měli bychom se s ním spokojit a nadále maximalizovat svou výhru pouze u něj? Nebo se vyplatí zkoušet i nadále další bandity v naději, že se povede nalézt ještě lepšího?
 \end{itemize}
 
-Tato dilemata jsou odborně nazývána jako explorace a exploatace.	
-\end{description}
-
-\subsubsection{Explorace vs. exploatace}
-\label{sub:explo}
-
-\begin{description}
-  \item[Explorace] Nacházení nových oblastí hledání, kdy agent nevyužívá předchozích znalostí (agent stále zkouší nové akce, jejichž výsledek nezná).
-  \item[Exploatace] Využívání stávajících znalostí. Hrozí uváznutí v lokálních extrémech. (agent provádí akce, o kterých ví, že mu přinášejí užitek). 
-\end{description}	
-
-Optimální strategie nemůže být ani čistě explorační, ani čistě exploatační. Hledá se vyvážený kompromis.
+Tato dilemata jsou odborně nazývána jako \emph{explorace a exploatace}~\ref{sub:explo}.	
 
 \subsection{Bayesian Bandits}
 \label{bayes}
 Nalézt optimální řešení tedy nepatří k triviálním problémům. Systému může trvat léta, než se k němu dopracuje. Naštěstí existuje spousta \emph{přibližně optimálních} řešení.
 
-Jedním z řešení je algoritmus zvaný \emph{Bayesian Bandits}. Algoritmus přímo souvisí s učením založeným na zpětné vazbě.
+Jedním z řešení je algoritmus zvaný \emph{Bayesian Bandits}. Algoritmus přímo souvisí s učením založeným na zpětné vazbě~\ref{feedback}.
 
 Bayesovské řešení začíná prior~\ref{prior} stanovením pravděpodobností výhry pro každého banditu. Hodnoty jsou v rozmezí $\langle0,1\rangle$. Jak již bylo řečeno, každého banditu reprezentuje jedna distribuční funkce.
 
@@ -678,20 +682,60 @@ Obrázek~\ref{fig:posteriors} znázorňuje postup pro problém tří banditů ($
 \end{figure}	
 
 \subsubsection{Zpětná vazba a její vliv na vývoj adaptibilního systému}
-TODO
+\label{subsub:feedback}
+Pojem zpětné vazby~\ref{feedback} již v předchozím textu zazněl. Pro účely této práce je nutné uzpůsobit její význam tak, aby měla přímý vliv na pružný vývoj adaptibilního systému.
+
+Vzhledem k tomu, že rádce bude plnit svůj úkol pomocí algoritmu Bayesian Bandits využívající ${Beta}$ rozdělení pravděpodobnosti (navíc operuje s pravděpodobnostmi \emph{prior} a \emph{posterior}), zpětná vazba bude mít vliv na oba parametry vstupující do rozdělení, což má ve finále vliv na tvar celé distribuce~\ref{distr} (k vidění na obrázku~\ref{fig:posteriors}). 
+
+Jak již bylo řečeno, zpětná vazba je dvojího typu:
+
+\begin{itemize}
+	\item Informace o zvolení rádcem navrženého algoritmu pro vlastní doporučení (rádci sdělujeme, že jsme se \textbf{pokusili} řídit jeho radou).
+	\item Zpětná vazba týkající se spokojenosti doporučení (zda byl tento algoritmus při doporučení \textbf{úspěšný} či nikoliv).
+\end{itemize}
+
+Do ${Beta}$ rozdělení vstupují dva parametry – $\alpha$ a $\beta$.
+
+Při každé žádosti na rádce je tedy pro každého banditu $B_i$ provedeno posterior (značením $B_i(success)$ se snažím naznačit dosavadní míru úspěchů bandity $B_i$, pomocí $B_i(trials)$ zase dosavadní míru pokusů téhož bandity):
+
+\begin{center}
+${Beta}(\alpha = 1 + B_i(success), \beta = 1 + B_i(trials) - B_i(success))$.
+\end{center}
+
+Na ukázku jsem připravil dva příklady posterior hustoty rozdělení pravděpodobnosti dle různých vstupních parametrů vstupujících do rozdělení ${Beta}$. Obrázek~\ref{fig:beta1} znázorňuje situaci 4 úspěchů ze 4 pokusů, zatímco obrázek~\ref{fig:beta2} 1 úspěch ze 4 pokusů. Na druhém obrázku lze vidět, že distribuce je širší.
+
+\paragraph{Typy zpětné vazby pro adaptibilní systém}
+
+\begin{itemize}
+	\item Informace o zvolení algoritmu přičte k míře pokusů tohoto algoritmu (bandity) nějakou hodnotu. Ostatním algoritmům se nic přičítat ani odečítat nebude.
+	\item V případě pozitivní zpětné vazby bude zvolenému algoritmu přičtena hodnota k míře jeho úspěchu. Ostatním algoritmům je od této míry v poměru odečteno.
+	\item V případě negativní zpětné vazby bude zvolenému algoritmu k míře úspěchu tohoto algoritmu přičtena hodnota. Ostatním algoritmům je od této míry v poměru odečteno.	
+\end{itemize}
+
+Stanovení nejvhodnějších hodnot bude provedeno na základě experimentů.
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/beta1.png}
+ 	\caption[Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 4 úspěchů ze 4 pokusů.]{Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 4 úspěchů ze 4 pokusů.}\label{fig:beta1}
+\end{figure}	
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/beta2.png}
+ 	\caption[Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 1 úspěchu ze 4 pokusů.]{Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 1 úspěchu ze 4 pokusů.}\label{fig:beta2}
+\end{figure}	
 
 \subsubsection{Stanovení míry učení}
-Vzhledem k tomu, že prostředí se rychle mění v čase, je nutné stanovit míru učení. Technicky vzato je standardní Bayesian Bandits algoritmus schopen učit se sám pomocí aktualizovaných parametrům vstupujících do ${Beta}$ rozdělení po každé hře. Stanovením vhodné míry učení lze docílit toho, že algoritmus se bude přizpůsobovat měnícímu se prostředí rychleji.
+\label{rate}
+Vzhledem k tomu, že prostředí se rychle mění v čase, je nutné stanovit nějakou míru učení, Technicky vzato je standardní Bayesian Bandits algoritmus schopen učit se sám pomocí aktualizovaných parametrům vstupujících do ${Beta}$ rozdělení po každé hře. Stanovením vhodné míry učení lze docílit toho, že algoritmus se bude přizpůsobovat měnícímu se prostředí rychleji a bude fungovat též jako prevence proti vyčerpání hodnot datových typů programu.
 
 Pokud stanovíme míru $<$ 1, algoritmus bude předchozí výsledky zapomínat rychleji a častěji bude zkoumat nové možnosti. Míra $>$ 1 implikuje naopak to, že algoritmus bude sázet na časnější dřívější výhry, čímž ale riskuje to, že se nedokáže rychle adaptovat na náhlé změny (je více imunní vůči rychle se měnícímu prostředí).
+
+Míra $<$ 1 bude pro potřeby adaptibilního systému vhodnější. Konkrétní hodnotu se pokusím stanovit pomocí experimentů.
 
 \chapter{Praktická část}
 \section{Analýza a návrh řešení}
 \label{chap:analysis}
-
-Tato kapitola je celá věnována analýze požadovaného chování systému.
-
-Nejprve se budu zabývat požadavky, které vyplynuly z úvodních konzultací s vedoucím práce a též po vlastním zkoumání řešeného problému. Se znalostí těchto požadavků pak bude možné provést hrubý návrh architektury systému včetně technického řešení komponent, jimiž bude systém disponovat.
+V této sekci se budu nejdříve zabývat požadavky, které vyplynuly z úvodních konzultací s vedoucím práce a též po vlastním zkoumání řešeného problému. Se znalostí těchto požadavků pak bude možné provést hrubý návrh architektury systému včetně technického řešení komponent, jimiž bude systém disponovat.
 
 S ohledem na výstupy získané v této kapitole bude možné provést implementaci systému.
 
@@ -752,7 +796,7 @@ Definujme nyní i tzv. \textbf{nefunkční požadavky}, které specifikují vlas
 	\item Pro snadné nasazení a testování systému na libovolné pracovní stanici bude nutné vytvořit Chef cookbook/recipe\footnote{\url{http://community.opscode.com/}}.
 \end{itemize}
 
-\subsection{Architektura platformy}
+\subsection{Architektura doporučovací platformy}
 
 Pro zdárnou implementaci platformy splňující všechny požadavky vzešlé z analýzy výše je třeba důkladně zvážit, jaké komponenty bude obsahovat.
 
@@ -764,37 +808,25 @@ Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové
 \end{figure}	
 
 \subsubsection{Server}
+Navrhovanými komponentami pro běh na serveru jsou:
 
-Stěžejní serverovou komponentou je adaptibilní systém~\ref{sec:recommeng}. Ten jsem pracovně nazval jako \textbf{Recommeng} systém (zkratka pro recommendation engine), abych o něm nemusel již nadále mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
+\paragraph{Webová aplikace s rozhraním pro snadnou komunikaci s klienty.}
+	Viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 1}. Aplikace bude mít na starosti obsluhu klientských požadavků na systém prováděných prostřednictvím protokolu HTTP. Zároveň bude disponovat sadou algoritmů, které lze použít pro doporučení obsahu. Dále bude aplikace obstarávat komunikační režii s druhou aplikací běžící na aplikačním serveru (\emph{Web Application 2}), kterou je platforma pro vyhledávání v textu – Apache Solr.
 
-V rámci ucelenosti zde uvádím přehled všech komponent nacházející se na serverové straně:
+\paragraph{Apache Solr}
+	Viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 2}. Přítomnost této aplikace vychází z nefunkčních požadavků. Apache Solr funguje jako samostatná komponenta umožňující fulltextové vyhledávání (detaily v kapitole~\ref{chap:impl}).
 
-\begin{description}
-	\item[Aplikační server]
-	
-Na aplikačním serveru poběží dvě aplikace. 
-
-\begin{description}
-	\item[Webová aplikace s rozhraním pro snadnou komunikaci s klienty.]
-	(viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 1}) Aplikace bude mít na starosti obsluhu klientských požadavků na systém prováděných prostřednictvím protokolu HTTP. Zároveň bude disponovat sadou algoritmů, které lze použít pro doporučení obsahu. Dále bude aplikace obstarávat komunikační režii s druhou aplikací běžící na aplikačním serveru (\emph{Web Application 2}), kterou je platforma pro vyhledávání v textu – Apache Solr.
-
-	\item[Apache Solr]
-	(viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 2}) Přítomnost této aplikace vychází z nefunkčních požadavků. Apache Solr funguje jako samostatná komponenta umožňující fulltextové vyhledávání (detaily v kapitole~\ref{chap:impl}).
-\end{description}	
-\end{description}
-
-\begin{description}
-	\item[Databáze]
+\paragraph{Databáze}
 
 Kvůli potřebě ukládat uživatelem vytvářené kolekce, též průběžný stav aplikace (časové snímky), a také kvůli snadnému obnovení znalostí systému v případě přerušení běhu, je nutné zapojit do návrhu Database Management System (DBMS).
 
 Volba DBMS hraje důležitou roli i při škálování aplikací. V minulosti tolik používané standardní relační DBMS mohou způsobovat zpoždění při provádění čtení/zápisu a v některých případech hrát roli úzkého hrdla aplikace (bottleneck).
 
 Ohledně tohoto problému by možná stálo za úvahu prozkoumat možnosti použití NoSQL databází, které jsou již ze svého principu navrženy pro spolupráci s aplikacemi zaměřenými na výkon a škálovatelnost.
-\end{description}
 
-\begin{description}
-	\item[Recommeng systém]
+\paragraph{Recommeng systém}
+
+Stěžejní serverovou komponentou je adaptibilní systém~\ref{sec:recommeng}. Ten jsem pracovně nazval jako \textbf{Recommeng} systém (zkratka pro recommendation engine), abych o něm nemusel již nadále mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
 
 Komunikaci s aplikací bude umožňovat systém pro zasílání zpráv (Messaging System) s využitím fronty zpráv (Message Queue). Toto řešení je zde nasnadě kvůli očekávání většího množství žádostí směřujících na systém a snadnější škálovatelnosti aplikace. Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
 
@@ -806,7 +838,6 @@ Komunikaci s aplikací bude umožňovat systém pro zasílání zpráv (Messagin
 Recommeng systém bude taktéž komunikovat s databází kvůli nutnosti ukládání informací o stavu, respektive kvůli možnosti načíst poslední uložený stav při novém startu aplikace.
 
 Veškerá data pro výpočet a predikci budou jinak udržována přímo ve vnitřní paměti (uvnitř JVM).
-\end{description}
 
 \subsubsection{Klient}
 
@@ -823,9 +854,7 @@ Přímé spojení s platformou skrze frontu zpráv bez nutnosti zapojení prost�
 
 V diagramu~\ref{fig:recommeng} jsem se snažil zachytit různé formy komunikace klienta se systémem. Pro lepší názornost jsou jednotlivé žádosti barevně odlišeny. Ty lze považovat za modelové případy užití inspirované systémovými požadavky.
 
-\begin{description}
-	\item[Zaslání zpětné vazby k doporučené položce]
-
+\paragraph{Zaslání zpětné vazby k doporučené položce}
 \emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen červenou barvou. 
 
 Jedná se o klienta přidávajícího nový vztah mezi položkou a jejím uživatelem do úložiště.
@@ -837,10 +866,7 @@ Jedná se o klienta přidávajícího nový vztah mezi položkou a jejím uživa
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
 
-\end{description}
-
-\begin{description}
-	\item[Žádost o radu při výběru metody pro doporučení obsahu]
+\paragraph{Žádost o radu při výběru metody pro doporučení obsahu}
 \label{subsub:purple}
 
 \emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen fialovou barvou.
@@ -854,10 +880,8 @@ V diagramu je znázorněna situace, kdy klient zasílá platformě zpětnou vazb
 	\item konzument zpracuje žádost a zasílá odpověď, kterou systém zpráv předá zpět do aplikace
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
-\end{description}
 
-\begin{description}
-	\item[Žádost o doporučení konkrétním algoritmem]
+\paragraph{Žádost o doporučení konkrétním algoritmem}
 \label{subsub:yellow}
 
 \emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen žlutou barvou.
@@ -870,10 +894,8 @@ Situace znázorňuje situaci, kdy klient poptává doporučení obsahu konkrétn
 	\item algoritmus přistoupí k datům v indexu, nad kterými se provede doporučení
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
-\end{description}
 
-\begin{description}
-	\item[Komunikace bez využití RESTful API]
+\paragraph{Komunikace bez využití RESTful API}
 
 \emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen modrou barvou.
 
@@ -885,48 +907,44 @@ Tento klient se rozhodl nevyužít možnosti komunikovat prostřednictvím REST 
 	\item konzument zpracuje žádost a zasílá klientovi odpověď
 \end{itemize}
 
-\end{description}
-
-\subsection{Recommeng systém}
+\subsection{Obecný návrh rozhraní}
 \label{sec:recommeng}
 
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/ensembleDiagram.pdf}
- 	\caption[Zjednodušený návrh spolupráce tříd v adaptibilním systému.]{Zjednodušený návrh spolupráce tříd v adaptibilním systému.}\label{fig:recommengNavrh}
-\end{figure}	
+\subsubsection{Rozhraní REST}
+Dle zadání má platforma poskytovat API pro interakci se systémem a daty formou RESTful~\ref{rest} (HTTP implementace REST~\ref{rest}). Každý uživatel tak bude moci interagovat s rozhraním prostřednictvím zveřejněných endpointů.
 
-\subsubsection{Komunikace s frontou zpráv Recommeng systému}
-
-Výše jsme měli možnost poznat dva způsoby komunikace uživatele s doporučovací platformou. Dalším úkolem je navrhnout formát, jakým si budou vyměňovat producent s konzumentem data prostřednictvím volání vzdálených procedur Recommeng systému.
-
-Vzhledem k obecné známosti protokolu HTTP jsem se rozhodl napodobit jeho chování a zachovat sémantiku:
+Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. 
 
 \begin{itemize}
-	\item metoda (method)
-	\item cesta (path)
-	\item tělo zprávy (body)
+	\item Ensemble alias Recommeng systém
+	\item Algorithms
+	\item Cores
 \end{itemize}
 
-Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status).
+Návrh tříd na zjednodušených\footnote{Pro větší srozumitelnost neuvádím v parametrech metod typy, ale spíše sémantické významy parametrů. Není též přítomna spousta dalších, s uvedenými třídami spolupracujících tříd.} diagramech~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} ilustruje formu poskytovaného API.
 
-\subsection{Rozhraní}
+V případě prvního diagramu~\ref{fig:recommengRestNavrh} jsou prostřednictvím API metod volány metody třídy \textbf{EnsembleZeroMqHelper}, která bude realizovat spojení s frontou zpráv Recommeng systému (třída \textbf{MultiThreadServer} na diagramu~\ref{fig:recommengNavrh}).
 
-Platforma poskytuje API pro interakci se systémem a daty formou RESTful (HTTP implementace REST~\ref{rest}). Každý uživatel tak může interagovat s rozhraním prostřednictvím zveřejněných endpointů.
+Druhým zjednodušeným diagramem~\ref{fig:recommengRestNavrh2} si lze utvořit představu o způsobu komunikace metod pro RESTful API se serverem Apache Solr (třída \textbf{SolrService}) a dále s jednotlivými doporučovacícmi algoritmy (skrze API \textbf{IAlgorithm}).
 
-Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. K dispozici je diagram~\ref{fig:rest}, který by měl celou věc osvětlit. 
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/rest1.pdf}
+ 	\caption[Zjednodušený návrh tříd pro RESTful API endpoint pro komunikaci s Recommeng systémem.]{Zjednodušený návrh tříd pro RESTful API endpoint pro komunikaci s Recommeng systémem.}\label{fig:recommengRestNavrh}
+\end{figure}	
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/rest2.pdf}
+ 	\caption[Zjednodušený návrh tříd pro RESTful API endpointy pro komunikaci s jádrem Solr a s doporučovacími algoritmy.]{Zjednodušený návrh tříd pro RESTful API endpointy pro komunikaci s jádrem Solr a s doporučovacími algoritmy.}\label{fig:recommengRestNavrh2}
+\end{figure}	
+
+Také z hlediska pohledu na jednotlivé zdroje je k dispozici je diagram~\ref{fig:rest}, který by měl celou věc pomoct osvětlit. 
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_rest.pdf}
  	\caption[Ukázka REST endpointů navrhovaného adaptibilního systému]{Ukázka REST endpointů navrhovaného adaptibilního systému}\label{fig:rest}
 \end{figure}	
 
-\subsubsection{Rozhraní pro Recommeng}
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/rest1.pdf}
- 	\caption[Zjednodušený návrh spolupráce tříd v adaptibilním systému.]{Zjednodušený návrh spolupráce tříd v adaptibilním systému.}\label{fig:recommengRestNavrh}
-\end{figure}	
-
+\paragraph{Ensemble}
 Komunikace s rozhraním by měla umožňovat vytvářet v Recommeng aplikaci kolekce s identifikátory algoritmů, jenž budou zapojeny do kombinování a predikce. 
 
 K tomu účelu bude sloužit endpoint:
@@ -953,12 +971,7 @@ Kvůli učení a vývoji znalostí systému je nezbytně nutné mít možnost za
 
 Na endpoint výše v takovém případě zašleme metodou PUT upřesňující informaci o operaci, kterou chceme systému sdělit (výběr vs. zpětná vazba).
 
-\subsubsection{Rozhraní pro sadu základních algoritmů}
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/rest2.pdf}
- 	\caption[Zjednodušený návrh spolupráce tříd v adaptibilním systému.]{Zjednodušený návrh spolupráce tříd v adaptibilním systému.}\label{fig:recommengRestNavrh2}
-\end{figure}	
+\paragraph{Rozhraní pro sadu základních algoritmů}
 
 Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s metodou GET.
 
@@ -970,7 +983,7 @@ Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s meto
 
 Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je též nutno uvést). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z té samé skupiny a další.
 
-\subsubsection{Rozhraní pro úložiště dat}
+\paragraph{Rozhraní pro úložiště dat}
 
 Důležité rozhraní umožňující zaznamenat chování uživatele vzhledem ke sledovaným položkám.
 
@@ -979,8 +992,34 @@ Důležité rozhraní umožňující zaznamenat chování uživatele vzhledem ke
 \end{verbatim}
 
 Prostřednictvím metody POST budou zasílány veškeré informace o položce (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), která má být uložena do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být cokoliv, například URL adresa).
+
+\subsubsection{Rozhraní Recommeng systému}
+Znázorňuje jej třídní diagram~\ref{fig:recommengNavrh}. V případě úspěšně navázaného spojení se systémem jsou pomocí pracovních vláken \textbf{WorkerThread} volány jednotlivé procedury systému. Tyto žádosti obsluhuje API \textbf{EnsembleApiFacade}.
+
+Stejně jako v případě diagramů~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} se jedná o zjednodušený návrh, kde chybí spousta dalších tříd zapojených do systému. Diagram slouží pouze k ilustraci metod rozhraní a jejich funkce pro daný systém.
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/ensembleDiagram.pdf}
+ 	\caption[Zjednodušený návrh tříd v adaptibilním systému a ukázka API.]{Zjednodušený návrh tříd v adaptibilním systému a ukázka API.}\label{fig:recommengNavrh}
+\end{figure}	
+
+\subsubsection{Komunikace s frontou zpráv Recommeng systému}
+
+Dle návrhu bude komunikace uživatele s Recommeng systémem, ať už komunikuje přímo či pomocí RESTful API, řešena prostřednictvím fronty zpráv.
+
+Dalším úkolem tedy je navrhnout formát, jakým si budou vyměňovat producent s konzumentem data prostřednictvím volání vzdálených procedur Recommeng systému.
+
+Vzhledem k obecné známosti protokolu HTTP jsem se rozhodl napodobit jeho chování a zachovat sémantiku:
+
+\begin{itemize}
+	\item metoda (method)
+	\item cesta (path)
+	\item tělo zprávy (body)
+\end{itemize}
+
+Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status).
 			
-\subsection{Sada algoritmů}
+\subsection{Identifikace sady algoritmů}
 
 Identifikace základní sady algoritmů určených pro kombinování je jeden z požadavků na systém plynoucí přímo ze zadání. 
 
@@ -1010,21 +1049,17 @@ Algoritmus je založen na modelu dřívějšího chování uživatele v systému
 
 Rozlišují se dva hlavní způsoby filtrování.
 
-\begin{description}
-	\item[User-based]
+\paragraph{User-based}
 
 \emph{``You may like it because your friends liked it.''}~\cite{cf}
 
 Aneb filtrování založené na uživatelích. Jedná se o starší variantu kolaborativního filtrování. Podstatou je vzít na základě určité podobnosti skupinu uživatelů (zdroj~\cite{cf} udává cca 20 až 50) s podobných vkusem jako má uživatel, pro něhož je doporučení konstruováno, a poté předpovědět, jak moc zajímavá by pro uživatele byla pro něj dosud neznámá položka, se kterou jsou spojení uživatelé se stejným vkusem.
-\end{description}
 
-\begin{description}
-	\item[Item-based]
+\paragraph{Item-based}
 
 \emph{``You tend to like that item because you have liked those items.''}~\cite{cf}
 
 Aneb filtrování založené na položkách, které použila v roce 2001 jako první společnost Amazon. Myšlenka je taková, že uživatel, který si v minulosti zakoupil nějakou položku, bude v budoucnu při dalším nákupu vyhledávat položku podobnou. Například předpověď toho, co si uživatel zakoupí v budoucnu, lze uskutečnit analýzou historie nákupů uživatele~\cite{itemcf}. 
-\end{description}
 
 \section{Principy a technologie}
 \label{sec:sysanalys}
@@ -1174,18 +1209,18 @@ Jeho výhodami jsou snadná konfigurovatelnost, podpora dependency injection, ro
 
 \textbf{Apache Maven} jsem použil při implementaci všech komponent aplikace.
 
-\section{Realizace platformy}
+\section{Realizace doporučovací platformy}
 \label{chap:impl}
 
 Následující kapitola se zaměřuje na popis programátorských principů, které jsem následoval při práci na realizaci systému, stejně tak popisuje technologie použité při implementaci a vzniklé řešení.
 
-\subsection{Modul adaptibilního systému Recommeng}
+\subsection{Recommeng systém}
 \label{sec:impl}
 
-Adaptibilní systém je samostatná \emph{Java Application}.
+Adaptibilní systém běží na serveru jako samostatná \emph{Java Application}.
 
 \subsubsection{Zavedení systému}
-Recommeng aplikace se spouští voláním metody \texttt{main()} třídy \textbf{EnsembleApp}. V této metodě je následně volána metoda \texttt{loadConsoleApplication()} abstraktní rodičovské třídy \textbf{EnsembleAppBase}.
+Poté, co je aplikace spuštěna (volání metody \texttt{main()} třídy \textbf{EnsembleApp}) je v této metodě následně volána metoda \texttt{loadConsoleApplication()} abstraktní rodičovské třídy \textbf{EnsembleAppBase}.
 
 Metoda loadConsoleApplication() hraje roli zavaděče aplikace, neboť postupným voláním v sobě obsažených metod zavádí do provozu celý systém. Hlavní ovládací třídou aplikace je třída \textbf{ApplicationBean}, což je Spring bean typu singleton. Jejím prostřednictvím je zavedena vrstva pro obsluhu zpráv i komponenty pro komunikaci s datovým úložištěm. ApplicationBean je mozkem systému a při zavádění aplikace je získána ze Spring aplikačního kontextu.
 
@@ -1226,106 +1261,7 @@ this.rate = Double.parseDouble(env.getProperty("ensemble.machine.rate"));
 this.possitiveFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.possitive.best"));
 \end{lstlisting}
 
-\subsubsection{Pravidelné ukládání časových snímků}
-\label{task}
-Pravidelné ukládání časových snímků jsem realizoval démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} s veřejnou metodou \emph{run()}. Na metodu bylo též nutné aplikovat anotaci s parametrem \emph{@Scheduled(cron = "\$\{scheduling.job.cron\}")}. Tato metoda je tedy automaticky volána systémem, na kterém aplikace běží. 
-
-Po automatickém spuštění této metody dojde k vyvolání metody \emph{saveCurrentState()} třídy ApplicationBean, která zprostředkuje persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze.
-
-Samozřejmě za předpokladu, že je použití databáze v konfiguračním souboru nastaveno. V opačném případě by tovární metoda třídy \textbf{StorageFactory} zvolila k použití jinou formu práce s daty.
-
-\begin{lstlisting}[language=java]
-public static IStorage getStorage(Environment env) {
-    switch (env.getProperty("storage")) {
-        case "cassandra" : 
-            return new CassandraStorage(env.getProperty("cassandra.host"), env.getProperty("cassandra.keyspace"));                
-        default : 
-            return new JvmStorage();
-    }
-}
-\end{lstlisting}
-
-Tento přístup vede k rozšiřitelnosti o další typy databází, které by mohl systém v budoucnu podporovat. 
-
-\begin{lstlisting}[language=java]
-@Scope("singleton")
-public class ApplicationBean {
-   ...
-   private IStorage storage;
-   ...
-   
-   public void saveCurrentState() {
-       try {
-           storage.saveCurrentState(strategies);
-       } catch (NullPointerException ex) {
-           logger.error("Application is not initialized yet.", ex);
-       }
-   }
-   ...
-}   
-\end{lstlisting}
-
-\subsubsection{Databázové úložiště Cassandra}
-Úložiště je realizováno třídou \textbf{CassandraStorage}. Během jejího zavádění do systému při startu aplikace jsou v konstruktoru volány dvě metody – \emph{connect()} a \emph{createSchema()}. V prvním případě dochází ke spojení s databázovým klastrem, pomocí kterého je následně získána \emph{session}.
-
-Pomocí session a její metody \emph{execute()} lze vykonávat jednotlivé dotazy. 
-
-Použita je hned v metodě createSchema(), která je zodpovědná za vytvoření datového modelu navrženého pro systém Recommeng.
-
-Ukázka vytvoření keyspace pro všechny column families aplikace:
-
-\begin{lstlisting}[language=java]
-private void createSchema() {        
-    session.execute("CREATE KEYSPACE IF NOT EXISTS " + keyspace + " WITH replication "
-            + "= {'class':'SimpleStrategy', 'replication_factor':3};");
-\end{lstlisting}
-
-Column families jsem pro účely aplikace vytvořil dvě – \emph{collection} a \emph{algorithm}.
-
-Druhá column family má dělený klíč řádku:
-
-\begin{verbatim}
-PRIMARY KEY ((collection_id, algorithm_id), event_time)
-\end{verbatim}
-
-a reverzní řazení založené na časové značce indikující dobu zápisu do databáze:
-
-\begin{verbatim}
-WITH CLUSTERING ORDER BY (event_time DESC)
-\end{verbatim}
-
-Třída pak implementuje několik metod svého rozhraní IStorage pro uložení aktuálního stavu aplikace, načtení poslední známé konfigurace a vytvoření kolekce banditů. Při realizaci funkcionality metod je bohatě využíváno možností, které nabízí DataStax driver pomocí CQL, například tvorba předpřipravených dotazů konstrukcí \textbf{PreparedStatement}. 
-
-Následuje příklad ukládání aktuálního stavu z paměti systému do databáze.
-
-\begin{lstlisting}[language=java]
-@Override
-public void saveCurrentState(List<BayesianStrategy> strategies) {
-    for (BayesianStrategy strategy : strategies) {
-        List<Bandit> bandits = strategy.getBanditsMachine().getBanditList();
-        if (bandits.size() > 0) {
-            PreparedStatement statement = session.prepare(
-                    "INSERT INTO " + keyspace + ".algorithm "
-                    + "(collection_id, algorithm_id, event_time, probability_in_time, trials_rate, successes_rate) "
-                    + "VALUES (?, ?, ?, ?, ?, ?);");
-
-        ...
-
-            for (Bandit b : bandits) {
-                BoundStatement boundStatement = new BoundStatement(statement);
-                session.execute(boundStatement.bind(
-                        strategy.getCollectionId(),
-                        b.getName(),
-                        actualDate,
-                        b.getProbability(),
-                        b.getTrials(),
-                        b.getSuccesses()));
-                ...
-        ...
-}
-\end{lstlisting}
-
-\subsection{Vrstva pro obsluhu zpráv}
+\subsubsection{Vrstva pro obsluhu zpráv}
 \label{sub:messvrs}
 Následující text popisuje postup, jakým jsem realizoval vrstvu pro obsluhu zpráv pomocí síťové knihovny ZeroMQ.
 
@@ -1343,7 +1279,7 @@ Postup by se dal shrnout do tří kroků:
 	\item realizace vzoru pro zasílání zpráv REQ/REP
 \end{enumerate}
 
-\subsubsection{Rozhodnutí o komunikačním protokolu}
+\paragraph{Rozhodnutí o komunikačním protokolu}
 \label{subsub:kompr}
 V prvním kroku bylo nutné rozhodnout o tom, jakým způsobem bude probíhat přenos dat směrem k Recommeng systému a naopak. Ze čtyř protokolů, jimiž disponuje ZeroMQ, jsem pro přenos dat zvolil síťový protokol \textbf{TCP}, a to z toho důvodu, že dle návrhu architektury by měl adaptibilní systém naslouchat na serveru a uživatelé s ním mít možnost navazovat spojení zvenčí mimo server.
 
@@ -1358,7 +1294,7 @@ ZMQ.Socket clients = context.socket(ZMQ.ROUTER);
 clients.bind("tcp://" + host + ":" + port);
 \end{lstlisting}
 
-\subsubsection{Definice síťové infrastruktury}
+\paragraph{Definice síťové infrastruktury}
 \label{subsub:queue}
 Propojení jednotlivých síťových komponent vychází z nativní povahy architektury Klient-Server. Server zastává roli stabilnější komponenty v síti, bude tedy přijímat spojení (viz ukázka s metodou \texttt{bind()} výše). Zároveň jsem mezi server a připojující se klienty umístil prostředníka v podobě \emph{fronty}, jehož úkolem je jak obsluha všech žádostí na server, tak i odpovědí zpět klientům.
 
@@ -1368,7 +1304,7 @@ ZMQQueue queue = new ZMQQueue(context, clients, workers);
 
 V případě více připojených klientů ZeroMQ automaticky obstarává obsluhu všech příchozích žádostí. 
 
-\subsubsection{Realizace vzoru pro zasílání zpráv REQ/REP}
+\paragraph{Realizace vzoru pro zasílání zpráv REQ/REP}
 Pro zasílání zpráv jsem zvolil obousměrně komunikující vzor \emph{Request Reply}. Toto paradigma je známé z většiny serverových typů\footnote{HTTP, POP či IMAP}. Klient používá vlastní socket typu \textbf{ZMQ.REQ} k inicializaci žádosti, kterou následně odesílá na server. Server též užívá vlastního socketu \textbf{ZMQ.REP} ke čtení příchozí žádosti, po které zasílá odpověď. 
 
 Problém je, že vzor Request-Reply toho v základní variantě mnoho neumožňuje, proto bylo nutné umožnit asynchronní komunikaci implementací rozšíření v podobě socketů \textbf{ROUTER} a \textbf{DEALER} (dříve nazývány jako XREP a XREQ). 
@@ -1420,7 +1356,7 @@ public interface RequestHandler {
 }
 \end{lstlisting}
 
-\subsubsection{Technika zasílání zpráv a WorkerThread}
+\paragraph{Technika zasílání zpráv a WorkerThread}
 O několik řádku výše bylo vysvětleno, jakým způsobem jsou na serveru zpracovány příchozí žádosti. Nyní již víme, že tuto funkcionalitu mají na starosti pracovní vlákna typu \textbf{WorkerThread}.
 
 Každý \emph{worker} v sobě udržuje kontext komunikace a pokud je na vstupu validní žádost, pro její zpracování je vyvolána příslušná operace rozhraní systému Recommeng. Sestavená odpověď je zaslána zpátky klientovi.
@@ -1488,8 +1424,6 @@ Jedná se o třídy splňující funkcionalitu dle funkčních požadavků~\ref{
 
 Výsledkem vykonání operace je vždy odpověď (třída \textbf{Reply} s atributy pro stavový kód a tělo zprávy), která je pomocí třídy \textbf{ResponseHandlerDefault} prezentována zpět klientovi.
 
-\subsection{Adaptibilní systém Recommeng}
-
 \subsubsection{API}
 API systému Recommeng reprezentuje interface \textbf{EnsembleApiFacade}. Nejdůležitějšími metodami jsou metody:
 
@@ -1502,9 +1436,10 @@ API systému Recommeng reprezentuje interface \textbf{EnsembleApiFacade}. Nejdů
 
 Tyto metody jsou volány prostřednictvím operací z vrstvy pro obsluhu zpráv~\ref{sub:messvrs}. Metody jsou přímo napojeny na bayesovskou strategii, což je hlavní ovládací prvek Recommeng systému.
 
-\subsubsection{Bayesian Bandits}
+\subsubsection{Bayesian Bandits strategie}
 
-TODOOOOO někam zpětná vazba
+!!!!!!!!!!!!
+TODO zpětná vazba
 
 Strategii řeší tří třídy umístěné v balíčku:
 
@@ -1512,10 +1447,11 @@ Strategii řeší tří třídy umístěné v balíčku:
    cz.cvut.fit.bouchja1.ensemble.bandits
 \end{verbatim}
 
-\begin{description}
-	\item[Bandit] je třída reprezentující jednoho konkrétní banditu. Každý bandita má svůj identifikátor a atributy pro zaznamenávání výher a pokusů během jednotlivých her.
-	\item[BanditsMachine] je třída reprezentující jeden herní automat. Tento automat obsahuje seznam banditů a číselné parametry pro výpočty zpětné vazby a míry učení. V podstatě se jedná o konfiguraci, pomocí které je automat naprogramován. Tato konfigurace se nastavuje ve vnějším soubor (viz~\ref{param}).
-	\item[BayesianStrategy]	je třída reprezentující online učící strategii k řešení strategie Multi-Armed Bandit~\ref{sub:mabandit}. Vzhledem k tomu, že je pro kombinování možné vytvářet více kolekcí s bandity, v systému může nezávisle na sobě fungovat více bayesovských strategií. 
+\paragraph{Bandit}
+Bandit je třída reprezentující jednoho konkrétní banditu. Každý bandita má svůj identifikátor a atributy pro zaznamenávání výher a pokusů během jednotlivých her.
+\paragraph{BanditsMachine}
+BanditsMachine je třída reprezentující jeden herní automat. Tento automat obsahuje seznam banditů a číselné parametry pro výpočty zpětné vazby a míry učení. V podstatě se jedná o konfiguraci, pomocí které je automat naprogramován. Tato konfigurace se nastavuje ve vnějším soubor (viz~\ref{param}).
+\paragraph{BayesianStrategy}	je třída reprezentující online učící strategii k řešení strategie Multi-Armed Bandit~\ref{sub:mabandit}. Vzhledem k tomu, že BayesianStrategy je pro kombinování možné vytvářet více kolekcí s bandity, v systému může nezávisle na sobě fungovat více bayesovských strategií. 
 	
 	Každá z nich je pak reprezentována dle identifikátoru kolekce, každá má přiřazen svůj vlastní herní automat a logiku algoritmu.  
 	
@@ -1538,10 +1474,107 @@ public Bandit sampleBandits(String banditCollectionId) {
     return banditsMachine.getBanditAtIndex(banditIndexChoice);
 }
 \end{lstlisting}	
-	
-\end{description}
 
-\subsection{Modul pro RESTful API}
+\subsubsection{Pravidelné ukládání časových snímků}
+\label{task}
+Pravidelné ukládání časových snímků jsem realizoval démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} s veřejnou metodou \emph{run()}. Na metodu bylo též nutné aplikovat anotaci s parametrem \emph{@Scheduled(cron = "\$\{scheduling.job.cron\}")}. Tato metoda je tedy automaticky volána systémem, na kterém aplikace běží. 
+
+Po automatickém spuštění této metody dojde k vyvolání metody \emph{saveCurrentState()} třídy ApplicationBean, která zprostředkuje persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze.
+
+Samozřejmě za předpokladu, že je použití databáze v konfiguračním souboru nastaveno. V opačném případě by tovární metoda třídy \textbf{StorageFactory} zvolila k použití jinou formu práce s daty.
+
+\begin{lstlisting}[language=java]
+public static IStorage getStorage(Environment env) {
+    switch (env.getProperty("storage")) {
+        case "cassandra" : 
+            return new CassandraStorage(env.getProperty("cassandra.host"), env.getProperty("cassandra.keyspace"));                
+        default : 
+            return new JvmStorage();
+    }
+}
+\end{lstlisting}
+
+Tento přístup vede k rozšiřitelnosti o další typy databází, které by mohl systém v budoucnu podporovat. 
+
+\begin{lstlisting}[language=java]
+@Scope("singleton")
+public class ApplicationBean {
+   ...
+   private IStorage storage;
+   ...
+   
+   public void saveCurrentState() {
+       try {
+           storage.saveCurrentState(strategies);
+       } catch (NullPointerException ex) {
+           logger.error("Application is not initialized yet.", ex);
+       }
+   }
+   ...
+}   
+\end{lstlisting}
+
+\subsubsection{Spojení s databází}
+Úložiště je realizováno třídou \textbf{CassandraStorage}. Během jejího zavádění do systému při startu aplikace jsou v konstruktoru volány dvě metody – \emph{connect()} a \emph{createSchema()}. V prvním případě dochází ke spojení s databázovým klastrem, pomocí kterého je následně získána \emph{session}.
+
+Pomocí session a její metody \emph{execute()} lze vykonávat jednotlivé dotazy. 
+
+Použita je hned v metodě createSchema(), která je zodpovědná za vytvoření datového modelu navrženého pro systém Recommeng.
+
+Ukázka vytvoření keyspace pro všechny column families aplikace:
+
+\begin{lstlisting}[language=java]
+private void createSchema() {        
+    session.execute("CREATE KEYSPACE IF NOT EXISTS " + keyspace + " WITH replication "
+            + "= {'class':'SimpleStrategy', 'replication_factor':3};");
+\end{lstlisting}
+
+Column families jsem pro účely aplikace vytvořil dvě – \emph{collection} a \emph{algorithm}.
+
+Druhá column family má dělený klíč řádku:
+
+\begin{verbatim}
+PRIMARY KEY ((collection_id, algorithm_id), event_time)
+\end{verbatim}
+
+a reverzní řazení založené na časové značce indikující dobu zápisu do databáze:
+
+\begin{verbatim}
+WITH CLUSTERING ORDER BY (event_time DESC)
+\end{verbatim}
+
+Třída pak implementuje několik metod svého rozhraní IStorage pro uložení aktuálního stavu aplikace, načtení poslední známé konfigurace a vytvoření kolekce banditů. Při realizaci funkcionality metod je bohatě využíváno možností, které nabízí DataStax driver pomocí CQL, například tvorba předpřipravených dotazů konstrukcí \textbf{PreparedStatement}. 
+
+Následuje příklad ukládání aktuálního stavu z paměti systému do databáze.
+
+\begin{lstlisting}[language=java]
+@Override
+public void saveCurrentState(List<BayesianStrategy> strategies) {
+    for (BayesianStrategy strategy : strategies) {
+        List<Bandit> bandits = strategy.getBanditsMachine().getBanditList();
+        if (bandits.size() > 0) {
+            PreparedStatement statement = session.prepare(
+                    "INSERT INTO " + keyspace + ".algorithm "
+                    + "(collection_id, algorithm_id, event_time, probability_in_time, trials_rate, successes_rate) "
+                    + "VALUES (?, ?, ?, ?, ?, ?);");
+
+        ...
+
+            for (Bandit b : bandits) {
+                BoundStatement boundStatement = new BoundStatement(statement);
+                session.execute(boundStatement.bind(
+                        strategy.getCollectionId(),
+                        b.getName(),
+                        actualDate,
+                        b.getProbability(),
+                        b.getTrials(),
+                        b.getSuccesses()));
+                ...
+        ...
+}
+\end{lstlisting}
+
+\subsection{RESTful API}
 \label{sub:restapi}
 
 RESTful API je realizováno jako \emph{Java Web Application}.
@@ -1584,36 +1617,28 @@ public RecommengApplication(){
 Třída registruje následující komponenty:
 
 \begin{itemize}
-	\item 
-\begin{lstlisting}[language=java]	
-org.glassfish.jersey.server.spring.scope.RequestContextFilter
-\end{lstlisting}
-	
-	Jedná se o Spring filter, který poskytuje propojení mezi JAX-RS a Spring žádostmi.
-	
-	\item
-\begin{lstlisting}[language=java]	
-cz.cvut.fit.bouchja1.mi_dip.rest.client.endpoint.AlgorithmEndpoint
-\end{lstlisting}
-
-	\item
-\begin{lstlisting}[language=java]	
-cz.cvut.fit.bouchja1.mi_dip.rest.client.endpoint.CoresEndpoint
-\end{lstlisting}
-
-	\item
-\begin{lstlisting}[language=java]	
-cz.cvut.fit.bouchja1.mi_dip.rest.client.endpoint.EnsembleEndpoint
-\end{lstlisting}
-	
-	Tyto tři třídy jsou služby REST API. 
-	\item
-\begin{lstlisting}[language=java]		
-org.glassfish.jersey.jackson.JacksonFeature	
-\end{lstlisting}
-	
-	Registruje Jackson JSON poskytovatele pro zpracování příchozích dat ve formátu JSON.
+	\item org.glassfish.jersey.server.spring.scope.RequestContextFilter
 \end{itemize}
+	Jedná se o Spring filter, který poskytuje propojení mezi JAX-RS a Spring žádostmi.
+
+\begin{itemize}	
+	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.AlgorithmEndpoint
+\end{itemize}	
+
+\begin{itemize}
+	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.CoresEndpoint
+\end{itemize}	
+
+\begin{itemize}
+	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.EnsembleEndpoint
+\end{itemize}	
+
+	Tyto tři třídy jsou služby REST API. 
+	
+\begin{itemize}	
+	\item org.glassfish.jersey.jackson.JacksonFeature		
+\end{itemize}	
+	Registruje Jackson JSON poskytovatele pro zpracování příchozích dat ve formátu JSON.
 
 Nakonec jsem definoval filtr \emph{CharacterEncodingFilter} s UTF-8 kódováním pro všechny URL splňující vzor:
 
@@ -1810,8 +1835,7 @@ Služby využívají pro zpracování žádostí a vytváření odpovědí pomoc
 \emph{Pozn.} Následující text se týká též tříd \textbf{CoresEndpoint} a \textbf{CoresEndpointHelper}. Ke komunikaci se Solr je použito instance třídy \textbf{CoreSolrService}, která též obsahuje komponentu \textbf{SolrService} zajišťující obsluhu spojení.
 
 
-\begin{description}
-	\item[Třída SolrService]
+\paragraph{Třída SolrService}
 	
 Třída je též prostředníkem mezi REST API a Apache Solr díky komponentě \textbf{SolrService}, která funguje především jako pool instancí serverových spojení pro různá jádra Solr. Vytvoření takového poolu bylo nutností kvůli možnosti znovu použít již vytvořené instance třídy \textbf{HttpSolrServer}.
 
@@ -1856,11 +1880,11 @@ Kdykoliv pak v metodách třídy AlgorithmSolrService navazujeme spojení se ser
 \begin{lstlisting}[language=java]
 HttpSolrServer server = solrService.getServerFromPool(coreId);
 \end{lstlisting}
-	
-\end{description}
 
-\subsection{Implementace základních algoritmů pro doporučování obsahu}
+\subsection{Algoritmy pro doporučování obsahu pomocí Apache Solr}
 \label{sec:alg}
+
+\subsubsection{Reprezentace dokumentů pro účely doporučování}
 
 \subsubsection{Algoritmus náhodného výběru}
 
@@ -1871,8 +1895,6 @@ HttpSolrServer server = solrService.getServerFromPool(coreId);
 \subsubsection{Algoritmus výběru dle podobnosti obsahu}
 
 \subsubsection{Algoritmus kolaborativního filtrování}
-
-\subsection{Apache Solr jako úložiště dokumentů}
 
 \chapter{Experimentální část}
 \label{chap:tests}
