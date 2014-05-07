@@ -99,35 +99,37 @@ breaklines=true
  \end{epigraphs}	
 	Když se člověk před nástupem digitálního věku snažil mezi množstvím nabízených informací nalézt takové, které by pro něj byly nějakým způsobem užitečné, musel se často spíše než na vlastní úsudek spolehnout na doporučení svých známých a přátel nebo na obecnou oblibu. Tu ale více než cokoliv jiného určoval aktuální společenský trend. Tato situace úzce souvisela s nedostatečným množstvím dat.
 
-	S rozvojem internetu začalo neúměrně narůstat i množství dostupných informací\footnote{Organizace IDC došla v článku~\emph{Extracting Value from Chaos} k závěru, že objem světových dat se každé dva roky zdvojnásobuje.~\cite{digitaluniverse}}. Nová data jsou produkována takřka každou sekundu, což vede k opačnému extrému - k jejich setřídění nám nyní nevybývá čas. Ceněným uměním je tak schopnost vytěžit maximum užitečných informací a ty posléze využít k nabytí nových znalostí.
+	S rozvojem internetu začalo narůstat i množství dostupných informací\footnote{Organizace IDC došla v článku~\emph{Extracting Value from Chaos} k závěru, že objem světových dat se každé dva roky zdvojnásobuje.~\cite{digitaluniverse}}. Nová data jsou produkována takřka každou sekundu, což vede k opačnému extrému - k jejich setřídění nám nyní nevybývá čas. Ceněným uměním je tak schopnost vytěžit maximum užitečných informací a ty posléze využít k nabytí nových znalostí.
 	
 	K těmto účelům přispěl velkou měrou rozvoj disciplíny zvané jako informační filtrování, čímž je myšlenka selekce a redukce informací. Odtud už je jen krok k personalizovanému doporučování obsahu, které se v posledních několika letech rozmáhá se zaváděním \emph{doporučovacích systémů}. 
 
-	Hned na začátku práce jsem citoval bývalého šéfredaktora časopisu Wired Chrise Andersona (článek \emph{The Long Tail~\cite{anderson}}, který shrnul nastalou situaci týkající se vývoje informací. Je důležité vzít v potaz, že Anderson toto prohlášení učinil v roce 2004. Vývoj v oblasti informačních technologií je však neúprosný a každý další rok je ve znamení výrazného pokroku ve vývoji všech oborů, těch zaměřených na doporučování nevyjímaje. 
+	Hned na začátku práce jsem dovolit citovat bývalého šéfredaktora časopisu Wired Chrise Andersona (článek \emph{The Long Tail~\cite{anderson}}, který shrnul nastalou situaci týkající se vývoje informací do jedné stručné věty. Je důležité vzít v potaz, že Anderson toto prohlášení učinil v roce 2004. Vývoj v oblasti informačních technologií je však neúprosný a každý další rok je ve znamení výrazných pokroků ve vývoji všech oborů, těch zaměřených na doporučování nevyjímaje. 
 	
-	Od vstupu do \emph{doporučovací éry} uplynulo deset let a situace je nyní taková, že s pouhou znalostí ověřených doporučovacích algoritmů sice ještě pořád lze dosáhnout jakýchsi úspěchů, například na svém malém e-shopu se zbožím, pro globálnější potřeby je to již ale přeci jen poněkud málo.
+	Od vstupu do \emph{doporučovací éry} uplynulo deset let a situace je nyní taková, že s pouhou znalostí ověřených doporučovacích algoritmů lze sice ještě stále dosáhnout měřitelných úspěchů, například nasazením na malý e-shop zabývající se prodejem zboží, pro globálnější potřeby je to již poněkud málo.
 	
 	Tajemstvím úspěšných systémů, jakými disponují například společnosti Google či Amazon, je aplikovaný výzkum a vývoj opírající se nejčastěji o teorii pravděpodobnosti a statistiky, strojové učení a další oblasti umělé inteligence.
 
-	Budoucnost je tedy v systémech, které dokáží sestavovat svá doporučení na základě nějaké pokročilejší analýzy a být schopny přizpůsobit doporučení svým uživatelům na míru. Jedním takovým přístupem je kombinování více doporučovacích metod dohromady a sestavování výsledků dle do té doby zaznamenávaného vývoje.
+	Budoucnost je tedy v systémech, které dokáží sestavovat svá doporučení na základě pokročilejší analýzy, a které jsou schopny přizpůsobit doporučení svým uživatelům na míru.
+	
+	Jedním takovým přístupem je kombinování více doporučovacích metod dohromady a sestavování výsledků na základě zaznamenávaného vývoje.
 
 \section{Motivace} 	
 \label{sec:motivation}
-	Představme si nyní podobný systém jako rádce, který je schopen v každém okamžiku rozhodnout, co je pro uživatele, jenž ho požádá o radu, nejvhodnější. Rádce uživatelům sděluje informace o typu doporučení (doporučovacím algoritmu), které by v \emph{danou chvíli} vedlo k maximalizaci užitku z doporučeného obsahu.
+	Představme si nyní podobný systém jako rádce, který je schopen v každém okamžiku rozhodnout, co je pro uživatele žádající ho o radu nejvhodnější. Rádce těmto uživatelům sděluje informace o typu doporučení (doporučovacím algoritmu), jehož použití by v \emph{danou chvíli} mohlo vést k maximalizaci užitku z doporučeného obsahu.
 	
-	Za danou chvíli je považována kombinace několika vstupních proměnných, například denní doba, zařízení, ze kterého je žádáno o obsah, den v týdnu či geografická lokace uživatele.
+	Za \emph{danou chvíli} je považována kombinace několika vstupních proměnných, například denní doba, zařízení, ze kterého je žádáno o obsah, den v týdnu či geografická lokace uživatele.
 	
-	Pokud bude uživatel dbát rádcových rad, s největší pravděpodobností obdrží doporučení, se kterým bude spokojen, a svou spokojenost vyjádří například tak, že u jedné z doporučených položek zažádá o bližší detaily nebo ji nějakým jiným způsobem ohodnotí. 
+	Pokud bude uživatel dbát rádcových rad, s největší pravděpodobností obdrží doporučení, se kterým bude spokojen, a svou spokojenost vyjádří například tím, že u jedné z doporučených položek zažádá o bližší detaily nebo ji nějakým dalším způsobem ohodnotí. 
 	
 	Jinými slovy, uživatel zašle rádci zpětnou vazbu týkající se toho, jak kvalitní bylo dané doporučení.
 	
-	Rádce sám neprovádí žádné operace, dokud k nim není explicitně vyzván. V paměti si uchovává pouze vnitřní stav, na základě kterého pak rozhoduje o doporučeních. Díky průběžné analýze a přepočítávání zpětné vazby je schopen pružně reagovat na situace, kdy dojde k náhlé a hromadnější změně preferencí nebo vyvstanou jiné události, jež by měly za následek dlouhodobější doporučování nevhodného obsahu.
+	Rádce sám neprovádí žádné operace, dokud k nim není explicitně vyzván. V paměti si uchovává pouze vnitřní stav, na základě kterého rozhoduje o doporučeních. Díky průběžné analýze a přepočítávání zpětné vazby je schopen pružně reagovat na situace, kdy dojde k náhlé a hromadnější změně preferencí nebo vyvstanou jiné události, jež by měly za následek dlouhodobější doporučování nevhodného obsahu.
 	
 \section{Cíle práce}
 \label{sec:objectives}
-	Nejdůležitějším cílem této práce je návrh a implementace takového rádce, neboli adaptibilního systému, jenž je schopen automaticky a vhodně kombinovat metody pro doporučování obsahu, rozdávat rady a přizpůsobovat se podmínkám. Součástí práce je také výběr vhodné sady algoritmů, které budou použity pro kombinování.
+	Nejdůležitějším cílem této práce je návrh a implementace rádce, neboli adaptibilního systému, který by byl schopen automaticky a vhodně kombinovat metody pro doporučování obsahu, rozdávat rady a přizpůsobovat se podmínkám. Součástí práce je také výběr a implementace vhodné sady algoritmů, které budou použity pro kombinování.
 
-	Vzniklý systém bude schopen zpracovávat zpětnou vazbu od uživatelů týkající se kvality jimi zvoleného doporučení. Zpětná vazba by měla fungovat na principu odměny za dobré doporučení či trestu za špatné, což vede k ovlivňování preferencí při kombinování v čase.
+	Vzniklý systém bude schopen zpracovávat zpětnou vazbu od uživatelů týkající se kvality jimi zvoleného doporučení. Zpětná vazba by měla fungovat na principu odměny za dobré doporučení či trestu za špatné, což povede k ovlivňování preferencí při kombinování v čase.
 		
 	Nezbytnou součástí diplomové práce je osvojení základních pojmů a pravidel z oblasti strojového učení, teorie pravděpodobnosti a statistiky. Těchto znalostí je využíváno zejména v části práce týkající se predikce vhodného algoritmu a dopadu zpětné vazby na vývoj systému. 
 	
@@ -146,20 +148,18 @@ breaklines=true
 
 \section{Struktura práce}
 \label{sec:structure}
-	Tato práce je strukturována do TODO různých kapitol. Kapitoly jsou řazeny v pořadí, v jakém probíhaly jednotlivé fáze vývoje.	
+	Tato práce je strukturována do 3 různých kapitol. Kapitoly jsou řazeny v pořadí, v jakém probíhaly jednotlivé fáze vývoje.	
 
-%\begin{description}
-%  \item[Kapitola \nameref{chap:current}] Popisuje historické pozadí i trendy používané současnými doporučovacími systémy. Snahou této rešerše je vyvodit závěry, jež by mohly být užitečné pro náplň dalších kapitol.
-%  \item[Kapitola \nameref{chap:analysis}] Shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. 
-%  \item[Kapitola \nameref{chap:adapt}] Detailně popisuje algoritmické a matematické postupy použité při návrhu adaptibilního systému. 
-%  \item[Kapitola \nameref{chap:impl}] Popisuje vývoj aplikace na základě provedené analýzy a návrhu.
-%  \item[Kapitola \nameref{chap:tests}] Shrnuje poznatky nabyté z provedených experimentů se systémem a hodnotí vyvinutou aplikaci. 
-%\end{description}
+\begin{description}
+  \item[Kapitola \nameref{chap:teor}] Popisuje trendy používané současnými doporučovacími systémy a zkoumá algoritmické a matematické postupy, které by mohly být použity při návrhu strategie adaptibilního systému.
+  \item[Kapitola \nameref{chap:prakt}] Shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. Popisuje též postupy užité při vývoji aplikace na základě provedené analýzy a návrhu.
+  \item[Kapitola \nameref{chap:tests}] Shrnuje poznatky nabyté z prováděných experimentů se systémem, stanovuje pravidla pro nejlepší použití a hodnotí vyvinutou aplikaci. 
+\end{description}
 	
 \end{introduction}
 
 \chapter{Teoretická část}		
-
+\label{chap:teor}
 
 \section{Doporučování obsahu}	
 \label{chap:current}
@@ -404,7 +404,7 @@ Z výše uvedených příkladů v sekci~\ref{sec:examples} lze vypozorovat urči
 
 Existujících řešení je tedy celá řada. Každé z těchto řešení je přitom využíváno k vlastnímu účelu a není snadno přenositelné.
 
-Jisté je navíc to, že době, kdy obchodníkům stačilo na svůj elektronický obchod nasadit jednoduchý algoritmus kolaborativního filtrování, odzvonilo a budoucnost patří systémům schopným nějaké predikce a přizpůsobení svého vývoje, a to vše v reálném čase. 
+Potvrdila se domněnka, že době, kdy obchodníkům stačilo na svůj elektronický obchod nasadit jednoduchý algoritmus kolaborativního filtrování, odzvonilo a budoucnost patří systémům schopným predikce a přizpůsobení svého vývoje, a to vše v reálném čase. 
 
 \section{Teorie adaptibilního systému}
 \label{chap:adapt}
@@ -710,22 +710,31 @@ Pokud stanovíme míru $<$ 1, algoritmus bude předchozí výsledky zapomínat r
 
 Míra $<$ 1 bude pro potřeby adaptibilního systému vhodnější. Konkrétní hodnotu se opět pokusím stanovit v závislosti na provedených experimentech.
 
+\subsection{Význam pro kombinování}
+\label{lkombinování}
+Význam bayesovské strategie pro kombinování spočívá ve výběru správné metody, která bude přidána do množiny ostatních vybraných metod. Z této množiny metod je dále nutné vybrat nejvhodnější a tu použít.
+
+Jako nejefektivnější a zároveň nejjednodušší přístup se jeví výběr metody s největší četností výskytu. 
+
+V případě shody, kdy bude mít více metod stejnou četnost výskytu, je učiněna volba jedné konkrétní.
+
 \chapter{Praktická část}
+\label{chap:prakt}
 \section{Analýza a návrh řešení}
 \label{chap:analysis}
-Náplní této sekce je sepsání požadavků na systém, které vyplynuly z úvodních konzultací s vedoucím práce a též po vlastním zkoumání řešeného problému. Se znalostí těchto požadavků pak bude možné provést hrubý návrh architektury systému včetně technického řešení komponent, kterými bude systém disponovat.
+Náplní této sekce je sepsání požadavků na systém, které vyplynuly z úvodních konzultací s vedoucím práce a též vlastním zkoumáním řešeného problému. Se znalostí těchto požadavků pak bude možné provést hrubý návrh architektury systému včetně technického řešení komponent, kterými bude systém disponovat.
 
 S ohledem na výstupy získané v této kapitole by mělo být možné provést implementaci systému.
 
 \subsection{Požadavky}
 \label{sec:req}
-Za účelem vyšší přehlednosti jsem se rozhodl související požadavky strukturovat do zastřešujících skupin dle typu modulu, který je bude obsluhovat.
+Za účelem vyšší přehlednosti jsem se rozhodl související požadavky strukturovat do zastřešujících skupin dle části aplikace, která bude mít jejich obsluhu na starosti.
 
-Vyvíjenými součástmi jsou:
+Vyvíjenými částmi jsou:
 
 \begin{itemize}
-  \item \textbf{adaptibilní systém pro doporučování obsahu,}
-  \item \textbf{sada základních algoritmů určených k doporučování,}
+  \item \textbf{Adaptibilní systém pro doporučování obsahu,}
+  \item \textbf{Sada základních algoritmů určených k doporučování,}
   \item \textbf{RESTful API pro manipulaci s doporučovacími algoritmy a systémem.}
   \item \textbf{Klientská aplikace pro simulaci modelové úlohy.}    
 \end{itemize}
@@ -733,22 +742,24 @@ Vyvíjenými součástmi jsou:
 \subsubsection{Požadavky na adaptibilní systém}
 
 \begin{itemize}
-	\item Systém bude klást důraz na zpětnou vazbu, podle které bude přizpůsobovat své chování.
+	\item Systém poklade důraz na zpětnou vazbu, pomocí které bude přizpůsobovat své chování.
 	\item Systém bude přijímat zpětnou vazbu v podobě informace o tom, že uživatel se rozhodl využít jeho rad.
 	\item Systém bude přijímat pozitivní (v případě dobrého doporučení) a negativní (v případě nevhodného doporučení) zpětnou vazbu.
-	\item Systém bude v pravidelných intervalech ukládat do databáze svůj aktuální stav.
-	\item Systém bude schopen v případě pádu aplikace a po jejím opětovném spuštění načíst naposledy uložený stav.
-	\item Systém bude veškeré své operace týkající se doporučování provádět a vyhodnocovat v reálném čase (live read \& live write).
+	\item Systém bude v pravidelných intervalech ukládat do databáze svůj aktuální vnitřní stav.
+	\item Systém bude schopen v případě pádu aplikace a po jejím opětovném spuštění načíst naposledy uložený vnitřní stav.
+	\item Systém bude veškeré své operace týkající se rad a doporučování provádět a vyhodnocovat v reálném čase.
 	\item Systém bude schopen automaticky se přizpůsobovat vývoji v čase normalizováním ukládaných hodnoty.
 	\item Systém bude na každou klientskou žádost vracet příslušnou odpověď (i chybovou) – neexistuje nic jako odpověď \emph{null}.	
 	\item Systém bude umožňovat vytváření a uchovávání kontextových kolekcí určených pro kombinování.
 	\item Systém bude umožňovat vytváření a uchovávání kolekcí složených z existujících kontextových kolekcí určených pro kombinování.	
+	\item Systém bude schopen odpovídat na žádosti uživatelů poptávajících způsob doporučení.
+	\item Systém bude schopen odpovídat na další dotazy týkající se kolekcí (jejich existence apod.).	
 	\item Systém bude umožňovat asynchronní komunikaci s klienty.
 \end{itemize}
 
 \subsubsection{Požadavky na sadu základních algoritmů}
 \begin{itemize}
-	\item Algoritmus bude dle typu přijímat různé parametry (uživatel, limit navrácených položek atd.), které využije pro doporučení obsahu.
+	\item Algoritmus bude dle typu přijímat parametry (uživatel, limit navrácených položek atd.), a ty využívat pro svá doporučení.
 	\item Algoritmus bude komunikovat s daty uložených v Apache Solr a nad těmito daty provádět doporučovací operace.
 \end{itemize}
 
@@ -768,8 +779,8 @@ Vyvíjenými součástmi jsou:
 
 \subsubsection{Klientská aplikace}
 \begin{itemize}
-	\item Klientská aplikace se bude umět připojit k systému a ověřit jeho funkčnost.
-	\item Klientská aplikace bude simulovat přístup více uživatelů k systému.	
+	\item Klientská aplikace se bude připojovat k výše uvedeným funkcím systému a zpracovávat získané výsledky.
+	\item Klientská aplikace bude umožňovat přístup více uživatelů k systému.	
 \end{itemize}	
 
 Dle disciplín softwarového inženýrství lze výčet uvedený výše označit za \textbf{funkční požadavky}.
@@ -779,7 +790,7 @@ Definujme nyní i tzv. \textbf{nefunkční požadavky}, které specifikují vlas
 \begin{itemize}
 	\item Systém bude postaven na platformě Java.
 	\item Pro uchování informací o uživatelích, položkách a jejich vzájemné interakci bude využita platforma pro vyhledávání v textu Apache Solr.
-	\item Systém bude umožňovat přístup aplikacím třetích stran prostřednictvím RESTful webových služeb (vychází ze zadání).
+	\item Systém bude umožňovat přístup aplikacím třetích stran prostřednictvím RESTful webových služeb.
 	\item Systém bude postaven tak, aby se dal snadno parametrizovat. 
 	\item Systém bude připraven na situaci, že jej bude využívat více uživatelů současně.
 	\item Systém poběží jako samostatná aplikace na serveru naslouchající na TCP portu. Veškerá komunikace s ní bude probíhat formou zasílání zpráv a volání procedur.
@@ -798,9 +809,9 @@ Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové
 \end{figure}	
 
 \subsubsection{Server}
-Navrhovanými komponentami pro běh na serveru jsou:
+Navrhovanými komponentami pro spuštění a běh na serveru jsou:
 
-\paragraph{Webová aplikace s rozhraním pro snadnou komunikaci s klienty.}
+\paragraph{Webová aplikace s rozhraním pro komunikaci s klienty.}
 	Viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 1}. Aplikace bude mít na starosti obsluhu klientských požadavků na systém prováděných prostřednictvím protokolu HTTP. Zároveň bude disponovat sadou algoritmů, které lze použít pro doporučení obsahu. Dále bude aplikace obstarávat komunikační režii s druhou aplikací běžící na aplikačním serveru (\emph{Web Application 2}), kterou je platforma pro vyhledávání v textu – Apache Solr.
 
 \paragraph{Apache Solr}
@@ -808,24 +819,24 @@ Navrhovanými komponentami pro běh na serveru jsou:
 
 \paragraph{Databáze}
 
-Kvůli potřebě ukládat uživatelem vytvářené kolekce, též průběžný stav aplikace (časové snímky), a také kvůli snadnému obnovení znalostí systému v případě přerušení běhu, je nutné zapojit do návrhu Database Management System (DBMS).
+Kvůli potřebě ukládat uživatelem vytvářené kolekce, průběžný stav aplikace (časové snímky), a také nutnosti snadného obnovení načerpaných znalostí systému v případě přerušení běhu, je nutné zapojit do návrhu Database Management System (DBMS).
 
-Volba DBMS hraje důležitou roli i při škálování aplikací. V minulosti tolik používané standardní relační DBMS mohou způsobovat zpoždění při provádění čtení/zápisu a v některých případech hrát roli úzkého hrdla aplikace (bottleneck).
+Volba DBMS hraje důležitou roli i při škálování aplikací. V minulosti tolik používané standardní relační DBMS mohou způsobovat zpoždění při provádění čtení/zápisu a v některých případech hrát roli úzkého hrdla aplikace.
 
-Ohledně tohoto problému by možná stálo za úvahu prozkoumat možnosti použití NoSQL databází, které jsou již ze svého principu navrženy pro spolupráci s aplikacemi zaměřenými na výkon a škálovatelnost.
+Kvůli tomuto problému stojí za úvahu prozkoumat možnost použití jedné z NoSQL databází, které jsou již ze svého principu navrženy pro spolupráci s aplikacemi zaměřenými na výkon a škálovatelnost.
 
 \paragraph{Recommeng systém}
 
-Stěžejní serverovou komponentou je adaptibilní systém~\ref{sec:recommeng}. Ten jsem pracovně nazval jako \textbf{Recommeng} systém (zkratka pro recommendation engine), abych o něm nemusel již nadále mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
+Stěžejní serverovou komponentou je adaptibilní systém~\ref{sec:recommeng}. Ten jsem pracovně nazval jako \textbf{Recommeng} (zkratka pro recommendation engine), abych o něm nemusel již nadále mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
 
-Komunikaci s aplikací bude umožňovat systém pro zasílání zpráv (Messaging System) s využitím fronty zpráv (Message Queue). Toto řešení je zde nasnadě kvůli očekávání většího množství žádostí směřujících na systém a snadnější škálovatelnosti aplikace. Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
+Komunikaci bude umožňovat systém pro zasílání zpráv (Messaging System) s využitím fronty zpráv (Message Queue). Toto řešení je zde nasnadě kvůli očekávání většího množství žádostí směřujících na systém a snadnější škálovatelnosti aplikace. Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
 
 \begin{figure}\centering
 	\includegraphics[width=1.2\textwidth]{obr/vitvar_mq.png}
  	\caption[Příklad MQ systému s producentem zpráv a konzumenty]{Příklad MQ systému s producentem zpráv a konzumenty. Zdroj: \cite{vitvarMq}}\label{fig:vitvarMq}
 \end{figure}	
 
-Recommeng systém bude taktéž komunikovat s databází kvůli nutnosti ukládání informací o stavu, respektive kvůli možnosti načíst poslední uložený stav při novém startu aplikace.
+Recommeng systém bude taktéž komunikovat s databází kvůli nutnosti průběžného ukládání informací o stavu, respektive kvůli možnosti načíst poslední uložený stav při novém startu aplikace.
 
 Veškerá data pro výpočet a predikci budou jinak udržována přímo ve vnitřní paměti (uvnitř JVM).
 
@@ -901,19 +912,19 @@ Tento klient se rozhodl nevyužít možnosti komunikovat prostřednictvím REST 
 \label{sec:recommeng}
 
 \subsubsection{Rozhraní REST}
-Dle zadání má platforma poskytovat API pro interakci se systémem a daty formou RESTful~\ref{rest} (HTTP implementace REST~\ref{rest}). Každý uživatel tak bude moci interagovat s rozhraním prostřednictvím zveřejněných endpointů.
+Dle zadání má platforma poskytovat API pro interakci se systémem a daty formou RESTful (HTTP implementace REST~\ref{rest}). Každý uživatel tak bude moci interagovat s rozhraním prostřednictvím zveřejněných endpointů.
 
 Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. 
 
 \begin{itemize}
 	\item Ensemble alias Recommeng systém
 	\item Algorithms
-	\item Cores
+	\item Articles
 \end{itemize}
 
-Návrh tříd na zjednodušených\footnote{Pro větší srozumitelnost neuvádím v parametrech metod typy, ale spíše sémantické významy parametrů. Není též přítomna spousta dalších, s uvedenými třídami spolupracujících tříd.} diagramech~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} ilustruje metody za poskytovaným API.
+Návrh tříd na zjednodušených\footnote{Pro větší srozumitelnost neuvádím v parametrech metod typy, ale spíše sémantické významy parametrů. Není též přítomna spousta dalších, s uvedenými třídami spolupracujících tříd.} diagramech~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} ilustruje metody běžícím za poskytovaným API.
 
-V případě prvního diagramu~\ref{fig:recommengRestNavrh} jsou prostřednictvím API metod volány metody třídy \textbf{EnsembleZeroMqHelper}, která bude realizovat spojení s frontou zpráv Recommeng systému (třída \textbf{MultiThreadServer} na diagramu~\ref{fig:recommengNavrh}).
+V případě prvního diagramu~\ref{fig:recommengRestNavrh} jsou prostřednictvím API metod volány metody třídy \textbf{EnsembleZeroMqHelper}, která bude realizovat spojení s frontou zpráv Recommeng systému (třída \textbf{AsynchronousServer} na diagramu~\ref{fig:recommengNavrh}).
 
 Druhým zjednodušeným diagramem~\ref{fig:recommengRestNavrh2} si lze utvořit představu o způsobu komunikace metod pro RESTful API se serverem Apache Solr (třída \textbf{SolrService}) a dále s jednotlivými doporučovacícmi algoritmy (skrze API \textbf{IAlgorithm}).
 
@@ -927,7 +938,7 @@ Druhým zjednodušeným diagramem~\ref{fig:recommengRestNavrh2} si lze utvořit 
  	\caption[Zjednodušený návrh tříd pro RESTful API endpointy pro komunikaci s jádrem Solr a s doporučovacími algoritmy.]{Zjednodušený návrh tříd pro RESTful API endpointy pro komunikaci s jádrem Solr a s doporučovacími algoritmy.}\label{fig:recommengRestNavrh2}
 \end{figure}	
 
-Z hlediska pohledu na jednotlivé zdroje je k dispozici diagram~\ref{fig:rest}, který by měl celou věc pomoct osvětlit. 
+Z hlediska pohledu na část zdrojů je k dispozici diagram~\ref{fig:rest}, který by měl celou věc pomoct osvětlit. 
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_rest.pdf}
@@ -935,7 +946,7 @@ Z hlediska pohledu na jednotlivé zdroje je k dispozici diagram~\ref{fig:rest}, 
 \end{figure}	
 
 \paragraph{Ensemble}
-Komunikace s rozhraním by měla umožňovat vytvářet v Recommeng aplikaci kolekce s identifikátory algoritmů a kolekce složené z kolekcí (dále je budu označovat jako super kolekce), jenž budou zapojeny do kombinování a predikce. 
+Komunikace s rozhraním by měla umožňovat vytvářet v Recommeng aplikaci kolekce s identifikátory algoritmů a kolekce složené z těchto kolekcí (dále je budu označovat jako super kolekce), jenž budou zapojeny do kombinování a predikce. 
 
 K tomu účelu budou sloužit endpointy:
 
@@ -947,19 +958,23 @@ K tomu účelu budou sloužit endpointy:
 	/recommeng/ensemble/supercollection
 \end{verbatim}
 
-Pokud uživatel zašle metodou POST žádost na tyto endpointy (obsahující jméno kolekce a seznam příslušných položek), v případě dosavadní neexistence v systému budou kolekce vytvořeny a připraveny k použití.
+Pokud uživatel zašle metodou POST žádost na tyto endpointy (obsahující jméno kolekce a seznam příslušných položek v těle požadavku), v případě dosavadní neexistence v systému budou kolekce vytvořeny a připraveny k užití systémem.
 
 Dále by měla existovat možnost zaslat na kolekci či super kolekci prosbu o predikci nejlepšího jejího algoritmu pro doporučení.
 
 \begin{verbatim}
-	/recommeng/ensemble/(collection|supercollection)/{collection-id}
+	/recommeng/ensemble/collection/{collection-id}
 \end{verbatim}
 
-Toho dosáhneme žádostí s metodou GET, uvedením identifikátoru kolekce a případným specifikováním požadovaného výstupu (zda chceme vrátit jen nejlepší možnost či všechny možnosti seřazené sestupně od nejlepšího) v parametru dotazu.
+\begin{verbatim}
+	/recommeng/ensemble/supercollection/{collection-id}
+\end{verbatim}
 
-Žádostí metodou GET bez specifikace ID je navrácen seznam existujících kolekcí a super kolekcí v systému (existují-li).
+Toho dosáhneme žádostí metodou GET, uvedením identifikátoru kolekce a případným specifikováním požadovaného výstupu (zda chceme vrátit jen nejlepší možnost či více možností seřazených sestupně od nejlepšího) v parametru dotazu.
 
-Kvůli učení a vývoji znalostí systému je nezbytně nutné mít možnost zaslat informaci o výběru konkrétního algoritmu a též zpětnou vazbu vyjadřující, jak byl žádající uživatel s navrhovanou variantou spokojen. Toho bude dosaženo zasláním žádosti metodou PUT s informacemi uvedenými v těle požadavku.
+Žádostí metodou GET bez specifikace ID bude navrácen seznam existujících kolekcí a super kolekcí v systému (existují-li v něm nějaké).
+
+Kvůli učení a vývoji znalostí systému je nezbytné mít možnost zaslat systému informaci o výběru konkrétního algoritmu a též zpětnou vazbu vyjadřující, jak byl žádající uživatel s navrhovanou variantou spokojen. Toho bude dosaženo zasláním žádosti metodou PUT s informacemi uvedenými v těle požadavku.
 
 \paragraph{Rozhraní pro sadu základních algoritmů}
 
@@ -971,24 +986,28 @@ Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s meto
 
 Úkolem je zpracovat žádost uživatele o doporučení algoritmem, jehož identifikátor je uveden v cestě. 
 
-Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je též nutno uvést). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z té samé skupiny a další.
+Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je nutno uvést). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z jedné skupiny a další.
 
 \paragraph{Rozhraní pro úložiště dat}
 
-Důležité rozhraní umožňující zaznamenat chování uživatele vzhledem ke sledovaným položkám.
+Důležité rozhraní umožňující zaznamenat například chování uživatele vzhledem ke sledovaným položkám.
 
 \begin{verbatim}
 	/recommeng/articles/{core-id}/document
 \end{verbatim}
 
-Prostřednictvím metody POST budou zasílány veškeré informace o položce (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), která má být uložena do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být cokoliv, například URL adresa).
+\begin{verbatim}
+	/recommeng/articles/{core-id}/articles
+\end{verbatim}
 
-Metody a endpointy uvedené výše se dají považovat za hrubý přehled budoucí funkcionality systému. Dokumentace navrženého REST API je k nahlédnutí v příloze.
+Prostřednictvím metody POST budou zasílány veškeré informace o položkách (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), které mají být uloženy do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být cokoliv, například URL adresa).
+
+Metody a endpointy uvedené výše se dají považovat za hrubý přehled budoucí funkcionality systému. Kompletní dokumentace navrženého REST API je k nahlédnutí v příloze~\ref{restfulapi} na konci práce.
 
 \subsubsection{Rozhraní Recommeng systému}
-Znázorňuje jej třídní diagram~\ref{fig:recommengNavrh}. V případě úspěšně navázaného spojení se systémem jsou pomocí pracovních vláken \textbf{WorkerThread} volány jednotlivé procedury systému. Tyto žádosti obsluhuje API \textbf{EnsembleApiFacade}.
+Znázorňuje jej třídní diagram~\ref{fig:recommengNavrh}. V případě úspěšně navázaného spojení se systémem jsou pomocí pracovních vláken \textbf{ServerWorker} volány jednotlivé procedury systému. Tyto žádosti obsluhuje API \textbf{EnsembleApiFacade}.
 
-Stejně jako v případě diagramů~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} se jedná o zjednodušený návrh, kde chybí spousta dalších tříd zapojených do systému. Diagram slouží pouze k ilustraci metod rozhraní a jejich funkce pro daný systém.
+Stejně jako v případě diagramů~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} se jedná o zjednodušený návrh, kde chybí spousta dalších tříd zapojených do systému. Diagram slouží pouze k ilustraci metod rozhraní a jejich funkcí pro daný systém.
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/ensembleDiagram.pdf}
@@ -1009,12 +1028,9 @@ Vzhledem k obecné známosti protokolu HTTP jsem se rozhodl napodobit jeho chov�
 	\item tělo zprávy (body)
 \end{itemize}
 
-Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status). Všechny tyto informace budou ale uvedeny ve formátu JSON.
+Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status). Všechny tyto informace budou ale prezentovány ve formátu JSON.
 			
 \subsection{Identifikace sady algoritmů}
-
-Identifikace základní sady algoritmů určených pro kombinování je jeden z požadavků na systém plynoucí přímo ze zadání. 
-
 Uživatel žádající o radu pro výběr nejlepšího algoritmu obdrží od systému identifikátor reprezentující tento algoritmus. 
 
 Algoritmy pro doporučování vyhodnocují především informace o uživateli, položkách a hodnocení. Ukládány jsou ale i další údaje, například datum zveřejnění položky či její popis (u článku se může jednat o text zprávy). Také s těmito informacemi mohou doporučovací algoritmy pracovat. 
@@ -2103,6 +2119,10 @@ bude li nějaká
 \bibliography{mybibliographyfile}
 
 \appendix
+
+\chapter{Dokumentace RESTful API}
+\label{restfulapi}
+sfsdf
 
 \chapter{Seznam použitých zkratek}
 % \printglossaries
