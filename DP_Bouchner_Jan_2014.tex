@@ -103,9 +103,9 @@ breaklines=true
 	
 	K těmto účelům přispěl velkou měrou rozvoj disciplíny zvané jako informační filtrování, čímž je myšlenka selekce a redukce informací. Odtud už je jen krok k personalizovanému doporučování obsahu, které se v posledních několika letech rozmáhá se zaváděním \emph{doporučovacích systémů}. 
 
-	Hned na začátku práce jsem dovolit citovat bývalého šéfredaktora časopisu Wired Chrise Andersona (článek \emph{The Long Tail~\cite{anderson}}, který shrnul nastalou situaci týkající se vývoje informací do jedné stručné věty. Je důležité vzít v potaz, že Anderson toto prohlášení učinil v roce 2004. Vývoj v oblasti informačních technologií je však neúprosný a každý další rok je ve znamení výrazných pokroků ve vývoji všech oborů, těch zaměřených na doporučování nevyjímaje. 
+	Hned na začátku práce jsem dovolit citovat bývalého šéfredaktora časopisu Wired Chrise Andersona (článek \emph{The Long Tail~\cite{anderson}}, který shrnul nastalou situaci týkající se vývoje informací do jedné stručné věty. Je důležité vzít v potaz, že Anderson toto prohlášení učinil v roce 2004. 
 	
-	Od vstupu do \emph{doporučovací éry} uplynulo deset let a situace je nyní taková, že s pouhou znalostí ověřených doporučovacích algoritmů lze sice ještě stále dosáhnout měřitelných úspěchů, například nasazením na malý e-shop zabývající se prodejem zboží, pro globálnější potřeby je to již poněkud málo.
+	Vývoj v oblasti informačních technologií je neúprosný a každý další rok je ve znamení výrazných pokroků ve vývoji všech oborů, těch zaměřených na doporučování nevyjímaje. Od vstupu do \emph{doporučovací éry} uplynulo deset let a situace je nyní taková, že s pouhou znalostí ověřených doporučovacích algoritmů lze sice ještě stále dosáhnout měřitelných úspěchů, například nasazením na malý e-shop zabývající se prodejem zboží, pro globálnější potřeby je to však již poněkud málo.
 	
 	Tajemstvím úspěšných systémů, jakými disponují například společnosti Google či Amazon, je aplikovaný výzkum a vývoj opírající se nejčastěji o teorii pravděpodobnosti a statistiky, strojové učení a další oblasti umělé inteligence.
 
@@ -714,9 +714,9 @@ Míra $<$ 1 bude pro potřeby adaptibilního systému vhodnější. Konkrétní 
 \label{lkombinování}
 Význam bayesovské strategie pro kombinování spočívá ve výběru správné metody, která bude přidána do množiny ostatních vybraných metod. Z této množiny metod je dále nutné vybrat nejvhodnější a tu použít.
 
-Jako nejefektivnější a zároveň nejjednodušší přístup se jeví výběr metody s největší četností výskytu. 
+Jako nejefektivnější a zároveň nejjednodušší postup se jeví výběr metody s největší četností výskytu. 
 
-V případě shody, kdy bude mít více metod stejnou četnost výskytu, je učiněna volba jedné konkrétní.
+V případě shody, kdy bude mít více metod stejnou četnost výskytu, bude učiněna volba jedné konkrétní pseudonáhodně.
 
 \chapter{Praktická část}
 \label{chap:prakt}
@@ -942,7 +942,7 @@ Z hlediska pohledu na část zdrojů je k dispozici diagram~\ref{fig:rest}, kter
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_rest.pdf}
- 	\caption[Ukázka REST endpointů navrhovaného adaptibilního systému]{Ukázka REST endpointů navrhovaného adaptibilního systému}\label{fig:rest}
+ 	\caption[Ukázka některých REST endpointů navrhovaného adaptibilního systému]{Ukázka některých REST endpointů navrhovaného adaptibilního systému}\label{fig:rest}
 \end{figure}	
 
 \paragraph{Ensemble}
@@ -1090,6 +1090,18 @@ Pomocí JAX-RS lze s využíváním anotací jednoduše a přehledně definovat 
 
 Pro účely implementace rozhraní systému Recommeng jsem zvolil vzhledem k předchozím zkušenostem referenční implementaci tohoto standardu v podobě frameworku \textbf{Jersey 2.x}. 
 
+\subsubsection{JSON}
+\textbf{JSON }\footnote{\url{http://www.json.org}} je jednoduchý a univerzální formát pro výměnu dat. Zkratka skrývá význam \emph{JavaScript Object Notation}. Jeho MIME (Internet media type) je application/json. V současné době se jedná o jeden z nejpoužívanějších formátů pro výměnu dat se službami REST. Výhodami jsou rychlost zpracování a snadnost použití.
+
+Formát je postaven na dvou strukturách. 
+
+\begin{description}
+	\item \textbf{Array} je seřazený seznam hodnot, který je ohraničen závorkami
+	\item \textbf{Object} je neseřazená kolekce dvojic klíč:hodnota ohraničený dvěma závorkami
+\end{description}
+
+Obě struktury lze do sebe zanořovat a vytvářet tak složitější struktury.
+
 \subsection{Fronta zpráv a síťová komunikace}
 
 \subsubsection{ØMQ}
@@ -1145,7 +1157,6 @@ Ukázka definice několika field dokumentu ve schématu Solr:
 \begin{lstlisting}[language=xml]
 <field name="userId" type="int" indexed="true" stored="true" multiValued="true"/>	
 <field name="time" type="date" indexed="true" stored="true"/>
-<field name="usedInRec" type="boolean" indexed="true" stored="true"/>
 \end{lstlisting}
 
 Ukázka reprezentace dokumentu ve výsledku vyhledávání pomocí Apache Solr ve formátu XML:
@@ -1210,17 +1221,17 @@ Jeho výhodami jsou snadná konfigurovatelnost, podpora dependency injection, ro
 \section{Realizace doporučovací platformy}
 \label{chap:impl}
 
-Následující kapitola se zaměřuje na popis programátorských principů, které jsem následoval při práci na realizaci systému, stejně tak popisuje technologie použité při implementaci a vzniklé řešení.
+Následující kapitola se zaměřuje na popis programátorských postupů, které jsem použil při implementaci systému.
 
 \subsection{Recommeng systém}
 \label{sec:impl}
 
-Adaptibilní systém běží na serveru jako samostatná \emph{Java Application}.
+Adaptibilní systém poběží na serveru jako samostatná \emph{Java Application} s názvem \textbf{Ensemble}.
 
 \subsubsection{Zavedení systému}
-Poté, co je aplikace spuštěna (volání metody \texttt{main()} třídy \textbf{EnsembleApp}) je v této metodě následně volána metoda \texttt{loadConsoleApplication()} abstraktní rodičovské třídy \textbf{EnsembleAppBase}.
+Poté, co je aplikace spuštěna voláním metody \texttt{main()} třídy \textbf{EnsembleApp}, je v této metodě následně volána metoda \texttt{loadEnsembleApplication()} abstraktní rodičovské třídy \textbf{EnsembleAppBase}.
 
-Metoda loadConsoleApplication() hraje roli zavaděče aplikace, neboť postupným voláním v sobě obsažených metod zavádí do provozu celý systém. Hlavní ovládací třídou aplikace je třída \textbf{ApplicationBean}, což je Spring bean typu singleton. Jejím prostřednictvím je zavedena vrstva pro obsluhu zpráv i komponenty pro komunikaci s datovým úložištěm. ApplicationBean je mozkem systému a při zavádění aplikace je získána ze Spring aplikačního kontextu.
+Metoda loadConsoleApplication() hraje roli zavaděče aplikace, neboť postupným voláním v sobě obsažených metod zavádí do provozu celý systém (vytvoření instance řídící třídy, napojení na databázi, inicializace API a spuštění asynchronního serveru). Hlavní řídící třídou aplikace je třída \textbf{ApplicationBean}. Jejím prostřednictvím je zavedena vrstva pro obsluhu zpráv i komponenty pro komunikaci s datovým úložištěm. Třída je zavedena z aplikačního kontextu frameworku Spring.
 
 Ten je možné velice jednoduše konfigurovat pomocí anotací ve třídě \textbf{AppConfig}:
 
@@ -1239,12 +1250,11 @@ Anotace \emph{@EnableScheduling} a \emph{@ComponentScan} využijeme pro pravidel
 
 \subsubsection{Parametrizace}
 \label{param}
-Pro účely experimentování se systémem a testování funkčnosti s různě navolenou konfigurací je nutné načítat konfiguraci z editovatelného \emph{properties} souboru. K tomu jsem využil Spring bean \textbf{PropertySourcesPlaceholderConfigurer}.
+Pro účely experimentování se systémem, volbu databázového úložiště a testování funkčnosti s různě volenou konfigurací je nutné načítat konfiguraci z editovatelného \emph{properties} souboru. K tomu jsem využil Spring bean \textbf{PropertySourcesPlaceholderConfigurer}.
 
 Konfigurační vlastnosti jsou do souboru \emph{application.properties} přidávány ve formátu:
 
 \begin{lstlisting}
-#cassandra or jvm
 storage=cassandra
 #storage=jvm
    
@@ -1263,18 +1273,18 @@ this.possitiveFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.p
 \label{sub:messvrs}
 Následující text popisuje postup, jakým jsem realizoval vrstvu pro obsluhu zpráv pomocí síťové knihovny ZeroMQ.
 
-Většinová funkcionalita je řešena třídou \texttt{MultiThreadServer} (obsahující též vnitřní třídu \textbf{WorkerThread}) z balíčku projektu Ensemble:
+Většinová funkcionalita je řešena třídou \texttt{AsynchronousServer} (obsahující též vnitřní třídu \textbf{ServerWorker}) v programovém balíčku:
 
 \begin{verbatim}
    cz.cvut.fit.bouchja1.ensemble.socket
 \end{verbatim}
 
-Postup by se dal shrnout do tří kroků:
+Postup tvorby by se dal shrnout do tří kroků:
 
 \begin{enumerate}
 	\item rozhodnutí o komunikačním protokolu
 	\item definice síťové infrastruktury
-	\item realizace vzoru pro zasílání zpráv REQ/REP
+	\item realizace vzoru pro zasílání asynchronních zpráv REQ/REP
 \end{enumerate}
 
 \paragraph{Rozhodnutí o komunikačním protokolu}
@@ -1283,127 +1293,106 @@ V prvním kroku bylo nutné rozhodnout o tom, jakým způsobem bude probíhat p�
 
 Mezi komunikujícími klienty a Recommeng aplikací na serveru jsou vytvářena jednotlivá spojení a data jsou z jednoho koncového bodu na druhý přenášena ve formě bajtů.
 
-Díky ZeroMQ API stačí připravit kontext a socket a metodě \texttt{bind()} nastavit adresu serveru s příslušným portem. Sama metoda se pak postará o zbylou práci (vytvoření endpointu pro příjem jednotlivých spojení a navázání na socket).
+Díky ZeroMQ API stačí připravit kontext, socket a metodě \texttt{bind()} nastavit adresu serveru s příslušným portem. Sama metoda se pak postará o zbylou práci (vytvoření endpointu pro příjem jednotlivých spojení a navázání na socket).
 
 \begin{lstlisting}[language=java]
-ZMQ.Context context = ZMQ.context(IO_THREADS_COUNT);
-// Socket to talk to clients
-ZMQ.Socket clients = context.socket(ZMQ.ROUTER);
-clients.bind("tcp://" + host + ":" + port);
+ZContext ctx = new ZContext();
+//  Frontend socket talks to clients over TCP
+Socket frontend = ctx.createSocket(ZMQ.ROUTER);
+frontend.bind("tcp://" + host + ":" + port);
 \end{lstlisting}
 
 \paragraph{Definice síťové infrastruktury}
 \label{subsub:queue}
-Propojení jednotlivých síťových komponent vychází z nativní povahy architektury Klient-Server. Server zastává roli stabilnější komponenty v síti, bude tedy přijímat spojení (viz ukázka s metodou \texttt{bind()} výše). Zároveň jsem mezi server a připojující se klienty umístil prostředníka v podobě \emph{fronty}, jehož úkolem je jak obsluha všech žádostí na server, tak i odpovědí zpět klientům.
+Propojení jednotlivých síťových komponent vychází z nativní povahy architektury Klient-Server. Server zastává roli stabilnější komponenty v síti, bude tedy přijímat spojení (viz ukázka s metodou \texttt{bind()} výše). Zároveň bude nutné umístit mezi server a připojující se klienty prostředníka, jehož úkolem obsluha všech žádostí na server a zasílání odpovědí zpět klientům.
 
-\begin{lstlisting}[language=java]
-ZMQQueue queue = new ZMQQueue(context, clients, workers);
-\end{lstlisting}
-
-V případě více připojených klientů ZeroMQ automaticky obstarává obsluhu všech příchozích žádostí. 
+V případě více připojených klientů bude ZeroMQ automaticky obstarávat obsluhu všech příchozích žádostí. 
 
 \paragraph{Realizace vzoru pro zasílání zpráv REQ/REP}
-Pro zasílání zpráv jsem zvolil obousměrně komunikující vzor \emph{Request Reply}. Toto paradigma je známé z většiny serverových typů\footnote{HTTP, POP či IMAP}. Klient používá vlastní socket typu \textbf{ZMQ.REQ} k inicializaci žádosti, kterou následně odesílá na server. Server též užívá vlastního socketu \textbf{ZMQ.REP} ke čtení příchozí žádosti, po které zasílá odpověď. 
+Pro zasílání zpráv jsem nejprve zvolil obousměrně komunikující vzor \emph{Request Reply}. Toto paradigma je známé z většiny serverových typů\footnote{HTTP, POP či IMAP}. Klient používá vlastní socket typu \textbf{ZMQ.REQ} k inicializaci žádosti, kterou následně odesílá na server. Server též užívá vlastního socketu \textbf{ZMQ.REP} ke čtení příchozí žádosti, po které zasílá odpověď. 
 
 Problém je, že vzor Request-Reply toho v základní variantě mnoho neumožňuje, proto bylo nutné umožnit asynchronní komunikaci implementací rozšíření v podobě socketů \textbf{ROUTER} a \textbf{DEALER} (dříve nazývány jako XREP a XREQ). 
 
-Řešení spočívá ve vytvoření více vláken (\emph{workers}), kdy každé vlákno disponuje jedním REP socketem. Za tímto účelem je nutné vytvořit socket typu DEALER, kterému přiřadíme komunikační protokol \emph{inproc://}. Poté, co DEALER obdrží zprávu, přenese ji na jeden z REP socketů. Přitom sleduje, které REP sockety jsou zaneprázdněny, a které mohou naopak zprávu přijmout. Jakmile tento vybraný REP socket zpracuje zprávu, předá ji zpět a DEALER tuto zprávu přepošle tak, jak ji obdržel od socketu.
+Řešení spočívá ve vytvoření více pracovních vláken (\emph{workers}) souběžně řešících příchozí požadavky. Za tímto účelem je nutné vytvořit v serverovém vlákně socket typu DEALER, kterému přiřadíme komunikační protokol \emph{inproc://}.
+
+Na serverové straně probíhá komunikace následovně: 
 
 \begin{lstlisting}[language=java]
-// Socket to talk to workers
-ZMQ.Socket workers = context.socket(ZMQ.DEALER);
-workers.bind("inproc://workers");
+//  Frontend socket talks to clients over TCP
+Socket frontend = ctx.createSocket(ZMQ.ROUTER);
+frontend.bind("tcp://" + host + ":" + port);
+
+//  Backend socket talks to workers over inproc
+Socket backend = ctx.createSocket(ZMQ.DEALER);
+backend.bind("inproc://backend");
+
+//  Launch pool of worker threads, precise number is not critical
+for (int threadNbr = 0; threadNbr < 5; threadNbr++) {
+    new Thread(new ServerWorker(threadNbr, ctx, api, new RequestHandlerJson(), new ResponseHandlerJson())).start();
+}
+
+//  Connect backend to frontend via a proxy
+ZMQ.proxy(frontend, backend, null);
 \end{lstlisting}
 
-Kvůli podpoře více TCP spojení utvářených vůči serveru je nutné předřadit před socket typu DEALER ještě další typ socketu, kterým je ROUTER (byl vidět již v ukázce~\ref{subsub:kompr}). 
+Kvůli podpoře více TCP spojení utvářených vůči serveru je nutné předřadit před socket typu DEALER ještě další typ socketu, kterým je ROUTER (byl vidět již v ukázce~\ref{subsub:kompr}) hrající roli frontend socketu. 
 
-ROUTER přiřazuje vnitřní identifikátor každému k němu se připojujícímu socketu, následně obdrženou zprávu předává dál i s připojenými metadaty (identifikátor socketu) a poté, co zprávu obdrží zpět, ihned ji předává správnému REQ socketu, kterého identifikuje opět díky identifikátoru uchovávaném v metadatech.
+ROUTER přiřazuje vnitřní identifikátor každému k němu se připojujícímu socketu a následně obdrženou zprávu předává dále prostřednictvím socketu typu DEALER (backend socket) na jedno ze svých pracovních vláken.
 
-Toto chování je umožněno díky vestavěné funkcionalitě ZMQQueue (viz příklad~\ref{subsub:queue}). Všechny zprávy, které přijme ROUTER, jsou zaslány na DEALER a naopak. Model této komunikace ilustruje obrázek~\ref{fig:mtserver}.
+Pracovním vláknům jsou přes parametry předány instance třídy \textbf{RequestHandlerJson} a \textbf{ResponseHandlerJson()}, takže jsou schopny obsluhovat příchozí žádosti v tomto formátu.
+
+O obsluhu požadavků a správnou komunikaci frontend socketů s backend sockety se stará \emph{ZMQ.proxy}, který hraje roli prostředníka zmíněného výše~\ref{subsub:queue}.
+
+Pracovní vlákna (ServerWorker) používají též komunikační protokol inproc a socket typu DEALER.
+
+\begin{lstlisting}[language=java]
+Socket worker = ctx.createSocket(ZMQ.DEALER);
+worker.connect("inproc://backend");
+\end{lstlisting}
+
+Komunikace probíhá tak, že DEALER komunikuje s DEALEREM. Oproti serverovému vláknu, který ale používal pro inproc spojení metodu \emph{bind()}, využívají pracovní vlákna metodu \emph{connect()}, čili se k němu připojují, přijímají zprávy a starají se o jejich vyřízení.
+
+Po navázání spojení je v těle metody \emph{run()} pracovních vláken realizována veškerá komunikace s logikou systému. Dochází zde k předávání zpráv jednotlivým metodám systémového API. Bližším popisem se zabývá~\ref{serverworker}. 
+
+Obsloužené zprávy jsou poté zasílány zpět na serverové vlákno, které je přeposílá komunikujícím klientům
 
 \begin{figure}\centering
 	\includegraphics[width=0.8\textwidth]{obr/multithreadingServer.png}
- 	\caption[Vícevláknový server s využitím ROUTER a DEALER.]{Vícevláknový server s využitím ROUTER a DEALER. Zdroj: \cite{mtserver}}\label{fig:mtserver}
+ 	\caption[Vícevláknový asynchronní server s využitím ROUTER a DEALER.]{Vícevláknový asynchronní server s využitím ROUTER a DEALER. Zdroj: \cite{mtserver}}\label{fig:mtserver}
 \end{figure}	
 
-\begin{lstlisting}[language=java]
-//Forwards messages from router to dealer and vice versa.
-new Thread(queue).start();
-\end{lstlisting}
+Správnou synchronizaci vláken má na starosti již zmíněná ZMQ.proxy. To je jedna z pokročilých vlastností ZeroMQ – pro vývoj vícevláknových aplikací nejsou potřeba žádné mutexy, zámky, ani jakékoliv další formy komunikace~\cite{mtserver}.
 
-Vyvoláním metody \texttt{start()} dojde k uzamknutí aktuálního vlákna (důvod, proč pro frontu existuje vlastní vlákno). To je jedna z pokročilých vlastností ZeroMQ – pro vývoj vícevláknových aplikací nejsou potřeba žádné mutexy, zámky, ani jakékoliv další formy komunikace kromě zpráv zasílaných napříč ZeroMQ sockety~\cite{mtserver}.
+\paragraph{Technika zasílání zpráv a ServerWorker}
+\label{serverworker}
+O několik řádku výše bylo vysvětleno, jakým způsobem jsou na serveru obsluhovány příchozí žádosti klientů. Nyní již víme, že tuto funkcionalitu mají na starosti pracovní vlákna typu \textbf{ServerWorker} a řekneme si, jakým způsobem jsou žádost zpracovávány.
 
-Na začátku procesu (při spuštění aplikace) je vytvořen ZeroMQ kontext (viz \ref{subsub:kompr}) a ten je předán všem vláknům, která jsou připravena pro komunikaci protokolem inproc:
-
-\begin{lstlisting}[language=java]
-// Launch worker threads
-for (int i = 0; i < threads.length; i++) {
-   threads[i] = new MultiThreadServer.WorkerThread(
-      i, context, api, new RequestHandlerJson()
-   );
-   threads[i].start();
-}
-\end{lstlisting}
-
-Vláknům je parametrem předána instance třídy \textbf{RequestHandlerJson}, takže jsou schopny obsluhovat příchozí žádosti ve formátu JSON. Jedná se o implementaci rozhraní \textbf{RequestHandler} s jednou definovanou metodou pro obsluhu zpráv. Tento typ přijímají ve svém konstruktoru i pracovní vlákna. Řešení je tedy postaveno tak, aby bylo snadno rozšiřitelné pro jakýkoliv jiný formát komunikace, klidně vlastní.
-
-\begin{lstlisting}[language=java]
-public interface RequestHandler {
-   public Operation handleMessage(byte[] message)
-      throws MessageFormatException;
-}
-\end{lstlisting}
-
-\paragraph{Technika zasílání zpráv a WorkerThread}
-O několik řádku výše bylo vysvětleno, jakým způsobem jsou na serveru zpracovány příchozí žádosti. Nyní již víme, že tuto funkcionalitu mají na starosti pracovní vlákna typu \textbf{WorkerThread}.
-
-Každý \emph{worker} v sobě udržuje kontext komunikace a pokud je na vstupu validní žádost, pro její zpracování je vyvolána příslušná operace rozhraní systému Recommeng. Sestavená odpověď je zaslána zpátky klientovi.
-
-Třída WorkerThread je vláknová; kromě konstruktoru obsahuje pouze jednu metodu \texttt{run()}. Právě tato metoda má na svědomí veškerou obsluhu žádosti zahrnující zpracování zprávy, volbu správné operace na rozhraní systému a po zpracování pak zaslání odpovědi zpátky k žádajícímu klientovi.
-
-V praxi to vypadá tak, že pokud je dané pracovní vlákno aktivní, čte příchozí žádost:
-
-\begin{lstlisting}[language=java]
-@Override
-public void run() {
-   ZMQ.Socket receiver = context.socket(ZMQ.REP);
-   receiver.connect("inproc://workers");
-   while (!Thread.currentThread().isInterrupted()) {
-      byte[] request = receiver.recv(0);
-...
-\end{lstlisting}
-
-Po přečtení žádosti následuje zpracování:
+Vláknová metoda \emph{run()} má na svědomí veškerou obsluhu žádosti. Každý jednotlivý \emph{worker} tak v sobě udržuje kontext komunikace a pokud je na vstupu validní žádost, pro její zpracování je vyvolána příslušná operace rozhraní systému Recommeng. Sestavená odpověď je zaslána zpět klientovi.
 
 %\begin{verbatim}
 \begin{lstlisting}[language=java]
 try {
-   Operation op = requestHandler.handleMessage(request);
-   if (op.validateOperation()) {
-      try {
-         Reply reply = op.executeOperation(api);
-         responseHandler.setReply(reply);
-      } catch (Exception ex) {
-         ex.printStackTrace();
-      }
-   } else {
-      responseHandler.createErrorReply(op.getErrorMessage());
-   }
-
-   try {
-      int sleepTime = (threadNo % 2 == 0) ? 100 : 200;
-      // Handle work, by sleeping for some time
-      Thread.sleep(sleepTime);
-   } catch (InterruptedException e) {
-      e.printStackTrace();
-      Thread.currentThread().interrupt();
-   }
+    Operation op = requestHandler.handleMessage(request);
+    if (op.validateOperation()) {
+        try {
+            Reply reply = op.executeOperation(api);
+            responseHandler.setReply(reply);
+        } catch (Exception ex) {
+            responseHandler.createInternalErrorReply("Internal error.");
+        }
+    } else {
+        responseHandler.createErrorReply(op.getErrorMessage());
+    }
 } catch (MessageFormatException | IOException ex) {
-   responseHandler.createErrorReply(ex.getMessage());
+    responseHandler.createErrorReply(ex.getMessage());
+} catch (NullPointerException ex) {
+    responseHandler.createErrorReply("Unrecognized operation.");
 }
 \end{lstlisting}
 
-Výsledkem zpracování zprávy je tedy operace realizována návrhovým vzorem Command. \textbf{Operation} je rozhraní deklarující metody pro validaci operace (\texttt{validateOperation()}) a její vykonání (\texttt{executeOperation()}). Každá třída implementující toto rozhraní je pak konkrétní operací, která volá rozhraní systému Recommeng. 
+Výsledkem zpracování zprávy je operace. Spuštění vhodné operace je realizováno návrhovým vzorem Command. \textbf{Operation} je rozhraní deklarující metody pro validaci operace (\texttt{validateOperation()}) a její vykonání (\texttt{executeOperation()}).
+
+Každá třída implementující toto rozhraní je pak konkrétní operací zasílanou na rozhraní systému. 
 
 Všechny typy podporovaných operací se nacházejí v aplikaci Ensemble v balíčku:
 
@@ -1411,73 +1400,112 @@ Všechny typy podporovaných operací se nacházejí v aplikaci Ensemble v balí
    cz.cvut.fit.bouchja1.ensemble.operation
 \end{verbatim}
 
-Jedná se o třídy splňující funkcionalitu dle funkčních požadavků~\ref{sec:req}:
+Jedná se o třídy splňující funkcionalitu dle funkčních požadavků~\ref{sec:req}. Jsou jimi například:
 
 \begin{itemize}
 	\item \texttt{OperationCreateBanditCollection}
+	\item \texttt{OperationCreateBanditSuperCollection}	
 	\item \texttt{OperationDetectBestBandit}
-	\item \texttt{OperationDetectBestBandit}
-	\item \texttt{OperationDetectBestBandit}			
+	\item \texttt{OperationFeedbackSupercollectionBandit}
+	\item \texttt{OperationUseSupercollectionBandit}			
 \end{itemize}
 
-Výsledkem vykonání operace je vždy odpověď (třída \textbf{Reply} s atributy pro stavový kód a tělo zprávy), která je pomocí třídy \textbf{ResponseHandlerDefault} prezentována zpět klientovi.
+Výsledkem vykonání operace je vždy odpověď (třída \textbf{Reply} obsahující stavový kód, tělo zprávy, případně další hodnoty jako seznam algoritmů apod.), která je pomocí třídy \textbf{ResponseHandlerDefault} prezentována zpět klientovi.
 
 \subsubsection{API}
-API systému Recommeng reprezentuje interface \textbf{EnsembleApiFacade}. Nejdůležitějšími metodami jsou metody:
+API systému Recommeng reprezentuje interface \textbf{EnsembleApiFacade}. Podporované metody jsou vidět na obrázku~\ref{fig:recommengNavrh}.
 
-\begin{itemize}
-	\item \texttt{createBanditSet(String banditSetId, Set<String> banditIds)}
-	\item \texttt{detectBestBandit(String banditCollectionId, String filter)}
-	\item \texttt{selectBandit(String banditCollectionId, String banditId)}
-	\item \texttt{calculateFeedback(String banditCollectionId, String banditId, String feedbackValue)}			
-\end{itemize}
+Tyto metody jsou volány prostřednictvím operací z vrstvy pro obsluhu zpráv~\ref{sub:messvrs}. Metody jsou přímo napojeny na bayesovské strategie, které jsou jedněmi ze stěžejních součástí systému.
 
-Tyto metody jsou volány prostřednictvím operací z vrstvy pro obsluhu zpráv~\ref{sub:messvrs}. Metody jsou přímo napojeny na bayesovskou strategii, což je hlavní ovládací prvek Recommeng systému.
+Ukázkovou metodou je například metoda zprostředkovávající detekci nejlepšího algoritmu ze zadané kolekce. Nejprve proběhne ověření, zda v systému opravdu taková kolekce, vůči které je žádost směřována, existuje. Následně dojde k provedení žádosti a vytvoření odpovědi.
 
-\subsubsection{Bayesian Bandits strategie}
+\begin{lstlisting}[language=java]
+@Override
+public Reply detectBestBandit(String banditCollectionId, String filter) {
+    ResponseHandler responseHandler = new ResponseHandlerJson();
+    Reply reply;
 
-!!!!!!!!!!!!
-TODO zpětná vazba
+    if (existBanditSetId(banditCollectionId)) {
+        BayesianStrategy strategyToUse = getStrategyByCollectionId(banditCollectionId);
+        if ("best".equals(filter)) {
+            Bandit banditToChoose = strategyToUse.sampleBandits();            
+            responseHandler.createSuccessReplyDetection("You should choose bandit with name " + banditToChoose.getName() + " now. He is the best for this context.", banditToChoose.getId(), banditToChoose.getName(), strategyToUse.getId());
+        } else {
+            List<Bandit> banditsByOrder = strategyToUse.sampleBanditsAll(banditCollectionId);
+            responseHandler.createSuccessReply("Bandit IDs by order: " + banditsByOrder.toString());
+        }
+        reply = responseHandler.returnReply();
+    } else {
+        responseHandler.createNotFoundReply("There is no collection with ID " + banditCollectionId + " in application.");
+        reply = responseHandler.returnReply();
+    }
+    return reply;
+}
+\end{lstlisting}
 
-Strategii řeší tří třídy umístěné v balíčku:
+Klient, který žádal systém o takovéto doporučení, obdrží zprávu ve tvaru:
+
+\begin{lstlisting}
+{"message":"You should choose bandit with name: latest. He is the best for this context.","status":200,"collection":1,"banditId":"latest","bestBandit":2}
+\end{lstlisting}
+
+Tento výstup lze použít jako parametry pro další dotaz (například pro zaslání zpětné vazby o zvolení algoritmu a posléze žádosti o doporučení obsahu navrácenou metodou).
+
+\subsubsection{Bayesovská strategie pro kombinování metod}
+
+Strategii mají na starosti třídy nacházející se v balíčku:
 
 \begin{verbatim}
    cz.cvut.fit.bouchja1.ensemble.bandits
 \end{verbatim}
 
 \paragraph{Bandit}
-Bandit je třída reprezentující jednoho konkrétní banditu. Každý bandita má svůj identifikátor a atributy pro zaznamenávání výher a pokusů během jednotlivých her.
+Bandit je třída reprezentující jednoho konkrétní banditu. Každý bandita má svůj identifikátor a atributy pro zaznamenávání výher a pokusů během jednotlivých her. Ty reprezentují jeho dosavadní znalosti.
 \paragraph{BanditsMachine}
-BanditsMachine je třída reprezentující jeden herní automat. Tento automat obsahuje seznam banditů a číselné parametry pro výpočty zpětné vazby a míry učení. V podstatě se jedná o konfiguraci, pomocí které je automat naprogramován. Tato konfigurace se nastavuje ve vnějším soubor (viz~\ref{param}).
-\paragraph{BayesianStrategy}	je třída reprezentující online učící strategii k řešení strategie Multi-Armed Bandit~\ref{sub:mabandit}. Vzhledem k tomu, že BayesianStrategy je pro kombinování možné vytvářet více kolekcí s bandity, v systému může nezávisle na sobě fungovat více bayesovských strategií. 
-	
-	Každá z nich je pak reprezentována dle identifikátoru kolekce, každá má přiřazen svůj vlastní herní automat a logiku algoritmu.  
-	
-	Nejdůležitější metodou této třídy je metoda \texttt{sampleBandits(String banditCollectionId)} starající se jednak o výběr z prior pravděpodobností distribucí banditů nacházejících se v kolekci s identifikátorem \emph{banditCollectionId}, a následně o volbu nejlepšího z banditů. 
+BanditsMachine je třída reprezentující herní automat. Každá samostatná bayesovská strategie (BayesianStrategy) má právě jeden herní automat. Automat obsahuje seznam banditů a číselné konfigurace pro výpočty zpětné vazby a míry učení. Konfigurace se nastavuje ve vnějším soubor (viz~\ref{param}).
+\paragraph{SuperBayesianStrategy} SuperBayesianStrategy je třída reprezentující super kolekci více bayesovských strategii. V případě přítomnosti dvou bayesovských strategií, například kontextových atributů \uv{ráno} a \uv{Evropa}, může z těchto strategií vytvořit super strategii \uv{ráno v Evropě}.
+\paragraph{BayesianStrategy}	BayesianStrategy je třída reprezentující online učící strategii k řešení strategie Multi-Armed Bandit~\ref{sub:mabandit}. Vzhledem k přítomnosti super strategií je již jasné, že v systému může nezávisle na sobě fungovat více bayesovských strategií. 
+
+\subsubsection{Důležité metody bayesovské strategie pro kombinování metod}	
+	Důležitou metodou třídy BayesianStrategy je metoda \texttt{sampleBandits()} starající se jednak o výběr z prior pravděpodobností distribucí banditů a následně o volbu nejlepšího z nich. Jedná se o implementaci teorie probírané v~\ref{bayes}.
 	
 \begin{lstlisting}[language=java]
-public Bandit sampleBandits(String banditCollectionId) {
+public Bandit sampleBandits() {
     //sample from the bandits's priors, and select the largest sample
-    for (int j = 0; j < banditsMachine.getBanditList().size(); j++) {
-        BetaDistribution beta = new BetaDistribution(1 + banditsMachine.getBanditAtIndex(j).getSuccesses(), 1 + banditsMachine.getBanditAtIndex(j).getTrials() - banditsMachine.getBanditAtIndex(j).getSuccesses());
-
-        double inverseDistribution = beta.inverseCumulativeProbability(Math.random());
-        roundInverseDistributions.add(inverseDistribution);
+    for (Integer bandit : banditsMachine.getBanditList().keySet()) {
+        BetaDistribution beta = new BetaDistribution(1 + banditsMachine.getBanditAtIndex(bandit).getSuccesses(), 1 + banditsMachine.getBanditAtIndex(bandit).getTrials() - banditsMachine.getBanditAtIndex(bandit).getSuccesses());
+    double inverseDistribution = beta.inverseCumulativeProbability(Math.random());
+    roundInverseDistributions.add(inverseDistribution);
     }
-
     int banditIndexChoice = MathUtil.argmax(roundInverseDistributions);
-
     roundInverseDistributions.clear();
-
     return banditsMachine.getBanditAtIndex(banditIndexChoice);
 }
 \end{lstlisting}	
 
+Do rozdělení vstupují jako parametry dosavadní výsledky jednotlivých algoritmů z kolekce a dochází k výpočtu kvantilových funkcí~\ref{icdf} pro každý algoritmus, kdy je nakonec vybrán algoritmus s největší hodnotou a navrácen jako nejlepší možnost. 
+
+Dalšími metodami jsou pak \emph{selectBandit(String banditId)} zpracovávající zpětnou vazbu o zvolení doporučeného algoritmu uživatelem a \emph{calculateFeedback(String banditCollectionId, String banditId, String feedbackValue)}. 
+
+\begin{lstlisting}[language=java]
+public void selectBandit(String banditId) {
+    Bandit banditToUpdate = banditsMachine.getBanditAtIndex(Integer.parseInt(banditId));        
+    banditsMachine.updateTrials(banditToUpdate, totalTrialsCountsToBoost);           
+}
+
+public void calculateFeedback(String banditCollectionId, String banditId, String feedbackValue) {
+    Bandit banditToUpdate = banditsMachine.getBanditAtIndex(Integer.parseInt(banditId));
+    banditsMachine.updateAllStatsInRound(banditToUpdate, feedbackValue);   
+}  
+\end{lstlisting}	
+
+Těmito metodami je zajištěn přepočet hodnot, které si uchovávají jednotlivými algoritmy (trials, successes) jako svůj vnitřní stav vyjadřující dosud načerpané znalosti. Při každém přepočtu jsou tyto hodnoty ještě navíc násobeny konstantou určující míru učení~\ref{rate}.
+    
+V případě super strategie (třída SuperBayesianStrategy) je poměrně důležitou metodou \emph{chooseBestFromSuperStrategy()}. Ze zadané super kolekce je na základě odhadů vybrán vždy jeden nejlepší algoritmus z jejích kolekcí a pomocnou metodou \emph{bestBanditFromCombination(List<Bandit> banditsCombination)} je spočtena četnost výskytů jednotlivých algoritmů (navrácených jako nejlepší) z kolekcí. V případě shody stejného výskytu dvou a více algoritmů je na základě náhodného výběru zvolena jedna, která je doporučena uživateli.
+    
 \subsubsection{Pravidelné ukládání časových snímků}
 \label{task}
-Pravidelné ukládání časových snímků jsem realizoval démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} s veřejnou metodou \emph{run()}. Na metodu bylo též nutné aplikovat anotaci s parametrem \emph{@Scheduled(cron = "\$\{scheduling.job.cron\}")}. Tato metoda je tedy automaticky volána systémem, na kterém aplikace běží. 
-
-Po automatickém spuštění této metody dojde k vyvolání metody \emph{saveCurrentState()} třídy ApplicationBean, která zprostředkuje persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze.
+Pravidelné ukládání časových snímků jsem realizoval Spring démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} spouštějící pravidelný časový úkol, který zprostředkuje persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze.
 
 Samozřejmě za předpokladu, že je použití databáze v konfiguračním souboru nastaveno. V opačném případě by tovární metoda třídy \textbf{StorageFactory} zvolila k použití jinou formu práce s daty.
 
@@ -1494,24 +1522,6 @@ public static IStorage getStorage(Environment env) {
 
 Tento přístup vede k rozšiřitelnosti o další typy databází, které by mohl systém v budoucnu podporovat. 
 
-\begin{lstlisting}[language=java]
-@Scope("singleton")
-public class ApplicationBean {
-   ...
-   private IStorage storage;
-   ...
-   
-   public void saveCurrentState() {
-       try {
-           storage.saveCurrentState(strategies);
-       } catch (NullPointerException ex) {
-           logger.error("Application is not initialized yet.", ex);
-       }
-   }
-   ...
-}   
-\end{lstlisting}
-
 \subsubsection{Spojení s databází}
 Úložiště je realizováno třídou \textbf{CassandraStorage}. Během jejího zavádění do systému při startu aplikace jsou v konstruktoru volány dvě metody – \emph{connect()} a \emph{createSchema()}. V prvním případě dochází ke spojení s databázovým klastrem, pomocí kterého je následně získána \emph{session}.
 
@@ -1527,55 +1537,45 @@ private void createSchema() {
             + "= {'class':'SimpleStrategy', 'replication_factor':3};");
 \end{lstlisting}
 
-Column families jsem pro účely aplikace vytvořil dvě – \emph{collection} a \emph{algorithm}.
+Column families jsem pro účely aplikace vytvořil tři – \emph{collection}, \emph{supercollection} a \emph{algorithm}.
 
-Druhá column family má dělený klíč řádku:
-
-\begin{verbatim}
-PRIMARY KEY ((collection_id, algorithm_id), event_time)
-\end{verbatim}
-
-a reverzní řazení založené na časové značce indikující dobu zápisu do databáze:
-
-\begin{verbatim}
-WITH CLUSTERING ORDER BY (event_time DESC)
-\end{verbatim}
-
-Třída pak implementuje několik metod svého rozhraní IStorage pro uložení aktuálního stavu aplikace, načtení poslední známé konfigurace a vytvoření kolekce banditů. Při realizaci funkcionality metod je bohatě využíváno možností, které nabízí DataStax driver pomocí CQL, například tvorba předpřipravených dotazů konstrukcí \textbf{PreparedStatement}. 
+Třída implementuje několik metod svého rozhraní IStorage pro uložení aktuálního stavu aplikace, načtení poslední známé konfigurace a vytvoření kolekcí banditů. Při realizaci funkcionality metod je bohatě využíváno možností, které nabízí DataStax driver pomocí CQL, například tvorba předpřipravených dotazů konstrukcí \textbf{PreparedStatement}. 
 
 Následuje příklad ukládání aktuálního stavu z paměti systému do databáze.
 
 \begin{lstlisting}[language=java]
 @Override
-public void saveCurrentState(List<BayesianStrategy> strategies) {
-    for (BayesianStrategy strategy : strategies) {
-        List<Bandit> bandits = strategy.getBanditsMachine().getBanditList();
-        if (bandits.size() > 0) {
-            PreparedStatement statement = session.prepare(
-                    "INSERT INTO " + keyspace + ".algorithm "
-                    + "(collection_id, algorithm_id, event_time, probability_in_time, trials_rate, successes_rate) "
-                    + "VALUES (?, ?, ?, ?, ?, ?);");
+public void saveCurrentState(LastEnsembleConfiguration strategies) {
+    if (strategies != null) {
+        for (BayesianStrategy strategy : strategies.getStrategies().values()) {
+             Map<Integer, Bandit> bandits = strategy.getBanditsMachine().getBanditList();
+            if (bandits.size() > 0) {
+                PreparedStatement statement = session.prepare(
+                        "INSERT INTO " + keyspace + ".algorithm "
+                        + "(collection_id, algorithm_id, algorithm_name, event_time, trials_rate, successes_rate) "
+                        + "VALUES (?, ?, ?, ?, ?, ?);");
 
-        ...
+                Date actualDate = Calendar.getInstance().getTime();
 
-            for (Bandit b : bandits) {
-                BoundStatement boundStatement = new BoundStatement(statement);
-                session.execute(boundStatement.bind(
-                        strategy.getCollectionId(),
-                        b.getName(),
-                        actualDate,
-                        b.getProbability(),
-                        b.getTrials(),
-                        b.getSuccesses()));
-                ...
-        ...
+                for (Map.Entry<Integer, Bandit> entry : bandits.entrySet()) {
+                    BoundStatement boundStatement = new BoundStatement(statement);
+                    session.execute(boundStatement.bind(
+                            strategy.getId(),
+                            entry.getValue().getId(),
+                            entry.getValue().getName(),
+                            actualDate,
+                            entry.getValue().getSuccesses()));
+                    logger.info("Time: " + actualDate + "Saving bandit with ID " + entry.getValue().getName() + " into collection : " + strategy.getCollectionId());
+                }
+			...
+			...			
 }
 \end{lstlisting}
 
 \subsection{RESTful API}
 \label{sub:restapi}
 
-RESTful API je realizováno jako \emph{Java Web Application}.
+RESTful API je realizováno jako \emph{Java Web Application} s názvem \textbf{ensembleRestApi}.
 
 Důležitou roli v modulu hraje přítomnost a správná konfigurace tzv. \emph{Web Application Deployment Descriptor} (soubor \textbf{/WEB-INF/web.xml}). V tomto souboru je definováno vše, co by měl server, na kterém aplikace poběží, o aplikaci vědět (informace o příslušných servletech, filtrech apod.).
 
@@ -1605,9 +1605,9 @@ Pomocí třídy RecommengApplication, rozšiřující třídu ResourceConfig fra
 \begin{lstlisting}[language=java]
 public RecommengApplication(){
     register(RequestContextFilter.class);
-    register(AlgorithmEndpoint.class);
-    register(CoresEndpoint.class);
-    register(EnsembleEndpoint.class);
+    register(AlgorithmEndpointImpl.class);
+    register(ArticleEndpointImpl.class);
+    register(EnsembleEndpointImpl.class);
     register(JacksonFeature.class);        
 }
 \end{lstlisting}
@@ -1620,15 +1620,15 @@ Třída registruje následující komponenty:
 	Jedná se o Spring filter, který poskytuje propojení mezi JAX-RS a Spring žádostmi.
 
 \begin{itemize}	
-	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.AlgorithmEndpoint
+	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.AlgorithmEndpointImpl
 \end{itemize}	
 
 \begin{itemize}
-	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.CoresEndpoint
+	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.ArticleEndpointImpl
 \end{itemize}	
 
 \begin{itemize}
-	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.EnsembleEndpoint
+	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.EnsembleEndpointImpl
 \end{itemize}	
 
 	Tyto tři třídy jsou služby REST API. 
@@ -1655,37 +1655,39 @@ Třídy z balíčku:
 cz.cvut.fit.bouchja1.mi_dip.rest.client.endpoint
 \end{verbatim}
 
-jsou služby typu REST obsluhující všechny žádosti směřující na jimi mapované zdroje. Programově má každá tato třída anotaci definující její relativní URI cestu. V případě třídy \textbf{CoresEndpoint} vypadá definice následovně:
+jsou služby typu REST obsluhující všechny žádosti směřující na jimi mapované zdroje. Programově má každá tato třída anotaci definující její relativní URI cestu. V případě třídy \textbf{ArticleEndpointImpl} vypadá definice následovně:
 
 \begin{lstlisting}[language=java]
 @Component
-@Path(EnsembleEndpoint.ENDPOINT_PATH)
-public class CoresEndpoint {
+@Path(ArticleEndpointImpl.ENDPOINT_PATH)
+public class ArticleEndpointImpl implements ArticleEndpoint {
     
-    public static final String ENDPOINT_PATH = "/cores";
+    public static final String ENDPOINT_PATH = "/articles";
     public static final String USER_ARTICLE_PATH = "/{coreId}/document";
 
-	private CoresEndpointHelper coresEndpointHelper; 		
+    @Autowired
+    private ArticleEndpointHelper articleEndpointHelper;  	
     ...
 \end{lstlisting}
 
-Anotace \emph{@Path} v tomto případě značí, že třída se bude nacházet na URI \emph{/recommeng/cores}.
+Anotace \emph{@Path} v tomto případě značí, že třída se bude nacházet na URI \emph{/recommeng/articles}.
 
-Jedna z jejích služeb umožňující vytvářet či aktualizovat informace o položkách v indexu zasíláním žádostí na URI zdroje \emph{/recommeng/cores/{coreId}/document} je definována takto:
+Jedna z jejích služeb umožňující vytvářet či aktualizovat informace o zpětné vazbě u dokumentu v indexu (zasíláním žádostí na URI zdroje \emph{/recommeng/articles/\{coreId\}/document}) je definována takto:
 
 \begin{lstlisting}[language=java]
 @Path(USER_ARTICLE_PATH)
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 @POST
-public Response insertUpdateUserArticle(@PathParam("coreId") String coreId, UserArticleDocument userArticle) {
-    return coresEndpointHelper.putUserArticle(coreId, userArticle);
-}    
+@Override
+public Response updateBehavioralToArticle(@PathParam("coreId") String coreId, UserArticleDocument userArticle) {
+    return articleEndpointHelper.updateBehavioralToArticle(coreId, userArticle);
+} 
 \end{lstlisting}
 
 O samotné reprezentaci zdroje referuje příslušná podpodsekce~\ref{subsub:resource}.
 
-Provádění má na starosti v tomto případě \textbf{CoresEndpointHelper}. Ostatní služby mají též své helpery – třídy pomáhající jim v obsluze žádosti zodpovědné za vytváření odpovědí, které rozšiřují rodičovskou třídu \textbf{CommonEndpointHelper} implementující rozhraní \textbf{EndpointHelper}.
+Provádění má na starosti v tomto případě \textbf{ArticleEndpointHelper}. Ostatní služby mají též své helpery – třídy pomáhající jim v obsluze žádosti zodpovědné za vytváření odpovědí, které rozšiřují rodičovskou třídu \textbf{CommonEndpointHelper} implementující rozhraní \textbf{EndpointHelper}.
 
 Rozhraní deklaruje více metod souvisejících s odpovědí, například metody pro vytvoření odpovědi dle typu návratového kódu a sestavení odpovědi.
 
@@ -1694,25 +1696,26 @@ public Response getNotFoundResponse(String message);
 public Response build(ResponseBuilder builder, String message);
 \end{lstlisting}
 
-Proces tvorby odpovědi pak vypadá tak, že konkrétní helper volá ve své metodě službu zajišťující komunikaci s indexem. V případě metody \emph{putUserArticle(String coreId, UserArticleDocument userArticle)} pro vkládání vztahu uživatel-článek do indexu je po provedení příslušných kontrol, kterými jsou validace vstupních dat a podobně, vytvořena odpověď.
+Proces tvorby odpovědi pak vypadá tak, že konkrétní helper volá ve své metodě službu zajišťující komunikaci s indexem. V případě metody \emph{updateBehavioralToArticle(String coreId, UserArticleDocument userArticle)} pro vkládání vztahu uživatel-hodnocení-článek do indexu je po provedení příslušných kontrol, kterými jsou validace vstupních dat a podobně, vytvořena odpověď.
 
 \begin{lstlisting}[language=java]
-public Response putUserArticle(String coreId, UserArticleDocument userArticle) {
-    Response resp;
-    if (coreSolrService.getSolrService().isServerCoreFromPool(coreId)) {
+public Response updateBehavioralToArticle(String coreId, UserArticleDocument userArticle) {
+    Response resp = null;
+    if (solrService.isServerCoreFromPool(coreId)) {
         String message = UserArticleValidator.validateUserArticle(userArticle);
         if ("success".equals(message)) {
             try {
-                coreSolrService.putUserArticle(coreId, userArticle);
-                resp = getOkResponse();
+                solrService.putUserArticle(coreId, userArticle);
+                resp = getOkResponse("User-rating-item succesfully added into Solr core.");
             } catch (SolrServerException ex) {
-			...
-        } else {
-            resp = getBadRequestResponse(message);
-        }
-    } else {
-        ...
-
+                logger.error(ex);
+                resp = getServerError(ex.getMessage());
+            } catch (IOException ex) {
+                logger.error(ex);
+                resp = getServerError(ex.getMessage());
+            }
+		...
+		...
     return resp;
 }
 \end{lstlisting}
@@ -1732,9 +1735,10 @@ public Response build(ResponseBuilder builder, String message) {
 \end{lstlisting}
 
 \subsubsection{Reprezentace zdrojů}
+\label{subsub:resource}
 Zdroje jsou jedním ze stěžejních konceptů architektury REST. Kromě toho, že jsou adresovány příslušnými globálními identifikátory (v HTTP realizaci např. pomocí URI), mají též jednu nebo více reprezentací, ve které jsou vystaveny okolnímu světu, a pomocí které je možné s těmito zdroji manipulovat. 
 
-V modulu pro RESTful API reprezentuji zdroje jako třídy v Javě. Například při tvorbě zdroje \emph{/recommeng/cores/{coreId}/document} je vytvářena třída \textbf{UserArticleDocument}. 
+V modulu pro RESTful API reprezentuji zdroje jako třídy v Javě. Například při tvorbě zdroje \emph{/recommeng/articles/{coreId}/document} je vytvářena třída \textbf{UserArticleDocument}. 
 
 \begin{lstlisting}[language=java]
 @XmlRootElement
@@ -1742,11 +1746,9 @@ public class UserArticleDocument implements Serializable {
     
     private static final long serialVersionUID = -8039686696076337053L;    
     private String articleId;
-    private String articleText;
-    private String group;
     private int userId;    
-    private Date time;    
-    private double userRating;
+    private double rating;
+    private int groupId;
     ...
 \end{lstlisting}
 
@@ -1755,134 +1757,51 @@ Reprezentace tohoto zdroje ve formátu JSON by pak mohla vypadat například tak
 \begin{lstlisting}
 {
     "articleId":"http://somedomain.org/somearticle.html",
-    "articleText":"Hello Bob and Alice!",
-    "group":"123",
+    "group":123,
     "userId":42,
-    "time":"2009-04-12T20:44:55Z",
     "userRating":5.0
 }
 \end{lstlisting}
 
 \subsubsection{Komunikace s Recommeng systémem}
 \label{sec:restrec}
-Vytvořil jsem též službu \textbf{EnsembleEndpoint} pro komunikaci s Recommeng systémem. Rozdíl oproti zbylým dvou službám (AlgorithmEndpoint a CoreEndpoint) je v rozdílném chování a funkčnosti její pomocné třídy \textbf{EnsembleZeroMqHelper}.
+Vytvořil jsem též službu \textbf{EnsembleEndpointImpl} pro komunikaci s Recommeng systémem. Rozdíl oproti zbylým dvou službám (AlgorithmEndpointImpl a ArticlesEndpointImpl) je v rozdílném chování a funkčnosti její pomocné třídy \textbf{EnsembleZeroMqHelper}.
 
 Tato služba, ač běžící jako součást serverové aplikace, hraje vůči Recommeng systému roli klientskou. Pro vnější uživatele zastává tradiční roli serveru.
 
-EnsembleZeroMqHelper zpracovává příchozí žádosti od uživatelů prostřednictvím RESTful API a následně tyto žádosti transformuje do formátu JSON dle stanoveného schématu imitujícího chování HTTP protokolu. Poté je pomocníkem vytvořen klientský socket a předřazená klientská žádost je odeslána do systému. Pomocník pak vyčkává na odpověď. Poté, co ji obdrží a zpracuje do formátu HTTP odpovědi, ji vrací zpět žádajícímu klientovi. 
-
-Ukázka komunikace služby EnsembleEndpoint. Stejně jako v předchozích případech předává řízení na svou pomocnou třídu.
+EnsembleZeroMqHelper zpracovává příchozí žádosti od uživatelů prostřednictvím RESTful API. Poté transformuje do JSON formátu žádost, kterou umí Recommeng systém zpracovat. 
 
 \begin{lstlisting}[language=java]
-@Component
-@Path(EnsembleEndpoint.ENDPOINT_PATH)
-public class EnsembleEndpoint {
-    
-    ...
-    @Autowired
-    private EnsembleZeroMqHelper ensembleZeroMqHelper;
-    ...
-	
-    @Path(COLLECTION_PATH + COLLECTION_ID)
-    @GET   
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getBanditCollection(@PathParam(value="collectionId") String collectionId, @QueryParam(value = "filter") String filter) {
-        return ensembleZeroMqHelper.filterBanditCollection(collectionId, filter);
-    }
-    
-    ...
+EnsembleRequest req = new EnsembleRequest();
+req.setMethod("POST");
+req.setPath("/ensemble/services/collection");
+req.setBody("collectionId=" + banditCollection.getName() + "&bandits=" + formatBanditIds(banditCollection.getBanditIds()));
+\end{lstlisting}
+
+Pro spojení se systémem je vytvořeno vlákno \textbf{ClientTask}, jemuž je parametrem předána zpráva ve formátu JSON, a které volá metodu \emph{call()}.
+
+\begin{lstlisting}[language=java]
+ExecutorService executor = Executors.newSingleThreadExecutor();
+Future<String> result = executor.submit(new ClientTask(req.toString()));
+
+try {
+    resp = buildResponse(result.get());
+} catch (Exception ex) {
+    resp = getServerError(ex.getMessage());
 }
 \end{lstlisting}
 
-Její funkcionalita už je ale oproti předchozím případům odlišná, především kvůli nutnosti vystavět žádost do formátu volání vzdálených procedur Recommeng systému a podobným způsobem zpracovat i odpověď.
+V těle metody call se vytvoří klientský socket prostřednictvím tcp a předřazená žádost je odeslána do systému. ClientTask pak vyčkává na odpověď (\emph{resp}). Poté, co ji obdrží a zpracuje do formátu HTTP odpovědi (\emph{buildResponse()}), ji vrací zpět žádajícímu klientovi. 
 
 \begin{lstlisting}[language=java]
-public Response filterBanditCollection(String collectionId, String filter) {
-    Response resp = null;
-    connect(); // connecting to socket
-
-    SmileRequest req = new SmileRequest();
-    req.setMethod("GET");
-	...
-    req.setPath("/ensemble/services/collection/" + collectionId + "?filter=" + filter);
-
-    try {
-        String json = new ObjectMapper().writeValueAsString(req);
-		...
-        //encode data
-        byte[] smileData = mapper.writeValueAsBytes(req);
-        requester.send(smileData, 0);
-        //Block until we receive a response
-        byte[] reply = requester.recv(0);
-        SmileResponse result = mapper.readValue(reply, SmileResponse.class);
-        json = new ObjectMapper().writeValueAsString(result);
-        logger.info(json);
-        resp = buildResponse(result);            
-     	...
-     }
-    return resp;        
-}    
+ZContext ctx = new ZContext();
+Socket client = ctx.createSocket(ZMQ.DEALER);
+client.connect("tcp://localhost:5555");
 \end{lstlisting}
 
 \subsubsection{Komunikace sady algoritmů pro doporučování}
 \label{sec:algcom}
-Doporučení je vyvoláno klientskou žádostí na rozhraní reprezentované třídou \textbf{AlgorithmEndpoint}. 
-
-Služby využívají pro zpracování žádostí a vytváření odpovědí pomocnou třídu \textbf{AlgorithmEndpointHelper} (podobně jako~\ref{sec:restrec}). Tato třída v sobě navíc udržuje odkaz v podobě instance třídy \textbf{AlgorithmSolrService}, která svými metodami implementuje funkcionalitu jednotlivých algoritmů pro doporučování v textu.
-
-\emph{Pozn.} Následující text se týká též tříd \textbf{CoresEndpoint} a \textbf{CoresEndpointHelper}. Ke komunikaci se Solr je použito instance třídy \textbf{CoreSolrService}, která též obsahuje komponentu \textbf{SolrService} zajišťující obsluhu spojení.
-
-
-\paragraph{Třída SolrService}
-	
-Třída je též prostředníkem mezi REST API a Apache Solr díky komponentě \textbf{SolrService}, která funguje především jako pool instancí serverových spojení pro různá jádra Solr. Vytvoření takového poolu bylo nutností kvůli možnosti znovu použít již vytvořené instance třídy \textbf{HttpSolrServer}.
-
-HttpSolrServer je thread-safe\footnote{Programové operace jsou prováděny správně i tehdy, kdy jsou prováděny více vlákny současně.} a pokud jej použijeme k vytvoření nové instance s URL některého z jader Solr v parametru, je nutné tuto instanci znovu použít pro všechny žádosti směřující na danou URL~\cite{solrj}. 
-
-V opačném případě, kdy jsou instance vytvářeny bez jakéhokoliv rozmyslu a strategie, hrozí \emph{leak} připojení~\cite{metawerx}.
-
-Validní jádra Solr pro připojení do poolu se nastavují v souboru aplikačního kontextu pro Spring:
-
-\begin{lstlisting}[language=xml]
-<bean id="solrService" class="cz.cvut.fit.bouchja1.mi_dip.rest.client.solr.SolrService">
-    <property name="serverUrl" value="http://localhost:8089/solr/"/>
-    <property name="validSolrCores">
-        <set>
-            <value>mi_dip_core1</value>
-            <value>mi_dip_core2</value>
-        </set>
-    </property>        
-</bean>  
-\end{lstlisting}
-
-SolrService je \emph{singleton scope} komponenta s metodou \emph{createValidSolrServers()}, jež je anotována jako \emph{@PostConstruct}. Jejími atributy jsou:
-
-\begin{lstlisting}[language=java]
-private String serverUrl;
-private Map<String, HttpSolrServer> validServers = new HashMap<String, HttpSolrServer>();
-private Set<String> validSolrCores;
-\end{lstlisting}
-
-Metoda s anotací @PostConstruct je vyvolána ještě před samotným vytvořením instance třídy. Účelem je naplnění poolu příslušnými validními instancemi spojení.
-
-\begin{lstlisting}[language=java]
-Iterator<String> validCores = validSolrCores.iterator();
-while (validCores.hasNext()) {
-    String core = validCores.next();
-    validServers.put(core, new HttpSolrServer(serverUrl + core));
-}
-\end{lstlisting}
-
-Kdykoliv pak v metodách třídy AlgorithmSolrService navazujeme spojení se serverem, dle zadaného identifikátoru jádra (coreId) se pokoušíme získat instanci z poolu, který má parametry \emph{HashMap<String, HttpSolrServer>}. 
-
-\begin{lstlisting}[language=java]
-HttpSolrServer server = solrService.getServerFromPool(coreId);
-\end{lstlisting}
-
-\subsection{Algoritmy pro doporučování obsahu pomocí Apache Solr}
-\label{sec:alg}
-
-Žádost o doporučení obsahu zvoleným algoritmem směřuje od uživatele k RESTful API. Zde je žádost zpracována třídou \emph{AlgorithmEndpointImpl}, konkrétně její metodou \emph{recommend()}. Metoda má několik vstupních parametrů:
+Doporučení je vyvoláno klientskou žádostí na rozhraní reprezentované třídou \textbf{AlgorithmEndpointImpl} a její zpracování zajišťuje metoda \emph{recommend()}. Metoda má několik vstupních parametrů:
 
 \begin{lstlisting}[language=java]
 @Path(ALGORITHM_PATH)
@@ -1903,8 +1822,65 @@ Jak vidno, metoda umí v žádosti přijmout spoustu parametrů. Při každém v
 \begin{lstlisting}[language=java]
 Map<String, String> algorithmParams = createAlgorithmParams(coreId, algorithmId, groupId, userId, documentId, text, limit);
 IAlgorithm algorithm = AlgorithmFactory.getAlgorithm(algorithmId, algorithmParams);
+
+if (algorithm == null) {
+    return algorithmEndpointHelper.createAlgorithmNotFound();
+}
+else return algorithmEndpointHelper.getRecommendation(algorithm);
 \end{lstlisting}
 
+Služby využívají pro zpracování žádostí a vytváření odpovědí pomocnou třídu \textbf{AlgorithmEndpointHelper} (podobně jako~\ref{sec:restrec}). Tato třída v sobě navíc udržuje odkaz v podobě instance třídy \textbf{SolrService}, kterou předává třídám implementující jednotlivé doporučovací algoritmy (viz dále v podsekci~\ref{sec:alg}). 
+
+\paragraph{Třída SolrService}
+	
+Třída implementuje metody pro komunikaci s Apache Solr a funguje též jako pool instancí serverových spojení pro různá jádra Solr. Vytvoření poolu bylo nutností kvůli možnosti znovu použít již vytvořené instance třídy \textbf{HttpSolrServer}.
+
+Jejími atributy jsou:
+
+\begin{lstlisting}[language=java]
+private String serverUrl;
+private Map<String, HttpSolrServer> validServers = new HashMap<String, HttpSolrServer>();
+private Set<String> validSolrCores;
+\end{lstlisting}
+
+HttpSolrServer je thread-safe\footnote{Programové operace jsou prováděny správně i tehdy, kdy jsou prováděny více vlákny současně.} a pokud jej použijeme k vytvoření nové instance s URL některého z jader Solr v parametru, je nutné tuto instanci znovu použít pro všechny žádosti směřující na danou URL~\cite{solrj}. 
+
+V opačném případě, kdy jsou instance vytvářeny bez jakéhokoliv rozmyslu a strategie, hrozí \emph{leak} připojení~\cite{metawerx}.
+
+Validní jádra Solr pro připojení do poolu se nastavují v souboru aplikačního kontextu pro Spring:
+
+\begin{lstlisting}[language=xml]
+<bean id="solrService" class="cz.cvut.fit.bouchja1.mi_dip.rest.client.solr.SolrService">
+    <property name="serverUrl" value="http://localhost:8089/solr/"/>
+    <property name="validSolrCores">
+        <set>
+            <value>mi_dip_core1</value>
+            <value>mi_dip_core2</value>
+        </set>
+    </property>        
+</bean>  
+\end{lstlisting}
+
+SolrService obsahuje také metodu \emph{createValidSolrServers()}, jež je anotována jako \emph{@PostConstruct}.
+
+Metoda s anotací @PostConstruct je vyvolána ještě před samotným vytvořením instance třídy. Účelem je naplnění poolu příslušnými validními instancemi spojení.
+
+\begin{lstlisting}[language=java]
+Iterator<String> validCores = validSolrCores.iterator();
+while (validCores.hasNext()) {
+    String core = validCores.next();
+    validServers.put(core, new HttpSolrServer(serverUrl + core));
+}
+\end{lstlisting}
+
+Kdykoliv je pak metodách tříd doporučovacích algoritmů navazováno spojení se serverem, dle zadaného identifikátoru jádra (coreId) se bere instanci z poolu, který má parametry \emph{HashMap<String, HttpSolrServer>}. 
+
+\begin{lstlisting}[language=java]
+HttpSolrServer server = solrService.getServerFromPool(coreId);
+\end{lstlisting}
+
+\subsection{Algoritmy pro doporučování obsahu pomocí Apache Solr}
+\label{sec:alg}
 Třídami, které jsou schopné různými způsoby doporučovat obsah, jsou:
 
 \begin{itemize}
@@ -1916,11 +1892,7 @@ Třídami, které jsou schopné různými způsoby doporučovat obsah, jsou:
 	\item AlgorithmItemBasedCf				
 \end{itemize}
 
-Všechny tyto třídy implementují rozhraní IAlgorithm disponující jednou metodou \emph{recommend()}.
-
-Vytvořená instance doporučovací třídy je předána metodě \emph{getRecommendation()} třídy \textbf{AlgorithmEndpointHelper} a ta je postará o vyvolání konkrétní metody recommend() pro konkrétní instanci třídy.
-
-Veškerá logika doporučení je tedy vykonávána v implementaci metod recommend() konkrétních doporučovacích tříd a jejich pomocných metodách. 
+Všechny tyto třídy implementují rozhraní IAlgorithm a veškerá logika doporučení je vykonávána v implementacích metody recommend() konkrétních doporučovacích tříd a jejich pomocných metod. 
 
 \subsubsection{Reprezentace dokumentů pro účely doporučování}
 
@@ -2096,20 +2068,13 @@ List<RecommendedItem> recommendedItems = recommender.recommend(Long.parseLong(us
 
 Jednou z mnoha výzev pro někoho, kdo se snaží vybudovat doporučovací systém, je to, že je velice těžké dopředu říct, zda budou naše předpovědi dost přesné. Alespoň do té doby, dokud je nezačneme dělat a nebudeme pozorovat, jak často naši uživatelé přijímají naše návrhy. Je zde obrovský prostor možností (možných metod), z čeho vybírat. 
 
-kecy o testování
 \section{Testování různých způsobů chování}
 viz jak jarda vymyslel těch zhruba 5 příkladů, co mohou nastat
 \section{Experimenty}
 
-\url{http://contest.plista.com/wiki/example}
-	\subsection{Vyhodnocovací technologie}	
-	Výpočty. kvůli kombinování budeme počítat s floaty
-	
+\chapter{Zhodnocení aplikace a budoucí práce}
+\label{chap:futurework}	
 
-\section{Zhodnocení aplikace}
-Slovní zhodnocení
-\section{Budoucí práce}
-bude li nějaká
 
 \begin{conclusion}
 	%sem napište závěr Vaší práce
