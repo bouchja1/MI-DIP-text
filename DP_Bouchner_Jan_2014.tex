@@ -99,25 +99,25 @@ breaklines=true
 \qitem{We are leaving the age of information and entering the age of recommendation.}%
  {---\textsc{Chris Anderson, 2004~\cite{anderson}}}
  \end{epigraphs}	
-	Když se člověk před nástupem digitálního věku snažil mezi množstvím nabízených informací nalézt takové, které by pro něj byly nějakým způsobem užitečné, musel se často spíše než na vlastní úsudek spolehnout na doporučení svých známých a přátel nebo na obecnou oblibu. Tu ale více než cokoliv jiného určoval aktuální společenský trend. Tato situace úzce souvisela s nedostatečným množstvím dat.
+	Když se člověk před nástupem digitálního věku snažil mezi množstvím nabízených informací nalézt takové, které by pro něj byly nějakým způsobem užitečné, musel se často spíše než na vlastní úsudek spoléhat na doporučení svých známých a přátel nebo na obecnou oblibu. Tu ale více než cokoliv jiného určoval aktuální společenský trend. Tato situace úzce souvisela s nedostatečným množstvím dat.
 
-	S rozvojem internetu začalo narůstat i množství dostupných informací\footnote{Organizace IDC došla v článku~\emph{Extracting Value from Chaos} k závěru, že objem světových dat se každé dva roky zdvojnásobuje.~\cite{digitaluniverse}}. Nová data jsou produkována takřka každou sekundu, což vede k opačnému extrému - k jejich setřídění nám nyní nevybývá čas. Ceněným uměním je tak schopnost vytěžit maximum užitečných informací a ty posléze využít k nabytí nových znalostí.
+	S rozvojem internetu začalo narůstat i množství dostupných informací\footnote{Organizace IDC došla v článku~\emph{Extracting Value from Chaos} k závěru, že objem světových dat se každé dva roky zdvojnásobuje.~\cite{digitaluniverse}}. Nová data jsou produkována takřka každou sekundu, což vede k opačnému extrému – k jejich setřídění nám nyní nevybývá čas. Ceněným uměním je tak schopnost vytěžit maximum užitečných informací a ty posléze využít k nabytí nových znalostí.
 	
 	K těmto účelům přispěl velkou měrou rozvoj disciplíny zvané jako informační filtrování, čímž je myšlenka selekce a redukce informací. Odtud už je jen krok k personalizovanému doporučování obsahu, které se v posledních několika letech rozmáhá se zaváděním \emph{doporučovacích systémů}. 
 
-	Hned na začátku práce jsem dovolit citovat bývalého šéfredaktora časopisu Wired Chrise Andersona (článek \emph{The Long Tail~\cite{anderson}}, který shrnul nastalou situaci týkající se vývoje informací do jedné stručné věty. Je důležité vzít v potaz, že Anderson toto prohlášení učinil v roce 2004. 
+	Hned na začátku práce jsem si dovolil citovat bývalého šéfredaktora časopisu Wired Chrise Andersona (článek \emph{The Long Tail~\cite{anderson}}, který shrnul nastalou situaci týkající se vývoje informací do jedné stručné věty. Je důležité vzít v potaz, že Anderson toto prohlášení učinil v roce 2004. 
 	
-	Vývoj v oblasti informačních technologií je neúprosný a každý další rok je ve znamení výrazných pokroků ve vývoji všech oborů, těch zaměřených na doporučování nevyjímaje. Od vstupu do \emph{doporučovací éry} uplynulo deset let a situace je nyní taková, že s pouhou znalostí ověřených doporučovacích algoritmů lze sice ještě stále dosáhnout měřitelných úspěchů, například nasazením na malý e-shop zabývající se prodejem zboží, pro globálnější potřeby je to však již poněkud málo.
+	Vývoj v oblasti informačních technologií je neúprosný a každý další rok je ve znamení výrazných pokroků ve vývoji všech oborů, těch zaměřených na doporučování nevyjímaje. Od vstupu do \emph{doporučovací éry} uplynulo deset let a situace je nyní taková, že s pouhou znalostí ověřených doporučovacích algoritmů lze sice ještě stále dosáhnout měřitelných úspěchů (například nasazením některého z doporučovacích algoritmů do programové logiky menšího e-shopu), pro globálnější potřeby je to však již poněkud málo.
 	
-	Tajemstvím úspěšných systémů, jakými disponují například společnosti Google či Amazon, je aplikovaný výzkum a vývoj opírající se nejčastěji o teorii pravděpodobnosti a statistiky, strojové učení a další oblasti umělé inteligence.
+	Tajemstvím úspěšných systémů, jakými disponují například společnosti Google či Amazon, je aplikovaný výzkum a vývoj opírající se nejčastěji o teorii pravděpodobnosti a statistiky, strojového učení a dalších oblastí umělé inteligence.
 
-	Budoucnost je tedy v systémech, které dokáží sestavovat svá doporučení na základě pokročilejší analýzy, a které jsou schopny přizpůsobit doporučení svým uživatelům na míru.
+	Budoucnost je tedy v systémech, které dokáží sestavovat svá doporučení na základě pokročilejší analýzy, a které jsou schopny přizpůsobit svá doporučení uživatelům na míru.
 	
 	Jedním takovým přístupem je kombinování více doporučovacích metod dohromady a sestavování výsledků na základě zaznamenávaného vývoje.
 
 \section{Motivace} 	
 \label{sec:motivation}
-	Představme si nyní podobný systém jako rádce, který je schopen v každém okamžiku rozhodnout, co je pro uživatele žádající ho o radu nejvhodnější. Rádce těmto uživatelům sděluje informace o typu doporučení (doporučovacím algoritmu), jehož použití by v \emph{danou chvíli} mohlo vést k maximalizaci užitku z doporučeného obsahu.
+	Představme si nyní podobný systém jako rádce, který je schopen v každém okamžiku rozhodnout, co je pro uživatele, kteří žádají systém o radu, nejvhodnější. Rádce těmto uživatelům sděluje informace o typu doporučení (doporučovacím algoritmu), jehož použití by v \emph{danou chvíli} mohlo vést k maximalizaci užitku z doporučeného obsahu.
 	
 	Za \emph{danou chvíli} je považována kombinace několika vstupních proměnných, například denní doba, zařízení, ze kterého je žádáno o obsah, den v týdnu či geografická lokace uživatele.
 	
@@ -954,11 +954,11 @@ Komunikace s rozhraním by měla umožňovat vytvářet v Recommeng aplikaci kol
 K tomu účelu budou sloužit endpointy:
 
 \begin{verbatim}
-	/recommeng/ensemble/collection
+	/collection
 \end{verbatim}
 
 \begin{verbatim}
-	/recommeng/ensemble/supercollection
+	/supercollection
 \end{verbatim}
 
 Pokud uživatel zašle metodou POST žádost na tyto endpointy (obsahující jméno kolekce a seznam příslušných položek v těle požadavku), v případě dosavadní neexistence v systému budou kolekce vytvořeny a připraveny k užití systémem.
@@ -966,11 +966,11 @@ Pokud uživatel zašle metodou POST žádost na tyto endpointy (obsahující jm�
 Dále by měla existovat možnost zaslat na kolekci či super kolekci prosbu o predikci nejlepšího jejího algoritmu pro doporučení.
 
 \begin{verbatim}
-	/recommeng/ensemble/collection/{collection-id}
+	/collection/{collection-id}
 \end{verbatim}
 
 \begin{verbatim}
-	/recommeng/ensemble/supercollection/{collection-id}
+	/supercollection/{collection-id}
 \end{verbatim}
 
 Toho dosáhneme žádostí metodou GET, uvedením identifikátoru kolekce a případným specifikováním požadovaného výstupu (zda chceme vrátit jen nejlepší možnost či více možností seřazených sestupně od nejlepšího) v parametru dotazu.
@@ -984,7 +984,7 @@ Kvůli učení a vývoji znalostí systému je nezbytné mít možnost zaslat sy
 Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s metodou GET.
 
 \begin{verbatim}
-	/recommeng/algorithms/{core-id}/{algorithm-id}
+	/algorithms/{algorithm-id}
 \end{verbatim}
 
 Úkolem je zpracovat žádost uživatele o doporučení algoritmem, jehož identifikátor je uveden v cestě. 
@@ -996,11 +996,11 @@ Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (
 Důležité rozhraní umožňující zaznamenat například chování uživatele vzhledem ke sledovaným položkám.
 
 \begin{verbatim}
-	/recommeng/articles/{core-id}/document
+	/cores
 \end{verbatim}
 
 \begin{verbatim}
-	/recommeng/articles/{core-id}/articles
+	/cores/{core-id}/documents
 \end{verbatim}
 
 Prostřednictvím metody POST budou zasílány veškeré informace o položkách (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), které mají být uloženy do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být cokoliv, například URL adresa).
@@ -1599,7 +1599,7 @@ Pro potřeby modulu RESTful API jsem v tomto souboru definoval \emph{listener\fo
 
 <servlet-mapping>
     <servlet-name>jersey-serlvet</servlet-name>
-    <url-pattern>/recommeng/*</url-pattern>
+    <url-pattern>/*</url-pattern>
 </servlet-mapping>
 \end{lstlisting}
 
@@ -1665,7 +1665,7 @@ jsou služby typu REST obsluhující všechny žádosti směřující na jimi ma
 @Path(ArticleEndpointImpl.ENDPOINT_PATH)
 public class ArticleEndpointImpl implements ArticleEndpoint {
     
-    public static final String ENDPOINT_PATH = "/articles";
+    public static final String ENDPOINT_PATH = "/cores";
     public static final String USER_ARTICLE_PATH = "/{coreId}/document";
 
     @Autowired
@@ -1673,9 +1673,9 @@ public class ArticleEndpointImpl implements ArticleEndpoint {
     ...
 \end{lstlisting}
 
-Anotace \emph{@Path} v tomto případě značí, že třída se bude nacházet na URI \emph{/recommeng/articles}.
+Anotace \emph{@Path} v tomto případě značí, že třída se bude nacházet na URI \emph{/cores}.
 
-Jedna z jejích služeb umožňující vytvářet či aktualizovat informace o zpětné vazbě u dokumentu v indexu (zasíláním žádostí na URI zdroje \emph{/recommeng/articles/\{coreId\}/document}) je definována takto:
+Jedna z jejích služeb umožňující vytvářet či aktualizovat informace o zpětné vazbě u dokumentu v indexu (zasíláním žádostí na URI zdroje \emph{/cores/\{coreId\}/document}) je definována takto:
 
 \begin{lstlisting}[language=java]
 @Path(USER_ARTICLE_PATH)
@@ -1741,7 +1741,7 @@ public Response build(ResponseBuilder builder, String message) {
 \label{subsub:resource}
 Zdroje jsou jedním ze stěžejních konceptů architektury REST. Kromě toho, že jsou adresovány příslušnými globálními identifikátory (v HTTP realizaci např. pomocí URI), mají též jednu nebo více reprezentací, ve které jsou vystaveny okolnímu světu, a pomocí které je možné s těmito zdroji manipulovat. 
 
-V modulu pro RESTful API reprezentuji zdroje jako třídy v Javě. Například při tvorbě zdroje \emph{/recommeng/articles/{coreId}/document} je vytvářena třída \textbf{UserArticleDocument}. 
+V modulu pro RESTful API reprezentuji zdroje jako třídy v Javě. Například při tvorbě zdroje \emph{/cores/{coreId}/document} je vytvářena třída \textbf{UserArticleDocument}. 
 
 \begin{lstlisting}[language=java]
 @XmlRootElement
@@ -2066,18 +2066,84 @@ Recommender recommender = new GenericBooleanPrefUserBasedRecommender(model, neig
 List<RecommendedItem> recommendedItems = recommender.recommend(Long.parseLong(userId), limit);
 \end{lstlisting}
 
+\section{Testovací klient}
+\label{chap:client}
+Testovací klient je realizován jako samostatná \emph{Java Application} s názvem \textbf{RecommengClient}.
+
+Pro komunikaci s RESTful API je využíváno již jednou použitého frameworku Jersey, tentokrát však v jeho variantě Client. Prvním krokem je inicializace klienta pro komunikaci s rozhraním v metodě \emph{invokeAndRegisterClient()} třídy \textbf{EnsembleClient}. Odkaz na vytvořenou klientskou instanci budou pro svou komunikaci využívat všechna vlákna (alias žádající klienti) dále v systému.
+
+\begin{lstlisting}[language=java]
+private void invokeAndRegisterClient() {
+    ClientConfig clientConfig = new ClientConfig()
+            .register(JsonProcessingFeature.class)
+            .property(JsonGenerator.PRETTY_PRINTING, true);
+    client = ClientBuilder.newClient(clientConfig);        
+}   
+\end{lstlisting}
+
+Následně jsou vytvářeny a spouštěny instance vláknových tříd, které mají simulovat souběžný přístup více uživatelů k systému. Každému vláknu je kromě identifikátoru značícího ID uživatele předávána vytvořená instance třídy EnsembleClient s inicializovaným klientem.
+
+Vlastní komunikace probíhá tak, že jednotlivá vlákna volají metody třídy \emph{Communication}. Těmto metodám jsou skrze parametry předávány informace týkající se chování klientů.
+
+Například uživatel, který chce v systému vytvořit kontextovou kolekci s názvem \emph{morning} obsahující algoritmy \emph{latest}, \emph{random} a \emph{mlt}, nejprve vytvoří nový JsonObject a ten předá parametrem metodě, jež naváže spojení s rozhraním systému a zašle žádost o vytvoření kolekce.
+
+\begin{lstlisting}[language=java]
+JsonObject collection = Json.createObjectBuilder()
+        .add("name", "morning")
+        .add("banditIds", Json.createArrayBuilder()
+        .add("latest")
+        .add("random"))
+        .build();
+
+JSONObject createContextCollectionResp = communication.createContextCollectionRest(collection);
+\end{lstlisting}
+
+\begin{lstlisting}[language=java]
+public JSONObject createContextCollectionRest(JsonObject collection) {
+    Client client = clientApi.getClient();
+
+    Response response = client.target(clientApi.getRestfulApiLocation())
+            .path("recommeng/ensemble/collection")
+            .request(MediaType.APPLICATION_JSON_TYPE)
+            .post(Entity.entity(collection, MediaType.APPLICATION_JSON_TYPE));
+
+    JSONObject jsonObj = new JSONObject(response.readEntity(String.class));
+    return jsonObj;
+}
+\end{lstlisting}
+
+Vzniklá klientská aplikace byla použita k simulaci chování systému.
+
 \chapter{Experimentální část}
 \label{chap:tests}
 
-Jednou z mnoha výzev pro někoho, kdo se snaží vybudovat doporučovací systém, je to, že je velice těžké dopředu říct, zda budou naše předpovědi dost přesné. Alespoň do té doby, dokud je nezačneme dělat a nebudeme pozorovat, jak často naši uživatelé přijímají naše návrhy. Je zde obrovský prostor možností (možných metod), z čeho vybírat. 
+\section{Testovací klient}
+
 
 \section{Testování různých způsobů chování}
-viz jak jarda vymyslel těch zhruba 5 příkladů, co mohou nastat
-\section{Experimenty}
+
+- jak se to bude vyvíjet, když bude jeden algoritmus v kuse pořád
+úspěšný a ostatní ne
+- jak to bude, když budou doporučovat všichni zhruba stejně
+- jak to bude, když nechám jeden algoritmus hodně naběhnout a pak ho srážet
+- nějaká ta anomálie, o které jsme se bavili (že se někdo splete a
+místo toho, že e mu to líbí dá, že se mu to nelíbí, tak jak moc to
+ovlivní ty váhy)
+- kompletní ignorování
+- ignorace ensemble - že nám něco pořád doporučí, ale budeme volit jinak..
+
+\section{Experimenty s různě volenými parametry}
 
 \chapter{Zhodnocení aplikace a budoucí práce}
 \label{chap:futurework}	
 
+\section{Zhodnocení aplikace}
+
+\section{Budoucí práce}
+sofistikovanější kombinační strategie
+hateoas odpovědi
+dodělat kolaborativní filtrování s využitím ratingů, když už tam jsou. ať se nepoužívají jen pro top rated
+vytváření banditů předtím, než je budeme dávat do kolekcí. takto máme možnost vytvářet jen povolené v properties souboru.
 
 \begin{conclusion}
 	%sem napište závěr Vaší práce
@@ -2090,7 +2156,60 @@ viz jak jarda vymyslel těch zhruba 5 příkladů, co mohou nastat
 
 \chapter{Dokumentace RESTful API}
 \label{restfulapi}
-sfsdf
+
+\subsection{Algorithm}
+
+\subsubsection{Zdroje}
+
+\begin{description}
+	\item[/algorithm]
+	\item[/algorithm/{algorithm-id}/?coreId={coreId}]
+\end{description}
+
+\subsection{Cores}
+
+\subsubsection{Zdroje}
+
+\begin{description}
+	\item[/cores]
+	\item[/cores/{coreId}/documents]
+\end{description}
+
+\subsection{Collection}
+
+\subsubsection{Zdroje}
+
+\begin{description}
+	\item[/algorithm]
+	\item[]
+	\item[]
+\end{description}
+
+\subsection{Supercollection}
+
+\subsubsection{Zdroje}
+
+\begin{description}
+	\item[/algorithm]
+	\item[]
+	\item[]
+\end{description}
+
+\subsubsection{Operace}
+
+\paragraph*{Implementace}
+
+fsddfsfsdf
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& GET			\tabularnewline 
+ 		\textit{URI}		& /admission/services/processing/identity			\tabularnewline 
+ 		\textit{Typ obsahu:}		& UserIdentity			\tabularnewline  		
+ 		\textit{Formát:}		& JSON / XML			\tabularnewline 		
+ 	\end{tabular}
+\end{center} 	
+
 
 \chapter{Seznam použitých zkratek}
 % \printglossaries
