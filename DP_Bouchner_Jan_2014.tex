@@ -2163,33 +2163,40 @@ Vzniklá klientská aplikace byla použita k simulaci chování systému.
 
 \chapter{Experimentální část}
 \label{chap:tests}
-Následující experimenty proběhly spouštěním předpřipravených testů v klientské aplikaci~\ref{chap:client}. 
+K ověření funkčnosti systému je nutné provést několik experimentů. Z pozorovaných výsledků experimentů lze často vyvodit jisté obecné vlastnosti a stanovit nejvhodnější konfiguraci pro řešení daného problému.
+
+Vlastnostmi, které mě pro účely experimentů zajímají, jsou:
+
+\begin{itemize}
+	\item četnost doporučení,
+	\item počet kroků (za krok považuji žádost o doporučení + zvolení doporučení + zpětná vazba),
+	\item poměr normalizovaného součtu úspěchů ku normalizovanému poměru pokusů.
+\end{itemize}
+
+Následující experimenty proběhly spouštěním předpřipravených testů v klientské aplikaci~\ref{chap:client}.
 
 \section{Jeden úspěšný algoritmus}
-- jak se to bude vyvíjet, když bude jeden algoritmus v kuse pořád
-úspěšný a ostatní ne
+Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud budou na doporučení jedním konkrétním algoritmem neustále zasílány pozitivní zpětné vazby. Dle předpokladu by měl tento jeden algoritmus po čase zcela převážit.
 
 \subsection{Pozorované vlastnosti při různě volených parametrech}
 
 \section{Jeden úspěšný algoritmus, který je po několika krocích srážen}
-- jak to bude, když nechám jeden algoritmus hodně naběhnout a pak ho srážet
+Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud budou na doporučení jedním konkrétním algoritmem neustále zasílány pozitivní zpětné vazby, ale po čase dojde ke změně preferencí a tento doporučení udělená tímto algoritmem začnou být odmítána. Dle předpokladu by měl tento algoritmus nejprve zcela převážit, po změně preferencí by ale opět měly začít postupně dostávat šanci i jiné algoritmy.
 
 \subsection{Pozorované vlastnosti při různě volených parametrech}
 
 \section{Všechny algoritmy doporučují rovnoměrně}
-- jak to bude, když budou doporučovat všichni zhruba stejně
+Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud bude o všech algoritmech a pozitivních i negativních zpětných vazbách rozhodováno přibližně stejně. Dle předpokládané úvahy by měl systém zůstat po celou dobu běhu nerozhodný a střídavě doporučovat všechny algoritmy.
 
 \subsection{Pozorované vlastnosti při různě volených parametrech}
 
 \section{Test na odolnost vůči anomáliím}
-- nějaká ta anomálie, o které jsme se bavili (že se někdo splete a
-místo toho, že e mu to líbí dá, že se mu to nelíbí, tak jak moc to
-ovlivní ty váhy)
+Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud bude do běhu čas od času zanesena nějaká anomálie. Takovou anomálií může být například omyl při zaslání zpětné vazby (uživatel se splete a místo toho, že je s doporučením spokojený, zašle negativní hodnocení). Dle předpokladů by tyto situace neměly mít na chování systému z dlouhodobého hlediska fatální následky.
 
 \subsection{Pozorované vlastnosti při různě volených parametrech}
 
 \section{Ignorace rad adaptibilního systému}
-- ignorace ensemble - že nám něco pořád doporučí, ale budeme volit jinak..
+Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud bude uživatel zcela ignorovat rad adaptibilního systému. Čas od času tak může vznést žádost o radu, podle které se ale stejně nakonec řídit nebude.
 
 \subsection{Pozorované vlastnosti při různě volených parametrech}
 
@@ -2206,7 +2213,13 @@ vytváření banditů předtím, než je budeme dávat do kolekcí. takto máme 
 hybridni doporucovaci algoritmus
 
 \begin{conclusion}
-	%sem napište závěr Vaší práce
+TODO dopsat, přepsat... rozvést
+
+Cílem práce bylo navrhnout systém, který by dokázal automaticky volit a dynamicky kombinovat algoritmy a optimalizovat tak jejich cenovou kvalitu. Preference při kombinování měly být ovlivňovány formou pozitivní a negativní zpětné vazby zasílané na systém. Pro účely kombinování bylo nutné vybrat a implementovat sadu základních doporučovacích algoritmů. 
+
+Pro účely komunikace se systémem a systémových komponent mezi sebou mělo být navrženo obecné rozhraní. Následně mělo být navrženo a implementováno rozhraní systému v podobě služeb REST.
+
+Funkčnost vyvinutého řešení měla být ověřena experimenty na modelové úloze.
 \end{conclusion}
 
 \bibliographystyle{csn690}
