@@ -704,13 +704,13 @@ V případě shody, kdy bude mít více metod stejnou četnost výskytu, bude u�
 \label{chap:prakt}
 \section{Analýza a návrh řešení}
 \label{chap:analysis}
-Náplní této sekce je sepsání požadavků na systém, které vyplynuly z úvodních konzultací s vedoucím práce a též vlastním zkoumáním řešeného problému. Se znalostí těchto požadavků pak bude možné provést hrubý návrh architektury systému včetně technického řešení komponent, kterými bude systém disponovat.
+Náplní této sekce je sepsání požadavků na systém, které vyplynuly z úvodních konzultací s vedoucím práce a též vlastním zkoumáním řešeného problému. Se znalostí těchto požadavků bude možné provést hrubý návrh architektury systému včetně technického řešení komponent, kterými bude systém disponovat.
 
-S ohledem na výstupy získané v této kapitole by mělo být možné provést implementaci systému.
+S ohledem na výstupy získané v této kapitole lze výsledný systém implementovat.
 
 \subsection{Požadavky}
 \label{sec:req}
-Za účelem vyšší přehlednosti jsem se rozhodl související požadavky strukturovat do zastřešujících skupin dle části aplikace, která bude mít jejich obsluhu na starosti.
+Z důvodu vyšší přehlednosti jsem se rozhodl související požadavky strukturovat do skupin dle částí aplikace, které budou mít jejich obsluhu na starost.
 
 Vyvíjenými částmi jsou:
 
@@ -724,24 +724,22 @@ Vyvíjenými částmi jsou:
 \subsubsection{Požadavky na adaptibilní systém}
 
 \begin{itemize}
-	\item Systém poklade důraz na zpětnou vazbu, pomocí které bude přizpůsobovat své chování.
-	\item Systém bude přijímat zpětnou vazbu v podobě informace o tom, že uživatel se rozhodl využít jeho rad.
+	\item Systém bude klást důraz na zpětnou vazbu pomocí které bude uzpůsobovat své chování.
+	\item Systém bude přijímat zpětnou vazbu formou informace, že uživatel se rozhodl následovat jeho rad.
 	\item Systém bude přijímat pozitivní (v případě dobrého doporučení) a negativní (v případě nevhodného doporučení) zpětnou vazbu.
 	\item Systém bude v pravidelných intervalech ukládat do databáze svůj aktuální vnitřní stav.
 	\item Systém bude schopen v případě pádu aplikace a po jejím opětovném spuštění načíst naposledy uložený vnitřní stav.
-	\item Systém bude veškeré své operace týkající se rad a doporučování provádět a vyhodnocovat v reálném čase.
-	\item Systém bude schopen automaticky se přizpůsobovat vývoji v čase normalizováním ukládaných hodnoty.
+	\item Systém bude veškeré operace týkající se rad a doporučování provádět a vyhodnocovat v reálném čase.
 	\item Systém bude na každou klientskou žádost vracet příslušnou odpověď (i chybovou) – neexistuje nic jako odpověď \emph{null}.	
-	\item Systém bude umožňovat vytváření a uchovávání kontextových kolekcí určených pro kombinování.
-	\item Systém bude umožňovat vytváření a uchovávání kolekcí složených z existujících kontextových kolekcí určených pro kombinování.	
-	\item Systém bude schopen odpovídat na žádosti uživatelů poptávajících způsob doporučení.
+	\item Systém bude umožňovat vytváření a uchovávání kontextových kolekcí určených ke kombinování.
+	\item Systém bude umožňovat vytváření a uchovávání kolekcí složených z existujících kontextových kolekcí určených ke kombinování.	
+	\item Systém bude schopen odpovídat na žádosti uživatelů poptávajících rady ohledně doporučovacích metod.
 	\item Systém bude schopen odpovídat na další dotazy týkající se kolekcí (jejich existence apod.).	
-	\item Systém bude umožňovat asynchronní komunikaci s klienty.
+	\item Systém bude umožňovat asynchronní komunikaci s více klienty.
 \end{itemize}
 
 \subsubsection{Požadavky na sadu základních algoritmů}
 \begin{itemize}
-	\item Algoritmus bude dle typu přijímat parametry (uživatel, limit navrácených položek atd.), a ty využívat pro svá doporučení.
 	\item Algoritmus bude komunikovat s daty uložených v Apache Solr a nad těmito daty provádět doporučovací operace.
 \end{itemize}
 
@@ -753,17 +751,15 @@ Vyvíjenými částmi jsou:
 	\item Skrze rozhraní bude možné zaslat systému žádost o radu a obdržet informaci o nejvhodnější metodě pro doporučení.
 	\item Skrze rozhraní bude možné zaslat systému informaci o zvolené metodě pro doporučení.
 	\item Skrze rozhraní bude možné zaslat systému žádost o doporučení zvolenou metodou.	
-	\item Skrze rozhraní bude možné zaslat systému zpětnou vazbu týkající se spokojenosti s metodou, kterou jim byl doporučen obsah.
+	\item Skrze rozhraní bude možné zaslat systému zpětnou vazbu týkající se spokojenosti s metodou, kterou bylo realizováno doporučení obsahu.
 	\item Skrze rozhraní bude možné zaslat systému zpětnou vazbu týkající se hodnocení doporučených položek (informace, že jeden konkrétní uživatel dělá něco s jedním konkrétním dokumentem).
-	\item Skrze rozhraní bude možné vytvářet v úložišti dat položky určené k doporučování. 
-	\item Skrze rozhraní bude možné mazat v úložišti dat položky již nerelevantní pro doporučování. 
+	\item Skrze rozhraní bude možné mazat v úložišti položky již nerelevantní pro doporučování. 
 \end{itemize}
 
 \subsubsection{Klientská aplikace}
 \begin{itemize}
 	\item Klientská aplikace se bude připojovat k výše uvedeným funkcím systému a zpracovávat získané výsledky.
-	\item Klientská aplikace bude umožňovat přístup více uživatelů k systému.	
-\end{itemize}	
+\end{itemize}
 
 Dle disciplín softwarového inženýrství lze výčet uvedený výše označit za \textbf{funkční požadavky}.
 
@@ -794,14 +790,14 @@ Diagram~\ref{fig:recommeng} znázorňuje abstraktní návrh architektury takové
 Navrhovanými komponentami pro spuštění a běh na serveru jsou:
 
 \paragraph{Webová aplikace s rozhraním pro komunikaci s klienty.}
-	Viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 1}. Aplikace bude mít na starosti obsluhu klientských požadavků na systém prováděných prostřednictvím protokolu HTTP. Zároveň bude disponovat sadou algoritmů, které lze použít pro doporučení obsahu. Dále bude aplikace obstarávat komunikační režii s druhou aplikací běžící na aplikačním serveru (\emph{Web Application 2}), kterou je platforma pro vyhledávání v textu – Apache Solr.
+	Viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 1}. Aplikace bude mít na starost obsluhu klientských požadavků na systém zasílaných protokolem HTTP. Zároveň bude disponovat sadou algoritmů, které lze použít pro doporučení obsahu. Dále bude aplikace obstarávat komunikační režii s druhou aplikací běžící na aplikačním serveru (\emph{Web Application 2}), kterou je platforma pro vyhledávání v textu – Apache Solr.
 
 \paragraph{Apache Solr}
 	Viz diagram~\ref{fig:recommeng}, komponenta \emph{Web Application 2}. Přítomnost této aplikace vychází z nefunkčních požadavků. Apache Solr funguje jako samostatná komponenta umožňující fulltextové vyhledávání (detaily v kapitole~\ref{chap:impl}).
 
 \paragraph{Databáze}
 
-Kvůli potřebě ukládat uživatelem vytvářené kolekce, průběžný stav aplikace (časové snímky), a také nutnosti snadného obnovení načerpaných znalostí systému v případě přerušení běhu, je nutné zapojit do návrhu Database Management System (DBMS).
+Kvůli potřebě ukládat uživatelem vytvářené kolekce, průběžný stav aplikace (časové snímky), a též možnosti snadného obnovení vnitřního stavu systému v případě přerušení běhu aplikace, je nutné zapojit do návrhu Database Management System (DBMS).
 
 Volba DBMS hraje důležitou roli i při škálování aplikací. V minulosti tolik používané standardní relační DBMS mohou způsobovat zpoždění při provádění čtení/zápisu a v některých případech hrát roli úzkého hrdla aplikace.
 
@@ -824,7 +820,7 @@ Veškerá data pro výpočet a predikci budou jinak udržována přímo ve vnit�
 
 \subsubsection{Klient}
 
-Klientská strana není nikterak složitá. Potenciální uživatel aplikace má v zásadě dvě možnosti, jak s platformou komunikovat:
+Klientská strana není příliš složitá. Potenciální uživatel aplikace má v zásadě dvě možnosti, jak s platformou komunikovat:
 
 \begin{itemize}
 	\item Jen a pouze zasíláním žádostí na REST API.
@@ -833,7 +829,7 @@ Klientská strana není nikterak složitá. Potenciální uživatel aplikace má
 
 Některé ze systémových funkcionalit nelze bez komunikace s REST API využívat. Do této kategorie spadá například přidání nového vztahu k položce ve fulltextovém indexu nebo zaslání žádosti o doporučení obsahu některým z podporovaných algoritmů. 
 
-Přímé spojení s platformou skrze frontu zpráv bez nutnosti zapojení prostředníka v podobě REST API by ale měly umožňovat všechny možnosti použití Recommeng systému. Jmenovitě jde především o vytváření kolekcí se seznamem algoritmů, dále zasílání žádostí o radu pro výběr algoritmu a též metody informující systém o uživatelově chování jako zvolení konkrétního algoritmu nebo zaslání zpětné vazby o doporučení. 
+Přímé spojení s platformou skrze frontu zpráv bez nutnosti zapojení prostředníka v podobě REST API by ale měly umožňovat všechny procedury Recommeng systému. Jmenovitě jde především o vytváření kolekcí se seznamem algoritmů, dále zasílání žádostí o radu pro výběr algoritmu a též metody informující systém o uživatelově chování.
 
 V diagramu~\ref{fig:recommeng} jsem se snažil zachytit různé formy komunikace klienta se systémem. Pro lepší názornost jsou jednotlivé žádosti barevně odlišeny. Ty lze považovat za modelové případy užití inspirované systémovými požadavky.
 
@@ -845,7 +841,7 @@ Jedná se o klienta přidávajícího nový vztah mezi položkou a jejím uživa
 \begin{itemize}
 	\item klient zašle žádost na rozhraní
 	\item aplikace (Web Application 1) za rozhraním se spojí s indexem
-	\item v případě zdárného průběhu se přidá do indexu informace o tom, že 1 uživatel dělá něco s 1 dokumentem
+	\item v případě zdárného průběhu se přidá do indexu informace o tom, že 1 uživatel ohodnotil 1 dokument
 	\item klient obdrží odpověď s výsledkem žádosti
 \end{itemize}
 
@@ -869,7 +865,7 @@ V diagramu je znázorněna situace, kdy klient zasílá platformě zpětnou vazb
 
 \emph{Pozn.} V diagramu~\ref{fig:recommeng} je klient odlišen žlutou barvou.
 
-Situace znázorňuje situaci, kdy klient poptává doporučení obsahu konkrétním algoritmem. Toto doporučení klient poptává na základě odpovědi na žádost, která mu byla udělena systém (viz varianta~\ref{subsub:purple})). 
+Situace znázorňuje situaci, kdy klient poptává doporučení obsahu konkrétním algoritmem. Toto doporučení klient poptává na základě odpovědi na žádost, která mu byla udělena systémem (viz varianta~\ref{subsub:purple})). 
 
 \begin{itemize}
 	\item klient zašle žádost na rozhraní
@@ -894,7 +890,7 @@ Tento klient se rozhodl nevyužít možnosti komunikovat prostřednictvím REST 
 \label{sec:recommeng}
 
 \subsubsection{Rozhraní REST}
-Dle zadání má platforma poskytovat API pro interakci se systémem a daty formou RESTful (HTTP implementace služeb REST~\ref{rest}). Každý uživatel tak bude moci interagovat s rozhraním prostřednictvím zveřejněných endpointů.
+Dle zadání má platforma poskytovat API pro interakci se systémem a daty formou RESTful (HTTP implementace služeb REST~\ref{rest}). Každý uživatel tak bude moci interagovat s rozhraním prostřednictvím veřejných endpointů.
 
 Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, že je lze rozdělit do čtyř skupin dle podstaty úkolu, který mají plnit. 
 
@@ -909,7 +905,7 @@ Návrh tříd na zjednodušených\footnote{Pro větší srozumitelnost neuvádí
 
 V případě prvního diagramu~\ref{fig:recommengRestNavrh} jsou prostřednictvím API metod volány metody třídy \textbf{EnsembleZeroMqHelper}, která bude realizovat spojení s frontou zpráv Recommeng systému (třída \textbf{AsynchronousServer} na diagramu~\ref{fig:recommengNavrh}).
 
-Druhým zjednodušeným diagramem~\ref{fig:recommengRestNavrh2} si lze utvořit představu o způsobu komunikace metod pro RESTful API se serverem Apache Solr (třída \textbf{SolrService}) a dále s jednotlivými doporučovacícmi algoritmy (skrze API \textbf{IAlgorithm}).
+Po prozkoumání druhého zjednodušeného diagramu~\ref{fig:recommengRestNavrh2} je možné utvořit si představu o způsobu komunikace metod za RESTful API se serverem Apache Solr (třída \textbf{SolrService}) a s jednotlivými doporučovacícmi algoritmy (skrze API \textbf{IAlgorithm}).
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/rest1.pdf}
@@ -921,7 +917,7 @@ Druhým zjednodušeným diagramem~\ref{fig:recommengRestNavrh2} si lze utvořit 
  	\caption[Zjednodušený návrh tříd pro RESTful API endpointy pro komunikaci s jádrem Solr a s doporučovacími algoritmy.]{Zjednodušený návrh tříd pro RESTful API endpointy pro komunikaci s jádrem Solr a s doporučovacími algoritmy.}\label{fig:recommengRestNavrh2}
 \end{figure}	
 
-Z hlediska pohledu na část zdrojů je k dispozici diagram~\ref{fig:rest}, který by měl celou věc pomoct osvětlit. 
+K dispozici je pohled na část zdrojů (diagram~\ref{fig:rest}), který by měl celou věc pomoci osvětlit. 
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/DIPLOMKA_rest.pdf}
@@ -943,7 +939,7 @@ K tomu účelu budou sloužit endpointy:
 
 Pokud uživatel zašle metodou POST žádost na tyto endpointy (obsahující jméno kolekce a seznam příslušných položek v těle požadavku), v případě dosavadní neexistence v systému budou kolekce vytvořeny a připraveny k užití systémem.
 
-Dále by měla existovat možnost zaslat na kolekci či super kolekci prosbu o predikci nejlepšího jejího algoritmu pro doporučení.
+Dále by měla existovat možnost zaslat na kolekci či super kolekci prosbu o predikci nejlepšího algoritmu pro doporučení.
 
 \begin{verbatim}
 	/collection/{collection-id}
@@ -953,7 +949,7 @@ Dále by měla existovat možnost zaslat na kolekci či super kolekci prosbu o p
 	/supercollection/{collection-id}
 \end{verbatim}
 
-Toho dosáhneme žádostí metodou GET, uvedením identifikátoru kolekce a případným specifikováním požadovaného výstupu (zda chceme vrátit jen nejlepší možnost či více možností seřazených sestupně od nejlepšího) v parametru dotazu.
+Toho je dosaženo zasláním žádosti s metodou GET, uvedením identifikátoru kolekce a případným specifikováním požadovaného výstupu (zda chceme vrátit pouze nejlepší možnost či více možností seřazených sestupně od nejlepší) v parametru dotazu.
 
 Žádostí metodou GET bez specifikace ID bude navrácen seznam existujících kolekcí a super kolekcí v systému (existují-li v něm nějaké).
 
@@ -967,9 +963,9 @@ Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s meto
 	/algorithms/{algorithm-id}
 \end{verbatim}
 
-Úkolem je zpracovat žádost uživatele o doporučení algoritmem, jehož identifikátor je uveden v cestě. 
+Úkolem je zpracovat uživatelovu žádost o doporučení algoritmem, jehož identifikátor je uveden v cestě. 
 
-Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je nutno uvést v parametru dotazu). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z jedné skupiny a další.
+Doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je nutno uvést v parametru dotazu). V parametrech dotazu lze navíc specifikovat další vstupy týkající se doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z jedné konkrétní skupiny a další.
 
 \paragraph{Rozhraní pro úložiště článků}
 
@@ -983,9 +979,9 @@ Důležité rozhraní umožňující zaznamenat například chování uživatele
 	/cores/{core-id}/documents
 \end{verbatim}
 
-Prostřednictvím metody POST budou zasílány veškeré informace o položkách (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), které mají být uloženy do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být obecně cokoliv, například i URL adresa).
+Prostřednictvím metody POST budou zasílány veškeré informace o položkách (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), které mají být uloženy do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky nadobro z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být obecně cokoliv, například i URL adresa).
 
-Metody a endpointy uvedené výše se dají považovat za hrubý přehled budoucí funkcionality systému. Kompletní dokumentace navrženého REST API je k nahlédnutí v příloze~\ref{restfulapi} na konci práce.
+Metody a endpointy uvedené výše jsou hrubým přehledem budoucí funkcionality systému. Kompletní dokumentace navrženého REST API je k nahlédnutí v příloze~\ref{restfulapi} na konci práce.
 
 \subsubsection{Rozhraní Recommeng systému}
 Znázorňuje jej třídní diagram~\ref{fig:recommengNavrh}. V případě úspěšně navázaného spojení se systémem jsou pomocí pracovních vláken \textbf{ServerWorker} volány jednotlivé procedury systému. Tyto žádosti obsluhuje API \textbf{EnsembleApiFacade}.
@@ -1011,12 +1007,10 @@ Vzhledem k obecné známosti protokolu HTTP jsem se rozhodl napodobit jeho chov�
 	\item tělo zprávy (body)
 \end{itemize}
 
-Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status). Všechny tyto informace budou ale prezentovány ve formátu JSON.
+Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status). Tyto informace budou reprezentovány formátem zpráv JSON~\ref{json}.
 			
 \subsection{Identifikace sady algoritmů}
-Uživatel žádající o radu pro výběr nejlepšího algoritmu obdrží od systému identifikátor reprezentující tento algoritmus. 
-
-Algoritmy pro doporučování vyhodnocují především informace o uživateli, položkách a hodnocení. Ukládány jsou ale i další údaje, například datum zveřejnění položky či její popis (u článku se může jednat o text zprávy). Také s těmito informacemi mohou doporučovací algoritmy pracovat. 
+Uživatel žádající o radu pro výběr nejlepšího algoritmu obdrží od systému identifikátor reprezentující tento algoritmus. Pro účely této práce jsem vybral následující sadu algoritmů:
 
 \subsubsection{Algoritmus náhodného výběru}
 
@@ -1072,6 +1066,7 @@ Pomocí JAX-RS lze s využíváním anotací jednoduše a přehledně definovat 
 Pro účely implementace rozhraní systému Recommeng jsem zvolil vzhledem k předchozím zkušenostem referenční implementaci tohoto standardu v podobě frameworku \textbf{Jersey 2.x}. 
 
 \subsubsection{JSON}
+\label{json}
 \textbf{JSON }\footnote{\url{http://www.json.org}} je jednoduchý a univerzální formát pro výměnu dat. Zkratka skrývá význam \emph{JavaScript Object Notation}. Jeho MIME (Internet media type) je application/json. V současné době se jedná o jeden z nejpoužívanějších formátů pro výměnu dat se službami REST. Výhodami jsou rychlost zpracování a snadnost použití.
 
 Formát je postaven na dvou strukturách. 
