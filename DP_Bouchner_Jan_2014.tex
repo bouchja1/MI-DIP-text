@@ -101,7 +101,7 @@ breaklines=true
  \end{epigraphs}	
 	Když se člověk před nástupem digitálního věku snažil mezi množstvím nabízených informací nalézt takové, které by pro něj byly nějakým způsobem užitečné, musel se často spíše než na vlastní úsudek spoléhat na doporučení svých známých a přátel nebo na obecnou oblibu. Tu ale více než cokoliv jiného určoval aktuální společenský trend. Tato situace úzce souvisela s nedostatečným množstvím dat.
 
-	S rozvojem internetu začalo narůstat i množství dostupných informací\footnote{Organizace IDC došla v článku~\emph{Extracting Value from Chaos} k závěru, že objem světových dat se každé dva roky zdvojnásobuje.~\cite{digitaluniverse}}. Nová data jsou produkována takřka každou sekundu, což vede k opačnému extrému – k jejich setřídění nám nyní nevybývá čas. Ceněným uměním je tak schopnost vytěžit maximum užitečných informací a ty posléze využít k nabytí nových znalostí.
+	S rozvojem internetu začalo narůstat i množství dostupných informací\footnote{Organizace IDC došla v článku~\emph{Extracting Value from Chaos} k závěru, že objem světových dat se každé dva roky zdvojnásobuje.~\cite{digitaluniverse}}. Nová data jsou produkována takřka každou sekundu, což vede k opačnému extrému – k jejich setřídění nám nyní nezbývá čas. Ceněným uměním je tak schopnost vytěžit maximum užitečných informací a ty posléze využít k nabytí nových znalostí.
 	
 	K těmto účelům přispěl velkou měrou rozvoj disciplíny zvané jako informační filtrování, čímž je myšlenka selekce a redukce informací. Odtud už je jen krok k personalizovanému doporučování obsahu, které se v posledních několika letech rozmáhá se zaváděním \emph{doporučovacích systémů}. 
 
@@ -167,13 +167,13 @@ breaklines=true
 \section{Doporučování obsahu}	
 \label{chap:current}
 
-Všechna doporučení sdílejí stejnou myšlenku – zaujmout či upozornit na něco (či někoho) konkrétního, co by pro nás jako uživatele mohlo být nějakým způsobem zajímavé. Spousta elektronických obchodů, renomovaných aukčních domů, ale též serverů se zábavou na doporučování doslova staví své podnikání.
+Všechna doporučení sdílejí stejnou myšlenku – zaujmout či upozornit na něco konkrétního, co by pro nás jako uživatele mohlo být nějakým způsobem zajímavé. Spousta elektronických obchodů, renomovaných aukčních domů, ale též serverů se zábavou na doporučování doslova staví své podnikání.
 
 \subsection{Analýza vybraných systémů}
 \label{sec:examples}
 Na internetu lze narazit na desítky, ba i stovky systémů zapojených do reálného provozu. Záměrně jsem se snažil vybral pouze zlomek, jenž by ale zároveň pokrýval většinu typů doporučovaného obsahu (produkty, články, zábava apod.).
 
-U těchto systémů jsem se snažil identifikovat, jaké postupy jsou prováděny na pozadí jejich doporučování, jaké k tomu využívají metody a vzhledem k povaze řešeného problému jsem zkoumal též znaky týkající se kombinování metod, kterými bych se mohl nechat inspirovat při návrhu svého systému.
+U těchto systémů jsem se snažil identifikovat, jaké postupy jsou prováděny na pozadí jejich doporučování a jaké k tomu využívají metody. Vzhledem k povaze řešeného problému jsem zkoumal též znaky týkající se kombinování metod, kterými bych se mohl nechat inspirovat při návrhu svého systému.
 
 \subsubsection{Amazon.com}
 
@@ -1469,7 +1469,7 @@ BanditsMachine je třída reprezentující herní automat. Každá samostatná b
 \paragraph{SuperBayesianStrategy} SuperBayesianStrategy je třída reprezentující super kolekci více bayesovských strategii. V případě přítomnosti dvou bayesovských strategií, například kontextových atributů \uv{ráno} a \uv{Evropa}, může z těchto strategií vytvořit super strategii \uv{ráno v Evropě}.
 \paragraph{BayesianStrategy}	BayesianStrategy je třída reprezentující online učící strategii k řešení strategie Multi-Armed Bandit~\ref{sub:mabandit}. Vzhledem k přítomnosti super strategií je již jasné, že v systému může nezávisle na sobě fungovat více bayesovských strategií. 
 
-\subsubsection{Důležité metody bayesovské strategie pro kombinování metod}	
+\subsubsection{Důležité metody bayesovské strategie pro kombinování metod}
 	Důležitou metodou třídy BayesianStrategy je metoda \texttt{sampleBandits()} starající se jednak o výběr z prior pravděpodobností distribucí banditů a následně o volbu nejlepšího z nich. Jedná se o implementaci teorie probírané v~\ref{bayes}.
 	
 \begin{lstlisting}[language=java]
@@ -1493,12 +1493,12 @@ Dalšími metodami jsou pak \emph{selectBandit(String banditId)} zpracovávajíc
 \begin{lstlisting}[language=java]
 public void selectBandit(String banditId) {
     Bandit banditToUpdate = banditsMachine.getBanditAtIndex(Integer.parseInt(banditId));        
-    banditsMachine.updateTrials(banditToUpdate, totalTrialsCountsToBoost);           
+    banditsMachine.updateTrials(banditToUpdate);           
 }
 
 public void calculateFeedback(String banditCollectionId, String banditId, String feedbackValue) {
     Bandit banditToUpdate = banditsMachine.getBanditAtIndex(Integer.parseInt(banditId));
-    banditsMachine.updateAllStatsInRound(banditToUpdate, feedbackValue);   
+    banditsMachine.updateFeedback(banditToUpdate, feedbackValue);   
 }  
 \end{lstlisting}	
 
@@ -1506,6 +1506,52 @@ Těmito metodami je zajištěn přepočet hodnot, které si uchovávají jednotl
     
 V případě super strategie (třída SuperBayesianStrategy) je poměrně důležitou metodou \emph{chooseBestFromSuperStrategy()}. Ze zadané super kolekce je na základě odhadů vybrán vždy jeden nejlepší algoritmus z jejích kolekcí a pomocnou metodou \emph{bestBanditFromCombination(List<Bandit> banditsCombination)} je spočtena četnost výskytů jednotlivých algoritmů (navrácených jako nejlepší) z kolekcí. V případě shody stejného výskytu dvou a více algoritmů je na základě náhodného výběru zvolena jedna, která je doporučena uživateli.
     
+\subsubsection{Zpětná vazba}
+\label{implfeedback}     
+Výše byly zmíněny dvě metody (selectBandit() a calculateFeedback()), které se zprostředkovávají zpětnou vazbu pro systém. Nyní si pojďme popsat jejich realizaci.
+
+Tělo metody updateTrials() je jednoduché a zpětná vazba týkající se připočítávání pokusů triviální:
+
+\begin{lstlisting}[language=java]
+double newTrials = rate * trials;
+trials = newTrials + 1;
+normalizedTrialsFrequencyInTime += totalTrialsCountsToBoost;
+\end{lstlisting}	
+
+V případě souhlasu s algoritmem, který rádce navrhuje, je k jeho vnitřnímu stavu uchovávající poměr pokusů (kolikrát byl vybrán) přičteno číslo 1.
+
+Zajímavější je to v případě zasílání informace o kvalitě doporučení. Dle typu zpětné vazby (pozitivní či negativní) jsou volány dvě metody - makePositiveFeedback(banditToUpdate) či makeNegativeFeedback(banditToUpdate).
+
+V případě pozitivní zpětné vazby je danému algoritmu přičítána definovaná odměna (emph{result}):
+
+\begin{lstlisting}[language=java]
+double newSuccesses = rate * successes;
+successes = newSuccesses + result;
+\end{lstlisting}	
+
+Všem ostatním algoritmům je nějaká nadefinovaná hodnota v poměru odečtena (za předpokladu, že nemají vnitřní stav menší než poměrná odečítaná hodnota):
+
+\begin{lstlisting}[language=java]
+if (successes > (result*rate)) {
+    successes = successes - (result*rate);
+    double newSuccesses = rate * successes;
+    successes = newSuccesses;
+} else {
+    double newSuccesses = rate * successes;
+    successes = newSuccesses;            
+}
+\end{lstlisting}	
+
+Tyto počty probíhají v případě pozitivní zpětné vazby. Ještě je nutné uvažovat případ, kdy dáme na radu systému, zvolíme algoritmus, který nám poradil, ale s výsledky doporučení nejsme spokojeni.V takovém případě je udělována negativní zpětná vazba. Negativní zpětná vazba je udělována pouze tomuto nevhodně zvolenému algoritmu. Vnitřní stav ostatních algoritmů zůstává nezměněn.
+
+Penalizace je realizována následovně:
+
+\begin{lstlisting}[language=java]
+successes = successes - (result*rate);
+double newSuccesses = rate * successes;
+successes = newSuccesses;
+\end{lstlisting}	
+  
 \subsubsection{Pravidelné ukládání časových snímků}
 \label{task}
 Pravidelné ukládání časových snímků jsem realizoval Spring démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} spouštějící pravidelný časový úkol, který zprostředkuje persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze.
@@ -2070,7 +2116,7 @@ List<RecommendedItem> recommendedItems = recommender.recommend(Long.parseLong(us
 \label{chap:client}
 Testovací klient je realizován jako samostatná \emph{Java Application} s názvem \textbf{RecommengClient}.
 
-Pro komunikaci s RESTful API je využíváno již jednou použitého frameworku Jersey, tentokrát však v jeho variantě Client. Prvním krokem je inicializace klienta pro komunikaci s rozhraním v metodě \emph{invokeAndRegisterClient()} třídy \textbf{EnsembleClient}. Odkaz na vytvořenou klientskou instanci budou pro svou komunikaci využívat všechna vlákna (alias žádající klienti) dále v systému.
+Pro komunikaci s RESTful API je využíváno již jednou použitého frameworku Jersey, tentokrát však v jeho variantě Client. Prvním krokem je inicializace klienta pro komunikaci s rozhraním v metodě \emph{invokeAndRegisterClient()} třídy \textbf{EnsembleClient}. Odkaz na vytvořenou klientskou instanci budou pro svou komunikaci užívat všechna vlákna (alias žádající klienti) dále v systému.
 
 \begin{lstlisting}[language=java]
 private void invokeAndRegisterClient() {
@@ -2122,8 +2168,10 @@ Vzniklá klientská aplikace byla použita k simulaci chování systému.
 
 \section{Testování různých způsobů chování}
 
+\subsection{Jeden úspěšný algoritmus}
 - jak se to bude vyvíjet, když bude jeden algoritmus v kuse pořád
 úspěšný a ostatní ne
+
 - jak to bude, když budou doporučovat všichni zhruba stejně
 - jak to bude, když nechám jeden algoritmus hodně naběhnout a pak ho srážet
 - nějaká ta anomálie, o které jsme se bavili (že se někdo splete a
