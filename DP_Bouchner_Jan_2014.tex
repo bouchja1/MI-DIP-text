@@ -80,8 +80,8 @@ breaklines=true
 \authorFN{Bouchner} %příjmení autora
 \authorWithDegrees{Bc. Jan Bouchner} %jméno autora včetně současných akademických titulů
 \supervisor{Ing. Jaroslav Kuchař}
-\acknowledgements{Chci upřímně poděkovat všem, kteří mi věnovali čas, když jsem potřeboval pomoc při psaní této diplomové práce. Především vedoucímu práce Ing. Jaroslavu Kuchaři za správné směrování, celkový vhled do technologií a cenné rady. Děkuji také své rodině a všem přátelům za bezvýhradnou podporu během celých mých studií.}
-\abstractCS{Tato diplomová práce popisuje návrh a vývoj adaptibilního systému schopného vhodně volit a kombinovat algoritmy pro doporučování obsahu. První část práce je zasvěcena zkoumání teorie související s pokročilejšími existujícími systémy, na základě výsledků tohoto zkoumání je provedena volba vhodné učící strategie a stanovení konkrétních požadavků na systém. Druhá část práce je praktická a popisuje návrh systému, obecného rozhraní pro komunikaci, použité technologie a programátorské postupy, jakými bylo dosaženo realizace výsledného systému. Vyvinutými částmi jsou: adaptibilní systém, sada základních algoritmů pro doporučování obsahu, RESTful API a klientská aplikace, jež na závěr umožnila provést se systémem několik experimentů. Všechny části aplikace byly implementovány v programovacím jazyce Java.}
+\acknowledgements{Chci upřímně poděkovat všem, kteří mi věnovali čas, když jsem potřeboval pomoc při psaní této diplomové práce. Především vedoucímu práce Ing. Jaroslavu Kuchaři za správné směrování a cenné rady, které výrazně napomohly ke vzniku této práce. Děkuji také své rodině a všem přátelům za bezvýhradnou podporu během celých mých studií.}
+\abstractCS{Tato diplomová práce popisuje návrh a vývoj adaptibilního systému schopného vhodně volit a kombinovat algoritmy pro doporučování obsahu. První část práce je zasvěcena zkoumání teorie související s pokročilejšími existujícími systémy, na základě výsledků tohoto zkoumání je provedena volba vhodné učící strategie a stanovení konkrétních požadavků na systém. Druhá část práce je praktická a popisuje návrh systému, obecného rozhraní pro komunikaci, použité technologie a programátorské postupy, jakými bylo dosaženo výsledného systému. Vyvinutými částmi jsou: adaptibilní systém, sada základních algoritmů pro doporučování obsahu, RESTful API a klientská aplikace, jež na závěr umožnila provést se systémem několik experimentů. Všechny části aplikace byly implementovány v programovacím jazyce Java.}
 \abstractEN{Sem doplňte ekvivalent abstraktu Vaší práce v~angličtině.}
 \placeForDeclarationOfAuthenticity{V~Praze}
 \declarationOfAuthenticityOption{1} %volba Prohlášení (číslo 1-6)
@@ -103,9 +103,9 @@ breaklines=true
 
 	S rozvojem internetu začalo narůstat i množství dostupných informací\footnote{Organizace IDC došla v článku~\emph{Extracting Value from Chaos} k závěru, že objem světových dat se každé dva roky zdvojnásobuje.~\cite{digitaluniverse}}. Nová data jsou produkována takřka každou sekundu, což vede k opačnému extrému – k jejich setřídění nám nyní nezbývá čas. Ceněným uměním je tak schopnost vytěžit maximum užitečných informací a ty posléze využít k nabytí nových znalostí.
 	
-	K těmto účelům přispěl velkou měrou rozvoj disciplíny zvané jako informační filtrování, čímž je myšlenka selekce a redukce informací. Odtud už je jen krok k personalizovanému doporučování obsahu, které se v posledních několika letech rozmáhá se zaváděním \emph{doporučovacích systémů}. 
+	K těmto účelům přispěl velkou měrou rozvoj disciplíny zvané jako informační filtrování, čímž je myšlena selekce a redukce informací. Odtud už je jen krok k personalisovanému doporučování obsahu, které se v posledních několika letech rozmáhá zaváděním \emph{doporučovacích systémů}. 
 
-	Hned na začátku práce jsem si dovolil citovat bývalého šéfredaktora časopisu Wired Chrise Andersona (článek \emph{The Long Tail~\cite{anderson}}, který shrnul nastalou situaci týkající se vývoje informací do jedné stručné věty. Je důležité vzít v potaz, že Anderson toto prohlášení učinil v roce 2004. 
+	Hned ze začátku práce jsem si dovolil citovat bývalého šéfredaktora časopisu Wired Chrise Andersona (článek \emph{The Long Tail~\cite{anderson}}, který shrnul nastalou situaci týkající se vývoje informací do jedné stručné věty. Je důležité vzít v potaz, že Anderson toto prohlášení učinil v roce 2004. 
 	
 	Vývoj v oblasti informačních technologií je neúprosný a každý další rok je ve znamení výrazných pokroků ve vývoji všech oborů, těch zaměřených na doporučování nevyjímaje. Od vstupu do \emph{doporučovací éry} uplynulo deset let a situace je nyní taková, že s pouhou znalostí ověřených doporučovacích algoritmů lze sice ještě stále dosáhnout měřitelných úspěchů (například nasazením některého z doporučovacích algoritmů do programové logiky menšího e-shopu), pro globálnější potřeby je to však již poněkud málo.
 	
@@ -121,23 +121,23 @@ breaklines=true
 	
 	Za \emph{danou chvíli} je považována kombinace několika vstupních proměnných, například denní doba, zařízení, ze kterého je žádáno o obsah, den v týdnu či geografická lokace uživatele.
 	
-	Pokud bude uživatel dbát rádcových rad, s největší pravděpodobností obdrží doporučení, se kterým bude spokojen, a svou spokojenost vyjádří například tím, že u jedné z doporučených položek zažádá o bližší detaily nebo ji nějakým dalším způsobem ohodnotí. 
+	Pokud se uživatel rozhodne následovat rádce, s největší pravděpodobností obdrží doporučení, se kterým bude spokojen. Svou spokojenost poté vyjádří například tím, že u jedné z doporučených položek zažádá o bližší detaily nebo ji jiným způsobem ohodnotí. 
 	
 	Jinými slovy, uživatel zašle rádci zpětnou vazbu týkající se toho, jak kvalitní bylo dané doporučení.
 	
-	Rádce sám neprovádí žádné operace, dokud k nim není explicitně vyzván. V paměti si uchovává pouze vnitřní stav, na základě kterého rozhoduje o doporučeních. Díky průběžné analýze a přepočítávání zpětné vazby je schopen pružně reagovat na situace, kdy dojde k náhlé a hromadnější změně preferencí nebo vyvstanou jiné události, jež by měly za následek dlouhodobější doporučování nevhodného obsahu.
+	Rádce sám neprovádí žádné operace (dokud není explicitně vyzván). Ve své paměti si uchovává pouze vnitřní stav, na základě kterého rozhoduje o budoucích doporučeních. Díky průběžné analýze a přepočítávání zpětné vazby je schopen pružně reagovat na situace, kdy dojde k náhlé změně preferencí nebo vyvstanou jiné neočekávané události, jež by měly za následek dlouhodobější doporučování nechtěného obsahu.
 	
 \section{Cíle práce}
 \label{sec:objectives}
-	Nejdůležitějším cílem této práce je návrh a implementace rádce, neboli adaptibilního systému, který by byl schopen automaticky a vhodně kombinovat metody pro doporučování obsahu, rozdávat rady a přizpůsobovat se podmínkám. Součástí práce je také výběr a implementace vhodné sady algoritmů, které budou použity pro kombinování.
+	Nejdůležitějším cílem této práce je návrh a implementace rádce popsaného výše, neboli adaptibilního systému, který bude schopen automaticky a vhodně kombinovat metody pro doporučování obsahu, rozdávat rady a přizpůsobovat se podmínkám. Součástí práce je též výběr a implementace vhodné sady doporučovacích algoritmů, které budou použity pro kombinování.
 
-	Vzniklý systém bude schopen zpracovávat zpětnou vazbu od uživatelů týkající se kvality jimi zvoleného doporučení. Zpětná vazba by měla fungovat na principu odměny za dobré doporučení či trestu za špatné, což povede k ovlivňování preferencí při kombinování v čase.
+	Vzniklý systém bude schopen zpracovávat zpětnou vazbu od uživatelů, která se bude týkat kvality následovaného doporučení. Zpětná vazba bude fungovat na principu odměny za dobré doporučení a trestu za špatné. Takovýto přístup logicky povede k ovlivňování preferencí při kombinování v čase.
 		
-	Nezbytnou součástí diplomové práce je osvojení základních pojmů a pravidel z oblasti strojového učení, teorie pravděpodobnosti a statistiky. Těchto znalostí je využíváno zejména v části práce týkající se predikce vhodného algoritmu a dopadu zpětné vazby na vývoj systému. 
+	Nezbytnou součástí diplomové práce je osvojení základních pojmů a pravidel z oblasti strojového učení, teorie pravděpodobnosti a statistiky. Těchto znalostí bude využíváno zejména v části práce týkající se predikce vhodného algoritmu a dopadu zpětné vazby na vnitřní stav a další vývoj systému. 
 	
-	Vzhledem k povaze projektu je nutné navrhnout obecné rozhraní jak pro manipulaci s doporučovacími algoritmy, tak pro adaptibilní systém a jeho součásti.
+	Vzhledem k povaze projektu bude nutné navrhnout obecné rozhraní jak pro manipulaci s doporučovacími algoritmy, tak pro adaptibilní systém a všechny jeho součásti.
 	
-	Funkčnost vyvinutého řešení bude na závěr ověřena implementací modelové úlohy simulující interakci více uživatelů s adaptibilním systémem. 
+	Funkcionalita vyvinutého řešení bude na závěr ověřena implementací modelové úlohy simulující interakci uživatelů s adaptibilním systémem. 
 	
 	K dosažení těchto cílů bude zapotřebí navrhnout a vyvinout následující části:
 
@@ -153,7 +153,7 @@ breaklines=true
 	Tato práce je strukturována do 3 různých kapitol. Kapitoly jsou řazeny v pořadí, v jakém probíhaly jednotlivé fáze vývoje.	
 
 \begin{description}
-  \item[Kapitola \nameref{chap:teor}] Popisuje trendy používané současnými doporučovacími systémy a zkoumá algoritmické a matematické postupy, které by mohly být použity při návrhu strategie adaptibilního systému.
+  \item[Kapitola \nameref{chap:teor}] Popisuje trendy používané současnými doporučovacími systémy a zkoumá algoritmické a matematické postupy, které by mohly být využity při návrhu strategie adaptibilního systému.
   \item[Kapitola \nameref{chap:prakt}] Shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. Popisuje též postupy užité při vývoji aplikace na základě provedené analýzy a návrhu.
   \item[Kapitola \nameref{chap:tests}] Shrnuje poznatky nabyté z prováděných experimentů se systémem a stanovuje pravidla pro nejlepší použití.
   \item[Kapitola \nameref{chap:futurework}] Hodnotí vzniklou aplikaci a zamýšlí se nad dalším kroky ve vývoji.
@@ -167,43 +167,43 @@ breaklines=true
 \section{Doporučování obsahu}	
 \label{chap:current}
 
-Všechna doporučení sdílejí stejnou myšlenku – zaujmout či upozornit na něco konkrétního, co by pro nás jako uživatele mohlo být nějakým způsobem zajímavé. Spousta elektronických obchodů, renomovaných aukčních domů, ale též serverů se zábavou na doporučování doslova staví své podnikání.
+Téměř všechna existující doporučení sdílejí stejnou myšlenku – zaujmout či upozornit na konkrétní věc, která by pro nás jako uživatele mohla být nějakým způsobem užitečná či přínosná. Spousta elektronických obchodů, renomovaných aukčních domů, ale též serverů se zábavou na doporučování doslova staví své podnikání.
 
 \subsection{Analýza vybraných systémů}
 \label{sec:examples}
-Na internetu lze narazit na desítky, ba i stovky systémů zapojených do reálného provozu. Záměrně jsem se snažil vybral pouze zlomek, jenž by ale zároveň pokrýval většinu typů doporučovaného obsahu (produkty, články, zábava apod.).
+Na internetu lze narazit na desítky, ba i stovky systémů zapojených do reálného provozu. Záměrně jsem se proto snažil vybral pouze malý zlomek z nich, který by ale zároveň pokrýval většinu typů doporučovaného obsahu (produkty, články, zábava apod.).
 
-U těchto systémů jsem se snažil identifikovat, jaké postupy jsou prováděny na pozadí jejich doporučování a jaké k tomu využívají metody. Vzhledem k povaze řešeného problému jsem zkoumal též znaky týkající se kombinování metod, kterými bych se mohl nechat inspirovat při návrhu svého systému.
+U těchto systémů jsem se snažil identifikovat, jaké postupy jsou používány v pozadí jejich doporučování a jaké konkrétní metody využívají. Vzhledem k povaze řešeného problému jsem též zkoumal znaky týkající se kombinování metod, jimiž bych se mohl nechat inspirovat při návrhu svého systému.
 
 \subsubsection{Amazon.com}
 
-\textbf{Amazon.com, Inc.}\footnote{\url{http://www.amazon.com}} je jedním z největších a nejstarších internetových prodejců. Společnost začínala jako online knihkupectví, postupem let však zařadila do své prodejní nabídky též hudební a filmové nosiče, software, elektroniku, nábytek a spoustu dalšího zboží včetně vlastní spotřební elektroniky v podobě čtečky elektronických knih a tabletů Kindle či poskytování služeb z oblasti cloud computingu.
+\textbf{Amazon.com, Inc.}\footnote{\url{http://www.amazon.com}} je jedním z největších a nejstarších internetových prodejců. Společnost začínala jako online knihkupectví, postupem let však zařadila do své prodejní nabídky i hudební a filmové nosiče, software, elektroniku, nábytek a spoustu dalšího zboží včetně vlastní spotřební elektroniky v podobě čtečky elektronických knih a tabletů Kindle.
 
-Firmu lze řadit mezi průkopníky doporučování na internetu. Jako jeden z prvních internetových prodejců začala svým zákazníkům doporučovat výrobky na základě nákupů jiných uživatelů.
+Firmu lze řadit mezi průkopníky doporučování na internetu. Jako jeden z prvních internetových prodejců začala svým zákazníkům nabízet ke koupi výrobky na základě nákupu jiných uživatelů s podobným osobnostním profilem.
 
-Doporučovací systém společnosti je založen na více zdrojích informací:
+Samotný doporučovací systém společnosti je založen na více zdrojích dat:
 
 \begin{itemize}
 	\item Porovnávání uživatelem prohlížených položek a položek umístěných uvnitř nákupního košíku s položkami, které se společně s těmito prohlíženými položkami v minulosti často prodávaly\footnote{affinity analysis – nacházení spojení mezi odlišnými položkami. Základním příkladem budiž vztah mezi šamponem a kondicionérem. Kupující je většinou používá v ten samý čas~\cite{affinity}. Při nákupu jednoho by mohl mít tedy zájem i o druhý.}.
-	\item Uchovávání informací ohledně hodnocení položek uživateli.
+	\item Uchovávání uživatelských hodnocení nabízených položek.
 	\item Zaznamenávání nákupní historie.
-	\item Sledování spousty dalších postupů, jako například vyhodnocování demografických informací (dle doručovací adresy), zaznamenávání pohybu po stránce (jaké všechny položky si uživatel prohlédl, než vložil jednu konkrétní do nákupního košíku) nebo sledování prokliků\footnote{Jako proklik se označuje takové kliknutí na odkaz, které uživatele dovede na cílovou stránku~\cite{proklik}.} z marketingových e-mailů s odkazy na zboží~\cite{amazonrec} a jejich vzájemná kombinace.
+	\item Sledování spousty dalších postupů, jako například vyhodnocování demografických informací (dle doručovací adresy), zaznamenávání pohybu po stránce (jaké všechny položky si uživatel prohlédl, než vložil jednu konkrétní do nákupního košíku) nebo sledování prokliků\footnote{Jako proklik se označuje takové kliknutí na odkaz, které uživatele dovede na cílovou stránku~\cite{proklik}.} z marketingových e-mailů obsahující odkazy na zboží~\cite{amazonrec}. Tyto všechny informace navíc ještě vzájemně kombinují.
 \end{itemize}
 
-Kromě výše uvedeného využívá společnost strategii \emph{item-to-item kolaborativní filtrování}.
+Kromě výše uvedeného využívá společnost metod kolaborativního filtrování ve variantě \emph{item-to-item}.
 
-Díky vzájemné kombinaci všech těchto pravidel a metod nalezne fanoušek moderních technologií při návštěvě stránek především odkazy na technologické novinky všeho druhu, zatímco mladá matka bude mít v nabídce té samé stránky ve větší míře zastoupeno dětské zboží.
+Díky vzájemné kombinaci všech těchto pravidel a metod tak například fanoušek moderních technologií při návštěvě stránek nalezne především odkazy na technologické novinky všeho druhu, zatímco mladá matka bude mít v nabídce té samé stránky ve větší míře zastoupeno dětské zboží.
  
-Výše jsou samozřejmě popsány pouze základní principy. Doporučovací systém společnosti jako takový je velmi komplexní a detaily algoritmu jsou drženy jako obchodní tajemství. K nahlédnutí jsou ale patenty, např. \emph{Personalized recommendations of items represented within a database}~\cite{jacobi2006personalized} nebo \emph{Collaborative recommendations using item-to-item similarity mappings}~\cite{linden2001collaborative}.
+Výše jsou samozřejmě popsány pouze základní principy. Doporučovací systém společnosti je velmi komplexní a detaily algoritmu jsou drženy jako obchodní tajemství. K nahlédnutí jsou ale patenty, např. \emph{Personalized recommendations of items represented within a database}~\cite{jacobi2006personalized} nebo \emph{Collaborative recommendations using item-to-item similarity mappings}~\cite{linden2001collaborative}.
 
 \subsubsection{Netflix}
 
-\textbf{Netflix, Inc.}\footnote{\url{https://www.netflix.com}} je společnost, poskytující v začátcích své služby jako internetová videopůjčovna, jež se v průběhu posledních několika let rozrostla v obrovskou mediální společnost. Strategicky významným byl pro ni rok 2007. Tehdy byla nabídka jejích služeb rozšířena o filmy přenášené přes stream\footnote{Snímek se fyzicky nenachází na koncovém zařízení, ale přehrává se přímo ze serveru poskytovatele .}~\cite{netflix2007}. Nyní společnost nabízí obsah v podobě filmů a seriálů pro většinu v dnešní době používaných platforem jako PC, Mac, PlayStation3, Wii, Xbox a také pro mobilní telefony a tablety. 
+\textbf{Netflix, Inc.}\footnote{\url{https://www.netflix.com}} je velká mediální společnost. Strategicky významným byl pro ni rok 2007. Tehdy byla nabídka jejích služeb rozšířena o filmy přenášené přes stream\footnote{Snímek se fyzicky nenachází na koncovém zařízení, ale přehrává se přímo ze serveru poskytovatele .}~\cite{netflix2007}. Nyní společnost nabízí obsah v podobě filmů a seriálů pro většinu v dnešní době používaných platforem jako PC, Mac, PlayStation3, Wii, Xbox a také pro mobilní telefony a tablety. 
 
-Vzhledem k tomu, že firma staví své podnikání na tom, že její zákazníci ji platí za konzumaci zábavy, je v jejím vlastním zájmu, aby těmto uživatelům sledujícím filmy a seriály nabízela automaticky další obsahově či žánrově podobné, zkrátka takové, jenž budou co možná nejvíce lahodit jejich vkusu (dle~\cite{netflixrec} pochází $\frac{2}{3}$ zapůjčených filmů na Netflix z předchozího doporučení). Úspěšné podnikání společnosti je tak přímo závislé na tom, jak kvalitním doporučovacím systém společnost disponuje. 
+Vzhledem k tomu, že firma staví své podnikání na tom, že její zákazníci si platí za konzumaci zábavy, je v jejím vlastním zájmu, aby těmto uživatelům sledujícím filmy a seriály nabízela automaticky další obsahově či žánrově podobné, zkrátka takové, jenž budou co možná nejvíce lahodit jejich vkusu (dle~\cite{netflixrec} pochází $\frac{2}{3}$ zapůjčených filmů na Netflix z předchozího doporučení). Úspěšné podnikání společnosti je tak přímo závislé na tom, jak kvalitní má doporučovací systém.
 
 \paragraph{Netflix Prize}
-Za tímto účelem vyvinula společnost vlastní systém \emph{Cinematch} napomáhající svým zákazníkům objevit pro ně zajímavé filmy. Postupný vývoj na poli doporučovacích systémů však přivedl společnost na otázku, zda není možné vyvinout systém, jenž by dokázal Cinematch v oblasti předpovídání filmového vkusu porazit.Společnost tak vypsala začátkem října 2006 soutěž známou jako \emph{Netflix Prize}. Týmu, kterému by se podařilo zlepšit dosavadní výsledky systému Cinematch alespoň o 10 procent, by byla přiřknuta odměna ve výši 1 milion amerických dolarů.
+Za tímto účelem vyvinula společnost vlastní systém \emph{Cinematch}. Postupný vývoj na poli doporučovacích systémů však přivedl společnost na otázku, zda není možné vyvinout systém, jenž by dokázal Cinematch v oblasti předpovídání filmového vkusu porazit. Začátkem října 2006 byla proto vypsána soutěž známá jako \emph{Netflix Prize}. Týmu, kterému by se podařilo zlepšit dosavadní výsledky systému Cinematch alespoň o 10 procent, by byla přidělena odměna ve výši 1 milion amerických dolarů.
 
 Do soutěže byla uvolněna sada testovacích dat obsahující:
 
@@ -214,94 +214,96 @@ Do soutěže byla uvolněna sada testovacích dat obsahující:
 	\item datum uskutečnění hodnocení
 \end{itemize}
 
-Data obsahovala 100 480 507 takových hodnocení pro 17 770 filmů od 480 189 uživatelů. Uvolněna byla ještě další sada testovacích dat obsahující stejné informace, jen s vynecháním uživatelských hodnocení. Cílem pak bylo predikovat tato chybějící hodnocení opět na intervalu $\langle1,5\rangle$~\cite{netflixrules}.
+Data obsahovala 100 480 507 hodnocení pro 17 770 filmů od 480 189 uživatelů. Uvolněna byla ještě další sada testovacích dat obsahující stejné informace, jen s vynecháním uživatelských hodnocení. Cílem pak bylo predikovat tato chybějící hodnocení opět na intervalu $\langle1,5\rangle$~\cite{netflixrules}.
 
-Celková výhra byla udělena až v roce 2009 (do té doby sice docházelo k průběžnému zlepšování výsledků, nikdy však nebylo dosaženo požadovaného zlepšení 10 procent) týmu \emph{BellKor's Pragmatic Chaos}, vzniklého spojením tří do té doby samostatně soutěžících týmů.
+Celková výhra byla udělena až v roce 2009 (do té doby sice docházelo k průběžnému zlepšování výsledků, nikdy však nebylo dosaženo požadovaného zlepšení o 10 procent) týmu \emph{BellKor's Pragmatic Chaos}, který vznikl spojením tří do té doby samostatně soutěžících týmů.
 
-Vítězný tým dosáhl cíle pomocí \emph{pokročilých technik strojového učení}. Zjistil přitom především to, že hodnocení každého filmu je silně subjektivní záležitostí, kterou je velmi obtížné programově předpovědět. Ukázalo se také, že ve větší míře záleží na tom, zda uživatel hodnotí právě dosledovaný film nebo film, který zhlédl již před delší dobou. Velkou roli hraje i nálada uživatele v průběhu dne, zda film sleduje například o víkendu, kdy má volno a tak podobně~\cite{bellkor}.
+Vítězný tým dosáhl cíle pomocí pokročilých technik strojového učení.
 
-Výsledný algoritmus, jenž získal cenu, vznikl kombinováním zhruba stovky menších algoritmů. S trochou nadsázky lze tedy prohlásit, že jednou z hlavních taktik pro kvalitní doporučení je \emph{použití tolika algoritmů, kolik je jen možné}.
+Při tom všech bylo zjištěno několik zajímavých poznatků. Například to, že hodnocení každého filmu je silně subjektivní záležitostí, kterou je velmi obtížné programově předpovědět. Ukázalo se také, že ve velké míře záleží na tom, zda uživatel hodnotí právě dosledovaný film nebo film, který zhlédl již před delší dobou. Velkou roli hraje i nálada uživatele v průběhu dne (zda film sleduje například o víkendu, kdy má volno)~\cite{bellkor}. Lze tedy opět mluvit o uživatelském kontextu vstupujícího do doporučování.
+
+Výsledný algoritmus, jenž získal cenu, vznikl kombinováním zhruba stovky menších algoritmů. S trochou nadsázky lze tedy prohlásit, že jednou z hlavních taktik pro kvalitní doporučení je \emph{použití tolika algoritmů, na kolik jen máme kapacity}.
 
 \subsubsection{Mendeley}	
 \label{mendeley}
-\textbf{Mendeley}\footnote{\url{http://www.mendeley.com}} je systém určený k doporučování vědeckých článků využívající jako svou výpočetní vrstvu technologii Apache Mahout\footnote{https://mahout.apache.org}. Cílem systému je spojovat dohromady výzkumníky a jejich data. Svým uživatelům napomáhá v organizaci výzkumu, umožňuje jim navázat potenciální spolupráci s dalšími uživateli aplikace a napomáhá též k objevení nových podnětů pro vlastní práci. Uživateli této aplikace jsou přední světové university jako University of Cambridge, Stanford University, MIT či University of Michigan. Data pro aplikaci pocházejí z vlastních importů uživateli i z externích importů skrze různé katalogy vědeckých prací. 
+\textbf{Mendeley}\footnote{\url{http://www.mendeley.com}} je systém určený k doporučování vědeckých článků využívající jako svou výpočetní vrstvu technologii Apache Mahout\footnote{https://mahout.apache.org}. Cílem systému je spojovat dohromady výzkumníky a jejich data. Svým uživatelům napomáhá v organizaci výzkumu, umožňuje jim navázat potenciální spolupráci s dalšími uživateli aplikace a napomáhá též k objevení nových podnětů pro vlastní vědeckou práci. Uživateli této aplikace jsou přední světové university jako University of Cambridge, Stanford University, MIT či University of Michigan. Data pro aplikaci pocházejí z uživatelských importů i z externích importů skrze různé katalogy prací. 
 
-Projekt samotný se v jedné ze svých prezentací~\cite{mendeleylastfm} přirovnává k největší hudební databázi na internetu – last.fm\footnote{http://www.last.fm}. Ta funguje na principu, že potenciální uživatel provede na svém počítači instalaci desktopové aplikace, následně s již instalovanou aplikací začne poslouchat hudbu a tím je zahájeno automatické odesílání informace o skladbě (interpret, žánr) na server last.fm. Podle dat odeslaných na server jsou uživateli v budoucnu doporučovány další skladby. 
+Projekt sám se v jedné ze svých prezentací~\cite{mendeleylastfm} přirovnává k největší hudební databázi na internetu – last.fm\footnote{http://www.last.fm}. Ta funguje na principu, že potenciální uživatel si na svém počítači nainstaluje desktopovou aplikace, následně s již instalovanou aplikací začne poslouchat ve svém přehrávači hudbu a tím je zahájeno automatické odesílání informace o skladbě (interpret, žánr) na server last.fm. Podle dat odeslaných na server jsou uživateli v budoucnu doporučovány další skladby. 
 
 Mendeley tuto analogii vysvětluje tak, že hudební knihovny jsou v jeho případě výzkumné knihovny, role interpretů zastávají jednotliví výzkumníci, hudební skladby jsou pak jimi publikované články a jednotlivé hudební žánry reprezentují vědecké disciplíny.  
 
 Doporučení jsou dle dostupných informací~\cite{mendeleylastfm} generována dvojím způsobem. 
 
 \begin{description}
-	\item[Kolaborativní filtrování] Používá se pro personalizované doporučení. Podporována je jak user-based, tak item-based varianta.
-	\item[Filtrování založené na obsahu] Používá se k nalezení souvisejících výzkumů, například pro nalezení článku ze stejné výzkumné kategorie nebo článku majícího podobný název. 
+	\item[Kolaborativní filtrování] Používá se pro personalisovaná doporučení. Podporována je jak user-based, tak item-based varianta.
+	\item[Filtrování založené na obsahu] Používá se k nalezení souvisejících výzkumů, například k nalezení článku ze stejné výzkumné kategorie nebo článku majícího podobný název. 
 \end{description}
 
-Uživatelé vyjadřují svůj zájem či nezájem o každou z doporučených položek zpětnou vazbou, která je dvojího typu:
+Uživatelé vyjadřují svůj zájem či nezájem o každou z doporučených položek zpětnou vazbou. Ta je dvojího typu:
 
 \begin{description}
 	\item[Accept] vyjadřuje, že uživatel s daným doporučením souhlasí nebo pro něj bylo nějakým způsobem užitečné.
-	\item[Remove] vyjadřuje nevhodné doporučení. Uživatel touto volbou dává najevo, že podobné doporučení by příště již raději nedostal.
+	\item[Remove] vyjadřuje nevhodně zvolené doporučení. Uživatel touto volbou dává najevo, že podobné doporučení by příště již raději nedostal.
 \end{description}
 
 \subsubsection{Google News}	
 
-Vlastní platformu pro doporučování obsahu vytvořila v rámci svého vývoje též společnost \textbf{Google, Inc.}~\footnote{\url{http://www.google.com/about/company}}. Její výzkumníci se v práci~\cite{googlenews} zabývali vývojem prediktivního systému pro personalizované doporučování zpráv na webu Google News~\footnote{\url{http://news.google.com}}.
+Vlastní platformu pro doporučování obsahu vytvořila v rámci svého vývoje též společnost \textbf{Google, Inc.}~\footnote{\url{http://www.google.com/about/company}}. Její výzkumníci se v práci~\cite{googlenews} zabývali vývojem prediktivního systému pro personalisované doporučování zpráv na webu Google News~\footnote{\url{http://news.google.com}}.
 
-Přihlášeným uživatelům, majících v prohlížeči explicitně povolen záznam historie prohlížení, jsou generována doporučení založená na zájmu těchto uživatelů, která vycházejí z různých profilů sestavených pozorováním chování uživatelů na stránce.  
+Přihlášeným uživatelům, kteří mají v prohlížeči explicitně povolen záznam historie prohlížení, jsou generována doporučení založená na dřívějším zkoumání různých profilů (sestavených z pozorování chování uživatelů na stránce).  
 
-K porozumění, jak se mění zájem uživatelů o zprávy v čase, napomohla výzkumníkům analýza logů (záznamy chování anonymních uživatelů na stránce). Na základě této analýzy byl vyvinut Bayesovský framework pro předvídání zájmu uživatelů o zveřejňované novinky.
+K porozumění, jak se mění zájem uživatelů o zprávy v čase, tak napomohla výzkumníkům analýza logů (záznamy chování anonymních uživatelů na stránce). Na základě této analýzy byl posléze vyvinut bayesovský framework pro předvídání zájmu uživatelů o publikované novinky.
 
-Kombinace mechanismu pro filtraci informací vzešlého z nashromážděných uživatelských profilů a již existujícího mechanismu využívajícího principů kolaborativního filtrování vedla ke vzniku systému generujícího personalisované zprávy. Vzniklá kombinace byla nasazena do reálného provozu a následné experimenty prokázaly, že kombinováním metod došlo ke zlepšení kvality doporučování.
+Kombinace tohoto mechanismu filtrace informací s již existujícím mechanismem využívajícího principů kolaborativního filtrování vedla ke vzniku systému generujícího personalisované zprávy. Vzniklá kombinace byla nasazena do reálného provozu a následné experimenty prokázaly, že kombinováním metod došlo ke zlepšení kvality doporučování.
 
 \subsubsection{Výzkum}
 
-Také současný výzkum v oblasti doporučovacích systémů, zdá se, nezahálí. Zde uvádím příklad dvou populárních akcí, jejichž náplní či součástí je problematika doporučování a doporučovacích systémů.
+Také současný výzkum v oblasti doporučovacích systémů nezahálí. Uvedu zde pro příklad dvě populární akce, jejichž náplní či součástí je problematika doporučování a doporučovacích systémů.
 
 \begin{itemize}
-  \item \textbf{ACM RecSys conference.}~\footnote{\url{http://recsys.acm.org}} Konference je předním mezinárodním fórem pro prezentaci nových výsledků výzkumu a postupů na poli doporučovacích systémů. RecSys sdružuje hlavní mezinárodní výzkumné skupiny a též mnoho předních světových společností na trhu e-commerce. Nabízí také doprovodný program v podobě zvaných přednášek, konzultace týkající se problematiky RecSys a sympózium studentů doktorských programů. 
+  \item \textbf{ACM RecSys conference.}~\footnote{\url{http://recsys.acm.org}} Konference je předním mezinárodním fórem pro prezentaci nových výsledků výzkumu a postupů na poli doporučovacích systémů. RecSys sdružuje hlavní mezinárodní výzkumné skupiny a též mnoho předních světových společností operujících na trhu e-commerce. Nabízí také doprovodný program v podobě zvaných přednášek, konzultace týkající se problematiky RecSys a sympózium studentů doktorských programů. 
   
-  Zajímavé prezentace jsou volně dostupné na internetu, dá se tedy načerpat spousta inspirace do vlastního výzkumu. Mě osobně velmi zaujala prezentace~\footnote{\url{http://www.slideshare.net/d0nut/open-recommendation-platform}} z posledního ročníku konference (Hong Kong, 2013), se kterou vystoupil Torben Brodt, jeden z klíčových řečníků. V prezentaci popisuje tzv. \emph{Open Recommendation Platform}~\ref{sub:orp}. 
+  Zajímavé prezentace jsou volně dostupné na internetu, dá se tedy načerpat spousta inspirace k vlastnímu výzkumu. Mě osobně velmi zaujala prezentace~\footnote{\url{http://www.slideshare.net/d0nut/open-recommendation-platform}} z posledního ročníku konference (Hong Kong, 2013), se kterou vystoupil Torben Brodt, jeden z klíčových řečníků. V prezentaci popisuje tzv. \emph{Open Recommendation Platform}~\ref{sub:orp}. 
   
-  \item \textbf{ICWSM: Weblog and Social Media.}~\footnote{\url{http://www.icwsm.org/2014}} The International AAAI Conference on Weblogs and Social Media je mezinárodní konference, na které se střetávají výzkumní pracovníci z oblasti počítačových a společenských věd. Konference je pořádaná za účelem sdílení znalostí, diskutování o nápadech a výměny informací. Probíranými body jsou psychologické a sociální teorie, výpočetní algoritmy pro analýzu sociálních médií a jedním z mnoha témat jsou též doporučovací systémy.
+  \item \textbf{ICWSM: Weblog and Social Media.}~\footnote{\url{http://www.icwsm.org/2014}} The International AAAI Conference on Weblogs and Social Media je mezinárodní konference, na které se střetávají výzkumní pracovníci z oblasti počítačových a společenských věd. Konference je pořádaná za účelem sdílení znalostí, diskutování o nápadech a výměny informací. Probíranými body jsou psychologické a sociální teorie, výpočetní algoritmy pro analýzu sociálních médií a jedním z témat jsou i doporučovací systémy.
 \end{itemize}
 
-O tématu se též píše spousta článků a každým rokem vzniká několik disertačních prací. Dle dostupných informací z ACM RecSys Wiki~\footnote{\url{http://www.recsyswiki.com/wiki/List_of_recommender_system_dissertations}} jich jen za poslední 4 roky bylo přes 50.
+O tématu doporučování se též píše mnoho článků a každý rok vznikne několik disertačních prací. Dle dostupných informací z ACM RecSys Wiki~\footnote{\url{http://www.recsyswiki.com/wiki/List_of_recommender_system_dissertations}} jich jen za poslední 4 roky bylo přes 50.
 
 \subsubsection{Open Recommendation Platform}
 \label{sub:orp}
 \textbf{Open recommendation Platorm} (zkr. ORP) je projekt společnosti \textbf{plista}\footnote{\url{https://www.plista.com}} prezentovaný na posledním ročníku konference ACM RecSys 2013 v Hong Kongu. 
 
-Motivací ORP bylo dosáhnout lepších výsledků kombinací více metod doporučování obsahu společně se zapojením kontextu uživatele (informacemi čerpanými převážně z HTTP hlaviček). Informacemi, které využívají, jsou například:
+Motivací ORP bylo dosáhnout lepších výsledků doporučování díky přístupu založeném na kombinaci více metod doporučování obsahu společně se zapojením kontextu uživatele (informace čerpané převážně z HTTP hlaviček). Kontextovými atributy jsou například:
 
 \begin{itemize}
 	\item IP adresa, která může prozradit geologickou lokaci uživatele,
 	\item denní doba, kdy uživatel přistupuje ke stránce,
-	\item user agent prohlížeče informující o zařízení, ze kterého bylo k obsahu přistoupeno (mobilní telefon, PC),
+	\item agent prohlížeče informující o zařízení, ze kterého bylo k obsahu přistupováno (mobilní telefon, PC),
 	\item referer pro zjištění způsobu přístupu (přístup z vyhledávání nebo přímý přístup). 
 \end{itemize}
 
-Řešení spočívá v utvoření databáze kontextových atributů (jeden atribut pro každou hodinu dne, pro každou kategorii, stát atd.), kdy je u každého atributu udržován seřazený seznam doporučovacích metod dle jejich úspěchu dosahovaném pro daný atribut. Tyto atributy lze kombinovat a dosáhnout tak nejlepšího doporučení v daném kontextu.
+Řešení ORP spočívá v utvoření databáze kontextových atributů (jeden atribut pro každou denní hodinu, pro každou kategorii, stát atd.), kdy je pro každý atribut udržován seřazený seznam doporučovacích metod dle úspěchu, kterého dosáhly v případě použití v daném kontextu. Tyto atributy lze libovolně kombinovat a dosáhnout tak nejlepšího doporučení v daném kontextu.
 
-Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}, na kterém je systém zachycen jako \emph{Ensemble}. Ensemble je schopen pro příchozího uživatele (kombinace kontextových atributů) vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, jenž pak použije k publikování obsahu pro tohoto uživatele (uživatelé jsou značení jako \emph{Visitors}). Po obdrženém doporučení zasílá uživatel systému zpětnou vazbu, díky které dochází k rekalkulaci preferencí (a přepočítání úspěšnosti metod v jednotlivých použitých atributech), což ovlivní výběr nejlepšího algoritmu pro další doporučení.
+Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}, na kterém je systém zachycen jako \emph{Ensemble}. Ensemble je schopen pro příchozího uživatele (kombinace kontextových atributů) vybírat z kolekce doporučovacích algoritmů ten nejvhodnější, jenž pak použije k publikování obsahu pro tohoto uživatele (uživatelé jsou značení jako \emph{Visitors}). Po obdrženém doporučení zasílá uživatel systému zpětnou vazbu, díky které dochází k rekalkulaci preferencí (a přepočítání úspěšnosti metod v jednotlivých použitých atributech), což ovlivní výběr nejlepšího algoritmu v dalších doporučeních.
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/plistaEnsemble.png}
  	\caption[Abstraktní pohled na systém společnosti plista]{Abstraktní pohled na systém společnosti plista. Zdroj: \cite{slideshare:plista}}\label{fig:plista}
 \end{figure}	
 
-V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechno by měl systém podobného typu umět. Zmíněna je potřeba rychlého síťového protokolu a rychlé fronty zpráv. Padla zde též potřeba rychlého úložiště pro data.
+V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechno by měl systém podobného typu umět. Je zde uvedena potřeba rychlého síťového protokolu, rychlé fronty zpráv a rychlého úložiště pro data.
 
-K dosažení správné funkcionality pro výběr nejlepšího algoritmu společnost používá tzv. \emph{multi-armed bayesian bandit}~\ref{sub:mabandit} v bayesovské variantě, což je i jedna ze strategií, kterou mi na úvodní schůzce doporučil vedoucí této práce.
+Důležitá je informace, že k dosažení výběru nejlepšího algoritmu se používá strategie \emph{Multi-armed bandit}~\ref{sub:mabandit} v bayesovské variantě, což je i jedna ze strategií, kterou mi na úvodní schůzce doporučil vedoucí této práce.
 
 \subsubsection{easyrec}
 Technická knihovna společnosti IBM obsahuje přehledný seznam~\cite{ibm} několika doporučovacích systémů, z nichž převážná část vznikla jakou součást univerzitního výzkumu.
 
-Z tohoto seznamu se mi jako velmi zajímavý jeví systém \textbf{easyrec}\footnote{\url{http://easyrec.org/recommendation-engine}}. Jedná se o open source webovou aplikaci napsanou v programovacím jazyce Java nabízející personalizovaná doporučení prostřednictvím RESTful webových služeb. Díky vystavenému REST API\footnote{REST API systému easyrec: \url{http://easyrec.org/implement}} je vývojáři umožněno napojit svou aplikaci psanou v libovolném jazyce na systém a využívat jejích funkcionalit. Lze tak zasílat uživatelské akce typu prohlížení, provedení nákupu či hodnocení položky a žádat o doporučení. Tyto uživatelské akce jsou ukládány do databáze easyrec.
+Z tohoto seznamu se mi velmi zajímavým jevil systém \textbf{easyrec}\footnote{\url{http://easyrec.org/recommendation-engine}}. Jedná se o open source webovou aplikaci napsanou v programovacím jazyce Java, která nabízí personalisovaná doporučení prostřednictvím RESTful webových služeb. Díky vystavenému REST API\footnote{REST API systému easyrec: \url{http://easyrec.org/implement}} je vývojáři umožněno napojit svou aplikaci, kterou píše v libovolném jazyce, na systém easyrec a využívat nabízených funkcionalit. Lze tak například zasílat uživatelské akce jako prohlížení stránky, provedení nákupu či hodnocení položky nebo žádat o doporučení. Všechny provedené uživatelské akce se ukládají do databáze easyrec.
 
-K doporučování lze přistupovat prostřednictvím specifických endpointů, například \emph{zboží související s danou položkou}, dále \emph{ostatní uživatelé prohlíželi též tyto položky} nebo lze dostávat \emph{specifická doporučení pro daného uživatele}~\cite{ibm}. 
+K doporučovacím metodám je možné přistupovat prostřednictvím specifických endpointů, například \emph{zboží související s danou položkou} nebo \emph{ostatní uživatelé prohlíželi též tyto položky}~\cite{ibm}. 
 
-Systém provádí na pozadí analytické operace, obsahuje též databázi asociačních pravidel a podporu online i offline doporučování. Uživatelským aplikacím připojujícím se k systému generuje v odpovědích žádaná doporučení (viz obrázek~\ref{fig:easyrec}).
+Systém na pozadí provádí analytické operace, disponuje databázi asociačních pravidel a nabízí plnou podporu pro online i offline doporučování. Uživatelským aplikacím připojujícím se k systému jsou v odpovědích generována vyžádaná doporučení (viz obrázek~\ref{fig:easyrec}).
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/easyrec.png}
@@ -320,7 +322,7 @@ Systém provádí na pozadí analytické operace, obsahuje též databázi asoci
     \vskip 6pt
     \begin{enumerate}
    \item Kolaborativní filtrování užívající podobnostní mapování item-to-item~\cite{linden2001collaborative}.
-   \item Personalizovaná doporučování získávaná z databáze informací o uživatelích~\cite{jacobi2006personalized}. Informace jsou mezi sebou kombinovány za účelem vytvoření nejlepšího doporučení.
+   \item Personalisovaná doporučování získávaná z databáze informací o uživatelích~\cite{jacobi2006personalized}. Informace jsou mezi sebou kombinovány za účelem vytvoření nejlepšího doporučení.
    \end{enumerate}
    \vskip 6pt
  \end{minipage}
@@ -396,18 +398,18 @@ Systém provádí na pozadí analytické operace, obsahuje též databázi asoci
 Z výše uvedených příkladů v sekci~\ref{sec:examples} lze vypozorovat určité vlastnosti (shrnutí v tabulce~\ref{tab:table}) a zformulovat několik závěrů:
 
 \begin{itemize}
-	\item O uživateli je vedena spousta záznamů, především historie jeho chování na stránkách.
+	\item O uživatelích je vedena spousta záznamů, například historie jejich chování na stránkách.
 	\item Velký důraz je kladen na zpětnou vazbu (vyjádření zájmu uživatele o doporučený obsah), ať už formou přečtení článku, ohodnocení položky apod.
 	\item Stále je využíváno osvědčených metod kolaborativního filtrování a filtrování na základě obsahu.
 	\item Síla není v použití jednoho konkrétního algoritmu, ale v kombinaci více metod a přístupů dohromady.
-	\item Většina systémových výpočtů běží na pozadí v tom samém čase, co uživatel tráví prohlížením stránky. Systém je schopna rychle se přizpůsobit okolnostem.
+	\item Většina systémových výpočtů běží na pozadí v tom samém čase, který uživatel tráví prohlížením stránek.
 	\item Problematika kombinování metod má silnou závislost na strojovém učení a teorii pravděpodobnosti a statistiky (především bayesovské).
-	\item Realizace RESTful API je poměrně vhodný způsob komunikace s doporučovacím systémem ověřeným v praxi.
+	\item Realizace RESTful API je vhodný způsob komunikace s doporučovacím systémem (ověřeno praxí).
 \end{itemize}
 
 Existujících řešení je tedy celá řada. Každé z těchto řešení je přitom využíváno k vlastnímu účelu a není snadno přenositelné.
 
-Potvrdila se domněnka, že době, kdy obchodníkům stačilo na svůj elektronický obchod nasadit jednoduchý algoritmus kolaborativního filtrování, odzvonilo a budoucnost patří systémům schopným predikce a přizpůsobení svého vývoje, a to vše v reálném čase. 
+Potvrdila se domněnka, že době, kdy obchodníkům stačilo na svůj elektronický obchod nasadit jednoduchý algoritmus kolaborativního filtrování, již odzvonilo a budoucnost patří systémům schopným predikce a přizpůsobení vývoje v reálném čase. 
 
 \section{Teorie adaptibilního systému}
 \label{chap:adapt}
@@ -421,25 +423,23 @@ Strojové učení je vědecká disciplína (jedna z větví oboru umělé inteli
 
 \subsubsection{Agent}
 \label{agent}
-Agent je speciální autonomní program, který jedná samostatně a nezávisle bez vedení uživatele. Jeho úkolem je komunikovat s okolím a interagovat v závislosti na okolních podnětech. Dalšími důležitými vlastnostmi jsou schopnost příhodně reagovat na danou situaci a též proaktivně vykonávat činnost a dosahovat cíle prostřednictvím vlastní iniciativy. Jedná se o definici obecnou, ale pro naše potřeby zcela dostačující.
-
-Problematika agentů a agentních systémů je jinak samostatný obor spadající do oblasti umělé inteligence a jeho zkoumání by vydalo na další závěrečnou práci. 
+Agent je speciální autonomní program, který jedná samostatně a nezávisle bez vedení uživatele. Jeho úkolem je komunikovat s okolím a interagovat v závislosti na okolních podnětech. Dalšími důležitými vlastnostmi jsou schopnost příhodně reagovat na danou situaci a též proaktivně vykonávat činnost a dosahovat cíle prostřednictvím vlastní iniciativy.
 
 \subsubsection{Zpětná vazba}
 \label{feedback}
-Zpětnou vazbou je označován proces, ve kterém na základě obdržených informací (například při komunikaci s nějakým systémem) a reakcí na ně ovlivňujeme jejich budoucí podobu – část systémového výstupu lze tedy použít jako vstup pro další činnost systému.
+Zpětnou vazbou je označován proces, kterým na základě obdržených informací (například při komunikaci s nějakým systémem) a reakcí na ně ovlivňujeme budoucí podobu informací.
 
-Rozlišujeme dva typy reakcí, a to kladnou zpětnou vazbu a zápornou zpětnou vazbu. Téma má blízko k psychologickému zkoumání toho, jakým způsobem dokáže ovlivnit zapojení odměny a trestu lidské chování.
+Rozlišujeme dva typy reakcí, a to pozitivní a negativní zpětnou vazbu. Téma má blízko k psychologickému zkoumání, jakým způsobem lze ovlivnit lidské chování, když do výchovy přidáme princip odměn a trestů.
 
 \subsubsection{Explorace vs. exploatace}
 \label{sub:explo}
 
 \begin{description}
-  \item[Explorace] Nacházení nových oblastí hledání, kdy agent nevyužívá předchozích znalostí (agent stále zkouší nové akce, jejichž výsledek nezná).
-  \item[Exploatace] Využívání stávajících znalostí. Hrozí uváznutí v lokálních extrémech. (agent provádí akce, o kterých ví, že mu přinášejí užitek). 
+  \item[Explorace] Nacházení nových neprozkoumaných oblastí. Agent nevyužívá svých dosud načerpaných znalostí a zkouší nové akce. 
+  \item[Exploatace] Využívání stávajících znalostí. Agent provádí akce, o kterých ma základě pokusů z minulosti ví, že mu přinášejí užitek. Pokud by dlouhodobě zůstal v tomto procesu, hrozí mu uváznutí v lokálním extrému.
 \end{description}	
 
-Optimální strategie nemůže být ani čistě explorační, ani čistě exploatační. Hledá se vyvážený kompromis.
+K nalezení optimální strategie je tedy nutné provést nějaký kompromis.
 
 \subsubsection{Základy teorie pravděpodobnosti}
 
@@ -460,7 +460,7 @@ Náhodný jev $A$ výsledek náhodného pokusu. Příkladem jevu může být nap
 
 \paragraph{Náhodná veličina}
 	\label{randomvel}
-Výsledkem náhodného pokusu nemusí být číslo (v příkladu výše jsme měli dvě hodnoty po stranách mince), proto je vhodné těmto výsledkům kvůli matematickému zpracování čísla přiřazovat. Způsob přiřazení čísla výsledku náhodného pokusu se označuje jako \emph{náhodná veličina $X$}~\cite{pst1}. 
+Jako náhodná veličina $X$ se označuje způsob přiřazení čísla výsledku náhodného pokusu~\cite{pst1}. 
 
 Náhodná veličina na pravděpodobnostním prostoru $(\Omega,\mathcal{F},P)$ je tedy funkce $X: \Omega \to R$, která každému $\omega \in \Omega$ přiřadí $X(\omega)$ a pro kterou platí podmínka měřitelnosti:
 
@@ -482,7 +482,7 @@ Vyjadřuje pravděpodobnost, že hodnota náhodné veličiny $X$ nabude hodnoty 
 
 \subsubsection{Kvantilová funkce}
 \label{icdf}
-\cite{pst2} Podobně jako distribuční funkce, i kvantilová funkce se týká rozdělení pravděpodobnosti. Lze ji považovat za funkci inverzní k distribuční funkci, neboť zatímco distribuční funkce $y = F(x)$ vyjadřuje pravděpodobnost, s jakou bude hodnota náhodné veličiny $X$ menší nebo rovna $x \in R$, výsledkem kvantilové funkce $x = F(y)^{-1}$ je hodnota $x$, pro jakou je výsledek náhodného pokusu se zadanou pravděpodobností $y$ menší nebo roven $x$. Jinými slovy hledáme taková $x$, kterým odpovídá určitá hodnota distribuční funkce $F(x)$. Hodnoty této funkce jsou tedy \emph{kvantily}.
+Podobně jako distribuční funkce, i kvantilová funkce se týká rozdělení pravděpodobnosti. Lze ji považovat za funkci inverzní k distribuční funkci, neboť zatímco distribuční funkce $y = F(x)$ vyjadřuje pravděpodobnost, s jakou bude hodnota náhodné veličiny $X$ menší nebo rovna $x \in R$, výsledkem kvantilové funkce $x = F(y)^{-1}$ je hodnota $x$, pro jakou je výsledek náhodného pokusu se zadanou pravděpodobností $y$ menší nebo roven $x$. Jinými slovy hledáme taková $x$, kterým odpovídá určitá hodnota distribuční funkce $F(x)$. Hodnoty této funkce jsou tedy \emph{kvantily}~\cite{pst2} .
 
 \subsubsection{Rozdělení pravděpodobnosti}
 \label{distr}
@@ -528,7 +528,7 @@ Jeden z klasických učících problémů zasahující do teorie pravděpodobnos
 
 S pojmy vysvětlenými výše souvisí strategie v tom smyslu, že použitím bayesovské varianty provádíme opakovaný výběr z konečného počtu rozdělení, čímž se snažíme maximalizovat průměrnou hodnotu.
 
-Toho lze využít například k cílenému doporučování reklamy nebo výběru personalizované úvodní stránky pro uživatele vstupujícího na naše stránky. Což je vlastně analogie k problému řešeného v této práci.
+Toho lze využít například k cílenému doporučování reklamy nebo výběru personalisované úvodní stránky pro uživatele vstupujícího na naše stránky. Což je vlastně analogie k problému řešeného v této práci.
 
 \subsection{Význam strojového učení}
 \label{sec:machine}
