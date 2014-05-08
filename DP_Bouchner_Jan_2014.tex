@@ -680,21 +680,11 @@ Na ukázku jsem připravil dva příklady posterior hustoty rozdělení pravděp
 
 \begin{itemize}
 	\item Informace o zvolení algoritmu přičte k míře pokusů tohoto algoritmu (bandity) hodnotu. Ostatním algoritmům se nic přičítat ani odečítat nebude.
-	\item V případě pozitivní zpětné vazby bude zvolenému algoritmu přičtena hodnota k míře jeho úspěchu. Ostatním algoritmům bude od této míry v poměru odečteno nebo bude poměr zachován.
-	\item V případě negativní zpětné vazby bude zvolenému algoritmu odečtena hodnota z míry jeho úspěchu. Ostatním algoritmům bude hodnota přičtena nebo nezměněna.
+	\item V případě pozitivní zpětné vazby bude zvolenému algoritmu přičtena hodnota k míře jeho úspěchu. Ostatním algoritmům bude od této míry v poměru odečteno.
+	\item V případě negativní zpětné vazby bude zvolenému algoritmu odečtena hodnota z míry jeho úspěchu. Ostatním algoritmům bude hodnota nezměněna.
 \end{itemize}
 
 \textbf{Stanovení nejvhodnějších hodnot a konkrétního přístupu bude provedeno na základě experimentů.}
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/beta1.png}
- 	\caption[Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 4 úspěchů ze 4 pokusů.]{Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 4 úspěchů ze 4 pokusů.}\label{fig:beta1}
-\end{figure}	
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/beta2.png}
- 	\caption[Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 1 úspěchu ze 4 pokusů.]{Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 1 úspěchu ze 4 pokusů.}\label{fig:beta2}
-\end{figure}	
 
 \subsubsection{Stanovení míry učení}
 \label{rate}
@@ -2283,6 +2273,17 @@ fsddfsfsdf
  	\end{tabular}
 \end{center} 	
 
+\chapter{Ukázky posterior rozdělení Beta s různými vstupními parametry}
+
+\begin{figure}\centering
+	\includegraphics[width=0.6\textwidth]{obr/beta1.png}
+ 	\caption[Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 4 úspěchů ze 4 pokusů.]{Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 4 úspěchů ze 4 pokusů.}\label{fig:beta1}
+\end{figure}	
+
+\begin{figure}\centering
+	\includegraphics[width=0.6\textwidth]{obr/beta2.png}
+ 	\caption[Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 1 úspěchu ze 4 pokusů.]{Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 1 úspěchu ze 4 pokusů.}\label{fig:beta2}
+\end{figure}	
 
 \chapter{Seznam použitých zkratek}
 % \printglossaries
