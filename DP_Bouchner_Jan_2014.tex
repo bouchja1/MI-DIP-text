@@ -903,7 +903,7 @@ Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, �
 	\item Collection	
 \end{itemize}
 
-Návrh tříd na zjednodušených\footnote{Pro větší srozumitelnost neuvádím v parametrech metod typy, ale spíše sémantické významy parametrů. Není též přítomna spousta dalších, s uvedenými třídami spolupracujících tříd.} diagramech~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} ilustruje metody běžícím za poskytovaným API.
+Návrh tříd na zjednodušených\footnote{Pro větší srozumitelnost neuvádím v parametrech metod typy, ale spíše sémantické významy parametrů. Není též přítomna spousta dalších, s uvedenými třídami spolupracujících tříd.} diagramech~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} ilustruje metody běžící za poskytovaným API.
 
 V případě prvního diagramu~\ref{fig:recommengRestNavrh} jsou prostřednictvím API metod volány metody třídy \textbf{EnsembleZeroMqHelper}, která bude realizovat spojení s frontou zpráv Recommeng systému (třída \textbf{AsynchronousServer} na diagramu~\ref{fig:recommengNavrh}).
 
@@ -1103,7 +1103,7 @@ Hned na úvod je nutné sdělit, že se nejedná o klasický messaging system (m
 
 Filosofie ZeroMQ je jiná, neboť jde především o multiplatformní knihovnu určenou k programovému využití. Pomocí jednoduchého socketového API umožňuje programátorovi sestavit si vlastní messaging system dle svého nejlepšího uvážení. Programátor využívá ze strany API veškerou podporu usnadňující práci se sítí a s trochou nadsázky lze prohlásit, že se stará pouze o zasílání zpráv.
 
-Knihovna navíc poskytuje kompletní svobodu v tom, jakým způsobem zakódujeme zprávu (JSON, BSON nebo jakýkoliv vlastní navržený formát). Já využil~\ref{mess}.
+Knihovna navíc poskytuje kompletní svobodu v tom, jakým způsobem zakódujeme zprávu (JSON, BSON nebo jakýkoliv vlastní navržený formát). Já využil formátu JSON~\ref{mess}.
 
 Podporovány jsou čtyři protokoly pro komunikaci~\cite{zeromq1}:
 
@@ -2110,31 +2110,25 @@ Vzniklá klientská aplikace byla použita k simulaci chování systému.
 
 \chapter{Experimentální část}
 \label{chap:tests}
-Když jsem začínal řešit tuto práci, prvotní verze adaptibilního systému existovaly dlouhou dobu pouze zakreslené na papírech všude okolo mě. Velmi jsem se těšil na okamžik, až projdu všemi fázemi vývoje a dostanu se k samotnému testování a provádění experimentů. Průběžným ověřováním se samozřejmě dařilo korigovat vývoj tak, aby neodbočil příliš z cesty, dokázal jsem také empiricky stanovit funkce pro výpočty zpětné vazby~\ref{implfeedback}, tou první zkouškou systému je však provádění souhrnnějších experimentů.
+Když jsem začínal řešit tuto práci, prvotní verze adaptibilního systému existovaly dlouhou dobu pouze zakresleny v papírech všude okolo mě. Velmi jsem se těšil na okamžik, až projdu všemi fázemi vývoje a dostanu se k samotnému testování aplikace a provádění experimentů. Průběžným ověřováním se samozřejmě dařilo korigovat vývoj tak, abych neodbočil z cesty. Tou první zkouškou systému je však provádění souhrnnějších experimentů.
 
 Z pozorovaných výsledků prováděných experimentů lze často vyvodit užitečné poznatky a rozhodnout o nejvhodnější konfiguraci pro řešení daného problému.
 
-Hodnota, kterou jsem pro účely vyhodnocování výsledků měření použil, vychází z vnitřního stavu systému. Je jí \emph{poměr normalizovaného součtu úspěchů ku normalizovanému poměru pokusů}.
+Míra, kterou jsem pro účely vyhodnocování výsledků měření použil, vychází z vnitřního stavu systému. Je jí \emph{podíl normalizovaného součtu úspěchů ku normalizovanému součtu pokusů}.
 
-Následující experimenty proběhly spouštěním předpřipravených testů v klientské aplikaci~\ref{chap:client} a jejich různých modifikací, získané výstupy byly ukládány do formátu CSV a pro vykreslení do grafů byl použit program Microsoft Excel.
+Následující experimenty proběhly spouštěním předpřipravených testů v klientské aplikaci~\ref{chap:client} a jejich modifikací. Získané výstupy jsem ukládal do formátu CSV a pro vykreslení do grafů použil program Microsoft Excel. Testování probíhalo vždy se čtyřmi bandity přítomnými v systému.
 
-\section{Jeden úspěšný algoritmus}
-Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud budou na doporučení jedním konkrétním algoritmem neustále zasílány pozitivní zpětné vazby. Dle předpokladu by měl tento jeden algoritmus po čase zcela převážit.
+\section{Jeden algoritmus mající výrazný úspěch}
+Viz graf~\ref{fig:test1} v příloze~\ref{experiments}. Tímto experimentem jsem chtěl zjistit, jakým způsobem se bude vyvíjet vnitřní stav algoritmů jedné systémové kolekce, pokud budou na doporučení jedním konkrétním algoritmem opakovaně zasílány pozitivní zpětné vazby, zatímco ostatní systémem vybírané metody budou mít vždy pouze 30\% šanci pozitivní zpětně vazby. Dle předpokladu by měl tento algoritmus většinu času převažovat nad ostatními, což se potvrdilo. Parametr konfigurace \emph{machine rate} je zde stanoven na hodnotu $0.5$. Nižší hodnota zajišťuje, že systém nebude spoléhat hned na první dobře se jevící výsledky, ale bude zkoumat i další možnosti.
 
-\subsection{Pozorované vlastnosti při různě volených parametrech}
+\section{Jeden úspěšný algoritmus, jehož hodnota je po čase srážena}
+Viz graf~\ref{fig:test5} v příloze~\ref{experiments}. Účelem experimentu bylo zjistit, jak se vyvine situace podobná situaci popsané výše (algoritmus mající výrazný úspěch), pokud se změní vnější podmínky (dojde ke změně preferencí) doporučení udávaná tímto algoritmem přestanou být náhle populární (k této situaci uměle dojde po 25. žádosti o doporučení na systém). Dle předpokladu by měl tento algoritmus nejprve výrazně převážit nad ostatními, po změně preferencí by měl klesat a šanci rovnoměrně dostávat další algoritmy. Jak je z obrázku patrné, k této situaci dochází. Stanovení vyšší míry negativní zpětné vazby (parametr \emph{stupid} stanoven oproti předchozímu případu na hodnotu $0.3$) má za následek strmější pád algoritmu.
 
-\section{Jeden úspěšný algoritmus, který je po několika krocích srážen}
-Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud budou na doporučení jedním konkrétním algoritmem neustále zasílány pozitivní zpětné vazby, ale po čase dojde ke změně preferencí a tento doporučení udělená tímto algoritmem začnou být odmítána. Dle předpokladu by měl tento algoritmus nejprve zcela převážit, po změně preferencí by ale opět měly začít postupně dostávat šanci i jiné algoritmy.
+\section{Všechny algoritmy doporučující rovnoměrně}
+Viz graf~\ref{fig:test7} v příloze~\ref{experiments}. Tímto experimentem jsem chtěl zjistit, jaký bude vývoj vnitřního stavu systému tehdy, pokud budou algoritmy z kolekce doporučovat víceméně rovnoměrně. Každému algoritmu jsem dal padesátiprocentní šanci na úspěšnou zpětnou vazbu. O všech zpětných vazbách (pozitivních i negativních) je tak rozhodováno zhruba stejně. Výsledný graf předčil má očekávání. Vzhledem k padesátiprocentní šanci se žádný z algoritmů nestal lídrem a po celou dobu pokusu zůstal stav všech algoritmů velmi podobný. 
 
-\subsection{Pozorované vlastnosti při různě volených parametrech}
-
-\section{Všechny algoritmy doporučují rovnoměrně}
-Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud bude o všech algoritmech a pozitivních i negativních zpětných vazbách rozhodováno přibližně stejně. Dle předpokládané úvahy by měl systém zůstat po celou dobu běhu nerozhodný a střídavě doporučovat všechny algoritmy.
-
-\subsection{Pozorované vlastnosti při různě volených parametrech}
-
-\section{Test na odolnost vůči anomáliím}
-Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud bude do běhu čas od času zanesena nějaká anomálie. Takovou anomálií může být například omyl při zaslání zpětné vazby (uživatel se splete a místo toho, že je s doporučením spokojený, zašle negativní hodnocení). Dle předpokladů by tyto situace neměly mít na chování systému z dlouhodobého hlediska fatální následky.
+\section{Test odolnosti jednoho preferovaného algoritmu vůči občasné anomálii}
+Viz graf~\ref{fig:test9_1} v příloze~\ref{experiments}. Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud bude do běhu čas od času zanesena nějaká anomálie. Takovou anomálií může být například omyl při zaslání zpětné vazby (uživatel se splete a místo toho, že je s doporučením spokojený, zašle negativní hodnocení). Dle předpokladů by tyto situace neměly mít na chování systému z dlouhodobého hlediska fatální následky.
 
 \subsection{Pozorované vlastnosti při různě volených parametrech}
 
@@ -2387,11 +2381,27 @@ Slouží k zaslání zpětné vazby do systému.
 \end{center} 
 
 \chapter{Prováděné experimenty}
+\label{experiments}
+
 \begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/plistaEnsemble.png}
- 	\caption[Abstraktní pohled na systém společnosti plista]{Abstraktní pohled na systém společnosti plista. Zdroj: \cite{slideshare:plista}}\label{fig:plista}
+	\includegraphics[width=1.0\textwidth]{obr/experimenty/test1.png}
+ 	\caption[Situace, kdy má jeden algoritmus oproti ostatním výrazný úspěch]{Situace, kdy má jeden algoritmus oproti ostatním výrazný úspěch}\label{fig:test1}
 \end{figure}	
 
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/experimenty/test5.png}
+ 	\caption[Jeden úspěšný algoritmus, jehož hodnota je po čase srážena]{Jeden úspěšný algoritmus, jehož hodnota je po čase srážena}\label{fig:test5}
+\end{figure}	
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/experimenty/test7.png}
+ 	\caption[Všechny algoritmy doporučující rovnoměrně]{Všechny algoritmy doporučující rovnoměrně}\label{fig:test7}
+\end{figure}	
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/experimenty/test9_1.png}
+ 	\caption[Test odolnosti jednoho preferovaného algoritmu vůči občasné anomálii]{Test odolnosti jednoho preferovaného algoritmu vůči občasné anomálii}\label{fig:test9_1}
+\end{figure}	
 
 \chapter{Dodatečné obrázky}
 \section{Ukázky posterior rozdělení Beta s různými vstupními parametry}
