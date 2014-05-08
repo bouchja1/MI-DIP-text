@@ -617,22 +617,22 @@ Opět jsme se dostali k \emph{exploraci a exploataci}~\ref{sub:explo}.
 
 \subsection{Bayesian Bandits}
 \label{bayes}
-Nalézt optimální řešení tedy nepatří k triviálním problémům. Systému může trvat léta, než se k němu dopracuje. Naštěstí existuje spousta \emph{přibližně optimálních} řešení.
+Nalézt optimální řešení tedy nepatří k triviálním problémům. Systému může trvat i roky, než se k němu dopracuje. Naštěstí existuje spousta \emph{přibližně optimálních} řešení.
 
-Jedním z řešení je algoritmus zvaný \emph{Bayesian Bandits}. Algoritmus přímo souvisí s učením založeným na zpětné vazbě~\ref{feedback}.
+Jedním z těchto řešení je algoritmus zvaný \emph{Bayesian Bandits}. Algoritmus přímo souvisí s učením založeným na zpětné vazbě~\ref{feedback}.
 
 Bayesovské řešení začíná prior~\ref{prior} stanovením pravděpodobností výhry pro každého banditu. Hodnoty jsou v rozmezí $\langle0,1\rangle$. Jak již bylo řečeno, každého banditu reprezentuje jedna distribuční funkce.
 
-V každém kole, kterých je v případě mnou vytvářeného systému nekonečně (neboť kola jsou závislá na žádostech uživatelů, kteří přistupují k systému – standardní použití Multi-armed Bandits pracuje s konečným počtem stavů), probíhá následující proces:
+V každém kole, kterých je v případě mnou vytvářeného systému nekonečně (kola jsou závislá na žádostech uživatelů, kteří přistupují k systému – standardní použití Multi-armed Bandits pracuje s konečným počtem stavů), probíhá následující proces:
 
 \begin{enumerate}
-	\item pro každého z $N$ banditů proveď prior~\ref{prior} (počty pokusů, výher, \ldots) výběr z náhodné veličiny $X_b$~\ref{randomvel} bandity $b$
-	\item ze získaných dat vyber~\ref{randomvyber} banditu s největší hodnotou předchozího výběru, například $B = argmax X_b$	
+	\item pro každého z $N$ banditů proveď prior~\ref{prior} (počty pokusů, výher atd.) výběr náhodné veličiny $X_b$~\ref{randomvel} (vypočti kvantilovou funkci~\ref{icdf}). 
+	\item ze získaných dat zvol~\ref{randomvyber} banditu s největší hodnotou předchozího výběru, například $B = argmax X_b$	
 	\item pozoruj výsledek vrácený banditou $B$ a proveď prior aktualizaci tohoto bandity.
 	\item vrať se na krok 1
 \end{enumerate}
 
-Počáteční prior pravděpodobnost je u každého bandity Beta rozdělení~\ref{beta} ${Beta}(\alpha = 1, \beta = 1)$ (uniformní rozdělení).
+Počáteční prior pravděpodobnost je u každého bandity Beta rozdělení~\ref{beta} ${Beta}(\alpha = 1, \beta = 1)$. Toto rozdělení je uniformní.
 
 Pozorovaná náhodná veličina $X$ (výhra či prohra, tedy 1 nebo 0) je binomická. Posterior~\ref{poster} pravděpodobnost se po provedení pokusu přizpůsobuje novému rozdělení:
 
@@ -640,13 +640,11 @@ Pozorovaná náhodná veličina $X$ (výhra či prohra, tedy 1 nebo 0) je binomi
 ${Beta}(\alpha = 1 + X, \beta = 1 + 1 - X)$.
 \end{center}
 
-V případě jakéhokoliv úspěchu se provádí navýšení pravděpodobnosti, se kterou bude algoritmus znovu vybrán. V případě neúspěchu se tato pravděpodobnost exponenciálně snižuje. V každé další hře se již systém rozhoduje s touto pravděpodobností (mezí explorací a exploatací).
+V případě jakéhokoliv úspěchu je provedeno navýšení pravděpodobnosti, se kterou bude algoritmus znovu vybrán. V případě neúspěchu se tato pravděpodobnost exponenciálně snižuje. V každé další hře se již systém rozhoduje s touto pravděpodobností (mezí explorací a exploatací).
 
-Pokud tedy chceme odpovědět na dřívější otázku, zda bychom měli dávat stále šanci i banditům, u kterých často prohráváme, nebo na ně zanevřít a zkoušet štěstí u jiných, tento algoritmus nám navrhuje to, abychom prohrávající bandity přímo nevyřazovali, ale vybírali je stále méně častěji, jakmile získáme dostatek jistoty, že existují i lepší bandité. 
+Pokud tedy chceme odpovědět na dřívější otázku, zda bychom měli dávat stále šanci i banditům, u kterých často prohráváme nebo na ně zanevřít (a zkoušet štěstí u jiných), tak tento algoritmus nám navrhuje, abychom prohrávající bandity přímo nevyřazovali. Stačí, když budou vybíráni s čím dál tím menší šancí, jakmile získáme dostatek jistoty, že existují i lepší bandité. 
 
-Existuje tu nenulová šance, že prohrávající bandita dosáhne statusu $B$, pravděpodobnost této šance se ale snižuje s rostoucím počtem odehraných kol. 
-
-Obrázek~\ref{fig:posteriors} znázorňuje postup pro problém tří banditů ($N = 3$), jakým se algoritmus učí s rostoucím počtem her. Přerušované čáry pod grafy hustoty každého rozdělení reprezentují skryté reálné pravděpodobnosti (v obrázku mají hodnoty $0.85$, $0.60$, $0.75$). Z uvedeného příkladu vyplývá, že o skryté pravděpodobnosti se až tolik nestaráme. Daleko větší význam pro nás má výběr nejlepšího bandity, což je vidět na distribuci červeného bandity. Ta je velice široká, což představuje skutečnou neznalost o tom, jak velkou skrytou pravděpodobností bandita disponuje. O pravděpodobnosti tedy nemáme nejmenší tušení, jsme si ale docela jistí tím, že bandita není nejlepší. Algoritmus se proto rozhodne ignorovat jej.
+Obrázek~\ref{fig:posteriors} ilustruje postup pro problém tří banditů ($N = 3$), jakým se algoritmus učí s rostoucím počtem her. Přerušované čáry pod grafy hustoty každého rozdělení reprezentují skryté reálné pravděpodobnosti (v obrázku mají hodnoty $0.85$, $0.60$, $0.75$). Z uvedeného příkladu vyplývá, že o skryté pravděpodobnosti se až tolik nestaráme. Daleko větší význam pro nás má výběr nejlepšího bandity, což je vidět na distribuci červeného bandity. Ta je velice široká, což představuje skutečnou neznalost o tom, jak velkou skrytou pravděpodobností bandita disponuje. O pravděpodobnosti tedy nemáme nejmenší tušení, jsme si ale docela jistí, že tento bandita není nejlepší. Algoritmus se proto rozhodne ignorovat jej.
 
 \begin{figure}\centering
 	\includegraphics[width=1.0\textwidth]{obr/posteriors.png}
@@ -657,26 +655,24 @@ Obrázek~\ref{fig:posteriors} znázorňuje postup pro problém tří banditů ($
 \label{subsub:feedback}
 Pojem zpětné vazby~\ref{feedback} již v předchozím textu zazněl. Pro účely této práce je nutné uzpůsobit její význam tak, aby měla přímý vliv na pružný vývoj adaptibilního systému.
 
-Vzhledem k tomu, že rádce bude plnit svůj úkol pomocí algoritmu Bayesian Bandits využívající ${Beta}$ rozdělení pravděpodobnosti (navíc operuje s pravděpodobnostmi \emph{prior} a \emph{posterior}), zpětná vazba bude mít vliv na oba parametry vstupující do rozdělení, což má ve finále vliv na tvar celé distribuce~\ref{distr} (k vidění na obrázku~\ref{fig:posteriors}). 
+Rádce bude plnit svůj úkol pomocí algoritmu Bayesian Bandits využívajícího ${Beta}$ rozdělení pravděpodobnosti. Zpětná vazba bude mít vliv na oba parametry vstupující do rozdělení, což bude mít ve finále vliv na tvar celé distribuce~\ref{distr} (k vidění na obrázku~\ref{fig:posteriors}). 
 
-Jak již bylo řečeno, zpětná vazba je dvojího typu:
+Tvar ${Beta}$ rozdělení ovlivňují dva parametry – $\alpha$ a $\beta$.
 
 \begin{itemize}
-	\item Informace o zvolení rádcem navrženého algoritmu pro vlastní doporučení (rádci sdělujeme, že jsme se \textbf{pokusili} řídit jeho radou).
-	\item Zpětná vazba týkající se spokojenosti doporučení (zda byl tento algoritmus při doporučení \textbf{úspěšný} či nikoliv).
+	\item Informace o zvolení rádcem navrženého algoritmu pro vlastní doporučení (rádci sdělujeme, že jsme se \textbf{pokusili} řídit jeho radou) bude vstupovat jako jedna z proměnných do druhého parametru rozdělení.
+	\item Zpětná vazba týkající se spokojenosti doporučení (zda byl tento algoritmus při doporučení \textbf{úspěšný} či nikoliv) bude vstupovat jako proměnná do obou parametrů rozdělení.
 \end{itemize}
 
-Do ${Beta}$ rozdělení vstupují dva parametry – $\alpha$ a $\beta$.
-
-Při každé žádosti na rádce je tedy pro každého banditu $B_i$ provedeno posterior (značením $B_i(success)$ se snažím naznačit dosavadní míru úspěchů bandity $B_i$, pomocí $B_i(trials)$ zase dosavadní míru pokusů téhož bandity):
+Při každé žádosti na rádce je pro každého banditu $B_i$ provedeno posterior (značením $B_i(success)$ se snažím naznačit dosavadní míru úspěchů bandity $B_i$, pomocí $B_i(trials)$ zase dosavadní míru pokusů téhož bandity):
 
 \begin{center}
 ${Beta}(\alpha = 1 + B_i(success), \beta = 1 + B_i(trials) - B_i(success))$.
 \end{center}
 
-Na ukázku jsem připravil dva příklady posterior hustoty rozdělení pravděpodobnosti dle různých vstupních parametrů vstupujících do rozdělení ${Beta}$. Obrázek~\ref{fig:beta1} znázorňuje situaci 4 úspěchů ze 4 pokusů, zatímco obrázek~\ref{fig:beta2} 1 úspěch ze 4 pokusů. Na druhém obrázku lze vidět, že distribuce je širší.
+Na ukázku jsem připravil dva příklady posterior hustoty rozdělení pravděpodobnosti dle různých hodnot parametrů vstupujících do rozdělení ${Beta}$. Obrázek~\ref{fig:beta1} znázorňuje situaci 4 úspěchů ze 4 pokusů, zatímco obrázek~\ref{fig:beta2} značí 1 úspěch ze 4 pokusů. Na druhém obrázku lze vidět, že distribuce je širší.
 
-\paragraph{Typy zpětné vazby pro adaptibilní systém}
+\paragraph{Hodnoty zpětné vazby pro adaptibilní systém}
 
 \begin{itemize}
 	\item Informace o zvolení algoritmu přičte k míře pokusů tohoto algoritmu (bandity) hodnotu. Ostatním algoritmům se nic přičítat ani odečítat nebude.
@@ -688,17 +684,17 @@ Na ukázku jsem připravil dva příklady posterior hustoty rozdělení pravděp
 
 \subsubsection{Stanovení míry učení}
 \label{rate}
-Vzhledem k tomu, že prostředí se mění velmi rychle v čase, je nutné stanovit nějakou míru učení, Technicky vzato je standardní Bayesian Bandits algoritmus schopen vyvíjet se sám díky neustálé aktualizaci parametrů vstupujících po každé provedené akci do ${Beta}$ rozdělení.
+Vzhledem k tomu, že prostředí se mění velmi rychle v čase, je vhodné stanovit nějakou míru učení. 
 
-Stanovením vhodné míry učení lze ale docílit toho, že algoritmus se bude přizpůsobovat měnícímu se prostředí rychleji a bude fungovat též jako prevence proti vyčerpání hodnot datových typů programu.
+Stanovením vhodné míry učení lze docílit toho, že algoritmus se bude přizpůsobovat měnícímu se prostředí rychleji a bude fungovat též jako prevence proti vyčerpání hodnot datových typů programu.
 
-Pokud stanovíme míru $<$ 1, algoritmus bude předchozí výsledky zapomínat rychleji a častěji bude zkoumat nové možnosti. Míra $>$ 1 implikuje naopak to, že algoritmus bude sázet na časnější dřívější výhry, čímž ale riskuje to, že se nedokáže rychle adaptovat na náhlé změny (je více imunní vůči rychle se měnícímu prostředí).
+Pokud stanovíme míru $<$ 1, algoritmus bude předchozí výsledky zapomínat rychleji a častěji bude zkoumat nové možnosti. Míra $>$ 1 implikuje naopak to, že algoritmus bude sázet na časnější dřívější výhry, čímž ale riskuje to, že se nedokáže rychle adaptovat na náhlé změny (je více konzervativní vůči měnícímu prostředí).
 
-Míra $<$ 1 bude pro potřeby adaptibilního systému vhodnější. Konkrétní hodnotu se opět pokusím stanovit v závislosti na provedených experimentech.
+Míra $<$ 1 tak bude pro potřeby adaptibilního systému nejspíš užitečnější (vzhledem k dlouhotrvajícímu běhu systému). Delší uváznutí v lokálním minimu hned ze začátku by bylo nevhodné. Konkrétní hodnotu se opět pokusím stanovit v závislosti na provedených experimentech.
 
 \subsection{Význam pro kombinování}
 \label{lkombinování}
-Význam bayesovské strategie pro kombinování spočívá ve výběru správné metody, která bude přidána do množiny ostatních vybraných metod. Z této množiny metod je dále nutné vybrat nejvhodnější a tu použít.
+Význam bayesovské strategie pro kombinování spočívá ve výběru správné metody (tedy bandity), která bude přidána do množiny ostatních vybraných metod. Z této množiny metod je dále nutné vybrat nejvhodnější a tu použít.
 
 Jako nejefektivnější a zároveň nejjednodušší postup se jeví výběr metody s největší četností výskytu. 
 
