@@ -156,7 +156,7 @@ breaklines=true
   \item[Kapitola \nameref{chap:teor}] Popisuje trendy používané současnými doporučovacími systémy a zkoumá algoritmické a matematické postupy, které by mohly být použity při návrhu strategie adaptibilního systému.
   \item[Kapitola \nameref{chap:prakt}] Shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. Popisuje též postupy užité při vývoji aplikace na základě provedené analýzy a návrhu.
   \item[Kapitola \nameref{chap:tests}] Shrnuje poznatky nabyté z prováděných experimentů se systémem a stanovuje pravidla pro nejlepší použití.
-  \item[Kapitola \nameref{chap:futurework}] Hodnotí vzniklou aplikaci a zamýšlí se nad dalším kroky ve vývoji aplikace.
+  \item[Kapitola \nameref{chap:futurework}] Hodnotí vzniklou aplikaci a zamýšlí se nad dalším kroky ve vývoji.
 \end{description}
 	
 \end{introduction}
@@ -456,24 +456,17 @@ Pravděpodobnostní prostor prováděného náhodného pokusu je tvořen trojic�
 
 \paragraph{Náhodný jev}
 	
-Náhodný jev $A$ výsledek náhodného pokusu. Příkladem jevu může být například hod mincí a pozorování, zda padla panna nebo orel. V tomto jevovém prostoru jsou zahrnuty celkem dva elementární jevy (hodnota panna a hodnota orel), které souvisejí s pokusem (pozorování výskytu elementárních jevů během házení).	
+Náhodný jev $A$ výsledek náhodného pokusu. Příkladem jevu může být například hod mincí a pozorování, zda padla panna nebo orel.
 
 \paragraph{Náhodná veličina}
 	\label{randomvel}
-Výsledkem náhodného pokusu nemusí být číslo (v příkladu výše jsme měli dvě hodnoty po stranách mince), proto je vhodné těmto výsledkům kvůli matematickému zpracování čísla přiřazovat. Způsob přiřazení čísla výsledku náhodného pokusu se označuje jako \emph{náhodná veličina $X$}~\cite{pst1}. Pro počítání padlých panen při opakovaném házení mincí by mohlo přiřazení vypadat například takto:
-
-\begin{itemize}
-	\item $X(panna) = 1$
-	\item $X(orel) = 0$
-\end{itemize}
+Výsledkem náhodného pokusu nemusí být číslo (v příkladu výše jsme měli dvě hodnoty po stranách mince), proto je vhodné těmto výsledkům kvůli matematickému zpracování čísla přiřazovat. Způsob přiřazení čísla výsledku náhodného pokusu se označuje jako \emph{náhodná veličina $X$}~\cite{pst1}. 
 
 Náhodná veličina na pravděpodobnostním prostoru $(\Omega,\mathcal{F},P)$ je tedy funkce $X: \Omega \to R$, která každému $\omega \in \Omega$ přiřadí $X(\omega)$ a pro kterou platí podmínka měřitelnosti:
 
 \begin{center}
 $\{ X \leq x \} = \{ \omega \in \Omega: X(\omega) \leq x \} \in \mathcal{F}, \forall x \in R$
 \end{center}
-
-Dle typu se rozlišují náhodné veličiny diskrétní a spojité. Diskrétní náhodné veličiny mohou nabývat pouze konečného počtu hodnot z $R$ (například ročník studia), zatímco spojité náhodné veličiny nabývají v určitém intervalu libovolné reálné hodnoty (například čas potřebný k dokončení diplomové práce). 
 
 Pravděpodobnostní rozdělení náhodné veličiny určuje její distribuční funkce. 
 
@@ -485,7 +478,7 @@ Distribuční funkce náhodné veličiny $X$ je funkce $F: R \to \langle0,1\rang
 $F(x) = P(X \leq x) = P(\{ \omega \in \Omega: X(\omega) \leq x \})$.
 \end{center}
 
-Vyjadřuje tedy pravděpodobnost, že hodnota náhodné veličiny $X$ nabude hodnoty menší nebo rovné zadané hodnotě (libovolnému $x \in R$). Distribuční funkce určuje rozdělení pravděpodobnosti.
+Vyjadřuje pravděpodobnost, že hodnota náhodné veličiny $X$ nabude hodnoty menší nebo rovné zadané hodnotě (libovolnému $x \in R$). Distribuční funkce určuje rozdělení pravděpodobnosti.
 
 \subsubsection{Kvantilová funkce}
 \label{icdf}
