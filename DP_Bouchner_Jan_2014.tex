@@ -2110,7 +2110,7 @@ Vzniklá klientská aplikace byla použita k simulaci chování systému.
 
 \chapter{Experimentální část}
 \label{chap:tests}
-Když jsem začínal řešit tuto práci, prvotní verze adaptibilního systému existovaly dlouhou dobu pouze zakresleny v papírech všude okolo mě. Velmi jsem se těšil na okamžik, až projdu všemi fázemi vývoje a dostanu se k samotnému testování aplikace a provádění experimentů. Průběžným ověřováním se samozřejmě dařilo korigovat vývoj tak, abych neodbočil z cesty. Tou první zkouškou systému je však provádění souhrnnějších experimentů.
+Když jsem začínal řešit tuto práci, prvotní verze adaptibilního systému existovala dlouhou dobu pouze zakreslena v papírech všude okolo mě. Velmi jsem se těšil na okamžik, až projdu všemi fázemi vývoje a dostanu se k samotnému testování aplikace a provádění experimentů. Průběžným ověřováním se samozřejmě dařilo korigovat vývoj tak, abych neodbočil z cesty. Tou první zkouškou systému je však provádění souhrnnějších experimentů.
 
 Z pozorovaných výsledků prováděných experimentů lze často vyvodit užitečné poznatky a rozhodnout o nejvhodnější konfiguraci pro řešení daného problému.
 
@@ -2118,25 +2118,58 @@ Míra, kterou jsem pro účely vyhodnocování výsledků měření použil, vyc
 
 Následující experimenty proběhly spouštěním předpřipravených testů v klientské aplikaci~\ref{chap:client} a jejich modifikací. Získané výstupy jsem ukládal do formátu CSV a pro vykreslení do grafů použil program Microsoft Excel. Testování probíhalo vždy se čtyřmi bandity přítomnými v systému.
 
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/experimenty/test1.png}
+ 	\caption[Situace, kdy má jeden algoritmus oproti ostatním výrazný úspěch]{Situace, kdy má jeden algoritmus oproti ostatním výrazný úspěch}\label{fig:test1}
+\end{figure}	
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/experimenty/test5.png}
+ 	\caption[Jeden úspěšný algoritmus, jehož hodnota je po čase srážena]{Jeden úspěšný algoritmus, jehož hodnota je po čase srážena}\label{fig:test5}
+\end{figure}	
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/experimenty/test7.png}
+ 	\caption[Všechny algoritmy doporučující rovnoměrně]{Všechny algoritmy doporučující rovnoměrně}\label{fig:test7}
+\end{figure}	
+
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/experimenty/test9_1.png}
+ 	\caption[Test odolnosti jednoho preferovaného algoritmu vůči občasné anomálii]{Test odolnosti jednoho preferovaného algoritmu vůči občasné anomálii}\label{fig:test9_1}
+\end{figure}	
+
 \section{Jeden algoritmus mající výrazný úspěch}
-Viz graf~\ref{fig:test1} v příloze~\ref{experiments}. Tímto experimentem jsem chtěl zjistit, jakým způsobem se bude vyvíjet vnitřní stav algoritmů jedné systémové kolekce, pokud budou na doporučení jedním konkrétním algoritmem opakovaně zasílány pozitivní zpětné vazby, zatímco ostatní systémem vybírané metody budou mít vždy pouze 30\% šanci pozitivní zpětně vazby. Dle předpokladu by měl tento algoritmus většinu času převažovat nad ostatními, což se potvrdilo. Parametr konfigurace \emph{machine rate} je zde stanoven na hodnotu $0.5$. Nižší hodnota zajišťuje, že systém nebude spoléhat hned na první dobře se jevící výsledky, ale bude zkoumat i další možnosti.
+Viz graf~\ref{fig:test1}. Tímto experimentem jsem chtěl zjistit, jakým způsobem se bude vyvíjet vnitřní stav algoritmů kolekce, pokud budou na doporučení jedním konkrétním algoritmem opakovaně zasílány pozitivní zpětné vazby, zatímco ostatní systémem vybírané metody budou mít vždy pouze 30\% šanci pozitivní zpětně vazby. Dle předpokladu by měl tento algoritmus většinu času převažovat nad ostatními, což se potvrdilo. Parametr konfigurace \emph{machine rate} je zde stanoven na hodnotu $0.5$. Nižší hodnota zajišťuje, že systém nebude spoléhat hned na první dobře se jevící výsledky, ale bude zkoumat i další možnosti.
 
 \section{Jeden úspěšný algoritmus, jehož hodnota je po čase srážena}
-Viz graf~\ref{fig:test5} v příloze~\ref{experiments}. Účelem experimentu bylo zjistit, jak se vyvine situace podobná situaci popsané výše (algoritmus mající výrazný úspěch), pokud se změní vnější podmínky (dojde ke změně preferencí) doporučení udávaná tímto algoritmem přestanou být náhle populární (k této situaci uměle dojde po 25. žádosti o doporučení na systém). Dle předpokladu by měl tento algoritmus nejprve výrazně převážit nad ostatními, po změně preferencí by měl klesat a šanci rovnoměrně dostávat další algoritmy. Jak je z obrázku patrné, k této situaci dochází. Stanovení vyšší míry negativní zpětné vazby (parametr \emph{stupid} stanoven oproti předchozímu případu na hodnotu $0.3$) má za následek strmější pád algoritmu.
+Viz graf~\ref{fig:test5}. Účelem experimentu bylo zjistit, jak se vyvine situace podobná situaci popsané výše (algoritmus mající výrazný úspěch), pokud se změní vnější podmínky (dojde ke změně preferencí) doporučení udávaná tímto algoritmem přestanou být náhle populární (k této situaci uměle dojde po 25. žádosti o doporučení na systém). Dle předpokladu by měl tento algoritmus nejprve výrazně převážit nad ostatními, po změně preferencí by měl klesat a šanci rovnoměrně dostávat další algoritmy. Jak je z obrázku patrné, k této situaci dochází. Stanovení vyšší míry negativní zpětné vazby (parametr \emph{stupid} stanoven oproti předchozímu případu na hodnotu $0.3$) má za následek strmější pád algoritmu.
 
 \section{Všechny algoritmy doporučující rovnoměrně}
-Viz graf~\ref{fig:test7} v příloze~\ref{experiments}. Tímto experimentem jsem chtěl zjistit, jaký bude vývoj vnitřního stavu systému tehdy, pokud budou algoritmy z kolekce doporučovat víceméně rovnoměrně. Každému algoritmu jsem dal padesátiprocentní šanci na úspěšnou zpětnou vazbu. O všech zpětných vazbách (pozitivních i negativních) je tak rozhodováno zhruba stejně. Výsledný graf předčil má očekávání. Vzhledem k padesátiprocentní šanci se žádný z algoritmů nestal lídrem a po celou dobu pokusu zůstal stav všech algoritmů velmi podobný. 
+Viz graf~\ref{fig:test7}. Tímto experimentem jsem chtěl zjistit, jaký bude vývoj vnitřního stavu systému tehdy, pokud budou algoritmy z kolekce doporučovat víceméně rovnoměrně. Každému algoritmu jsem dal padesátiprocentní šanci na úspěšnou zpětnou vazbu. O všech zpětných vazbách (pozitivních i negativních) je tak rozhodováno zhruba stejně. Výsledný graf předčil má očekávání. Vzhledem k padesátiprocentní šanci se žádný z algoritmů nestal lídrem a po celou dobu pokusu zůstal stav všech algoritmů velmi podobný. 
 
 \section{Test odolnosti jednoho preferovaného algoritmu vůči občasné anomálii}
-Viz graf~\ref{fig:test9_1} v příloze~\ref{experiments}. Experimentem jsem chtěl ověřit, jak bude systém reagovat, pokud bude do jeho běhu čas od času zanesena nějaká anomálie. Anomálií může být například omyl při zaslání zpětné vazby na doporučení (uživatel omylem zvolí negativní hodnocení místo positivního). Dle předpokladů by tyto situace neměly mít na chování a vývoj dlouhodobě populárního algoritmu fatálnější následky. Test jsem provedl tak, že jsem preferoval jeden konkrétní algoritmus a po každé patnácté žádosti jsem zanesl anomálii. Jak vidno, neměla žádný viditelný vliv. Parametr \emph{stupid} určující hodnotu negativní zpětné vazby jsem zkoušel nastavovat i výše a výraznější skoky v grafu směrem dolu nastávaly až od hodnoty $0.4$.
+Viz graf~\ref{fig:test9_1}. Experimentem jsem chtěl ověřit, jak bude systém reagovat, pokud bude do jeho běhu čas od času zanesena nějaká anomálie. Anomálií může být například omyl při zaslání zpětné vazby na doporučení (uživatel omylem zvolí negativní hodnocení místo pozitivního). Dle předpokladů by tyto situace neměly mít na chování a vývoj dlouhodobě populárního algoritmu fatálnější následky. Test jsem provedl tak, že jsem preferoval jeden konkrétní algoritmus a po každé patnácté žádosti jsem zanesl anomálii. Jak vidno, neměla žádný viditelný vliv. Parametr \emph{stupid} určující hodnotu negativní zpětné vazby jsem zkoušel nastavovat i výše a výraznější skoky v grafu směrem dolu nastávaly až od hodnoty $0.4$.
 
-\subsection{Pozorované vlastnosti při různě volených parametrech}
+\subsection{Zhodnocení experimentů}
+Tyto provedené experimenty prokázaly základní schopnost systému reagovat na určité situace, které mohou nastat během jeho používání. Nejedná se samozřejmě o kompletní a robustní sadu testů, jakou by si systém zasloužil. Je zde prostor pro další testování zahrnující například různé kombinace. Věřím ale, že jako demonstrace základní funkčnosti systému jsou provedené experimenty dostačující. 
 
-\chapter{Zhodnocení aplikace}
+\chapter{Zhodnocení práce}
 \label{chap:futurework}	
-Závěrečnou kapitolu věnuji zhodnocení přínosu aplikace. Také zde popisuji další možné kroky ve vývoji práce.
+Závěrečnou kapitolu bych rád věnoval zhodnocení celé své práce. Zaměřím se také na další možné kroky v budoucím vývoji aplikace. 
 
-TODO
+Na základě definovaných požadavků a znalostí nabytých vlastním výzkumem byl vyvinut adaptibilní systém pro doporučování obsahu a několik součástí nezbytných pro vzájemnou komunikaci s tímto systémem a okolními komponentami. 
+
+V teoretické části práce jsem se zabýval analýzou konkurenčních systémů, sbíral inspiraci zkoumáním existujících řešení běžících na pozadí těchto systémů a v neposlední řadě jsem se také snažil nastudovat problematiku pokročilejších technik strojového učení, abych tyto načerpané znalosti následně proměnil ve schopnost navrhnout vhodnou strategii pro kombinování a volbu jednotlivých doporučovacích algoritmů.
+
+Systém jsem se snažil navrhnout co nejobecněji, aby nebyl příliš závislý na okolí a bylo možné jej snadno škálovat a přistupovat k němu prostřednictvím API. Přímo s adaptibilním jádrem je možné komunikovat jak zasíláním socketových zpráv, tak pomocí služeb REST.
+
+Při tvorbě součástí systému bylo využito několik moderních technologií, jejichž snahou je poskytovat uživateli rychlý a distribuovaný přístup a stavět robustní a odolná řešení. 
+
+Kvůli potřebám snadné komunikace a provádění experimentů se systémem jsem byl nucen vyvinout testovacího klienta~\ref{chap:client} schopného komunikovat se všemi komponentami vystavěného doporučovacího prostředí. Do tohoto prostředí spadá fulltextový index uchovávající informace o článcích a uživatelských hodnoceních a stejně tak i doporučovací algoritmy přístupné díky HTTP metodám RESTful API.
+
+Výsledné experimenty se systémem jsem bohužel nestihl provést na žádném standardním datasetu a zůstal tak odkázán na vlastní jednoduchý generátor, jímž jsem vytvářel \uv{články} a \uv{uživatelská hodnocení} v Apache Solr již v prvních týdnech implementace. Testovací klient využíval těchto informací z indexu po celou dobu experimentů. To samozřejmě přineslo některé nepříjemnosti v závěru, například to, že uživatelská hodnocení položek nebyla dostatečně vypovídající například pro potřeby kolaborativního filtrování. Dalo by se říci, že tato hodnocení jsou jen náhodným shlukem položek u článku.
+
+Další rozvoj systému je nicméně v plánu a ani zdaleka se nejedná o uzavřenou věc.
 
 \section{Budoucí práce}
 I přesto, že se podařilo splnit většinu požadavků kladených na systém a bylo vyvinuto funkční řešení, do budoucna je stále prostor pro zlepšování, provádění dalších testování a vývoj nových funkcionalit.
@@ -2380,29 +2413,6 @@ Slouží k zaslání zpětné vazby do systému.
  	\end{tabular}	
 \end{center} 
 
-\chapter{Prováděné experimenty}
-\label{experiments}
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/experimenty/test1.png}
- 	\caption[Situace, kdy má jeden algoritmus oproti ostatním výrazný úspěch]{Situace, kdy má jeden algoritmus oproti ostatním výrazný úspěch}\label{fig:test1}
-\end{figure}	
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/experimenty/test5.png}
- 	\caption[Jeden úspěšný algoritmus, jehož hodnota je po čase srážena]{Jeden úspěšný algoritmus, jehož hodnota je po čase srážena}\label{fig:test5}
-\end{figure}	
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/experimenty/test7.png}
- 	\caption[Všechny algoritmy doporučující rovnoměrně]{Všechny algoritmy doporučující rovnoměrně}\label{fig:test7}
-\end{figure}	
-
-\begin{figure}\centering
-	\includegraphics[width=1.0\textwidth]{obr/experimenty/test9_1.png}
- 	\caption[Test odolnosti jednoho preferovaného algoritmu vůči občasné anomálii]{Test odolnosti jednoho preferovaného algoritmu vůči občasné anomálii}\label{fig:test9_1}
-\end{figure}	
-
 \chapter{Dodatečné obrázky}
 \section{Ukázky posterior rozdělení Beta s různými vstupními parametry}
 
@@ -2447,113 +2457,6 @@ Slouží k zaslání zpětné vazby do systému.
 	\item[ORP]
 	\item[HTTP]
 \end{description}
-
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% % Tuto kapitolu z výsledné práce ODSTRAŇTE.
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% 
-% \chapter{Návod k~použití této šablony}
-% 
-% Tento dokument slouží jako základ pro napsání závěrečné práce na Fakultě informačních technologií ČVUT v~Praze.
-% 
-% \section{Výběr základu}
-% 
-% Vyberte si šablonu podle druhu práce (bakalářská, diplomová), jazyka (čeština, angličtina) a kódování (ASCII, \mbox{UTF-8}, \mbox{ISO-8859-2} neboli latin2 a nebo \mbox{Windows-1250}). 
-% 
-% V~české variantě naleznete šablony v~souborech pojmenovaných ve formátu práce\_kódování.tex. Typ může být:
-% \begin{description}
-% 	\item[BP] bakalářská práce,
-% 	\item[DP] diplomová (magisterská) práce.
-% \end{description}
-% Kódování, ve kterém chcete psát, může být:
-% \begin{description}
-% 	\item[UTF-8] kódování Unicode,
-% 	\item[ISO-8859-2] latin2,
-% 	\item[Windows-1250] znaková sada 1250 Windows.
-% \end{description}
-% V~případě nejistoty ohledně kódování doporučujeme následující postup:
-% \begin{enumerate}
-% 	\item Otevřete šablony pro kódování UTF-8 v~editoru prostého textu, který chcete pro psaní práce použít -- pokud můžete texty s~diakritikou normálně přečíst, použijte tuto šablonu.
-% 	\item V~opačném případě postupujte dále podle toho, jaký operační systém používáte:
-% 	\begin{itemize}
-% 		\item v~případě Windows použijte šablonu pro kódování \mbox{Windows-1250},
-% 		\item jinak zkuste použít šablonu pro kódování \mbox{ISO-8859-2}.
-% 	\end{itemize}
-% \end{enumerate}
-% 
-% 
-% V~anglické variantě jsou šablony pojmenované podle typu práce, možnosti jsou:
-% \begin{description}
-% 	\item[bachelors] bakalářská práce,
-% 	\item[masters] diplomová (magisterská) práce.
-% \end{description}
-% 
-% \section{Použití šablony}
-% 
-% Šablona je určena pro zpracování systémem \LaTeXe{}. Text je možné psát v~textovém editoru jako prostý text, lze však také využít specializovaný editor pro \LaTeX{}, např. Kile.
-% 
-% Pro získání tisknutelného výstupu z~takto vytvořeného souboru použijte příkaz \verb|pdflatex|, kterému předáte cestu k~souboru jako parametr. Vhodný editor pro \LaTeX{} toto udělá za Vás. \verb|pdfcslatex| ani \verb|cslatex| \emph{nebudou} s~těmito šablonami fungovat.
-% 
-% Více informací o~použití systému \LaTeX{} najdete např. v~\cite{wikilatex}.
-% 
-% \subsection{Typografie}
-% 
-% Při psaní dodržujte typografické konvence zvoleného jazyka. České \uv{uvozovky} zapisujte použitím příkazu \verb|\uv|, kterému v~parametru předáte text, jenž má být v~uvozovkách. Anglické otevírací uvozovky se v~\LaTeX{}u zadávají jako dva zpětné apostrofy, uzavírací uvozovky jako dva apostrofy. Často chybně uváděný symbol "{} (palce) nemá s~uvozovkami nic společného.
-% 
-% Dále je třeba zabránit zalomení řádky mezi některými slovy, v~češtině např. za jednopísmennými předložkami a spojkami (vyjma \uv{a}). To docílíte vložením pružné nezalomitelné mezery -- znakem \texttt{\textasciitilde}. V~tomto případě to není třeba dělat ručně, lze použít program \verb|vlna|.
-% 
-% Více o~typografii viz \cite{kobltypo}.
-% 
-% \subsection{Obrázky}
-% 
-% Pro umožnění vkládání obrázků je vhodné použít balíček \verb|graphicx|, samotné vložení se provede příkazem \verb|\includegraphics|. Takto je možné vkládat obrázky ve formátu PDF, PNG a JPEG jestliže používáte pdf\LaTeX{} nebo ve formátu EPS jestliže používáte \LaTeX{}. Doporučujeme preferovat vektorové obrázky před rastrovými (vyjma fotografií).
-% 
-% \subsubsection{Získání vhodného formátu}
-% 
-% Pro získání vektorových formátů PDF nebo EPS z~jiných lze použít některý z~vektorových grafických editorů. Pro převod rastrového obrázku na vektorový lze použít rasterizaci, kterou mnohé editory zvládají (např. Inkscape). Pro konverze lze použít též nástroje pro dávkové zpracování běžně dodávané s~\LaTeX{}em, např. \verb|epstopdf|.
-% 
-% \subsubsection{Plovoucí prostředí}
-% 
-% Příkazem \verb|\includegraphics| lze obrázky vkládat přímo, doporučujeme však použít plovoucí prostředí, konkrétně \verb|figure|. Například obrázek \ref{fig:float} byl vložen tímto způsobem. Vůbec přitom nevadí, když je obrázek umístěn jinde, než bylo původně zamýšleno -- je tomu tak hlavně kvůli dodržení typografických konvencí. Namísto vynucování konkrétní pozice obrázku doporučujeme používat odkazování z~textu (dvojice příkazů \verb|\label| a \verb|\ref|).
-% 
-% \begin{figure}\centering
-% 	\includegraphics[width=0.5\textwidth, angle=30]{cvut-logo-bw}
-% 	\caption[Příklad obrázku]{Ukázkový obrázek v~plovoucím prostředí}\label{fig:float}
-% \end{figure}
-% 
-% \subsubsection{Verze obrázků}
-% 
-% % Gnuplot BW i barevně
-% Může se hodit mít více verzí stejného obrázku, např. pro barevný či černobílý tisk a nebo pro prezentaci. S~pomocí některých nástrojů na generování grafiky je to snadné.
-% 
-% Máte-li například graf vytvořený v programu Gnuplot, můžete jeho černobílou variantu (viz obr. \ref{fig:gnuplot-bw}) vytvořit parametrem \verb|monochrome dashed| příkazu \verb|set term|. Barevnou variantu (viz obr. \ref{fig:gnuplot-col}) vhodnou na prezentace lze vytvořit parametrem \verb|colour solid|.
-% 
-% \begin{figure}\centering
-% 	\includegraphics{gnuplot-bw}
-% 	\caption{Černobílá varianta obrázku generovaného programem Gnuplot}\label{fig:gnuplot-bw}
-% \end{figure}
-% 
-% \begin{figure}\centering
-% 	\includegraphics{gnuplot-col}
-% 	\caption{Barevná varianta obrázku generovaného programem Gnuplot}\label{fig:gnuplot-col}
-% \end{figure}
-% 
-% 
-% \subsection{Tabulky}
-% 
-% Tabulky lze zadávat různě, např. v~prostředí \verb|tabular|, avšak pro jejich vkládání platí to samé, co pro obrázky -- použijte plovoucí prostředí, v~tomto případě \verb|table|. Například tabulka \ref{tab:matematika} byla vložena tímto způsobem.
-% 
-% \begin{table}\centering
-% 	\caption[Příklad tabulky]{Zadávání matematiky}\label{tab:matematika}
-% 	\begin{tabular}{|l|l|c|c|}\hline
-% 		Typ		& Prostředí		& \LaTeX{}ovská zkratka	& \TeX{}ovská zkratka	\tabularnewline \hline \hline
-% 		Text		& \verb|math|		& \verb|\(...\)|	& \verb|$...$|		\tabularnewline \hline
-% 		Displayed	& \verb|displaymath|	& \verb|\[...\]|	& \verb|$$...$$|	\tabularnewline \hline
-% 	\end{tabular}
-% \end{table}
-% 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 
 \chapter{Obsah přiloženého CD}
 
