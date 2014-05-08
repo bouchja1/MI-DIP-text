@@ -2222,7 +2222,7 @@ Funkčnost vyvinutého řešení měla být ověřena experimenty na modelové �
 \chapter{Dokumentace RESTful API}
 \label{restfulapi}
 
-\emph{Pozn.} Pro výměnu dat je využíván formát JSON.
+\emph{Pozn.} Pro výměnu dat je využíván formát JSON. Návratové kódy mají standardní sémantický význam, tedy \textbf{200} (OK), \textbf{201} (CREATED), \textbf{400} (BAD REQUEST), \textbf{404} (NOT FOUND), \textbf{500} (SERVER INTERNAL ERROR).
 
 \subsection{Algorithm}
 
@@ -2242,18 +2242,18 @@ Vrací seznam podporovaných algoritmů, kterými si lze nechat doporučit člá
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200			\tabularnewline 		
  	\end{tabular}
 \end{center} 	
 
 \paragraph*{/algorithm/\{algorithm-id\}/?coreId=\{core-id\}}
 
-Vrací seznam doporučených článků daným algoritmem.
+Vrací seznam doporučených článků daným algoritmem. Pro zadávání vstupů určených konkrétním doporučovacím algoritmům lze ještě využít parametry dotazu: \emph{documentId}, \emph{groupId}, \emph{userId}, \emph{limit}.
 
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok, 400 - bad request, 404 - not found			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200, 400, 404			\tabularnewline 		
  	\end{tabular}
 \end{center} 
 
@@ -2275,7 +2275,7 @@ Vrací seznam podporovaných jader, se kterými lze komunikovat.
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200			\tabularnewline 		
  	\end{tabular}
 \end{center} 	
 
@@ -2286,18 +2286,18 @@ Uloží do zadaného jádra nové články.
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& POST			\tabularnewline 
- 		\textit{Návratové kódy:}		& 201 - created, 400 - bad request, 404 - not found, 500 - server internal error			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 201, 400, 404, 500			\tabularnewline 		
  	\end{tabular}
 \end{center} 	
 
 \paragraph*{/cores/\{core-id\}/documents}
 
-Smaže z daného jádra dokument specifikovaný v těle požadavku (ID dokumentu může být obecně cokoliv, i URL, proto zasíláno v těle)
+Smaže z daného jádra dokument specifikovaný v parametru dotazu: \emph{documentId} (ID dokumentu může být obecně cokoliv, i URL, proto zasíláno v těle)
 
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& DELETE			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok, 400 - bad request, 404 - not found, 500 - server internal error			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200, 400, 404, 500			\tabularnewline 		
  	\end{tabular}
 \end{center} 	
 
@@ -2308,7 +2308,7 @@ Slouží k přidání informace o uživatelském hodnocení dokumentu (článku 
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& PUT			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok, 400 - bad request, 404 - not found, 500 - server internal error			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200, 400, 404, 500		\tabularnewline 		
  	\end{tabular}
 \end{center} 
 
@@ -2331,7 +2331,7 @@ Slouží k vypsání existujících kolekcí v Recommeng systému.
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
@@ -2342,7 +2342,7 @@ Slouží k vytvoření kontextové kolekce v systému.
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& POST			\tabularnewline 
- 		\textit{Návratové kódy:}		& 201 - created, 400 - bad request			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 201, 400			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
@@ -2353,7 +2353,7 @@ Slouží k vypsání algoritmů přítomných v kolekci sestupně od toho nejvho
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200, 404			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
@@ -2364,7 +2364,7 @@ Slouží k vypsání nejlepšího algoritmu pro doporučení z kontextové kolek
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200, 404			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
@@ -2375,7 +2375,7 @@ Slouží k zaslání zpětné vazby do systému.
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& PUT			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found, 400 - bad request			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200, 404, 400			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
@@ -2398,7 +2398,7 @@ Slouží k vypsání existujících super kolekcí v Recommeng systému.
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
@@ -2409,7 +2409,7 @@ Slouží k vytvoření super kolekce v systému.
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& POST			\tabularnewline 
- 		\textit{Návratové kódy:}		& 201 - created, 400 - bad request			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 201, 400			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
@@ -2420,7 +2420,7 @@ Slouží k vypsání nejlepšího algoritmu pro doporučení z kombinace kontext
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200, 404			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
@@ -2431,7 +2431,7 @@ Slouží k zaslání zpětné vazby do systému.
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& PUT			\tabularnewline 
- 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found, 400 - bad request			\tabularnewline 		
+ 		\textit{Návratové kódy:}		& 200, 404, 400			\tabularnewline 		
  	\end{tabular}	
 \end{center} 
 
