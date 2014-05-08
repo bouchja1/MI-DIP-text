@@ -2206,11 +2206,15 @@ Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav
 \section{Zhodnocení aplikace}
 
 \section{Budoucí práce}
-sofistikovanější kombinační strategie
-hateoas odpovědi
-dodělat kolaborativní filtrování s využitím ratingů, když už tam jsou. ať se nepoužívají jen pro top rated
-vytváření banditů předtím, než je budeme dávat do kolekcí. takto máme možnost vytvářet jen povolené v properties souboru.
-hybridni doporucovaci algoritmus
+TODO trochu učesat, přeformulovat...
+
+I přesto, že se podařilo splnit většinu požadavků kladených na systém a bylo vyvinuto funkční řešení, do budoucna je stále prostor pro zlepšování, pořádné zátěžové testování a vývoj nových funkcionalit.
+
+Jako jednou z možných budoucích funkcionalit by mohl být vývoj sofistikovanější strategie volby v případě, že více algoritmů vybraných z jednotlivých kolekcí má stejnou četnost.
+
+Vzhledem k možnostem, jaké nabízejí uživatelská hodnocení u článků, by stálo za to popřemýšlet o dalších doporučovacím algoritmu, který by těchto informací dokázal využít (v této práci s hodnoceními pracoval pouze jeden algoritmus, a to pro výběr nejlépe hodnocených článků). Nabízí se varianta kolaborativního filtrování ve struktuře user-rating-item.
+
+Z časových důvodů nebyl vyvinut ani žádný hybridní doporučovací algoritmus, i když jsem jej měl původně v plánu.
 
 \begin{conclusion}
 TODO dopsat, přepsat... rozvést
@@ -2220,6 +2224,8 @@ Cílem práce bylo navrhnout systém, který by dokázal automaticky volit a dyn
 Pro účely komunikace se systémem a systémových komponent mezi sebou mělo být navrženo obecné rozhraní. Následně mělo být navrženo a implementováno rozhraní systému v podobě služeb REST.
 
 Funkčnost vyvinutého řešení měla být ověřena experimenty na modelové úloze.
+
+...výhledové použití v systému \url{http://inbeat.eu/} (Interest Beat is a service for recommendation of content). 
 \end{conclusion}
 
 \bibliographystyle{csn690}
