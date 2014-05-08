@@ -56,8 +56,6 @@ breaklines=true
 
 \usepackage{nameref}
 
-\setcounter{tocdepth}{2}
-
 \usepackage{epigraph}
 \setlength{\epigraphrule}{0pt}
 \setlength{\epigraphwidth}{.95\textwidth}
@@ -81,8 +79,8 @@ breaklines=true
 \authorWithDegrees{Bc. Jan Bouchner} %jméno autora včetně současných akademických titulů
 \supervisor{Ing. Jaroslav Kuchař}
 \acknowledgements{Chci upřímně poděkovat všem, kteří mi věnovali čas, když jsem potřeboval pomoc při psaní této diplomové práce. Především vedoucímu práce Ing. Jaroslavu Kuchaři za správné směrování a cenné rady, které výrazně napomohly ke vzniku této práce. Děkuji také své rodině a všem přátelům za bezvýhradnou podporu během celých mých studií.}
-\abstractCS{Tato diplomová práce popisuje návrh a vývoj adaptibilního systému schopného vhodně volit a kombinovat algoritmy pro doporučování obsahu. První část práce je zasvěcena zkoumání teorie související s pokročilejšími existujícími systémy, na základě výsledků tohoto zkoumání je provedena volba vhodné učící strategie a stanovení konkrétních požadavků na systém. Druhá část práce je praktická a popisuje návrh systému, obecného rozhraní pro komunikaci, použité technologie a programátorské postupy, jakými bylo dosaženo výsledného systému. Vyvinutými částmi jsou: adaptibilní systém, sada základních algoritmů pro doporučování obsahu, RESTful API a klientská aplikace, jež na závěr umožnila provést se systémem několik experimentů. Všechny části aplikace byly implementovány v programovacím jazyce Java.}
-\abstractEN{Sem doplňte ekvivalent abstraktu Vaší práce v~angličtině.}
+\abstractCS{Tato diplomová práce popisuje návrh a vývoj adaptibilního systému schopného vhodně volit a kombinovat algoritmy pro doporučování obsahu. První část práce je zasvěcena zkoumání teorie související s pokročilejšími, již existujícími systémy. Na základě výsledků tohoto zkoumání je provedena volba vhodné učící strategie a stanovení konkrétních požadavků na systém. Druhá část práce je praktická a popisuje návrh systému, obecného rozhraní pro komunikaci, použité technologie a programátorské postupy, jakými bylo dosaženo výsledného systému. Vyvinutými částmi jsou: adaptibilní systém, sada základních algoritmů pro doporučování obsahu, RESTful API a klientská aplikace, jež na závěr umožnila provést se systémem několik experimentů. Všechny části aplikace byly implementovány v programovacím jazyce Java.}
+\abstractEN{This thesis describes design and development of an adaptive system that is able to appropriately choose and combine content-recommendation algorithms. The first part of the thesis studies the theory related to advanced, already existing systems. Based on the results of this research, suitable learning strategy and particular system requirements were chosen. The second part of this thesis is practical and describes the system design, general interface for communication, used technologies, and programmer's approach used to get the resultant system. Developed parts comprehend: adaptive system, a set of basic algorithms for content recommendation, RESTful API and a client application that in the end made it possible to perform several experiments with the system. All the application's parts are implemented in Java programming language.}
 \placeForDeclarationOfAuthenticity{V~Praze}
 \declarationOfAuthenticityOption{1} %volba Prohlášení (číslo 1-6)
 \keywordsCS{Multi-Armed Bandit, doporučovací systémy, ensemble, REST, strojové učení, Apache Solr, ZeroMQ}
@@ -436,7 +434,7 @@ Rozlišujeme dva typy reakcí, a to pozitivní a negativní zpětnou vazbu. Tém
 
 \begin{description}
   \item[Explorace] Nacházení nových neprozkoumaných oblastí. Agent nevyužívá svých dosud načerpaných znalostí a zkouší nové akce. 
-  \item[Exploatace] Využívání stávajících znalostí. Agent provádí akce, o kterých ma základě pokusů z minulosti ví, že mu přinášejí užitek. Pokud by dlouhodobě zůstal v tomto procesu, hrozí mu uváznutí v lokálním extrému.
+  \item[Exploatace] Využívání stávajících znalostí. Agent provádí akce, o kterých na základě pokusů z minulosti ví, že mu přinášejí užitek. Pokud by dlouhodobě zůstal v tomto procesu, hrozí mu uváznutí v lokálním extrému.
 \end{description}	
 
 K nalezení optimální strategie je tedy nutné provést nějaký kompromis.
@@ -651,6 +649,15 @@ Obrázek~\ref{fig:posteriors} ilustruje postup pro problém tří banditů ($N =
  	\caption[Vizualizace sekvenčního učení řešení od jedné do tisíce her.]{Vizualizace sekvenčního učení řešení od jedné do tisíce her. Zdroj: \cite{camdp}}\label{fig:posteriors}
 \end{figure}	
 
+\subsubsection{Kolekce a super kolekce banditů}
+Při zkoumání existujících řešení padla zmínka o jakémsi kontextu~\ref {sub:orp}.
+
+Nyní již víme, že za kontextový atribut lze považovat téměř cokoliv. Od denní doby přes aktuální náladu ve společnosti až po národnost uživatele. V mnou navrhovaném řešení budou hrát roli kontextu jednotlivé bayesovské strategie. Kontext tak v sobě obsahuje bandity, mezi kterými je prováděna volba, který z nich je nejlepší. 
+
+Kontext budu ve smyslu bayesovských strategií nazývat jako \emph{kolekce}.
+
+Složením více bayesovských strategií (např. \uv{ráno} a \uv{Evropa}) do jedné vznikne \emph{super kolekce} (\uv{ráno v Evropě}). 
+
 \subsubsection{Zpětná vazba a její vliv na vývoj adaptibilního systému}
 \label{subsub:feedback}
 Pojem zpětné vazby~\ref{feedback} již v předchozím textu zazněl. Pro účely této práce je nutné uzpůsobit její význam tak, aby měla přímý vliv na pružný vývoj adaptibilního systému.
@@ -808,11 +815,6 @@ Kvůli tomuto problému stojí za úvahu prozkoumat možnost použití jedné z 
 Stěžejní serverovou komponentou je adaptibilní systém~\ref{sec:recommeng}. Ten jsem pracovně nazval jako \textbf{Recommeng} (zkratka pro recommendation engine), abych o něm nemusel již nadále mluvit jako o \emph{adaptibilním systému} či \emph{systému pro kombinování metod}. 
 
 Komunikaci bude umožňovat systém pro zasílání zpráv (Messaging System) s využitím fronty zpráv (Message Queue). Toto řešení je zde nasnadě kvůli očekávání většího množství žádostí směřujících na systém a snadnější škálovatelnosti aplikace. Obecný příklad takového MQ systému znázorňuje obrázek~\ref{fig:vitvarMq}
-
-\begin{figure}\centering
-	\includegraphics[width=1.2\textwidth]{obr/vitvar_mq.png}
- 	\caption[Příklad MQ systému s producentem zpráv a konzumenty]{Příklad MQ systému s producentem zpráv a konzumenty. Zdroj: \cite{vitvarMq}}\label{fig:vitvarMq}
-\end{figure}	
 
 Recommeng systém bude taktéž komunikovat s databází kvůli nutnosti průběžného ukládání informací o stavu, respektive kvůli možnosti načíst poslední uložený stav při novém startu aplikace.
 
@@ -1007,7 +1009,21 @@ Vzhledem k obecné známosti protokolu HTTP jsem se rozhodl napodobit jeho chov�
 	\item tělo zprávy (body)
 \end{itemize}
 
-Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{body} s využitím různých návratových kódů pro stav (status). Tyto informace budou reprezentovány formátem zpráv JSON~\ref{json}.
+Podobně jako v HTTP, i v případě mnou navrhované komunikace bude na každou žádost ve tvaru \emph{method, path} a \emph{body} přicházet odpověď ve tvaru \emph{status} a \emph{message} (plus další specifické parametry například \emph{collection} či \emph{bestBandit} v případě obdržení odpovědi na žádost o nejlepší algoritmus ze zvolené kolekce). Jak si lze všimnout, při odpovědi klientovi jsem nakonec parametr body nahradil za parametr message, protože dle mého názoru lépe vystihuje význam. Tyto informace budou reprezentovány formátem zpráv JSON~\ref{json}.
+
+Ukázka odpovědí, které obdrží klient od serveru:
+
+\begin{lstlisting}
+{"message":"You should choose bandit with name latest now. He is the best for this context.","status":200,"collection":1,"banditId":"latest","bestBandit":3}
+{"message":"Feedback to Bandit with ID 3 was involved.","status":200}
+\end{lstlisting}
+
+Ukázka obdržených žádostí serveru od klienta, který zasílal zpětnou vazbou na algoritmus s ID 3 z kolekce s ID 1:
+
+\begin{lstlisting}
+{"method":"PUT","path":"/ensemble/services/collection/1/3","body":"operation=use"}
+{"method":"PUT","path":"/ensemble/services/collection/1/3","body":"operation=feedback&feedbackType=possitive"}
+\end{lstlisting}
 			
 \subsection{Identifikace sady algoritmů}
 Uživatel žádající o radu pro výběr nejlepšího algoritmu obdrží od systému identifikátor reprezentující tento algoritmus. Pro účely této práce jsem vybral následující sadu algoritmů:
@@ -1662,7 +1678,7 @@ public class ArticleEndpointImpl implements ArticleEndpoint {
 
 Anotace \emph{@Path} v tomto případě značí, že třída se bude nacházet na URI \emph{/cores}.
 
-Jedna z jejích služeb umožňující vytvářet či aktualizovat informace o zpětné vazbě u dokumentu v indexu (zasíláním žádostí na URI zdroje \emph{/cores/\{coreId\}/document}) je definována takto:
+Jedna z jejích služeb umožňující vytvářet či aktualizovat informace o zpětné vazbě u dokumentu v indexu je definována následovně:
 
 \begin{lstlisting}[language=java]
 @Path(USER_ARTICLE_PATH)
@@ -1759,7 +1775,9 @@ Vytvořil jsem též službu \textbf{EnsembleEndpointImpl} pro komunikaci s Reco
 
 Tato služba, ač běžící jako součást serverové aplikace, hraje vůči Recommeng systému roli klientskou. Pro vnější uživatele zastává tradiční roli serveru.
 
-EnsembleZeroMqHelper zpracovává příchozí žádosti od uživatelů prostřednictvím RESTful API. Poté transformuje do JSON formátu žádost, kterou umí Recommeng systém zpracovat. 
+EnsembleZeroMqHelper zpracovává příchozí žádosti od uživatelů prostřednictvím RESTful API.
+
+Poté transformuje žádost do mnou navrženého formátu, kterou umí Recommeng systém zpracovat (vůči systému je žádost zasílána ve formátu JSON). 
 
 \begin{lstlisting}[language=java]
 EnsembleRequest req = new EnsembleRequest();
@@ -1808,7 +1826,7 @@ public Response recommend(@PathParam("coreId") String coreId,
         @QueryParam(value = "limit") int limit) {
 \end{lstlisting}
 
-Jak vidno, metoda umí v žádosti přijmout spoustu parametrů. Při každém vyvolání jsou všechny existující příchozí parametry uloženy do mapy a ta je následně předána tovární metodě, jejímž cílem je vytvořit na základě uživatelského vstupu vhodnou instanci třídy pro doporučení obsahu.
+Při každém vyvolání jsou všechny existující příchozí parametry uloženy do mapy a ta je následně předána tovární metodě, jejímž cílem je vytvořit na základě uživatelského vstupu vhodnou instanci třídy pro doporučení obsahu.
 
 \begin{lstlisting}[language=java]
 Map<String, String> algorithmParams = createAlgorithmParams(coreId, algorithmId, groupId, userId, documentId, text, limit);
@@ -1864,7 +1882,7 @@ while (validCores.hasNext()) {
 }
 \end{lstlisting}
 
-Kdykoliv je pak metodách tříd doporučovacích algoritmů navazováno spojení se serverem, dle zadaného identifikátoru jádra (coreId) se bere instanci z poolu, který má parametry \emph{HashMap<String, HttpSolrServer>}. 
+Kdykoliv je pak v metodách tříd doporučovacích algoritmů navazováno spojení se serverem, dle zadaného identifikátoru jádra (coreId) se vezme instanci z poolu, který má parametry \emph{HashMap<String, HttpSolrServer>}. 
 
 \begin{lstlisting}[language=java]
 HttpSolrServer server = solrService.getServerFromPool(coreId);
@@ -1872,7 +1890,7 @@ HttpSolrServer server = solrService.getServerFromPool(coreId);
 
 \subsection{Algoritmy pro doporučování obsahu pomocí Apache Solr}
 \label{sec:alg}
-Třídami, které jsou schopné různými způsoby doporučovat obsah, jsou:
+Třídami, které jsou schopné různým způsobem doporučovat obsah, jsou:
 
 \begin{itemize}
 	\item AlgorithmWeightedRating
@@ -1883,13 +1901,13 @@ Třídami, které jsou schopné různými způsoby doporučovat obsah, jsou:
 	\item AlgorithmItemBasedCf				
 \end{itemize}
 
-Všechny tyto třídy implementují rozhraní IAlgorithm a veškerá logika doporučení je vykonávána v implementacích metody recommend() konkrétních doporučovacích tříd a jejich pomocných metod. 
+Všechny tyto třídy implementují rozhraní \textbf{IAlgorithm} a veškerá logika doporučení je vykonávána v implementacích metod \emph{recommend()} konkrétních doporučovacích tříd.
 
 \subsubsection{Reprezentace dokumentů pro účely doporučování}
 
-Pro potřeby modelové úlohy bylo nutné zamyslet se nad reprezentací a strukturou dat v Apache Solr. Z požadavků a technických možností Solr vyplynulo přímočaré řešení spočívající ve vytvoření dvou jader - jedno pro vkládání a uchovávání článků (\emph{articleCore}), druhé pro zaznamenávání interakce uživatele s doporučenými články (\emph{behavioralCore}). 
+Pro potřeby modelové úlohy bylo nutné zamyslet se nad reprezentací a strukturou dat v Apache Solr. Z požadavků a technických možností Solr vyplynulo přímočaré řešení spočívající ve vytvoření dvou jader – jednoho pro vkládání a uchovávání článků (\emph{articleCore}), druhého pro zaznamenávání interakce uživatele s doporučenými články (\emph{behavioralCore}). 
 
-Jádro pro články budou při svých doporučeních využívat obsahově založené algoritmy (random, latest, more like this), jádro pro interakce budou využívat algoritmy pracující s uživatelskými hodnoceními (nejlépe hodnocené, kolaborativní filtrování).
+Jádro pro články budou při svých doporučeních využívat obsahově založené algoritmy (náhodné, nejnovější, more like this), jádro pro interakce budou využívat algoritmy pracující s uživatelskými hodnoceními (nejlépe hodnocené, kolaborativní filtrování).
 
 \paragraph{Article core}
 Jakýkoliv nově vytvořený článek je zaslán do tohoto jádra a přidán jako dokument s následující strukturou:
@@ -1906,7 +1924,7 @@ Jakýkoliv nově vytvořený článek je zaslán do tohoto jádra a přidán jak
 \end{lstlisting}
 
 \paragraph{Behavioral core}
-Po každé uživatelské interakci se článkem je tato interakce přidána do jádra jako trojice userId, articleId a userId\_rating. Pokud dokument s požadovaným articleId není v jádře přítomen, je v něm vytvořen. Pokud přítomen je, proběhne pouze přidání dvojice userId a userId\_rating.
+Po každé uživatelské interakci se článkem je tato interakce přidána do jádra jako trojice userId, articleId a userId\_rating. Pokud dokument s požadovaným articleId není v jádře přítomen, je v něm nově vytvořen. Pokud přítomen je, proběhne pouze přidání dvojice \emph{userId} a \emph{userId\_rating}.
 
 \begin{lstlisting}[language=xml]
 <doc>
@@ -1927,45 +1945,43 @@ Po každé uživatelské interakci se článkem je tato interakce přidána do j
 \end{lstlisting}
 
 \subsubsection{Algoritmus náhodného výběru}
-Náhodný výběr by neměl mít již z podstaty věci příliš složitou implementaci. Rozhodl jsem se proto využít možnosti, kterou nabízí Solr. Rou možností je přidání speciálního typu a pole tohoto typu do schématu\footnote{Soubor schema.xml popisující veškeré detaily o tom, které filedy může jádro indexu obsahovat, a jakým způsobem s nimi má být nakládáno při přidávání dokumentů do indexu či dotazování.} jádra. 
+Náhodný výběr by neměl mít již z podstaty věci příliš složitou implementaci. Rozhodl jsem se proto využít možnosti, kterou nabízí mechanismus Apache Solr. Tou možností je přidání speciálního typu a pole tohoto typu do schématu\footnote{Soubor schema.xml popisující veškeré detaily o tom, které filedy může jádro indexu obsahovat, a jakým způsobem s nimi má být nakládáno při přidávání dokumentů do indexu či dotazování.} jádra. 
 
 \begin{lstlisting}[language=xml]
 <fieldType name="random" class="solr.RandomSortField" indexed="true" />
 <dynamicField name="random_*" type="random" />
 \end{lstlisting}
 
-Pro dotaz je poté možné využít speciálního vstupu pro řazení výsledků. Solr podporuje parametrem \emph{sort} řazení dokumentů dle specifikovaného pole v indexu. Díky definici náhodného typu lze zaslat jako vstup pro řazení field \emph{random} s náhodným prefixem. Například:
+Pro dotaz je poté možné využít speciální vstup pro řazení výsledků. Solr podporuje parametrem \emph{sort} řazení dokumentů dle specifikovaného pole v indexu. Díky definici náhodného typu lze zaslat jako vstup pro řazení field \emph{random} s náhodným prefixem. Například:
 
 \begin{verbatim}
 q=*:*&sort=random_12939291%20desc
 \end{verbatim}
 
-Solr tímto způsobem vyhodnotí pořadí dokumentů dle jména náhodného pole a verze indexu. To tedy znamená, že pokaždé, kdy je použito stejného jména náhodného pole a toho samého indexu (který nebyl mezi dotazy změněn), jsou navráceny ty samé výsledky. Proto jsem byl nucen zanést do dotazu ještě další prvek náhody a to tak, že pro názvy pole využívám náhodného čísla v rozsahu 1 až maximální hodnota celočíselného datového typu.
+Solr tímto způsobem vyhodnotí pořadí dokumentů dle jména náhodného pole a verze indexu. To znamená, že pokaždé, kdy je použito stejné jméno náhodného pole a ten samý indexu (který nebyl mezi dotazy změněn), jsou navráceny totožné výsledky. Byl jsem tedy nucen zanést do dotazu ještě jeden prvek náhody a to tak, že pro názvy pole využívám náhodného čísla v rozsahu 1 až maximální hodnota celočíselného datového typu.
 
-Programová realizace je pak již triviální:
+Programová realizace je triviální:
 
 \begin{lstlisting}[language=java]
 int random = generator.nextInt(Integer.MAX\_VALUE) + 1;
-String sortOrder = "random\_" + random;
+String sortOrder = "random_" + random;
   
 query.setSortField(sortOrder, SolrQuery.ORDER.desc);
 \end{lstlisting}       
 
 \subsubsection{Algoritmus výběru dle nejnovějších položek}
-Logika řazení funguje stejně jako v případě náhodného výběru výše díky parametru \emph{sort}. S tím rozdílem, že vstupem pro parametr je pole \emph{time} uchovávající datum vytvoření článku.
+Logika řazení funguje – stejně jako v případě náhodného výběru výše – díky parametru \emph{sort}. S tím rozdílem, že vstupem pro parametr je pole \emph{time}, které v sobě uchovává datum vytvoření článku.
 
 \begin{lstlisting}[language=xml]
 <date name="time">2012-09-19T09:42:12Z</date>
 \end{lstlisting}
 
-Navrácené dokumenty jsou tak řazeny dle této hodnoty.
-
 \subsubsection{Algoritmus výběru nejlépe hodnocených položek}
-Pro výběr nejlépe hodnocených položek je již zapotřebí použít sofistikovanějšího mechanismu. Nelze se spoléhat na celkovou sumu či aritmetický průměr. Pomocí takového přístupu by totiž například položka, která byla hodnocena tisíckrát se známkou 1 (z 5 možných) byla považována za lepší než například položka hodnocená stokrát, ale vždy se známkou 5.
+Pro výběr nejlépe hodnocených položek je již zapotřebí použít sofistikovanějšího mechanismu. Nelze se spoléhat na celkovou sumu či aritmetický průměr.
 
 Rozhodl jsem se použít podobný přístup, jaký využívá známá filmová databáze IMDB\footnote{\url{http://www.imdb.com/chart/top}}. 
 
-K výpočtu váženého hodnocení je využito bayesovských odhadů. Výpočet je realizován pomocí následující formule:
+Výpočet váženého hodnocení je realizován pomocí následující formule:
 
 \begin{center}
 $W = \frac{Rv + Cm}{v + m}$
@@ -1975,24 +1991,16 @@ $W = \frac{Rv + Cm}{v + m}$
 	\item[W] značí výsledné vážené hodnocení
 	\item[R] značí průměrné hodnocení položky
 	\item[v] značí počet hodnotitelů položky
-	\item[m] značí minimální počet hodnocení potřebných k objevení se ve výsledku (IMDB pro potřeby výskytu filmu v prvních 250 užívá konstatnty 250000)
-	\item[C] značí průměr hodnocení všech položek (IMDB používá hodnotu 7.0)
+	\item[m] značí minimální počet hodnocení potřebných k objevení se ve výsledku
+	\item[C] značí průměr hodnocení všech položek
 \end{description}
 
-Výpočet váženého hodnocení probíhá po přidání každé další uživatelské interakce do jádra behavioralCore. Přepočet je nutný, neboť do dokumentů přibývají uživatelé s novými hodnoceními, mění se tak počty a průměrné hodnoty vstupující do vzorce. Mechanismu přepočítávání je realizován v metodě třídy \textbf{SolrService}.
-
-\begin{verbatim}
-recalculateWeightedRating(SolrInputDocument sid)
-\end{verbatim}
-
-Pro výpočet jsou důležitá pole userId a userId\_rating daného dokumentu.
-
-Navrácení seřazených výsledků pak zajišťuje třída \textbf{AlgorithmWeightedRating} a nejedná se o nic jiného, než o seřazení dle vstupního parametru \emph{weightedRating}. Stejně jako v předchozích dvou případech.
+Vážené hodnocení je přepočítáváno po přidání každé další uživatelské interakce do jádra \emph{behavioralCore}. Přepočet je nutný, neboť do dokumentů přibývají uživatelé s novými hodnoceními, mění se tak počty a průměrné hodnoty vstupující do vzorce.
 
 \subsubsection{Algoritmus výběru dle podobnosti obsahu}
-K doporučování dokumentů obsahově podobných jiným dokumentům v indexu mi byly opět velmi nápomocné nativní mechanismy Apache Solr. Tentokrát je řeč o vyhledávací komponentně známé jako \emph{MoreLikeThis}\footnote{\url{https://wiki.apache.org/solr/MoreLikeThis}}.
+K doporučování dokumentů obsahově podobných jiným dokumentům v indexu mi byly opět velmi nápomocné nativní mechanismy Apache Solr. Tentokrát konkrétně vyhledávací komponenta známá jako \emph{MoreLikeThis}\footnote{\url{https://wiki.apache.org/solr/MoreLikeThis}}.
 
-Přístup spočívá v přidání request handleru do konfigurace jádra\footnote{Soubor solrconfig.xml.}.
+Řešení spočívá v přidání request handleru do konfigurace jádra\footnote{Soubor solrconfig.xml.}.
 
 \begin{lstlisting}[language=xml]
 <requestHandler name="/mlt" class="solr.MoreLikeThisHandler">
@@ -2024,27 +2032,25 @@ query.setQuery("articleId:" + document.getFieldValue("articleId"));
 query.setFilterQueries("group:" + document.getFieldValue("group"));
 \end{lstlisting}
 
-Jako vstup pro porovnání slouží jeden dokument z jádra.
+Jako vstup pro porovnání bude sloužit jeden dokument z jádra.
 
 \subsubsection{Algoritmus kolaborativního filtrování}
-Při provádění analýzy stávajících řešení pro doporučování jsem se dozvěděl o knihovně Apache Mahout~\ref{mahout}, kterou využívá pro své potřeby systém Mendeley~\ref{mahout}, načež jsem se rozhodl pro to ji vyzkoušet.
+Během provádění analýzy stávajících řešení pro doporučování jsem se dočetl o knihovně Apache Mahout~\ref{mahout}, kterou využívá pro své potřeby systém Mendeley~\ref{mahout}. Rozhodl jsem se ji vyzkoušet.
 
-Řešení budu demonstrovat na user-based přístupu realizovaného třídou \textbf{AlgorithmUserBasedCf}.
+Řešení níže demonstruji na user-based přístupu realizovaného třídou \textbf{AlgorithmUserBasedCf}.
 
-Nejprve bylo nutné získat z úložiště seznam uživatelských ID a ID dokumentů, které tito uživatelé hodnotili a tato data uložit do kolekce FastByIDMap.
+Nejdříve je nutné získat ze Solr seznam uživatelských ID a ID dokumentů, které tito uživatelé hodnotili. Následně tato data vzít a uložit je do kolekce \textbf{FastByIDMap}.
 
 \begin{lstlisting}[language=java]
 FastByIDMap<FastIDSet> userData = new FastByIDMap<FastIDSet>();
 \end{lstlisting}
-
-Každý uživatel byl poté přidán do kolekce a z této kolekce byl vytvořen datový model.
 
 \begin{lstlisting}[language=java]
 userData.put(userRelatedId, new FastIDSet(itemValues));
 DataModel model = new GenericBooleanPrefDataModel(userData);
 \end{lstlisting}
 
-Po vytvoření datového modelu je již možné konstruovat doporučení. Na výběr je několik podobnostních metrik, například euklidovská vzdálenost, pearsonův korelační koeficient či log-likelihood. Vzhledem k použití booleovského modelu preferencí jsem zvolil LogLikelihoodSimilarity. Pro doporučení je ještě stanovena sousedská funkce (doporučované položky pro uživatele jsou počítány na základě podobnosti mezi uživatelem a uživateli nacházejícími se v modelu) a následně provedeno doporučení.
+Po vytvoření datového modelu je již možné konstruovat doporučení. Na výběr je několik podobnostních metrik, například euklidovská vzdálenost, pearsonův korelační koeficient či log-likelihood. Vzhledem k použití booleovského modelu preferencí jsem zvolil \textbf{LogLikelihoodSimilarity}. Pro doporučení je ještě nutné stanovit sousedskou funkci.
 
 \begin{lstlisting}[language=java]
 UserSimilarity similarity = new LogLikelihoodSimilarity(model);
@@ -2058,7 +2064,7 @@ List<RecommendedItem> recommendedItems = recommender.recommend(Long.parseLong(us
 \label{chap:client}
 Testovací klient je realizován jako samostatná \emph{Java Application} s názvem \textbf{RecommengClient}.
 
-Pro komunikaci s RESTful API je využíváno již jednou použitého frameworku Jersey, tentokrát však v jeho variantě Client. Prvním krokem je inicializace klienta pro komunikaci s rozhraním v metodě \emph{invokeAndRegisterClient()} třídy \textbf{EnsembleClient}. Odkaz na vytvořenou klientskou instanci budou pro svou komunikaci užívat všechna vlákna (alias žádající klienti) dále v systému.
+Pro komunikaci s RESTful API je využíváno již jednou použitého frameworku Jersey, tentokrát však v jeho variantě Client. Prvním krokem je inicializace klienta pro komunikaci s rozhraním v metodě \emph{invokeAndRegisterClient()} třídy \textbf{EnsembleClient}. Odkaz na tuto vytvořenou klientskou instanci pak pro svou komunikaci užívají všechna dále vytvářená vlákna v systému (alias žádající klienti).
 
 \begin{lstlisting}[language=java]
 private void invokeAndRegisterClient() {
@@ -2069,9 +2075,9 @@ private void invokeAndRegisterClient() {
 }   
 \end{lstlisting}
 
-Následně jsou vytvářeny a spouštěny instance vláknových tříd, které mají simulovat souběžný přístup více uživatelů k systému. Každému vláknu je kromě identifikátoru značícího ID uživatele předávána vytvořená instance třídy EnsembleClient s inicializovaným klientem.
+K simulaci přístupu uživatelů k systému jsou spouštěna vlákna připravených klientských tříd.
 
-Vlastní komunikace probíhá tak, že jednotlivá vlákna volají metody třídy \emph{Communication}. Těmto metodám jsou skrze parametry předávány informace týkající se chování klientů.
+Vlastní komunikace probíhá tak, že jednotlivá vlákna volají metody třídy \textbf{Communication} a těmto metodám jsou přes parametry předávány informace týkající se chování klientů.
 
 Například uživatel, který chce v systému vytvořit kontextovou kolekci s názvem \emph{morning} obsahující algoritmy \emph{latest}, \emph{random} a \emph{mlt}, nejprve vytvoří nový JsonObject a ten předá parametrem metodě, jež naváže spojení s rozhraním systému a zašle žádost o vytvoření kolekce.
 
@@ -2104,17 +2110,13 @@ Vzniklá klientská aplikace byla použita k simulaci chování systému.
 
 \chapter{Experimentální část}
 \label{chap:tests}
-K ověření funkčnosti systému je nutné provést několik experimentů. Z pozorovaných výsledků experimentů lze často vyvodit jisté obecné vlastnosti a stanovit nejvhodnější konfiguraci pro řešení daného problému.
+Když jsem začínal řešit tuto práci, prvotní verze adaptibilního systému existovaly dlouhou dobu pouze zakreslené na papírech všude okolo mě. Velmi jsem se těšil na okamžik, až projdu všemi fázemi vývoje a dostanu se k samotnému testování a provádění experimentů. Průběžným ověřováním se samozřejmě dařilo korigovat vývoj tak, aby neodbočil příliš z cesty, dokázal jsem také empiricky stanovit funkce pro výpočty zpětné vazby~\ref{implfeedback}, tou první zkouškou systému je však provádění souhrnnějších experimentů.
 
-Vlastnostmi, které mě pro účely experimentů zajímají, jsou:
+Z pozorovaných výsledků prováděných experimentů lze často vyvodit užitečné poznatky a rozhodnout o nejvhodnější konfiguraci pro řešení daného problému.
 
-\begin{itemize}
-	\item četnost doporučení,
-	\item počet kroků (za krok považuji žádost o doporučení + zvolení doporučení + zpětná vazba),
-	\item poměr normalizovaného součtu úspěchů ku normalizovanému poměru pokusů.
-\end{itemize}
+Hodnota, kterou jsem pro účely vyhodnocování výsledků měření použil, vychází z vnitřního stavu systému. Je jí \emph{poměr normalizovaného součtu úspěchů ku normalizovanému poměru pokusů}.
 
-Následující experimenty proběhly spouštěním předpřipravených testů v klientské aplikaci~\ref{chap:client}.
+Následující experimenty proběhly spouštěním předpřipravených testů v klientské aplikaci~\ref{chap:client} a jejich různých modifikací, získané výstupy byly ukládány do formátu CSV a pro vykreslení do grafů byl použit program Microsoft Excel.
 
 \section{Jeden úspěšný algoritmus}
 Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud budou na doporučení jedním konkrétním algoritmem neustále zasílány pozitivní zpětné vazby. Dle předpokladu by měl tento jeden algoritmus po čase zcela převážit.
@@ -2136,11 +2138,6 @@ Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav
 
 \subsection{Pozorované vlastnosti při různě volených parametrech}
 
-\section{Ignorace rad adaptibilního systému}
-Experiment má za cíl zjistit, jakým způsobem se bude vyvíjet vnitřní stav systému, pokud bude uživatel zcela ignorovat rad adaptibilního systému. Čas od času tak může vznést žádost o radu, podle které se ale stejně nakonec řídit nebude.
-
-\subsection{Pozorované vlastnosti při různě volených parametrech}
-
 \chapter{Zhodnocení aplikace}
 \label{chap:futurework}	
 Závěrečnou kapitolu věnuji zhodnocení přínosu aplikace. Také zde popisuji další možné kroky ve vývoji práce.
@@ -2148,9 +2145,7 @@ Závěrečnou kapitolu věnuji zhodnocení přínosu aplikace. Také zde popisuj
 TODO
 
 \section{Budoucí práce}
-TODO trochu učesat, přeformulovat...
-
-I přesto, že se podařilo splnit většinu požadavků kladených na systém a bylo vyvinuto funkční řešení, do budoucna je stále prostor pro zlepšování, pořádné zátěžové testování a vývoj nových funkcionalit.
+I přesto, že se podařilo splnit většinu požadavků kladených na systém a bylo vyvinuto funkční řešení, do budoucna je stále prostor pro zlepšování, provádění dalších testování a vývoj nových funkcionalit.
 
 Jako jednou z možných budoucích funkcionalit by mohl být vývoj sofistikovanější strategie volby v případě, že více algoritmů vybraných z jednotlivých kolekcí má stejnou četnost.
 
@@ -2391,8 +2386,15 @@ Slouží k zaslání zpětné vazby do systému.
  	\end{tabular}	
 \end{center} 
 
+\chapter{Prováděné experimenty}
+\begin{figure}\centering
+	\includegraphics[width=1.0\textwidth]{obr/plistaEnsemble.png}
+ 	\caption[Abstraktní pohled na systém společnosti plista]{Abstraktní pohled na systém společnosti plista. Zdroj: \cite{slideshare:plista}}\label{fig:plista}
+\end{figure}	
 
-\chapter{Ukázky posterior rozdělení Beta s různými vstupními parametry}
+
+\chapter{Dodatečné obrázky}
+\section{Ukázky posterior rozdělení Beta s různými vstupními parametry}
 
 \begin{figure}\centering
 	\includegraphics[width=0.6\textwidth]{obr/beta1.png}
@@ -2403,6 +2405,15 @@ Slouží k zaslání zpětné vazby do systému.
 	\includegraphics[width=0.6\textwidth]{obr/beta2.png}
  	\caption[Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 1 úspěchu ze 4 pokusů.]{Hustota pravděpodobnosti $Beta$ rozdělení pro vizualizaci 1 úspěchu ze 4 pokusů.}\label{fig:beta2}
 \end{figure}	
+
+\section{MQ systém}
+
+\begin{figure}\centering
+	\includegraphics[width=0.5\textwidth]{obr/vitvar_mq.png}
+ 	\caption[Příklad MQ systému s producentem zpráv a konzumenty]{Příklad MQ systému s producentem zpráv a konzumenty. Zdroj: \cite{vitvarMq}}\label{fig:vitvarMq}
+\end{figure}	
+
+\chapter{Instalační a uživatelská příručka}
 
 \chapter{Seznam použitých zkratek}
 % \printglossaries
