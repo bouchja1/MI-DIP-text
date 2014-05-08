@@ -994,7 +994,7 @@ Stejně jako v případě diagramů~\ref{fig:recommengRestNavrh} a~\ref{fig:reco
 \end{figure}	
 
 \subsubsection{Komunikace s frontou zpráv Recommeng systému}
-
+\label{mess}
 Dle návrhu bude komunikace uživatele s Recommeng systémem, ať už komunikuje přímo či pomocí RESTful API, řešena prostřednictvím fronty zpráv.
 
 Dalším úkolem tedy je navrhnout formát, jakým si budou vyměňovat producent s konzumentem data prostřednictvím volání vzdálených procedur Recommeng systému.
@@ -1014,7 +1014,7 @@ Uživatel žádající o radu pro výběr nejlepšího algoritmu obdrží od sys
 
 \subsubsection{Algoritmus náhodného výběru}
 
-Jak je patrné již z názvu, tento algoritmus vybírá položky pro doporučení naprosto náhodným způsobem. Jeho hlavním úkolem je být zde pro srovnání s ostatními algoritmy. 
+Jak je patrné již z názvu, tento algoritmus vybírá položky pro doporučení naprosto náhodným způsobem. Jeho hlavním úkolem je být zde pro srovnání s ostatními algoritmy (náhodný algoritmus by zřejmě neměl dostávat nejlepší zpětnou vazbu). 
 
 \subsubsection{Algoritmus výběru dle nejnovějších položek}
 
@@ -1061,13 +1061,13 @@ Data mohou být reprezentována v rozličných formátech jako XML, JSON či YAM
 \subsubsection{Jersey (JAX-RS)}
 \textbf{Java API for RESTful Web Services (JAX-RS)}\footnote{https://jax-rs-spec.java.net} je standard definovaný v Java Specification Request 311\footnote{https://jcp.org/en/jsr/detail?id=311}. Jedná se o specifikaci pro RESTful webové služby implementované v programovacím jazyce Java.
 
-Pomocí JAX-RS lze s využíváním anotací jednoduše a přehledně definovat sémantiku jednotlivých tříd a jejich metod z hlediska využití v architektuře REST. Příklady anotací jsou \emph{@Path(relativni\_cesta)} pro specifikaci relativní cesty zdroje, \emph{@GET} či \emph{@POST} specifikující typ žádosti nebo třeba \emph{@QueryParam} pro přiřazení parametru HTTP dotazu k hodnotě parametru příslušné metody třídy.
+Pomocí JAX-RS lze s využitím anotací jednoduše a přehledně definovat sémantiku jednotlivých tříd a jejich metod z hlediska architektury REST. Příklady anotací jsou \emph{@Path(relativni\_cesta)} pro specifikaci relativní cesty zdroje, \emph{@GET} či \emph{@POST} specifikující typ žádosti nebo třeba \emph{@QueryParam} pro přiřazení parametru HTTP dotazu k hodnotě parametru příslušné metody třídy.
 
 Pro účely implementace rozhraní systému Recommeng jsem zvolil vzhledem k předchozím zkušenostem referenční implementaci tohoto standardu v podobě frameworku \textbf{Jersey 2.x}. 
 
 \subsubsection{JSON}
 \label{json}
-\textbf{JSON }\footnote{\url{http://www.json.org}} je jednoduchý a univerzální formát pro výměnu dat. Zkratka skrývá význam \emph{JavaScript Object Notation}. Jeho MIME (Internet media type) je application/json. V současné době se jedná o jeden z nejpoužívanějších formátů pro výměnu dat se službami REST. Výhodami jsou rychlost zpracování a snadnost použití.
+\textbf{JSON }\footnote{\url{http://www.json.org}} je jednoduchý a univerzální formát pro výměnu dat. Zkratka skrývá význam \emph{JavaScript Object Notation}. Jeho MIME (Internet media type) je application/json. V současné době se jedná o jeden z nejpoužívanějších formátů pro výměnu dat se službami REST. Výhodami jsou rychlost zpracování a snadné použití.
 
 Formát je postaven na dvou strukturách. 
 
@@ -1085,9 +1085,9 @@ Obě struktury lze do sebe zanořovat a vytvářet tak složitější struktury.
 
 Hned na úvod je nutné sdělit, že se nejedná o klasický messaging system (message-oriented middleware) takového typu, jakým je například Apache ActiveMQ\footnote{\url{http://activemq.apache.org}} a jemu podobné systémy. Takové systémy jsou většinou hotová řešení připravená k okamžitému nasazení a integraci s dalšími službami. 
 
-Filosofie ZeroMQ je jiná, neboť jde především o multiplatformní knihovnu určenou k programovému využití (nabízí podporu více než 30 programovacích jazyků\footnote{TODO}). Pomocí jednoduchého socketového API umožňuje programátorovi sestavit si vlastní messaging system dle svého nejlepšího uvážen. Programátor využívá ze strany API veškerou podporu usnadňující práci se sítí a s trochou nadsázky lze prohlásit, že se stará pouze o zasílání zpráv. Sama socketová komunikace je výrazně zjednodušena.
+Filosofie ZeroMQ je jiná, neboť jde především o multiplatformní knihovnu určenou k programovému využití. Pomocí jednoduchého socketového API umožňuje programátorovi sestavit si vlastní messaging system dle svého nejlepšího uvážení. Programátor využívá ze strany API veškerou podporu usnadňující práci se sítí a s trochou nadsázky lze prohlásit, že se stará pouze o zasílání zpráv.
 
-Knihovna nám navíc dává kompletní svobodu v tom, jakým způsobem zakódujeme naši zprávu (JSON, BSON nebo jakýkoliv vlastní navržený formát).
+Knihovna navíc poskytuje kompletní svobodu v tom, jakým způsobem zakódujeme zprávu (JSON, BSON nebo jakýkoliv vlastní navržený formát). Já využil~\ref{mess}.
 
 Podporovány jsou čtyři protokoly pro komunikaci~\cite{zeromq1}:
 
@@ -1109,22 +1109,22 @@ Základními vzory jsou:
 	\item Exclusive pair
 \end{itemize}
 
-Nejvhodnějším vzorem pro mou práci je díky nátuře navrhovaného systému (zasílání zpráv a odpovědi na ně) vzor Request-reply, jehož konkrétní použití následuje záhy v sekci \nameref{sec:impl}. Ostatní vzory nemá smysl v rámci této práce popisovat.
+Nejvhodnějším vzorem pro mou práci je vzhledem k povaze vyvíjeného systému (zasílání zpráv a odpovědi na ně) vzor Request-reply, jehož konkrétní použití následuje záhy v sekci \nameref{sec:impl}. Ostatní vzory nemá smysl v rámci této práce představovat.
 
 Pro účely Recommeng systému jsem se rozhodl využít čistou Java implementaci knihovny ZeroMQ v podobě knihovny \textbf{jeroMQ}\footnote{\url{https://github.com/zeromq/jeromq}}. Z výkonnostního hlediska za původním řešením zaostává jen nepatrně\footnote{Viz srovnávací testy \url{https://github.com/zeromq/jeromq/wiki/Perfomance}.} a navíc je mnohem jednodušší integrovat ji do vyvíjené aplikace prostým přidáním knihovny do projektu.
 
 \subsection{Úložiště dat}
 
 \subsubsection{Apache Solr}
-\textbf{Apache Solr}\footnote{\url{https://lucene.apache.org/solr}} je populární\footnote{Viz seznam serverů využívajících služeb Solr \url{https://wiki.apache.org/solr/PublicServers}} open-source platforma pro vyhledávání napsaná v programovacím jazyce Java. Jejími charakteristickými vlastnosti jsou podpora pro fulltextové vyhledávání, fasetové vyhledávání (analogie ke konstrukci GROUP BY v RDBMS), dobrá škálovatelnost pomocí kešování a distribuovaného vyhledávání, využívání vyhledávací konstrukce \emph{more like this}, o které bude řeč v sekci~\ref{sec:alg}, a také například tzv. \emph{near real-time indexing}\footnote{\url{https://cwiki.apache.org/confluence/display/solr/Near+Real+Time+Searching}} (dokumenty je možné vyhledávat téměř ihned po jejich zaindexování).
+\textbf{Apache Solr}\footnote{\url{https://lucene.apache.org/solr}} je populární\footnote{Viz seznam serverů využívajících služeb Solr \url{https://wiki.apache.org/solr/PublicServers}} open-source platforma pro vyhledávání textu napsaná v programovacím jazyce Java. Jejími charakteristickými vlastnostmi jsou podpora pro fulltextové vyhledávání, fasetové vyhledávání (analogie ke konstrukci GROUP BY v RDBMS), dobrá škálovatelnost pomocí kešování a distribuovaného vyhledávání, využívání vyhledávací konstrukce \emph{more like this}, o které bude řeč v sekci~\ref{sec:alg}, a také například tzv. \emph{near real-time indexing}\footnote{\url{https://cwiki.apache.org/confluence/display/solr/Near+Real+Time+Searching}} (dokumenty je možné vyhledávat téměř ihned po jejich zaindexování).
 
 Z hlediska architektury programu jde o samostatný server pro fulltextové vyhledávání běžící v servletovém kontejneru (například Apache Tomcat). K indexaci a fulltextovému vyhledávání využívá ve svém jádru knihovnu Apache Lucene. 
 
 \textbf{Apache Lucene}\footnote{\url{http://lucene.apache.org/core}} je vysoce výkonná knihovna pro účely vyhledávání v textu a indexování.
 
-Vstupem pro indexaci jsou dokumenty. Každý takový dokument obsahuje množinu elementů, kde je tento element nazvaný jako \emph{field}). Každý field má své jméno, datový typ a případně další atributy.
+Vstupem pro indexaci jsou dokumenty. Každý takový dokument obsahuje množinu elementů, kde je tento element nazvaný jako \emph{field}. Každý field má své jméno, datový typ a případně další atributy.
 
-Vstupem pro vyhledávání jsou textové řetězce (viz syntax\footnote{\url{http://lucene.apache.org/core/2_9_4/queryparsersyntax.html}}, případně dotazované objekty.
+Vstupem pro vyhledávání jsou textové řetězce (viz syntax\footnote{\url{http://lucene.apache.org/core/2_9_4/queryparsersyntax.html}}), případně dotazované objekty.
 
 Index je uložen na disku ve formě souborů ve struktuře invertovaného indexu dokumentů~\cite{wiki:invindex}.
 
@@ -1160,7 +1160,7 @@ Vzhledem k tomu, že jedním z vyzdvihovaných případů užití databáze je u
 
 Redis je klasickou key-value databází uchovávající data primárně v paměti. Postupným vývojem se jeho funkcionalita propracovala k tomu, že pod jeden klíč je nyní možné uložit několik datových struktur (např. množiny a asociativní pole). Vzhledem k ukládání dat do paměti disponuje značnou rychlostí, navíc jej lze dle konfigurace nastavit tak, aby se obsah paměti průběžně ukládal na disk pro potřeby snadného obnovení dat v případě pádu aplikace.
 
-Jeho zapojení do aplikace jsem zvažoval ve fázi zkoumání, jakým způsobem bude v adaptibilním systému řešen failover dat. Po následném návrhu datového modelu pro ukládání časových snímků stavu aplikace jsem však sáhl po použití Apache Cassandra jako po lepší z nabízených variant pro budoucí potřeby práce (rozsahové dotazy, vizualizace vývoje systému apod.). 
+Jeho zapojení do aplikace jsem zvažoval ve fázi zkoumání, jakým způsobem bude v adaptibilním systému řešen failover dat. Po následném návrhu datového modelu pro ukládání časových snímků stavu aplikace jsem však sáhl po použití Apache Cassandra jako po lepší z nabízených variant pro případné budoucí potřeby práce (rozsahové dotazy, vizualizace vývoje systému apod.). 
 
 Velkým benefitem je podpora Cassandra Query Language (CQL), dotazovacího jazyka umožňujícího vytvářet podobné konstrukty, jaké nabízí jazyk SQL. CQL je nyní k dispozici ve verzi 3.1 a s pomocí \textbf{DataStax Java Driver 2.0} mohu snadno manipulovat s databází přímo ze své aplikace. 
 
