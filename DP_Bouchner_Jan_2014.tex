@@ -898,14 +898,15 @@ Tento klient se rozhodl nevyužít možnosti komunikovat prostřednictvím REST 
 \label{sec:recommeng}
 
 \subsubsection{Rozhraní REST}
-Dle zadání má platforma poskytovat API pro interakci se systémem a daty formou RESTful (HTTP implementace REST~\ref{rest}). Každý uživatel tak bude moci interagovat s rozhraním prostřednictvím zveřejněných endpointů.
+Dle zadání má platforma poskytovat API pro interakci se systémem a daty formou RESTful (HTTP implementace služeb REST~\ref{rest}). Každý uživatel tak bude moci interagovat s rozhraním prostřednictvím zveřejněných endpointů.
 
-Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, že je lze rozdělit do tří skupin dle podstaty úkolu, který mají plnit. 
+Z prováděné analýzy vyplynuly požadavky na aplikační rozhraní takové, že je lze rozdělit do čtyř skupin dle podstaty úkolu, který mají plnit. 
 
 \begin{itemize}
-	\item Ensemble alias Recommeng systém
 	\item Algorithms
-	\item Articles
+	\item Cores
+	\item Supercollection
+	\item Collection	
 \end{itemize}
 
 Návrh tříd na zjednodušených\footnote{Pro větší srozumitelnost neuvádím v parametrech metod typy, ale spíše sémantické významy parametrů. Není též přítomna spousta dalších, s uvedenými třídami spolupracujících tříd.} diagramech~\ref{fig:recommengRestNavrh} a~\ref{fig:recommengRestNavrh2} ilustruje metody běžícím za poskytovaným API.
@@ -972,9 +973,9 @@ Bude se jednat o jednoduchý endpoint, který si při žádosti vystačí s meto
 
 Úkolem je zpracovat žádost uživatele o doporučení algoritmem, jehož identifikátor je uveden v cestě. 
 
-Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je nutno uvést). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z jedné skupiny a další.
+Hledání doporučení bude provedeno nad dokumenty ze specifikovaného indexu (identifikátor indexu je nutno uvést v parametru dotazu). V parametrech dotazu lze specifikovat další vstupy pro doporučení jako limit vrácených výsledků, identifikátor pro doporučení článků z jedné skupiny a další.
 
-\paragraph{Rozhraní pro úložiště dat}
+\paragraph{Rozhraní pro úložiště článků}
 
 Důležité rozhraní umožňující zaznamenat například chování uživatele vzhledem ke sledovaným položkám.
 
@@ -986,7 +987,7 @@ Důležité rozhraní umožňující zaznamenat například chování uživatele
 	/cores/{core-id}/documents
 \end{verbatim}
 
-Prostřednictvím metody POST budou zasílány veškeré informace o položkách (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), které mají být uloženy do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být cokoliv, například URL adresa).
+Prostřednictvím metody POST budou zasílány veškeré informace o položkách (u článku např. identifikátor, text, skupina, datum publikace) a jejím uživateli (identifikátor), které mají být uloženy do fulltextového indexu. Druhou podporovanou metodou je metoda DELETE pro vyřazení položky z doporučování. Metoda je použita v žádosti na týž endpoint jako metoda POST, pouze je nutné v parametru dotazu specifikovat identifikátor článku (z toho důvodu, že identifikátorem článku může být obecně cokoliv, například i URL adresa).
 
 Metody a endpointy uvedené výše se dají považovat za hrubý přehled budoucí funkcionality systému. Kompletní dokumentace navrženého REST API je k nahlédnutí v příloze~\ref{restfulapi} na konci práce.
 
@@ -1442,7 +1443,7 @@ BanditsMachine je třída reprezentující herní automat. Každá samostatná b
 \paragraph{SuperBayesianStrategy} SuperBayesianStrategy je třída reprezentující super kolekci více bayesovských strategii. V případě přítomnosti dvou bayesovských strategií, například kontextových atributů \uv{ráno} a \uv{Evropa}, může z těchto strategií vytvořit super strategii \uv{ráno v Evropě}.
 \paragraph{BayesianStrategy}	BayesianStrategy je třída reprezentující online učící strategii k řešení strategie Multi-Armed Bandit~\ref{sub:mabandit}. Vzhledem k přítomnosti super strategií je již jasné, že v systému může nezávisle na sobě fungovat více bayesovských strategií. 
 
-\subsubsection{Důležité metody bayesovské strategie pro kombinování metod}
+\subsubsection{Důležité metody bayesovské strategie}
 	Důležitou metodou třídy BayesianStrategy je metoda \texttt{sampleBandits()} starající se jednak o výběr z prior pravděpodobností distribucí banditů a následně o volbu nejlepšího z nich. Jedná se o implementaci teorie probírané v~\ref{bayes}.
 	
 \begin{lstlisting}[language=java]
@@ -1843,6 +1844,7 @@ Doporučení je vyvoláno klientskou žádostí na rozhraní reprezentované tř
 @Override
 public Response recommend(@PathParam("coreId") String coreId,
         @PathParam("algorithmId") String algorithmId,
+        @QueryParam(value = "coreId") String coreId,
         @QueryParam(value = "groupId") int groupId,
         @QueryParam(value = "userId") int userId,
         @QueryParam(value = "documentId") String documentId,
@@ -2133,7 +2135,7 @@ public JSONObject createContextCollectionRest(JsonObject collection) {
     Client client = clientApi.getClient();
 
     Response response = client.target(clientApi.getRestfulApiLocation())
-            .path("recommeng/ensemble/collection")
+            .path("/collection")
             .request(MediaType.APPLICATION_JSON_TYPE)
             .post(Entity.entity(collection, MediaType.APPLICATION_JSON_TYPE));
 
@@ -2220,58 +2222,219 @@ Funkčnost vyvinutého řešení měla být ověřena experimenty na modelové �
 \chapter{Dokumentace RESTful API}
 \label{restfulapi}
 
+\emph{Pozn.} Pro výměnu dat je využíván formát JSON.
+
 \subsection{Algorithm}
 
 \subsubsection{Zdroje}
 
 \begin{description}
-	\item[/algorithm]
-	\item[/algorithm/{algorithm-id}/?coreId={coreId}]
+	\item[/algorithm] Kontejner podporovaných algoritmů pro doporučení na serveru.
+	\item[/algorithm/\{algorithm-id\}/?coreId=\{core-id\}] Doporučení zvoleným algoritmem (filtrace dle jádra v Apache Solr).
 \end{description}
+
+\subsubsection{Operace}
+
+\paragraph*{/algorithm}
+
+Vrací seznam podporovaných algoritmů, kterými si lze nechat doporučit články.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& GET			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok			\tabularnewline 		
+ 	\end{tabular}
+\end{center} 	
+
+\paragraph*{/algorithm/\{algorithm-id\}/?coreId=\{core-id\}}
+
+Vrací seznam doporučených článků daným algoritmem.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& GET			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok, 400 - bad request, 404 - not found			\tabularnewline 		
+ 	\end{tabular}
+\end{center} 
 
 \subsection{Cores}
 
 \subsubsection{Zdroje}
 
 \begin{description}
-	\item[/cores]
-	\item[/cores/{coreId}/documents]
+	\item[/cores] Kontejner podporovaných jader Apache Solr.
+	\item[/cores/\{core-id\}/documents] Vkládání dokumentů do zadaného indexu.
 \end{description}
+
+\subsubsection{Operace}
+
+\paragraph*{/cores}
+
+Vrací seznam podporovaných jader, se kterými lze komunikovat.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& GET			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok			\tabularnewline 		
+ 	\end{tabular}
+\end{center} 	
+
+\paragraph*{/cores/\{core-id\}/documents}
+
+Uloží do zadaného jádra nové články. 
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& POST			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 201 - created, 400 - bad request, 404 - not found, 500 - server internal error			\tabularnewline 		
+ 	\end{tabular}
+\end{center} 	
+
+\paragraph*{/cores/\{core-id\}/documents}
+
+Smaže z daného jádra dokument specifikovaný v těle požadavku (ID dokumentu může být obecně cokoliv, i URL, proto zasíláno v těle)
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& DELETE			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok, 400 - bad request, 404 - not found, 500 - server internal error			\tabularnewline 		
+ 	\end{tabular}
+\end{center} 	
+
+\paragraph*{/cores/\{core-id\}/documents}
+
+Slouží k přidání informace o uživatelském hodnocení dokumentu (článku v indexu).
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& PUT			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok, 400 - bad request, 404 - not found, 500 - server internal error			\tabularnewline 		
+ 	\end{tabular}
+\end{center} 
 
 \subsection{Collection}
 
 \subsubsection{Zdroje}
 
 \begin{description}
-	\item[/algorithm]
-	\item[]
-	\item[]
+	\item[/collection] Kontejner kontextových kolekcí vytvořených v Recommeng systému.
+	\item[/collection/\{collection-id\}] Algoritmy v kolekci.
+	\item[/collection/\{collection-id\}/?filter=best] Filtrování jednoho v danou chvíli toho nejlepšího algoritmu v kolekci.
 \end{description}
+
+\subsubsection{Operace}
+
+\paragraph*{/collection}
+
+Slouží k vypsání existujících kolekcí v Recommeng systému.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& GET			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
+
+\paragraph*{/collection}
+
+Slouží k vytvoření kontextové kolekce v systému.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& POST			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 201 - created, 400 - bad request			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
+
+\paragraph*{/collection/\{collection-id\}}
+
+Slouží k vypsání algoritmů přítomných v kolekci sestupně od toho nejvhodnějšího pro doporučení.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& GET			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
+
+\paragraph*{/collection/\{collection-id\}?filter=best}
+
+Slouží k vypsání nejlepšího algoritmu pro doporučení z kontextové kolekce.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& GET			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
+
+\paragraph*{/collection/\{collection-id\}}
+
+Slouží k zaslání zpětné vazby do systému.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& PUT			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found, 400 - bad request			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
 
 \subsection{Supercollection}
 
 \subsubsection{Zdroje}
 
 \begin{description}
-	\item[/algorithm]
-	\item[]
-	\item[]
+	\item[/supercollection] Kontejner super kolekcí vytvořených v Recommeng systému.
+	\item[/supercollection/\{supercollection-id\}] Všechny kontextové kolekce, pomocí kterých byla vytvořena super kolekce.
+	\item[/supercollection/\{supercollection-id\}/?filter=best] Filtrování jednoho v danou chvíli toho nejlepšího algoritmu kombinovaného ze všech kontextových kolekcí dané superkolekce.
 \end{description}
 
 \subsubsection{Operace}
 
-\paragraph*{Implementace}
+\paragraph*{/supercollection}
 
-fsddfsfsdf
+Slouží k vypsání existujících super kolekcí v Recommeng systému.
 
 \begin{center}
  	\begin{tabular}{lp{10cm}}
  		\textit{Metoda:}		& GET			\tabularnewline 
- 		\textit{URI}		& /admission/services/processing/identity			\tabularnewline 
- 		\textit{Typ obsahu:}		& UserIdentity			\tabularnewline  		
- 		\textit{Formát:}		& JSON / XML			\tabularnewline 		
- 	\end{tabular}
-\end{center} 	
+ 		\textit{Návratové kódy:}		& 200 - ok			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
+
+\paragraph*{/supercollection}
+
+Slouží k vytvoření super kolekce v systému.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& POST			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 201 - created, 400 - bad request			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
+
+\paragraph*{/supercollection/\{supercollection-id\}?filter=best}
+
+Slouží k vypsání nejlepšího algoritmu pro doporučení z kombinace kontextových kolekcí.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& GET			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
+
+\paragraph*{/supercollection/\{supercollection-id\}}
+
+Slouží k zaslání zpětné vazby do systému.
+
+\begin{center}
+ 	\begin{tabular}{lp{10cm}}
+ 		\textit{Metoda:}		& PUT			\tabularnewline 
+ 		\textit{Návratové kódy:}		& 200 - ok, 404 - not found, 400 - bad request			\tabularnewline 		
+ 	\end{tabular}	
+\end{center} 
+
 
 \chapter{Ukázky posterior rozdělení Beta s různými vstupními parametry}
 
