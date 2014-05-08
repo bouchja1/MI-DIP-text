@@ -85,8 +85,8 @@ breaklines=true
 \abstractEN{Sem doplňte ekvivalent abstraktu Vaší práce v~angličtině.}
 \placeForDeclarationOfAuthenticity{V~Praze}
 \declarationOfAuthenticityOption{1} %volba Prohlášení (číslo 1-6)
-\keywordsCS{Multi-armed bandit, doporučovací systémy, ensemble, REST, strojové učení, Apache Solr, ZeroMQ}
-\keywordsEN{Multi-armed bandit, recommendation systems, ensemble, REST, machine learning, Apache Solr, ZeroMQ}
+\keywordsCS{Multi-Armed Bandit, doporučovací systémy, ensemble, REST, strojové učení, Apache Solr, ZeroMQ}
+\keywordsEN{Multi-Armed Bandit, recommendation systems, ensemble, REST, machine learning, Apache Solr, ZeroMQ}
 
 \begin{document}
 
@@ -294,7 +294,7 @@ Abstraktní pohled na ORP znázorňuje obrázek~\ref{fig:plista}, na kterém je 
 
 V prezentaci bylo zmíněno několik užitečných rad ohledně toho, co všechno by měl systém podobného typu umět. Je zde uvedena potřeba rychlého síťového protokolu, rychlé fronty zpráv a rychlého úložiště pro data.
 
-Důležitá je informace, že k dosažení výběru nejlepšího algoritmu se používá strategie \emph{Multi-armed bandit}~\ref{sub:mabandit} v bayesovské variantě, což je i jedna ze strategií, kterou mi na úvodní schůzce doporučil vedoucí této práce.
+Důležitá je informace, že k dosažení výběru nejlepšího algoritmu se používá strategie \emph{Multi-Armed Bandit}~\ref{sub:mabandit} v bayesovské variantě, což je i jedna ze strategií, kterou mi na úvodní schůzce doporučil vedoucí této práce.
 
 \subsubsection{easyrec}
 Technická knihovna společnosti IBM obsahuje přehledný seznam~\cite{ibm} několika doporučovacích systémů, z nichž převážná část vznikla jakou součást univerzitního výzkumu.
@@ -373,7 +373,7 @@ Systém na pozadí provádí analytické operace, disponuje databázi asociačn�
    \item Kombinování více doporučovacích metod společně s kontextem uživatele.
    \item Přítomnost mezivrstvy v podobě rádce starajícího se o obsluhu uživatelů a jejich doporučení.
    \item Silný důraz na zpětnou vazbu a následné přepočítávání budoucích šancí doporučení.
-   \item Ke kombinaci je využíváno strategie Multi-armed bandit~\ref{sec:multi} v bayesovské variantě~\ref{bayes}.
+   \item Ke kombinaci je využíváno strategie Multi-Armed Bandit~\ref{sec:multi} v bayesovské variantě~\ref{bayes}.
    \end{enumerate}
    \vskip 6pt
  \end{minipage}
@@ -522,9 +522,9 @@ Odhadem je myšleno získání číselné hodnoty nebo intervalu hodnot z výbě
 
 Rozlišujeme dva typy odhadů, a to bodový, kdy odhadem je jedna hodnota, a intervalový, kdy je odhadem interval hodnot~\cite{pst5}. 
 
-\subsubsection{Multi-armed bandit}
+\subsubsection{Multi-Armed Bandit}
 \label{sub:mabandit}
-Multi-armed bandits je jeden z klasických učících problémů zasahující do teorie pravděpodobnosti. Herní strategie je podobná filosofii tradičního výherního automatu s tím rozdílem, že multi-armed varianta má více herních pák. Strategií se detailně zabývá sekce~\ref{sec:multi}.
+Multi-Armed Bandit je jeden z klasických učících problémů zasahující do teorie pravděpodobnosti. Herní strategie je podobná filosofii tradičního výherního automatu s tím rozdílem, že Multi-Armed varianta má více herních pák. Strategií se detailně zabývá sekce~\ref{sec:multi}.
 
 S pojmy vysvětlenými výše souvisí strategie tak, že použitím bayesovské varianty provádíme opakovaný výběr z konečného počtu rozdělení a pomocí statistické inference se snažíme maximalizovat průměrnou hodnotu.
 
@@ -574,9 +574,9 @@ O strategii je též možné mluvit jako o \emph{online učení}. Nutno zmínit,
 
 Z matematického hlediska má online učení propojení na klasické online algoritmy, teorii her a teorii pravděpodobnosti.
 
-Díky těmto znalostem tak můžeme navrhovat dynamické pravděpodobnostní systémy, jakým je například již výše zmíněný výherní automat \emph{Multi-Armed bandit}.
+Díky těmto znalostem tak můžeme navrhovat dynamické pravděpodobnostní systémy, jakým je například již výše zmíněný výherní automat \emph{Multi-Armed Bandit}.
 
-\subsection{Multi-armed bandit algoritmus}
+\subsection{Multi-Armed Bandit algoritmus}
 \label{sec:multi}
 
 \subsubsection{Princip algoritmu}
@@ -623,7 +623,7 @@ Jedním z těchto řešení je algoritmus zvaný \emph{Bayesian Bandits}. Algori
 
 Bayesovské řešení začíná prior~\ref{prior} stanovením pravděpodobností výhry pro každého banditu. Hodnoty jsou v rozmezí $\langle0,1\rangle$. Jak již bylo řečeno, každého banditu reprezentuje jedna distribuční funkce.
 
-V každém kole, kterých je v případě mnou vytvářeného systému nekonečně (kola jsou závislá na žádostech uživatelů, kteří přistupují k systému – standardní použití Multi-armed Bandits pracuje s konečným počtem stavů), probíhá následující proces:
+V každém kole, kterých je v případě mnou vytvářeného systému nekonečně (kola jsou závislá na žádostech uživatelů, kteří přistupují k systému – standardní použití Multi-Armed Bandit pracuje s konečným počtem stavů), probíhá následující proces:
 
 \begin{enumerate}
 	\item pro každého z $N$ banditů proveď prior~\ref{prior} (počty pokusů, výher atd.) výběr náhodné veličiny $X_b$~\ref{randomvel} (vypočti kvantilovou funkci~\ref{icdf}). 
@@ -1205,7 +1205,7 @@ Následující kapitola se zaměřuje na popis programátorských postupů, kter
 Adaptibilní systém poběží na serveru jako samostatná \emph{Java Application} s názvem \textbf{Ensemble}.
 
 \subsubsection{Zavedení systému}
-Poté, co je aplikace spuštěna voláním metody \texttt{main()} třídy \textbf{EnsembleApp}, je v této metodě následně volána metoda \texttt{loadEnsembleApplication()} abstraktní rodičovské třídy \textbf{EnsembleAppBase}.
+Poté, co je aplikace spuštěna voláním metody \emph{main()} třídy \textbf{EnsembleApp}, je v této metodě následně volána metoda \emph{loadEnsembleApplication()} abstraktní rodičovské třídy \textbf{EnsembleAppBase}.
 
 Metoda loadConsoleApplication() hraje roli zavaděče aplikace, neboť postupným voláním v sobě obsažených metod zavádí do provozu celý systém (vytvoření instance řídící třídy, napojení na databázi, inicializace API a spuštění asynchronního serveru). Hlavní řídící třídou aplikace je třída \textbf{ApplicationBean}. Jejím prostřednictvím je zavedena vrstva pro obsluhu zpráv i komponenty pro komunikaci s datovým úložištěm. Třída je zavedena z aplikačního kontextu frameworku Spring.
 
@@ -1241,7 +1241,7 @@ this.negativeFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.ne
 \label{sub:messvrs}
 Následující text popisuje postup, jakým jsem realizoval vrstvu pro obsluhu zpráv pomocí síťové knihovny ZeroMQ.
 
-Většinová funkcionalita je řešena třídou \texttt{AsynchronousServer} (obsahující též vnitřní třídu \textbf{ServerWorker}) v programovém balíčku:
+Většinová funkcionalita je řešena třídou \textbf{AsynchronousServer} (obsahující též vnitřní třídu \textbf{ServerWorker}) v programovém balíčku:
 
 \begin{verbatim}
    cz.cvut.fit.bouchja1.ensemble.socket
@@ -1259,9 +1259,7 @@ Postup tvorby by se dal shrnout do tří kroků:
 \label{subsub:kompr}
 V prvním kroku bylo nutné rozhodnout o tom, jakým způsobem bude probíhat přenos dat směrem k Recommeng systému a naopak. Ze čtyř protokolů, jimiž disponuje ZeroMQ, jsem pro přenos dat zvolil síťový protokol \textbf{TCP}, a to z toho důvodu, že dle návrhu architektury by měl adaptibilní systém naslouchat na serveru a uživatelé s ním mít možnost navazovat spojení zvenčí mimo server.
 
-Mezi komunikujícími klienty a Recommeng aplikací na serveru jsou vytvářena jednotlivá spojení a data jsou z jednoho koncového bodu na druhý přenášena ve formě bajtů.
-
-Díky ZeroMQ API stačí připravit kontext, socket a metodě \texttt{bind()} nastavit adresu serveru s příslušným portem. Sama metoda se pak postará o zbylou práci (vytvoření endpointu pro příjem jednotlivých spojení a navázání na socket).
+Díky ZeroMQ API stačí připravit kontext, socket a metodě \emph{bind()} nastavit adresu serveru s příslušným portem. Sama metoda se pak postará o zbylou práci (vytvoření endpointu pro příjem jednotlivých spojení a navázání na socket).
 
 \begin{lstlisting}[language=java]
 ZContext ctx = new ZContext();
@@ -1272,7 +1270,7 @@ frontend.bind("tcp://" + host + ":" + port);
 
 \paragraph{Definice síťové infrastruktury}
 \label{subsub:queue}
-Propojení jednotlivých síťových komponent vychází z nativní povahy architektury Klient-Server. Server zastává roli stabilnější komponenty v síti, bude tedy přijímat spojení (viz ukázka s metodou \texttt{bind()} výše). Zároveň bude nutné umístit mezi server a připojující se klienty prostředníka, jehož úkolem obsluha všech žádostí na server a zasílání odpovědí zpět klientům.
+Propojení jednotlivých síťových komponent vychází z nativní povahy architektury Klient-Server. Server zastává roli stabilnější komponenty v síti, bude tedy přijímat spojení (viz ukázka s metodou \emph{bind()} výše). Zároveň bude nutné umístit mezi server a připojující se klienty prostředníka, jehož úkolem obsluha všech žádostí na server a zasílání odpovědí zpět klientům.
 
 V případě více připojených klientů bude ZeroMQ automaticky obstarávat obsluhu všech příchozích žádostí. 
 
@@ -1281,9 +1279,9 @@ Pro zasílání zpráv jsem nejprve zvolil obousměrně komunikující vzor \emp
 
 Problém je, že vzor Request-Reply toho v základní variantě mnoho neumožňuje, proto bylo nutné umožnit asynchronní komunikaci implementací rozšíření v podobě socketů \textbf{ROUTER} a \textbf{DEALER} (dříve nazývány jako XREP a XREQ). 
 
-Řešení spočívá ve vytvoření více pracovních vláken (\emph{workers}) souběžně řešících příchozí požadavky. Za tímto účelem je nutné vytvořit v serverovém vlákně socket typu DEALER, kterému přiřadíme komunikační protokol \emph{inproc://}.
+Řešení spočívá ve vytvoření více pracovních vláken (\emph{workers}) souběžně řešících příchozí požadavky. Za tímto účelem je nutné vytvořit v serverovém vlákně socket typu DEALER, kterému přiřadíme komunikační protokol \textbf{inproc}.
 
-Na serverové straně probíhá komunikace následovně: 
+Na serverové straně probíhá inicializace komunikace následovně: 
 
 \begin{lstlisting}[language=java]
 //  Frontend socket talks to clients over TCP
@@ -1305,11 +1303,11 @@ ZMQ.proxy(frontend, backend, null);
 
 Kvůli podpoře více TCP spojení utvářených vůči serveru je nutné předřadit před socket typu DEALER ještě další typ socketu, kterým je ROUTER (byl vidět již v ukázce~\ref{subsub:kompr}) hrající roli frontend socketu. 
 
-ROUTER přiřazuje vnitřní identifikátor každému k němu se připojujícímu socketu a následně obdrženou zprávu předává dále prostřednictvím socketu typu DEALER (backend socket) na jedno ze svých pracovních vláken.
+ROUTER pak přiřazuje vnitřní identifikátor každému k němu se připojujícímu socketu a následně obdrženou zprávu předává dále prostřednictvím socketu typu DEALER (backend socket) na jedno ze svých pracovních vláken.
 
-Pracovním vláknům jsou přes parametry předány instance třídy \textbf{RequestHandlerJson} a \textbf{ResponseHandlerJson()}, takže jsou schopny obsluhovat příchozí žádosti v tomto formátu.
+Pracovním vláknům jsou jako parametry předány instance tříd \textbf{RequestHandlerJson} a \textbf{ResponseHandlerJson}, takže jsou schopny obsluhovat příchozí žádosti v tomto formátu.
 
-O obsluhu požadavků a správnou komunikaci frontend socketů s backend sockety se stará \emph{ZMQ.proxy}, který hraje roli prostředníka zmíněného výše~\ref{subsub:queue}.
+O obsluhu požadavků a správnou komunikaci frontend socketů s backend sockety se stará \emph{ZMQ.proxy} hrající roli prostředníka zmíněného výše~\ref{subsub:queue}.
 
 Pracovní vlákna (ServerWorker) používají též komunikační protokol inproc a socket typu DEALER.
 
@@ -1318,7 +1316,7 @@ Socket worker = ctx.createSocket(ZMQ.DEALER);
 worker.connect("inproc://backend");
 \end{lstlisting}
 
-Komunikace probíhá tak, že DEALER komunikuje s DEALEREM. Oproti serverovému vláknu, který ale používal pro inproc spojení metodu \emph{bind()}, využívají pracovní vlákna metodu \emph{connect()}, čili se k němu připojují, přijímají zprávy a starají se o jejich vyřízení.
+Komunikace probíhá tak, že DEALER komunikuje s DEALEREM a oproti serverovému vláknu, který ale používal pro inproc spojení metodu \emph{bind()}, využívají pracovní vlákna metodu \emph{connect()}, čili se k němu připojují, přijímají zprávy a starají se o jejich vyřízení.
 
 Po navázání spojení je v těle metody \emph{run()} pracovních vláken realizována veškerá komunikace s logikou systému. Dochází zde k předávání zpráv jednotlivým metodám systémového API. Bližším popisem se zabývá~\ref{serverworker}. 
 
@@ -1335,7 +1333,7 @@ Správnou synchronizaci vláken má na starosti již zmíněná ZMQ.proxy. To je
 \label{serverworker}
 O několik řádku výše bylo vysvětleno, jakým způsobem jsou na serveru obsluhovány příchozí žádosti klientů. Nyní již víme, že tuto funkcionalitu mají na starosti pracovní vlákna typu \textbf{ServerWorker} a řekneme si, jakým způsobem jsou žádost zpracovávány.
 
-Vláknová metoda \emph{run()} má na svědomí veškerou obsluhu žádosti. Každý jednotlivý \emph{worker} tak v sobě udržuje kontext komunikace a pokud je na vstupu validní žádost, pro její zpracování je vyvolána příslušná operace rozhraní systému Recommeng. Sestavená odpověď je zaslána zpět klientovi.
+Vláknová metoda \emph{run()} má na svědomí veškerou obsluhu žádosti. Každý jednotlivý \emph{worker} tak v sobě udržuje kontext komunikace a pokud je na vstupu validní žádost, pro její zpracování je vyvolána příslušná operace rozhraní systému Recommeng. Sestavená odpověď je poté zaslána zpět klientovi.
 
 %\begin{verbatim}
 \begin{lstlisting}[language=java]
@@ -1358,7 +1356,7 @@ try {
 }
 \end{lstlisting}
 
-Výsledkem zpracování zprávy je operace. Spuštění vhodné operace je realizováno návrhovým vzorem Command. \textbf{Operation} je rozhraní deklarující metody pro validaci operace (\texttt{validateOperation()}) a její vykonání (\texttt{executeOperation()}).
+Výsledkem zpracování zprávy je operace. Spuštění vhodné operace je realizováno návrhovým vzorem Command. \textbf{Operation} je rozhraní deklarující metody pro validaci operace (\emph{validateOperation()}) a její vykonání (\emph{executeOperation()}).
 
 Každá třída implementující toto rozhraní je pak konkrétní operací zasílanou na rozhraní systému. 
 
@@ -1378,7 +1376,7 @@ Jedná se o třídy splňující funkcionalitu dle funkčních požadavků~\ref{
 	\item \texttt{OperationUseSupercollectionBandit}			
 \end{itemize}
 
-Výsledkem vykonání operace je vždy odpověď (třída \textbf{Reply} obsahující stavový kód, tělo zprávy, případně další hodnoty jako seznam algoritmů apod.), která je pomocí třídy \textbf{ResponseHandlerDefault} prezentována zpět klientovi.
+Výsledkem vykonání operace je odpověď (třída \textbf{Reply} obsahující stavový kód, tělo zprávy, případně další hodnoty jako seznam algoritmů apod.), která je pomocí třídy \textbf{ResponseHandlerDefault} prezentována zpět klientovi.
 
 \subsubsection{API}
 API systému Recommeng reprezentuje interface \textbf{EnsembleApiFacade}. Podporované metody jsou vidět na obrázku~\ref{fig:recommengNavrh}.
@@ -1417,7 +1415,7 @@ Klient, který žádal systém o takovéto doporučení, obdrží zprávu ve tva
 {"message":"You should choose bandit with name: latest. He is the best for this context.","status":200,"collection":1,"banditId":"latest","bestBandit":2}
 \end{lstlisting}
 
-Tento výstup lze použít jako parametry pro další dotaz (například pro zaslání zpětné vazby o zvolení algoritmu a posléze žádosti o doporučení obsahu navrácenou metodou).
+Část tohoto výstupu lze použít jako parametry pro další dotaz (například pro zaslání zpětné vazby).
 
 \subsubsection{Bayesovská strategie pro kombinování metod}
 
@@ -1430,12 +1428,12 @@ Strategii mají na starosti třídy nacházející se v balíčku:
 \paragraph{Bandit}
 Bandit je třída reprezentující jednoho konkrétní banditu. Každý bandita má svůj identifikátor a atributy pro zaznamenávání výher a pokusů během jednotlivých her. Ty reprezentují jeho dosavadní znalosti.
 \paragraph{BanditsMachine}
-BanditsMachine je třída reprezentující herní automat. Každá samostatná bayesovská strategie (BayesianStrategy) má právě jeden herní automat. Automat obsahuje seznam banditů a číselné konfigurace pro výpočty zpětné vazby a míry učení. Konfigurace se nastavuje ve vnějším soubor (viz~\ref{param}).
-\paragraph{SuperBayesianStrategy} SuperBayesianStrategy je třída reprezentující super kolekci více bayesovských strategii. V případě přítomnosti dvou bayesovských strategií, například kontextových atributů \uv{ráno} a \uv{Evropa}, může z těchto strategií vytvořit super strategii \uv{ráno v Evropě}.
+BanditsMachine je třída reprezentující herní automat. Každá samostatná bayesovská strategie (BayesianStrategy) má právě jeden herní automat. Automat obsahuje seznam banditů a číselné konfigurace pro výpočty zpětné vazby a míry učení. Konfigurace se nastavuje ve vnějším souboru (viz~\ref{param}).
+\paragraph{SuperBayesianStrategy} SuperBayesianStrategy je třída reprezentující super kolekci obsahující více bayesovských strategii. V případě přítomnosti dvou bayesovských strategií, například kontextových atributů \uv{ráno} a \uv{Evropa}, může z těchto strategií vytvořit super strategii \uv{ráno v Evropě}.
 \paragraph{BayesianStrategy}	BayesianStrategy je třída reprezentující online učící strategii k řešení strategie Multi-Armed Bandit~\ref{sub:mabandit}. Vzhledem k přítomnosti super strategií je již jasné, že v systému může nezávisle na sobě fungovat více bayesovských strategií. 
 
 \subsubsection{Důležité metody bayesovské strategie}
-	Důležitou metodou třídy BayesianStrategy je metoda \texttt{sampleBandits()} starající se jednak o výběr z prior pravděpodobností distribucí banditů a následně o volbu nejlepšího z nich. Jedná se o implementaci teorie probírané v~\ref{bayes}.
+	Důležitou metodou třídy BayesianStrategy je metoda \emph{sampleBandits()} starající se jednak o výběr z prior pravděpodobností distribucí banditů a následně o volbu nejlepšího z nich. Jedná se o implementaci teorie probírané v~\ref{bayes}.
 	
 \begin{lstlisting}[language=java]
 public Bandit sampleBandits() {
@@ -1451,7 +1449,7 @@ public Bandit sampleBandits() {
 }
 \end{lstlisting}	
 
-Do rozdělení vstupují jako parametry dosavadní výsledky jednotlivých algoritmů z kolekce a dochází k výpočtu kvantilových funkcí~\ref{icdf} pro každý algoritmus, kdy je nakonec vybrán algoritmus s největší hodnotou a navrácen jako nejlepší možnost. 
+Do rozdělení vstupují jako parametry dosavadní výsledky pokusů a úspěchů jednotlivých algoritmů z kolekce a dochází k výpočtu kvantilových funkcí~\ref{icdf} pro každý algoritmus, kdy je nakonec vybrán algoritmus s největší hodnotou a navrácen jako nejlepší možnost. 
 
 Dalšími metodami jsou pak \emph{selectBandit(String banditId)} zpracovávající zpětnou vazbu o zvolení doporučeného algoritmu uživatelem a \emph{calculateFeedback(String banditCollectionId, String banditId, String feedbackValue)}. 
 
@@ -1467,13 +1465,13 @@ public void calculateFeedback(String banditCollectionId, String banditId, String
 }  
 \end{lstlisting}	
 
-Těmito metodami je zajištěn přepočet hodnot, které si uchovávají jednotlivými algoritmy (trials, successes) jako svůj vnitřní stav vyjadřující dosud načerpané znalosti. Při každém přepočtu jsou tyto hodnoty ještě navíc násobeny konstantou určující míru učení~\ref{rate}.
+Tyto metody zajišťují přepočet hodnot uchovávaných jednotlivými algoritmy (trials, successes) jako jejich vnitřní stav (vyjadřující dosud načerpané znalosti). Při každém přepočtu jsou hodnoty ještě násobeny konstantou určující míru učení~\ref{rate}.
     
-V případě super strategie (třída SuperBayesianStrategy) je poměrně důležitou metodou \emph{chooseBestFromSuperStrategy()}. Ze zadané super kolekce je na základě odhadů vybrán vždy jeden nejlepší algoritmus z jejích kolekcí a pomocnou metodou \emph{bestBanditFromCombination(List<Bandit> banditsCombination)} je spočtena četnost výskytů jednotlivých algoritmů (navrácených jako nejlepší) z kolekcí. V případě shody stejného výskytu dvou a více algoritmů je na základě náhodného výběru zvolena jedna, která je doporučena uživateli.
+V případě super strategie (třída SuperBayesianStrategy) je poměrně důležitou metodou \emph{chooseBestFromSuperStrategy()}. Ze zadané super kolekce je z odhadů vybrán vždy jeden nejlepší algoritmus z jejích kolekcí a pomocnou metodou \emph{bestBanditFromCombination(List<Bandit> banditsCombination)} je spočtena četnost výskytů jednotlivých algoritmů (navrácených jako nejlepší) z kolekcí. V případě shody stejného výskytu dvou a více algoritmů je na náhodným výběrem zvolena jedna, která je doporučena uživateli.
     
 \subsubsection{Zpětná vazba}
 \label{implfeedback}     
-Výše byly zmíněny dvě metody (selectBandit() a calculateFeedback()), které zprostředkovávají zpětnou vazbu pro systém. Nyní si pojďme popsat jejich realizaci.
+Výše byly zmíněny dvě metody (\emph{selectBandit()} a \emph{calculateFeedback()}), které zprostředkovávají zpětnou vazbu pro systém. Nyní si pojďme popsat jejich realizaci.
 
 Tělo metody updateTrials() je jednoduché a zpětná vazba týkající se připočítávání pokusů triviální:
 
@@ -1483,9 +1481,9 @@ trials = newTrials + 1;
 normalizedTrialsFrequencyInTime += totalTrialsCountsToBoost;
 \end{lstlisting}	
 
-V případě souhlasu s algoritmem, který rádce navrhuje, je k jeho vnitřnímu stavu uchovávající poměr pokusů (kolikrát byl vybrán) přičteno číslo 1.
+V případě souhlasu s výsledky doporučenými následovaným algoritmem je k jeho vnitřnímu stavu uchovávající poměr pokusů (kolikrát byl vybrán) přičteno číslo 1.
 
-Zajímavější je to v případě zasílání informace o kvalitě doporučení. Dle typu zpětné vazby (pozitivní či negativní) jsou volány dvě metody - makePositiveFeedback(banditToUpdate) či makeNegativeFeedback(banditToUpdate) a pomocí parametrů voleny tři hodnoty:
+Zajímavější již je zasílání informace o kvalitě doporučení. Dle typu zpětné vazby (pozitivní či negativní) jsou volány dvě metody – \emph{makePositiveFeedback(banditToUpdate)} či \emph{makeNegativeFeedback(banditToUpdate)} a pomocí parametrů voleny tři hodnoty:
 
 \begin{verbatim}
 ensemble.feedback.possitive.winner=1.0
@@ -1500,7 +1498,7 @@ double newSuccesses = rate * successes;
 successes = newSuccesses + winner;
 \end{lstlisting}	
 
-Všem ostatním algoritmům je nějaká nadefinovaná hodnota v poměru odečtena (za předpokladu, že nemají vnitřní stav menší než poměrná odečítaná hodnota):
+Všem ostatním algoritmům je jistá poměrová hodnota odečtena (za předpokladu, že nemají vnitřní stav menší než odečítaná hodnota):
 
 \begin{lstlisting}[language=java]
 if (successes > (losers*rate)) {
@@ -1513,9 +1511,11 @@ if (successes > (losers*rate)) {
 }
 \end{lstlisting}	
 
-Tyto počty probíhají v případě pozitivní zpětné vazby. Ještě je nutné uvažovat případ, kdy dáme na radu systému, zvolíme algoritmus, který nám poradil, ale s výsledky doporučení nejsme spokojeni.V takovém případě je udělována negativní zpětná vazba. Negativní zpětná vazba je udělována pouze tomuto nevhodně zvolenému algoritmu. Vnitřní stav ostatních algoritmů zůstává nezměněn.
+Těchto počtů je využíváno v případě pozitivní zpětné vazby. Ještě je ale nutné uvažovat případ, kdy dáme na radu systému, zvolíme algoritmus, který nám poradil, ale s výsledky doporučení nejsme spokojeni. V takovém případě je udělována negativní zpětná vazba.
 
-Penalizace je realizována následovně:
+Vazba je udělována pouze algoritmu, se kterým jsme nebyli spokojeni. Vnitřní stav ostatních algoritmů zůstává nezměněn.
+
+Penalizační funkce je realizována následovně:
 
 \begin{lstlisting}[language=java]
 successes = successes - (stupid*rate);
@@ -1525,7 +1525,7 @@ successes = newSuccesses;
   
 \subsubsection{Pravidelné ukládání časových snímků}
 \label{task}
-Pravidelné ukládání časových snímků jsem realizoval Spring démonem (\emph{cron}). Četnost jeho spouštění je možné volit přes parametr~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} spouštějící pravidelný časový úkol, který zprostředkuje persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze.
+Pravidelné ukládání časových snímků jsem implementoval Spring démonem (\emph{cron}). Četnost jeho spouštění lze ovlivňovat parametrem~\ref{param} v konfiguračním souboru aplikace. K tomuto účelu jsem vytvořil třídu \textbf{ScheduledJob} spouštějící pravidelný časový úkol, který zprostředkuje persistenci aktuálního stavu aplikace (tedy všech běžících bayesovských strategií), který je v té době v paměti, do databáze.
 
 Samozřejmě za předpokladu, že je použití databáze v konfiguračním souboru nastaveno. V opačném případě by tovární metoda třídy \textbf{StorageFactory} zvolila k použití jinou formu práce s daty.
 
@@ -1635,41 +1635,6 @@ public RecommengApplication(){
     register(EnsembleEndpointImpl.class);
     register(JacksonFeature.class);        
 }
-\end{lstlisting}
-
-Třída registruje následující komponenty:
-
-\begin{itemize}
-	\item org.glassfish.jersey.server.spring.scope.RequestContextFilter
-\end{itemize}
-	Jedná se o Spring filter, který poskytuje propojení mezi JAX-RS a Spring žádostmi.
-
-\begin{itemize}	
-	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.AlgorithmEndpointImpl
-\end{itemize}	
-
-\begin{itemize}
-	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.ArticleEndpointImpl
-\end{itemize}	
-
-\begin{itemize}
-	\item cz.cvut.fit.bouchja1.mi\_dip.rest.client.endpoint.EnsembleEndpointImpl
-\end{itemize}	
-
-	Tyto tři třídy jsou služby REST API. 
-	
-\begin{itemize}	
-	\item org.glassfish.jersey.jackson.JacksonFeature		
-\end{itemize}	
-	Registruje Jackson JSON poskytovatele pro zpracování příchozích dat ve formátu JSON.
-
-Nakonec jsem definoval filtr \emph{CharacterEncodingFilter} s UTF-8 kódováním pro všechny URL splňující vzor:
-
-\begin{lstlisting}[language=java]
-<filter-mapping>
-    <filter-name>CharacterEncodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>    
 \end{lstlisting}
 
 \subsubsection{Realizace endpointů}
