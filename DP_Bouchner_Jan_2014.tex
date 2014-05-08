@@ -1255,21 +1255,13 @@ Anotace \emph{@EnableScheduling} a \emph{@ComponentScan} využijeme pro pravidel
 \label{param}
 Pro účely experimentování se systémem, volbu databázového úložiště a testování funkčnosti s různě volenou konfigurací je nutné načítat konfiguraci z editovatelného \emph{properties} souboru. K tomu jsem využil Spring bean \textbf{PropertySourcesPlaceholderConfigurer}.
 
-Konfigurační vlastnosti jsou do souboru \emph{application.properties} přidávány ve formátu:
-
-\begin{lstlisting}
-storage=cassandra
-#storage=jvm
-   
-ensemble.machine.rate=0.5
-ensemble.feedback.possitive.best=1.0
-\end{lstlisting}
-
-Konkrétní načítání v programu je pak díky použití PropertySourcesPlaceholderConfigurer velice jednoduché:
+Konkrétní načítání v programu je pak velice jednoduché:
 
 \begin{lstlisting}[language=java]
 this.rate = Double.parseDouble(env.getProperty("ensemble.machine.rate"));
-this.possitiveFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.possitive.best"));
+this.possitiveFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.possitive.winner"));
+this.possitiveFeedbackOthers = Double.parseDouble(env.getProperty("ensemble.feedback.possitive.losers"));
+this.negativeFeedback = Double.parseDouble(env.getProperty("ensemble.feedback.negative.stupid"));
 \end{lstlisting}
 
 \subsubsection{Vrstva pro obsluhu zpráv}
@@ -1508,7 +1500,7 @@ V případě super strategie (třída SuperBayesianStrategy) je poměrně důle�
     
 \subsubsection{Zpětná vazba}
 \label{implfeedback}     
-Výše byly zmíněny dvě metody (selectBandit() a calculateFeedback()), které se zprostředkovávají zpětnou vazbu pro systém. Nyní si pojďme popsat jejich realizaci.
+Výše byly zmíněny dvě metody (selectBandit() a calculateFeedback()), které zprostředkovávají zpětnou vazbu pro systém. Nyní si pojďme popsat jejich realizaci.
 
 Tělo metody updateTrials() je jednoduché a zpětná vazba týkající se připočítávání pokusů triviální:
 
@@ -1520,20 +1512,26 @@ normalizedTrialsFrequencyInTime += totalTrialsCountsToBoost;
 
 V případě souhlasu s algoritmem, který rádce navrhuje, je k jeho vnitřnímu stavu uchovávající poměr pokusů (kolikrát byl vybrán) přičteno číslo 1.
 
-Zajímavější je to v případě zasílání informace o kvalitě doporučení. Dle typu zpětné vazby (pozitivní či negativní) jsou volány dvě metody - makePositiveFeedback(banditToUpdate) či makeNegativeFeedback(banditToUpdate).
+Zajímavější je to v případě zasílání informace o kvalitě doporučení. Dle typu zpětné vazby (pozitivní či negativní) jsou volány dvě metody - makePositiveFeedback(banditToUpdate) či makeNegativeFeedback(banditToUpdate) a pomocí parametrů voleny tři hodnoty:
+
+\begin{verbatim}
+ensemble.feedback.possitive.winner=1.0
+ensemble.feedback.possitive.losers=0.1
+ensemble.feedback.negative.stupid=0.2
+\end{verbatim}
 
 V případě pozitivní zpětné vazby je danému algoritmu přičítána definovaná odměna (emph{result}):
 
 \begin{lstlisting}[language=java]
 double newSuccesses = rate * successes;
-successes = newSuccesses + result;
+successes = newSuccesses + winner;
 \end{lstlisting}	
 
 Všem ostatním algoritmům je nějaká nadefinovaná hodnota v poměru odečtena (za předpokladu, že nemají vnitřní stav menší než poměrná odečítaná hodnota):
 
 \begin{lstlisting}[language=java]
-if (successes > (result*rate)) {
-    successes = successes - (result*rate);
+if (successes > (losers*rate)) {
+    successes = successes - (losers*rate);
     double newSuccesses = rate * successes;
     successes = newSuccesses;
 } else {
@@ -1547,7 +1545,7 @@ Tyto počty probíhají v případě pozitivní zpětné vazby. Ještě je nutn�
 Penalizace je realizována následovně:
 
 \begin{lstlisting}[language=java]
-successes = successes - (result*rate);
+successes = successes - (stupid*rate);
 double newSuccesses = rate * successes;
 successes = newSuccesses;
 \end{lstlisting}	
