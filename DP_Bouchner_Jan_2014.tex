@@ -554,7 +554,7 @@ Algoritmy strojového učení dělíme do taxonomie (nadtříd a podtříd) zalo
   \item[Unsupervised learning]\footnote{Učení bez učitele} je již z~podstaty absence učitele obtížným problémem. Učení bez učitele se používá k~analýze dat, když nemáme k~dispozici trénovací množinu. Pozorovaná data se mají vysvětlit pomocí matematických modelů.
   
   Používá se v~oblasti rozpoznávání vzorů~\cite{hlavac}.
-  \item[Reinforcement learning]\footnote{Zpětnovazební učení nebo též učení posilováním} je oblast informatiky tykající se chování agentů~\ref{agent}. Jedná se o~metodu, při které se agent učí, jakým způsobem má volit akce, aby nalezl optimální strategii pro dané prostředí.
+  \item[Reinforcement learning]\footnote{Zpětnovazební učení nebo též učení posilováním} je oblast informatiky tykající se chování agentů. Jedná se o~metodu, při které se agent učí, jakým způsobem má volit akce, aby nalezl optimální strategii pro dané prostředí.
   
   Jedná se o~učení bez učitele. Agent sice dostává odezvu, ale přímo z~prostředí, takže musí experimentovat a zjišťovat, které stavy jsou nějakým způsobem dobré, a kterým stavům je lepší se vyhnout.
   
@@ -583,7 +583,7 @@ Díky těmto znalostem tak můžeme navrhovat dynamické pravděpodobnostní sys
 \subsubsection{Princip algoritmu}
 Základ algoritmu si lze představit tak, že hráč stojí před $N$ výherními automaty (ty jsou podle názvu strategie označeny jako bandité) a v~každém kole má možnost vybrat si jeden, na kterém bude hrát.
 
-Strategie je formálně popsána jako skupina výnosových distribučních funkcí~\ref{cdf} $B = \{ A_1, A_2, \ldots, A_N \}$, kde $N$ je počet banditů (každý z~banditů má tedy přiřazenu právě jednu distribuční funkci vyjadřující pravděpodobnost úspěchu). 
+Strategie je formálně popsána jako skupina výnosových distribučních~\ref{cdf} funkcí $B = \{ A_1, A_2, \ldots, A_N \}$, kde $N$ je počet banditů (každý z~banditů má tedy přiřazenu právě jednu distribuční funkci vyjadřující pravděpodobnost úspěchu). 
 
 Hráč zpočátku nedisponuje žádnými informacemi o~průběhu hry ani o~rozložení pravděpodobnosti úspěchu mezi bandity. Maximalizace výhry může dosáhnout pouze tím, že v~každém kole vhodně vybere jednoho z~banditů.
 
@@ -605,7 +605,7 @@ Popisu toho, jaký vliv má zpětná vazba na vývoj samotného systému, je vě
 	
 Návrh učící strategie spočívá v~tom, že systém jednotlivé bandity nejdříve testuje~\ref{inferno} za účelem získání znalostí nezbytně nutných pro další vývoj. Jak systém postupně nabývá znalostí, je možné zaměřit se na bandity, kteří poskytují díky zužitkovaným znalostem největší odměnu. 
 
-Úkol je komplikován stochastickou povahou banditů vyplývající z~odhadů~\ref{inferno}. Suboptimální bandita může přinášet spoustu výher, což by nás mohlo přimět uvěřit, že právě tento bandita je tím nejlepším. Stejně tak je ale nutné uvažovat naopak – nejlepší bandita totiž může zpočátku přinášet spoustu proher.
+Úkol je komplikován stochastickou povahou banditů vyplývající~\ref{inferno} z~odhadů. Suboptimální bandita může přinášet spoustu výher, což by nás mohlo přimět uvěřit, že právě tento bandita je tím nejlepším. Stejně tak je ale nutné uvažovat naopak – nejlepší bandita totiž může zpočátku přinášet spoustu proher.
 
 Na místě jsou dvě otázky:
 
@@ -1055,13 +1055,9 @@ Rozlišují se dva hlavní způsoby filtrování.
 
 \paragraph{User-based}
 
-\emph{``You may like it because your friends liked it.''}~\cite{cf}
-
 Aneb filtrování založené na uživatelích. Jedná se o~starší variantu kolaborativního filtrování. Podstatou je vzít na základě určité podobnosti skupinu uživatelů (zdroj~\cite{cf} udává cca 20 až 50) s~podobných vkusem jako má uživatel, pro něhož je doporučení konstruováno, a poté předpovědět, jak moc zajímavá by pro uživatele byla pro něj dosud neznámá položka, se kterou jsou spojení uživatelé se stejným vkusem.
 
 \paragraph{Item-based}
-
-\emph{``You tend to like that item because you have liked those items.''}~\cite{cf}
 
 Aneb filtrování založené na položkách, které použila v~roce 2001 jako první společnost Amazon. Myšlenka je taková, že uživatel, který si v~minulosti zakoupil nějakou položku, bude v~budoucnu při dalším nákupu vyhledávat položku podobnou. Například předpověď toho, co si uživatel zakoupí v~budoucnu, lze uskutečnit analýzou historie nákupů uživatele~\cite{itemcf}. 
 
@@ -1468,7 +1464,7 @@ public Bandit sampleBandits() {
 }
 \end{lstlisting}	
 
-Do rozdělení vstupují jako parametry dosavadní výsledky pokusů a úspěchů jednotlivých algoritmů z~kolekce a dochází k~výpočtu kvantilových funkcí~\ref{icdf} pro každý algoritmus, kdy je nakonec vybrán algoritmus s~největší hodnotou a navrácen jako nejlepší možnost. 
+Do rozdělení vstupují jako parametry dosavadní výsledky pokusů a úspěchů jednotlivých algoritmů z~kolekce a dochází k~výpočtu kvantilových~\ref{icdf} funkcí pro každý algoritmus, kdy je nakonec vybrán algoritmus s~největší hodnotou a navrácen jako nejlepší možnost. 
 
 Dalšími metodami jsou pak \emph{selectBandit(String banditId)} zpracovávající zpětnou vazbu o~zvolení doporučeného algoritmu uživatelem a \emph{calculateFeedback(String banditCollectionId, String banditId, String feedbackValue)}. 
 
@@ -1696,7 +1692,9 @@ public Response updateBehavioralToArticle(@PathParam("coreId") String coreId, Us
 
 O~samotné reprezentaci zdroje referuje příslušná podpodsekce~\ref{subsub:resource}.
 
-Provádění má na starosti v~tomto případě \textbf{ArticleEndpointHelper}. Ostatní služby mají též své helpery – třídy pomáhající jim v~obsluze žádosti zodpovědné za vytváření odpovědí, které rozšiřují rodičovskou třídu \textbf{CommonEndpointHelper} implementující rozhraní \textbf{EndpointHelper}.
+Provádění má na starosti v~tomto případě \textbf{ArticleEndpointHelper}.
+
+Ostatní služby mají též své helpery – třídy pomáhající jim v~obsluze žádosti zodpovědné za vytváření odpovědí, které rozšiřují rodičovskou třídu \textbf{CommonEndpointHelper} implementující rozhraní \textbf{EndpointHelper}.
 
 Rozhraní deklaruje více metod souvisejících s~odpovědí, například metody pro vytvoření odpovědi dle typu návratového kódu a sestavení odpovědi.
 
