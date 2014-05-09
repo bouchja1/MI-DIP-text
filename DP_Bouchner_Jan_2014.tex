@@ -154,7 +154,6 @@ breaklines=true
   \item[Kapitola \nameref{chap:teor}] Popisuje trendy používané současnými doporučovacími systémy a zkoumá algoritmické a matematické postupy, které by mohly být využity při návrhu strategie adaptibilního systému.
   \item[Kapitola \nameref{chap:prakt}] Shromažďuje veškeré požadavky kladené na systém, dále se zabývá návrhem architektury, detailními návrhy serverové i klientské části, rozhraním zastřešujícím komunikaci těchto částí a výběrem základní sady algoritmů, které budou využity k doporučování obsahu. Popisuje též postupy užité při vývoji aplikace na základě provedené analýzy a návrhu.
   \item[Kapitola \nameref{chap:tests}] Shrnuje poznatky nabyté z prováděných experimentů se systémem a stanovuje pravidla pro nejlepší použití.
-  \item[Kapitola \nameref{chap:futurework}] Hodnotí vzniklou aplikaci a zamýšlí se nad dalším kroky ve vývoji.
 \end{description}
 	
 \end{introduction}
@@ -2153,43 +2152,27 @@ Viz graf~\ref{fig:test9_1}. Experimentem jsem chtěl ověřit, jak bude systém 
 \subsection{Zhodnocení experimentů}
 Tyto provedené experimenty prokázaly základní schopnost systému reagovat na určité situace, které mohou nastat během jeho používání. Nejedná se samozřejmě o kompletní a robustní sadu testů, jakou by si systém zasloužil. Je zde prostor pro další testování zahrnující například různé kombinace. Věřím ale, že jako demonstrace základní funkčnosti systému jsou provedené experimenty dostačující. 
 
-\chapter{Zhodnocení práce}
-\label{chap:futurework}	
-Závěrečnou kapitolu bych rád věnoval zhodnocení celé své práce. Zaměřím se také na další možné kroky v budoucím vývoji aplikace. 
+\begin{conclusion}
+Na základě definovaných požadavků a znalostí nabytých vlastním výzkumem byl vyvinut adaptibilní systém pro doporučování obsahu, který je schopen vhodně volit a kombinovat algoritmy a optimalizovat tak jejich cenovou kvalitu. Preference při kombinování jsou ovlivňovány formou pozitivní a negativní zpětné vazby zasílané na systém. Jedná se tedy o plně flexibilní řešení. 
 
-Na základě definovaných požadavků a znalostí nabytých vlastním výzkumem byl vyvinut adaptibilní systém pro doporučování obsahu a několik součástí nezbytných pro vzájemnou komunikaci s tímto systémem a okolními komponentami. 
+Vyvinuto bylo též několik součástí nezbytných pro vzájemnou komunikaci s tímto systémem a okolními komponentami. 
 
 V teoretické části práce jsem se zabýval analýzou konkurenčních systémů, sbíral inspiraci zkoumáním existujících řešení běžících na pozadí těchto systémů a v neposlední řadě jsem se také snažil nastudovat problematiku pokročilejších technik strojového učení, abych tyto načerpané znalosti následně proměnil ve schopnost navrhnout vhodnou strategii pro kombinování a volbu jednotlivých doporučovacích algoritmů.
 
 Systém jsem se snažil navrhnout co nejobecněji, aby nebyl příliš závislý na okolí a bylo možné jej snadno škálovat a přistupovat k němu prostřednictvím API. Přímo s adaptibilním jádrem je možné komunikovat jak zasíláním socketových zpráv, tak pomocí služeb REST.
 
-Při tvorbě součástí systému bylo využito několik moderních technologií, jejichž snahou je poskytovat uživateli rychlý a distribuovaný přístup a stavět robustní a odolná řešení. 
+Při tvorbě součástí systému bylo využito několik moderních technologií, jejichž snahou je poskytovat uživateli rychlý a distribuovaný přístup a vystavět pomocí nich robustní a odolná řešení. 
 
-Kvůli potřebám snadné komunikace a provádění experimentů se systémem jsem byl nucen vyvinout testovacího klienta~\ref{chap:client} schopného komunikovat se všemi komponentami vystavěného doporučovacího prostředí. Do tohoto prostředí spadá fulltextový index uchovávající informace o článcích a uživatelských hodnoceních a stejně tak i doporučovací algoritmy přístupné díky HTTP metodám RESTful API.
+Pro účely komunikace a provádění experimentů se systémem jsem vyvinul testovacího klienta~\ref{chap:client} schopného komunikovat se všemi komponentami vytvořeného doporučovacího prostředí. Do tohoto prostředí spadá fulltextový index uchovávající informace o článcích a uživatelských hodnoceních a stejně tak i doporučovací algoritmy přístupné díky HTTP metodám RESTful API.
 
-Výsledné experimenty se systémem jsem bohužel nestihl provést na žádném standardním datasetu a zůstal tak odkázán na vlastní jednoduchý generátor, jímž jsem vytvářel \uv{články} a \uv{uživatelská hodnocení} v Apache Solr již v prvních týdnech implementace. Testovací klient využíval těchto informací z indexu po celou dobu experimentů. To samozřejmě přineslo některé nepříjemnosti v závěru, například to, že uživatelská hodnocení položek nebyla dostatečně vypovídající například pro potřeby kolaborativního filtrování. Dalo by se říci, že tato hodnocení jsou jen náhodným shlukem položek u článku.
-
-Další rozvoj systému je nicméně v plánu a ani zdaleka se nejedná o uzavřenou věc.
+Výsledné experimenty se systémem jsem bohužel nestihl provést na žádném standardním datasetu a zůstal tak odkázán na vlastní generátor, jímž jsem vytvářel položky a uživatelská hodnocení v Apache Solr již v prvních týdnech implementace. Testovací klient využíval těchto informací z indexu po celou dobu testování a provádění experimentů. To přineslo i některé nepříjemnosti, například to, že uživatelská hodnocení položek nebyla dostatečně vypovídající například pro potřeby kolaborativního filtrování (dalo by se říci, že tato hodnocení jsou jen náhodným shlukem dat).
 
 \section{Budoucí práce}
-I přesto, že se podařilo splnit většinu požadavků kladených na systém a bylo vyvinuto funkční řešení, do budoucna je stále prostor pro zlepšování, provádění dalších testování a vývoj nových funkcionalit.
+I přesto, že se většinu požadavků kladených na systém podařilo splnit, do budoucna je stále prostor pro zlepšování, provádění dalších nezbytných testování a vývoj nových funkcionalit.
 
-Jako jednou z možných budoucích funkcionalit by mohl být vývoj sofistikovanější strategie volby v případě, že více algoritmů vybraných z jednotlivých kolekcí má stejnou četnost.
+Vzhledem k tomu, že další rozvoj systému je v brzké době v plánu, další metou pro dosažení by mohl být vývoj sofistikované strategie volby v případě, že více algoritmů vybraných z jednotlivých kolekcí má stejnou četnost.
 
-Vzhledem k možnostem, jaké nabízejí uživatelská hodnocení u článků, by stálo za to popřemýšlet o dalších doporučovacím algoritmu, který by těchto informací dokázal využít (v této práci s hodnoceními pracoval pouze jeden algoritmus, a to pro výběr nejlépe hodnocených článků). Nabízí se varianta kolaborativního filtrování ve struktuře user-rating-item.
-
-Z časových důvodů nebyl vyvinut ani žádný hybridní doporučovací algoritmus, i když jsem jej měl původně v plánu.
-
-\begin{conclusion}
-TODO dopsat, přepsat... rozvést
-
-Cílem práce bylo navrhnout systém, který by dokázal automaticky volit a dynamicky kombinovat algoritmy a optimalizovat tak jejich cenovou kvalitu. Preference při kombinování měly být ovlivňovány formou pozitivní a negativní zpětné vazby zasílané na systém. Pro účely kombinování bylo nutné vybrat a implementovat sadu základních doporučovacích algoritmů. 
-
-Pro účely komunikace se systémem a systémových komponent mezi sebou mělo být navrženo obecné rozhraní. Následně mělo být navrženo a implementováno rozhraní systému v podobě služeb REST.
-
-Funkčnost vyvinutého řešení měla být ověřena experimenty na modelové úloze.
-
-...výhledové použití v systému \url{http://inbeat.eu/} (Interest Beat is a service for recommendation of content). 
+Vzhledem k možnostem, jaké nabízejí uživatelská hodnocení u článků, by stálo za to popřemýšlet o dalších doporučovacích algoritmech, které by těchto informací využívaly. Nabízí se varianta kolaborativního filtrování v podobě user-rating-item, případně i hybridní doporučovací algoritmus.
 \end{conclusion}
 
 \bibliographystyle{csn690}
